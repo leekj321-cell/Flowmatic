@@ -1,1564 +1,272 @@
-<!DOCTYPE html>
-<html lang="en" data-language="en"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flowmatic | Manufacturing Intelligence OS</title>
-  <meta id="meta-description" name="description" content="Flowmatic connects NC analysis, cycle-time intelligence, machine vision and flexible material flow into a modular Manufacturing Intelligence OS.">
-  <meta property="og:title" content="Flowmatic | Manufacturing Intelligence OS">
-  <meta property="og:description" content="From isolated factory data to an operating flow that people can act on.">
-  <meta property="og:type" content="website">
-  <meta name="theme-color" content="#07111f">
-  <style>
-    :root {
-      --bg: #07111f;
-      --bg-deep: #040b14;
-      --panel: #0e1b2f;
-      --panel-soft: #13233a;
-      --text: #eef5ff;
-      --muted: #a9b7ca;
-      --line: rgba(255,255,255,.12);
-      --line-strong: rgba(255,255,255,.2);
-      --accent: #46e6b0;
-      --accent2: #4ca3ff;
-      --warning: #ffd166;
-      --danger: #ff7a90;
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
-      --radius: 24px;
-      --header-height: 72px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-width: 320px;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Pretendard, "Noto Sans KR", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(76,163,255,.18), transparent 34%),
-        radial-gradient(circle at top right, rgba(70,230,176,.14), transparent 30%),
-        var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-    }
-
-    body.modal-open { overflow: hidden; }
-    button, input, select, textarea { font: inherit; }
-    button { color: inherit; }
-    a { color: inherit; text-decoration: none; }
-    img, video, iframe { max-width: 100%; }
-    .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(18px);
-      background: rgba(7,17,31,.8);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav {
-      min-height: var(--header-height);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      letter-spacing: -.02em;
-      font-size: 20px;
-      white-space: nowrap;
-    }
-
-    .logo {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 28px rgba(70,230,176,.28);
-      display: grid;
-      place-items: center;
-      color: #06111f;
-      font-weight: 900;
-    }
-
-    .nav-right { display: flex; align-items: center; gap: 22px; }
-    .nav-links { display: flex; gap: 22px; font-size: 14px; color: var(--muted); }
-    .nav-links a { transition: color .2s; }
-    .nav-links a:hover { color: var(--text); }
-
-    .language-switch {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.04);
-    }
-
-    .language-switch button {
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      min-width: 46px;
-      padding: 7px 11px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .language-switch button.is-active {
-      background: var(--text);
-      color: var(--bg);
-    }
-
-    .hero { padding: 96px 0 76px; }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 13px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      background: rgba(255,255,255,.04);
-      font-size: 13px;
-    }
-
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px var(--accent); }
-
-    h1 {
-      margin: 24px 0 18px;
-      font-size: clamp(42px, 6vw, 76px);
-      line-height: 1.05;
-      letter-spacing: -.06em;
-    }
-
-    .gradient {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .lead { font-size: 19px; color: var(--muted); max-width: 680px; }
-    .hero-actions { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 13px 18px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform .2s, background .2s, border-color .2s;
-    }
-    .btn:hover { transform: translateY(-2px); border-color: var(--line-strong); }
-    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #06111f; border: 0; }
-    .btn-secondary { background: rgba(255,255,255,.05); color: var(--text); }
-    .btn-small { padding: 9px 12px; border-radius: 11px; font-size: 13px; }
-
-    .mockup {
-      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.035));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .window-bar { display: flex; gap: 8px; margin-bottom: 18px; }
-    .bubble { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.25); }
-    .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-    .card {
-      background: rgba(10,23,41,.82);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .card.wide { grid-column: 1 / -1; }
-    .metric { font-size: 30px; font-weight: 850; letter-spacing: -.03em; }
-    .label { color: var(--muted); font-size: 13px; }
-    .bar { height: 10px; background: rgba(255,255,255,.08); border-radius: 999px; overflow: hidden; margin-top: 12px; }
-    .bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: inherit; }
-
-    section { padding: 76px 0; scroll-margin-top: calc(var(--header-height) + 18px); }
-    .section-title { margin-bottom: 28px; }
-    h2 { font-size: clamp(32px, 4vw, 50px); line-height: 1.12; letter-spacing: -.05em; margin: 0 0 12px; }
-    .section-title p { color: var(--muted); margin: 0; max-width: 820px; font-size: 17px; }
-
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .feature h3 { margin: 0 0 8px; font-size: 20px; }
-    .feature p, .timeline p { color: var(--muted); margin: 0; }
-    .icon {
-      width: 42px; height: 42px; border-radius: 14px;
-      background: rgba(70,230,176,.12);
-      border: 1px solid rgba(70,230,176,.25);
-      display: grid; place-items: center;
-      margin-bottom: 14px;
-      font-weight: 900; color: var(--accent);
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .problem-list { display: grid; gap: 12px; }
-    .problem-item {
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.045);
-      border: 1px solid var(--line);
-      color: var(--muted);
-    }
-    .problem-item strong { color: var(--text); }
-
-    /* Solutions */
-    .solution-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-      align-items: start;
-    }
-
-    .solution-card {
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(15,31,52,.94), rgba(9,21,37,.94));
-      overflow: hidden;
-      transition: border-color .25s, box-shadow .25s, transform .25s;
-    }
-
-    .solution-card:hover { border-color: rgba(76,163,255,.4); }
-    .solution-card.is-open {
-      grid-column: 1 / -1;
-      border-color: rgba(70,230,176,.42);
-      box-shadow: 0 24px 70px rgba(0,0,0,.34);
-    }
-
-    .solution-trigger {
-      width: 100%;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 18px;
-      align-items: start;
-      text-align: left;
-      background: transparent;
-      border: 0;
-      padding: 26px 28px;
-      cursor: pointer;
-    }
-
-    .solution-number {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: rgba(76,163,255,.1);
-      border: 1px solid rgba(76,163,255,.25);
-      color: var(--accent2);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .solution-summary h3 {
-      margin: 0 0 8px;
-      font-size: clamp(24px, 3vw, 34px);
-      letter-spacing: -.035em;
-    }
-
-    .solution-summary p { color: var(--muted); margin: 0; font-size: 16px; }
-    .status-row { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: 800;
-    }
-    .status-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
-    .status-pill.concept::before { background: var(--warning); }
-
-    .solution-chevron {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      color: var(--muted);
-      transition: transform .3s, color .3s, background .3s;
-      font-size: 22px;
-    }
-
-    .solution-card.is-open .solution-chevron {
-      transform: rotate(45deg);
-      color: var(--bg);
-      background: var(--accent);
-    }
-
-    .solution-detail {
-      display: grid;
-      grid-template-rows: 0fr;
-      opacity: 0;
-      transition: grid-template-rows .45s ease, opacity .3s ease;
-    }
-    .solution-detail-inner { overflow: hidden; }
-    .solution-card.is-open .solution-detail { grid-template-rows: 1fr; opacity: 1; }
-
-    .solution-content {
-      border-top: 1px solid var(--line);
-      padding: 0 28px 30px;
-      display: grid;
-      grid-template-columns: .8fr 1.2fr;
-      gap: 30px;
-    }
-
-    .solution-copy { padding-top: 28px; }
-    .solution-copy h4 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
-    .solution-copy p { color: var(--muted); margin: 0 0 18px; }
-    .capability-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-    .capability-list li {
-      display: grid;
-      grid-template-columns: 20px 1fr;
-      gap: 9px;
-      color: var(--muted);
-    }
-    .capability-list li::before { content: "↗"; color: var(--accent); font-weight: 900; }
-
-    .media-zone { padding-top: 28px; min-width: 0; }
-    .media-gallery { display: grid; gap: 14px; }
-    .media-placeholder,
-    .media-item {
-      min-height: 320px;
-      border: 1px dashed rgba(255,255,255,.22);
-      border-radius: 20px;
-      background:
-        linear-gradient(135deg, rgba(76,163,255,.12), rgba(70,230,176,.08)),
-        rgba(255,255,255,.025);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .media-placeholder {
-      display: grid;
-      place-items: center;
-      padding: 30px;
-      text-align: center;
-    }
-    .media-placeholder strong { display: block; font-size: 20px; margin-bottom: 8px; }
-    .media-placeholder span { color: var(--muted); max-width: 520px; display: block; }
-    .media-placeholder .play-mark {
-      width: 68px; height: 68px; border-radius: 50%;
-      display: grid; place-items: center;
-      margin: 0 auto 18px;
-      background: rgba(255,255,255,.09);
-      border: 1px solid var(--line);
-      font-size: 24px;
-    }
-
-    .media-item { border-style: solid; background: #02070d; }
-    .media-item img,
-    .media-item video,
-    .media-item iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      display: block;
-      object-fit: contain;
-      border: 0;
-      background: #02070d;
-    }
-    .media-item figcaption { padding: 15px 17px 17px; background: rgba(8,18,31,.96); }
-    .media-item figcaption strong { display: block; margin-bottom: 3px; }
-    .media-item figcaption span { display: block; color: var(--muted); font-size: 14px; }
-    .media-remove {
-      display: none;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 3;
-      border: 1px solid rgba(255,255,255,.22);
-      border-radius: 999px;
-      background: rgba(5,11,20,.82);
-      color: #fff;
-      padding: 7px 10px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    body.editor-mode .media-remove { display: inline-flex; }
-    .media-gallery:has(.media-item) .media-placeholder { display: none; }
-
-    .pipeline {
-      position: relative;
-      padding: 28px;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(76,163,255,.11), rgba(70,230,176,.07));
-      border: 1px solid var(--line);
-    }
-    .flow-row { display: grid; grid-template-columns: 1fr 40px 1fr; align-items: center; gap: 12px; margin-bottom: 12px; }
-    .flow-box { padding: 16px; border: 1px solid var(--line); border-radius: 15px; background: rgba(7,17,31,.62); }
-    .arrow { color: var(--accent); text-align: center; font-size: 22px; }
-
-    .tagline {
-      padding: 40px;
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(70,230,176,.16), rgba(76,163,255,.14));
-      border: 1px solid var(--line);
-      text-align: center;
-    }
-    .tagline strong { font-size: clamp(28px, 4vw, 44px); letter-spacing: -.045em; display: block; }
-    .tagline p { color: var(--muted); margin: 12px auto 0; max-width: 780px; }
-
-    .roadmap { display: grid; gap: 14px; }
-    .timeline { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.04); }
-    .timeline h3 { margin: 0 0 4px; }
-    .phase { color: var(--accent); font-weight: 900; }
-
-    footer { padding: 42px 0; border-top: 1px solid var(--line); color: var(--muted); }
-    .footer-grid { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-    .footer-tools { display: flex; align-items: center; gap: 10px; }
-    #editor-launcher { display: none; }
-    body.editor-mode #editor-launcher { display: inline-flex; }
-
-    /* Media editor */
-    .editor-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: none;
-      background: rgba(1,5,10,.76);
-      backdrop-filter: blur(10px);
-      padding: 24px;
-      overflow-y: auto;
-    }
-    .editor-modal.is-open { display: grid; place-items: start center; }
-    .editor-panel {
-      width: min(760px, 100%);
-      margin: 28px auto;
-      border: 1px solid var(--line-strong);
-      border-radius: 24px;
-      background: #0b1728;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .editor-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 22px 24px;
-      border-bottom: 1px solid var(--line);
-    }
-    .editor-head h3 { margin: 0; font-size: 24px; }
-    .icon-button {
-      width: 40px; height: 40px; border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      cursor: pointer;
-    }
-    .editor-body { padding: 24px; display: grid; gap: 18px; }
-    .editor-note {
-      border: 1px solid rgba(255,209,102,.25);
-      background: rgba(255,209,102,.07);
-      border-radius: 15px;
-      padding: 14px 16px;
-      color: #f5df9f;
-      font-size: 14px;
-    }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .field { display: grid; gap: 7px; }
-    .field.full { grid-column: 1 / -1; }
-    .field label { font-size: 13px; font-weight: 800; color: var(--muted); }
-    .field input, .field select, .field textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: rgba(255,255,255,.045);
-      color: var(--text);
-      padding: 11px 12px;
-      outline: none;
-    }
-    .field textarea { min-height: 80px; resize: vertical; }
-    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent2); }
-    .field option { color: #0b1728; }
-    .source-panel { display: none; }
-    .source-panel.is-active { display: grid; }
-    .editor-actions { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
-    .editor-status { min-height: 24px; color: var(--accent); font-size: 14px; }
-    .shortcut {
-      margin-left: auto;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    @media (max-width: 940px) {
-      .hero-grid, .split, .solution-content { grid-template-columns: 1fr; }
-      .grid-3 { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .hero { padding-top: 58px; }
-      .solution-card.is-open { grid-column: auto; }
-      .solution-content { gap: 0; }
-      .media-zone { padding-top: 14px; }
-    }
-
-    @media (max-width: 720px) {
-      .container { width: min(100% - 24px, 1180px); }
-      .solution-grid, .form-grid { grid-template-columns: 1fr; }
-      .solution-trigger { grid-template-columns: auto 1fr; padding: 22px 20px; }
-      .solution-chevron { grid-column: 2; justify-self: end; }
-      .solution-content { padding: 0 20px 24px; }
-      .media-placeholder, .media-item { min-height: 230px; }
-      .dashboard { grid-template-columns: 1fr; }
-      .card.wide { grid-column: auto; }
-      .flow-row { grid-template-columns: 1fr; }
-      .arrow { transform: rotate(90deg); }
-      .timeline { grid-template-columns: 1fr; }
-      .tagline { padding: 30px 20px; }
-      .nav-right { gap: 10px; }
-      .language-switch button { min-width: 40px; padding: 7px 8px; }
-      .shortcut { display: none; }
-    }
-
-
-    /* Product journey / development arrow */
-    .journey-shell {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background:
-        radial-gradient(circle at 12% 18%, rgba(76,163,255,.13), transparent 24%),
-        radial-gradient(circle at 88% 72%, rgba(70,230,176,.12), transparent 26%),
-        rgba(10,23,41,.72);
-      box-shadow: var(--shadow);
-      padding: 34px 28px 30px;
-    }
-
-    .journey-topline {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 24px;
-      margin-bottom: 28px;
-    }
-
-    .journey-kicker {
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .14em;
-      margin-bottom: 8px;
-    }
-
-    .journey-topline h3 {
-      margin: 0;
-      font-size: clamp(24px, 3vw, 38px);
-      line-height: 1.12;
-      letter-spacing: -.04em;
-    }
-
-    .journey-legend {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-
-    .legend-chip,
-    .milestone-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 850;
-      white-space: nowrap;
-      background: rgba(255,255,255,.04);
-    }
-
-    .legend-chip::before,
-    .milestone-status::before {
-      content: '';
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--muted);
-    }
-
-    .legend-chip.live::before,
-    .milestone-status.live::before { background: var(--accent); box-shadow: 0 0 12px rgba(70,230,176,.65); }
-    .legend-chip.build::before,
-    .milestone-status.build::before { background: var(--accent2); box-shadow: 0 0 12px rgba(76,163,255,.55); }
-    .legend-chip.plan::before,
-    .milestone-status.plan::before { background: var(--warning); }
-
-    .journey-scroll {
-      overflow-x: auto;
-      padding: 18px 4px 12px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255,255,255,.22) transparent;
-    }
-
-    .journey-track {
-      position: relative;
-      min-width: 1520px;
-      display: grid;
-      grid-template-columns: repeat(7, minmax(180px, 1fr));
-      gap: 26px;
-      padding: 0 18px 18px;
-    }
-
-    .journey-track::before {
-      content: '';
-      position: absolute;
-      left: 22px;
-      right: 40px;
-      top: 36px;
-      height: 3px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2) 45%, var(--warning) 78%, rgba(255,255,255,.18));
-      box-shadow: 0 0 22px rgba(76,163,255,.18);
-    }
-
-    .journey-track::after {
-      content: '➜';
-      position: absolute;
-      right: 6px;
-      top: 11px;
-      font-size: 34px;
-      color: var(--warning);
-      filter: drop-shadow(0 0 12px rgba(255,209,102,.28));
-    }
-
-    .milestone {
-      position: relative;
-      z-index: 1;
-      padding-top: 0;
-    }
-
-    .milestone-node {
-      width: 20px;
-      height: 20px;
-      margin: 27px 0 24px 10px;
-      border-radius: 50%;
-      border: 4px solid var(--bg);
-      background: var(--muted);
-      box-shadow: 0 0 0 2px rgba(255,255,255,.18);
-    }
-
-    .milestone.live .milestone-node { background: var(--accent); box-shadow: 0 0 0 2px rgba(70,230,176,.35), 0 0 24px rgba(70,230,176,.48); }
-    .milestone.build .milestone-node { background: var(--accent2); box-shadow: 0 0 0 2px rgba(76,163,255,.35), 0 0 22px rgba(76,163,255,.4); }
-    .milestone.plan .milestone-node { background: var(--warning); box-shadow: 0 0 0 2px rgba(255,209,102,.3), 0 0 20px rgba(255,209,102,.3); }
-
-    .milestone-card {
-      min-height: 240px;
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(7,17,31,.86);
-      transition: transform .2s, border-color .2s, background .2s;
-    }
-
-    .milestone-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(76,163,255,.42);
-      background: rgba(14,27,47,.95);
-    }
-
-    .milestone-date {
-      color: var(--accent2);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .milestone-card h4 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      line-height: 1.25;
-    }
-
-    .milestone-card p {
-      color: var(--muted);
-      margin: 0 0 16px;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .journey-outcome {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
-      align-items: center;
-      padding: 20px 22px;
-      border-radius: 20px;
-      border: 1px solid rgba(70,230,176,.2);
-      background: linear-gradient(90deg, rgba(70,230,176,.09), rgba(76,163,255,.08));
-    }
-
-    .journey-outcome strong {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    .journey-outcome span { color: var(--muted); }
-    .journey-outcome-mark {
-      font-size: 40px;
-      font-weight: 900;
-      color: var(--accent);
-      white-space: nowrap;
-    }
-
-    @media (max-width: 760px) {
-      .journey-shell { padding: 26px 18px 22px; }
-      .journey-topline { align-items: flex-start; flex-direction: column; }
-      .journey-legend { justify-content: flex-start; }
-      .journey-track { min-width: 1320px; grid-template-columns: repeat(7, 165px); gap: 22px; }
-      .journey-outcome { grid-template-columns: 1fr; }
-      .journey-outcome-mark { font-size: 30px; }
-    }
-
-  </style>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Flowmatic is a modular Factory OS for brownfield manufacturing, connecting machines, robots, cameras, quality data and people through an event-driven operating intelligence." />
+<title>Flowmatic — Factory OS for Brownfield Manufacturing</title>
+<style>
+:root{
+  --ink:#0c1720;
+  --muted:#566b7d;
+  --bg:#f3f7fa;
+  --paper:#ffffff;
+  --line:#dbe6ee;
+  --accent:#00a878;
+  --accent-dark:#007d5b;
+  --accent-soft:#e9f8f3;
+  --blue:#2575fc;
+  --dark:#071018;
+  --dark-2:#0d2a3e;
+  --navy:#123247;
+  --shadow:0 18px 55px rgba(24,54,76,.09);
+  --radius:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.55;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.progress{position:fixed;z-index:60;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),#46d8ff);box-shadow:0 0 16px rgba(0,168,120,.45)}
+.nav{position:fixed;z-index:50;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;background:rgba(7,16,24,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.11);color:white}
+.logo{font-size:23px;font-weight:950;letter-spacing:-.045em}.logo span{color:#43e8b8}
+.links{display:flex;align-items:center;gap:22px;color:#d5e4ed;font-size:13px;font-weight:800}.links a{transition:.2s}.links a:hover,.links a.active{color:#43e8b8}.links .navCta{padding:10px 15px;border-radius:999px;background:#43e8b8;color:#061610}
+.menuBtn{display:none;background:transparent;color:white;border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:8px 11px;cursor:pointer}
+.hero{min-height:94vh;padding:144px 7vw 82px;display:grid;grid-template-columns:1.1fr .9fr;gap:54px;align-items:center;background:radial-gradient(circle at 18% 16%,#1d4b67 0,#071018 44%,#03080c 100%);color:white;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:540px;height:540px;border-radius:50%;right:-160px;top:-100px;background:radial-gradient(circle,rgba(61,238,186,.22),transparent 66%)}
+.kicker{font-weight:900;color:#43e8b8;letter-spacing:.22em;text-transform:uppercase;font-size:13px;margin-bottom:18px}
+.hero h1{font-size:clamp(58px,8vw,112px);letter-spacing:-.075em;line-height:.89;margin:0 0 26px;max-width:920px}
+.hero p{font-size:clamp(21px,2.2vw,31px);line-height:1.28;max-width:920px;margin:0;color:#dcecf6}
+.heroActions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 21px;font-weight:900;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:white;cursor:pointer}.btn.primary{background:#43e8b8;color:#04140e;border-color:transparent}.btn.light{background:white;color:var(--ink);border-color:var(--line)}
+.heroPanel{position:relative;z-index:2;min-height:510px;border-radius:36px;background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 100px rgba(0,0,0,.35);padding:28px;display:flex;align-items:center;justify-content:center}
+.osMap{position:relative;width:100%;height:100%;min-height:450px}.core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:176px;height:176px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle,#55f3c5,#04916b);color:#052018;font-weight:950;font-size:24px;box-shadow:0 0 80px rgba(61,238,186,.33)}
+.ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:330px;height:330px;border-radius:50%;border:1px dashed rgba(255,255,255,.3)}
+.asset{position:absolute;padding:15px 17px;border-radius:18px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);font-weight:850;color:#e9f7ff}.a1{left:2%;top:9%}.a2{right:2%;top:17%}.a3{left:3%;bottom:15%}.a4{right:1%;bottom:10%}.a5{left:50%;top:2%;transform:translateX(-50%)}
+.signal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:300px;height:300px;border-radius:50%;border:1px solid rgba(67,232,184,.45);animation:pulse 3s infinite}@keyframes pulse{0%{opacity:.9;transform:translate(-50%,-50%) scale(.72)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.36)}}
+main{max-width:1240px;margin:0 auto;padding:40px 24px 80px}.section{scroll-margin-top:92px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);margin:24px 0;padding:48px;box-shadow:var(--shadow)}
+.section.flush{padding:0;overflow:hidden}.section.dark{background:linear-gradient(135deg,var(--dark),var(--dark-2));color:white;border-color:rgba(255,255,255,.08)}
+.sectionHead{max-width:930px;margin-bottom:34px}.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-dark);font-weight:900;margin-bottom:10px}.dark .eyebrow{color:#45efbd}
+h2{font-size:clamp(36px,5vw,62px);line-height:1.02;letter-spacing:-.055em;margin:0 0 16px}h3{font-size:24px;line-height:1.15;margin:0 0 10px}p{font-size:18px;color:var(--muted);margin:0 0 16px}.dark p{color:#b9cedb}.lead{font-size:24px;line-height:1.42;color:#25394a}.dark .lead{color:#e6f2f7}.statement{font-size:clamp(37px,5vw,72px);line-height:1.04;letter-spacing:-.06em;font-weight:950;max-width:1100px}.accent{color:var(--accent)}
+.grid{display:grid;gap:20px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{border:1px solid var(--line);border-radius:22px;padding:25px;background:#fff}.card.soft{background:linear-gradient(180deg,#f0fcf8,#fff)}.card h3{font-size:23px}.card p{font-size:17px;margin:0}.card .smallLabel{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);font-weight:900;margin-bottom:10px}.card .num{font-size:42px;font-weight:950;letter-spacing:-.05em;color:#0f2f42;margin-bottom:8px}
+.badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}.badge{border-radius:999px;background:var(--accent-soft);color:#006e50;padding:7px 12px;font-weight:850;font-size:13px}
+.missionFlow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:28px}.missionStep{background:#f5fafc;border:1px solid var(--line);border-radius:18px;padding:18px 12px;text-align:center;font-weight:900;color:#1a3446;position:relative}.missionStep:not(:last-child):after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--accent);z-index:3}
+.architecture{display:grid;gap:13px}.layer{display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:center;padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06)}.layer strong{font-size:19px;color:#48efbd}.layer span{font-size:17px;color:#c4d6e0}
+.portfolio{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{min-height:210px;display:flex;flex-direction:column}.product p{font-size:16px}.product .productFoot{margin-top:auto;padding-top:18px;color:var(--accent-dark);font-weight:850;font-size:13px}
+.useCase{display:grid;grid-template-columns:1fr 1fr;gap:22px}.flowPanel{background:linear-gradient(135deg,#071018,#12364c);color:white;border-radius:26px;padding:32px}.nodes{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:22px 0}.node{padding:12px 15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:15px;font-weight:850}.arrow{font-size:22px;color:#45efbd}.terminal{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#03070b;border:1px solid #203341;border-radius:26px;padding:28px;color:#9fffdc;min-height:390px;box-shadow:inset 0 0 50px rgba(45,240,182,.04)}.terminal div{margin:10px 0}.terminal .mutedLine{color:#72988a}
+.deploy{display:grid;grid-template-columns:1fr 90px 1fr;gap:20px;align-items:stretch}.deployArrow{display:flex;align-items:center;justify-content:center;font-size:42px;color:var(--accent)}
+.roadmap{position:relative}.phase{display:grid;grid-template-columns:155px 1fr;gap:26px;padding:22px 0;border-bottom:1px solid var(--line)}.phase:last-child{border-bottom:0}.phase b{font-size:22px;color:#08344a}.phase p{margin:0}.phase .phaseTag{display:block;font-size:12px;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.statusBoard{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}.statusList{display:grid;gap:12px}.statusItem{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line)}.statusItem:last-child{border-bottom:0}.statusItem strong{color:#0d3448}.statusItem span{color:var(--muted)}
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.principle{padding:28px;border-radius:24px;background:#f8fbfd;border:1px solid var(--line)}.principle b{display:block;font-size:22px;margin-bottom:9px}.principle p{font-size:16px;margin:0}
+.vision{padding:56px;background:linear-gradient(135deg,#071018,#102e42);color:white}.vision p{color:#b8cedb}.visionQuote{font-size:clamp(30px,4vw,52px);line-height:1.08;letter-spacing:-.045em;font-weight:900;max-width:1030px;margin:20px 0}
+.footer{background:#03080c;color:white;padding:76px 7vw}.footerInner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:40px}.footer h2{font-size:clamp(48px,7vw,82px);margin:0 0 16px}.footer p{color:#a9c0cf}.footerLinks{display:grid;align-content:start;justify-content:end;gap:12px;color:#d5e3eb;font-weight:800}.footerNote{border-top:1px solid rgba(255,255,255,.1);margin-top:42px;padding-top:18px;color:#77909f;font-size:13px}
+.printBtn{position:fixed;z-index:45;right:20px;bottom:20px;border:0;border-radius:999px;background:var(--dark);color:white;padding:12px 16px;font-weight:850;box-shadow:0 14px 35px rgba(0,0,0,.25);cursor:pointer}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}.reveal.visible{opacity:1;transform:none}
+@media(max-width:1050px){.hero,.g3,.g4,.portfolio,.principles,.statusBoard,.useCase,.footerInner{grid-template-columns:1fr}.g2{grid-template-columns:1fr}.links{display:none}.menuBtn{display:block}.links.open{display:flex;position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;padding:20px 24px;background:#071018;border-bottom:1px solid rgba(255,255,255,.13)}.links.open a{padding:9px 0}.hero{padding:128px 24px 72px}.heroPanel{min-height:430px}.portfolio{grid-template-columns:repeat(2,1fr)}.missionFlow{grid-template-columns:repeat(3,1fr)}.missionStep:nth-child(3):after{display:none}.deploy{grid-template-columns:1fr}.deployArrow{transform:rotate(90deg)}.layer{grid-template-columns:1fr}.footerLinks{justify-content:start}.section{padding:34px}}
+@media(max-width:640px){.hero{min-height:auto}.heroPanel{min-height:390px}.osMap{min-height:340px}.core{width:140px;height:140px;font-size:20px}.ring{width:260px;height:260px}.asset{font-size:12px;padding:11px 12px}.a5{top:-1%}.portfolio,.missionFlow{grid-template-columns:1fr}.missionStep:after{display:none!important}.section{padding:27px 20px;border-radius:22px}.phase,.statusItem{grid-template-columns:1fr;gap:5px}.printBtn{display:none}.nav{padding:0 20px}.hero h1{font-size:58px}}
+@media print{.nav,.progress,.printBtn,.heroActions,.menuBtn{display:none!important}body{background:white}.hero{min-height:auto;padding:54px;background:#071018;page-break-after:always}.heroPanel{display:none}main{max-width:none;padding:0}.section{box-shadow:none;margin:0;border-radius:0;page-break-inside:avoid}.footer{page-break-before:always}.reveal{opacity:1;transform:none}}
+</style>
 </head>
-<body class="">
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#top" aria-label="Flowmatic Home">
-        <span class="logo">F</span>
-        <span>Flowmatic</span>
-      </a>
-      <div class="nav-right">
-        <nav class="nav-links" aria-label="Main navigation">
-          <a href="#problem"><span data-en="Problem" data-ko="문제">Problem</span></a>
-          <a href="#technology"><span data-en="Technology" data-ko="기술">Technology</span></a>
-          <a href="#solutions"><span data-en="Solutions" data-ko="솔루션">Solutions</span></a>
-          <a href="#vision"><span data-en="Vision" data-ko="비전">Vision</span></a>
-          <a href="#contact"><span data-en="Contact" data-ko="문의">Contact</span></a>
-        </nav>
-        <div class="language-switch" aria-label="Language selector">
-          <button type="button" data-language-button="en" class="is-active" aria-pressed="true">EN</button>
-          <button type="button" data-language-button="ko" aria-pressed="false">한국어</button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <span class="badge"><span class="dot"></span> Manufacturing Intelligence OS</span>
-          <h1>
-            <span data-en="Read the flow of the factory." data-ko="공장의 흐름을 읽고,">Read the flow of the factory.</span><br>
-            <span class="gradient" data-en="Reduce waste automatically." data-ko="낭비를 자동으로 줄입니다.">Reduce waste automatically.</span>
-          </h1>
-          <p class="lead" data-en="Flowmatic connects CNC machining, cycle-time analysis, machine vision, AMR logistics and quality data into one operating flow. We turn fragmented tools and operator know-how into a modular, data-driven factory system." data-ko="Flowmatic은 CNC 가공, CT 분석, 비전 검사, AMR 물류, 품질 데이터를 하나의 흐름으로 연결하는 제조현장 운영 솔루션입니다. 사람의 감과 반복 수작업에 의존하던 현장을 모듈형 데이터 기반 운영 체계로 전환합니다.">Flowmatic connects CNC machining, cycle-time analysis, machine vision, AMR logistics and quality data into one operating flow. We turn fragmented tools and operator know-how into a modular, data-driven factory system.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#solutions"><span data-en="Explore solutions" data-ko="솔루션 보기">Explore solutions</span> ↓</a>
-            <a class="btn btn-secondary" href="#contact"><span data-en="Request a demo" data-ko="데모 문의">Request a demo</span></a>
-          </div>
-        </div>
-
-        <div class="mockup" aria-label="Flowmatic dashboard mockup">
-          <div class="window-bar"><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span></div>
-          <div class="dashboard">
-            <div class="card">
-              <div class="label">NC Cycle Time</div>
-              <div class="metric">-9.3%</div>
-              <div class="bar"><span style="width: 74%"></span></div>
-            </div>
-            <div class="card">
-              <div class="label">Manual Check</div>
-              <div class="metric">↓</div>
-              <div class="bar"><span style="width: 58%"></span></div>
-            </div>
-            <div class="card wide">
-              <div class="label">Toolpath Intelligence</div>
-              <div class="metric">G-code → CT → 3D Path → Optimization</div>
-              <div class="bar"><span style="width: 88%"></span></div>
-            </div>
-            <div class="card">
-              <div class="label">Vision CT Log</div>
-              <div class="metric">Auto</div>
-              <div class="bar"><span style="width: 82%"></span></div>
-            </div>
-            <div class="card">
-              <div class="label">AMR Dispatch</div>
-              <div class="metric">Flow</div>
-              <div class="bar"><span style="width: 66%"></span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="problem">
-      <div class="container split">
-        <div class="section-title">
-          <h2><span data-en="The factory does not lack data. It lacks " data-ko="현장의 문제는 데이터 부족이 아니라, ">The factory does not lack data. It lacks </span><span class="gradient" data-en="continuity." data-ko="흐름의 단절">continuity.</span></h2>
-          <p data-en="Most factories already have machines, MES, SCADA, spreadsheets and experienced people. When those systems do not lead naturally to action, they increase cognitive load instead of reducing it." data-ko="대부분의 제조현장은 이미 설비, MES, SCADA, 엑셀, 작업자 노하우를 갖고 있습니다. 그러나 이 정보들이 현장 의사결정으로 자연스럽게 이어지지 못하면 사람의 인지부하만 증가합니다.">Most factories already have machines, MES, SCADA, spreadsheets and experienced people. When those systems do not lead naturally to action, they increase cognitive load instead of reducing it.</p>
-        </div>
-        <div class="problem-list">
-          <div class="problem-item"><strong data-en="Repeated CT measurement" data-ko="CT 재측정 반복">Repeated CT measurement</strong><br><span data-en="Teams repeatedly time cycles by hand and rebuild the same bottleneck reports." data-ko="라인별 사이클타임과 병목을 사람이 직접 측정하고 다시 정리합니다.">Teams repeatedly time cycles by hand and rebuild the same bottleneck reports.</span></div>
-          <div class="problem-item"><strong data-en="NC verification burden" data-ko="NC 프로그램 검증 부담">NC verification burden</strong><br><span data-en="Engineers must mentally trace motion, tool changes, indexing and rapid travel." data-ko="G-code의 실제 이동, 공구교환, 인덱스, 급속이송 시간을 눈으로 추적해야 합니다.">Engineers must mentally trace motion, tool changes, indexing and rapid travel.</span></div>
-          <div class="problem-item"><strong data-en="Disconnected production data" data-ko="품질·생산·물류 데이터 분산">Disconnected production data</strong><br><span data-en="Quality, machine state, work history and logistics move in separate systems." data-ko="불량, 설비상태, 작업이력, 물류 흐름이 따로 움직입니다.">Quality, machine state, work history and logistics move in separate systems.</span></div>
-          <div class="problem-item"><strong data-en="Dependence on a few experts" data-ko="숙련자 의존">Dependence on a few experts</strong><br><span data-en="Problem-solving logic stays in individual memory instead of becoming a repeatable system." data-ko="문제가 생겼을 때 해결 과정이 시스템이 아니라 특정 사람의 기억에 남습니다.">Problem-solving logic stays in individual memory instead of becoming a repeatable system.</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="technology">
-      <div class="container">
-        <div class="section-title">
-          <h2>Core Technology</h2>
-          <p data-en="Flowmatic captures factory events, structures them and connects analysis to the next action through a lightweight Factory OS architecture." data-ko="Flowmatic은 제조현장의 이벤트를 수집하고, 구조화하고, 분석 결과를 다음 행동으로 연결하는 경량형 Factory OS를 지향합니다.">Flowmatic captures factory events, structures them and connects analysis to the next action through a lightweight Factory OS architecture.</p>
-        </div>
-        <div class="grid-3">
-          <div class="card feature">
-            <div class="icon">NC</div>
-            <h3>NC Toolpath Intelligence</h3>
-            <p data-en="Parse G-code, visualize toolpaths, separate cutting and rapid motion, account for tool changes and compare motion against 3D models." data-ko="G-code 파싱, 공구별 경로 시각화, 절삭·급속 이송 분리, 공구교환 시간 반영, 3D 모델 비교를 통해 NC 검증 시간을 줄입니다.">Parse G-code, visualize toolpaths, separate cutting and rapid motion, account for tool changes and compare motion against 3D models.</p>
-          </div>
-          <div class="card feature">
-            <div class="icon">CT</div>
-            <h3>Vision Cycle-Time Automation</h3>
-            <p data-en="Use video and object recognition to capture equipment events and convert them into Gantt charts, event logs and bottleneck evidence." data-ko="카메라와 객체인식을 활용해 로봇·설비 동작을 자동 기록하고, Gantt Chart와 이벤트 로그로 병목을 드러냅니다.">Use video and object recognition to capture equipment events and convert them into Gantt charts, event logs and bottleneck evidence.</p>
-          </div>
-          <div class="card feature">
-            <div class="icon">OS</div>
-            <h3>Event-Based Factory OS</h3>
-            <p data-en="Normalize production, quality, equipment and logistics events so repeated decisions can be automated without replacing every existing system." data-ko="생산, 품질, 설비, 물류 이벤트를 공통 데이터 구조로 묶어 기존 시스템을 전부 교체하지 않고 반복 판단을 자동화합니다.">Normalize production, quality, equipment and logistics events so repeated decisions can be automated without replacing every existing system.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="solutions">
-      <div class="container">
-        <div class="section-title">
-          <h2>Solutions</h2>
-          <p data-en="Start with a module that solves an immediate factory problem, then connect the modules into a wider operating system. Click a solution to unfold its workflow, capabilities and media." data-ko="한 번에 거대한 시스템을 갈아엎기보다 현장 문제 하나를 해결하는 모듈부터 시작하고, 이후 하나의 운영체계로 연결합니다. 솔루션을 누르면 상세 기능과 영상·사진 영역이 아래로 펼쳐집니다.">Start with a module that solves an immediate factory problem, then connect the modules into a wider operating system. Click a solution to unfold its workflow, capabilities and media.</p>
-        </div>
-
-        <div class="solution-grid">
-          <article class="solution-card" data-solution="nc">
-            <button class="solution-trigger" type="button" aria-expanded="false" aria-controls="solution-nc-detail">
-              <span class="solution-number">01</span>
-              <span class="solution-summary">
-                <h3>Flowmatic NC</h3>
-                <p data-en="An engineering workspace for NC program verification, 3D toolpath review and cycle-time explanation." data-ko="NC 프로그램 검증, 3D 공구경로 확인, 사이클타임 설명을 위한 가공 엔지니어용 분석 도구입니다.">An engineering workspace for NC program verification, 3D toolpath review and cycle-time explanation.</p>
-                <span class="status-row"><span class="status-pill" data-en="Working prototype" data-ko="작동 프로토타입">Working prototype</span></span>
-              </span>
-              <span class="solution-chevron" aria-hidden="true">+</span>
-            </button>
-            <div class="solution-detail" id="solution-nc-detail">
-              <div class="solution-detail-inner">
-                <div class="solution-content">
-                  <div class="solution-copy">
-                    <h4 data-en="What it does" data-ko="핵심 기능">What it does</h4>
-                    <p data-en="Flowmatic NC reads the program as an engineer would: motion, tool, feed, index angle, cumulative time and the relationship between code and geometry." data-ko="Flowmatic NC는 이동, 공구, 이송, 인덱스 각도, 누적시간, 코드와 형상의 관계를 엔지니어가 검토하는 방식으로 읽어냅니다.">Flowmatic NC reads the program as an engineer would: motion, tool, feed, index angle, cumulative time and the relationship between code and geometry.</p>
-                    <ul class="capability-list">
-                      <li><span data-en="G00/G01/G02/G03 parsing and 3D path visualization" data-ko="G00/G01/G02/G03 파싱 및 3D 경로 시각화">G00/G01/G02/G03 parsing and 3D path visualization</span></li>
-                      <li><span data-en="Cutting, rapid motion and tool-change CT breakdown" data-ko="절삭·급속·공구교환 시간 분리 계산">Cutting, rapid motion and tool-change CT breakdown</span></li>
-                      <li><span data-en="Tool, WCS and INDEX state tracking" data-ko="공구·워크좌표·INDEX 상태 추적">Tool, WCS and INDEX state tracking</span></li>
-                      <li><span data-en="STL/STEP-derived model overlay and motion review" data-ko="STL/STEP 기반 모델 오버레이 및 움직임 검토">STL/STEP-derived model overlay and motion review</span></li>
-                    </ul>
-                  </div>
-                  <div class="media-zone">
-                    <div class="media-gallery" data-gallery="nc">
-                      <div class="media-placeholder">
-                        <div>
-                          <div class="play-mark">▶</div>
-                          <strong data-en="NC demo media slot" data-ko="NC 데모 미디어 영역">NC demo media slot</strong>
-                          <span data-en="Add a screen recording, UI screenshot, before/after toolpath or customer case through the built-in media editor." data-ko="내장 미디어 편집기에서 화면 녹화, UI 스크린샷, 전후 공구경로 또는 고객 사례를 추가할 수 있습니다.">Add a screen recording, UI screenshot, before/after toolpath or customer case through the built-in media editor.</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="solution-card" data-solution="ct">
-            <button class="solution-trigger" type="button" aria-expanded="false" aria-controls="solution-ct-detail">
-              <span class="solution-number">02</span>
-              <span class="solution-summary">
-                <h3>Flowmatic CT</h3>
-                <p data-en="Video-based cycle-time capture that turns machine and robot events into evidence, not another stopwatch sheet." data-ko="설비와 로봇 이벤트를 자동 기록하여 스톱워치 표가 아닌 분석 가능한 근거로 바꾸는 영상 기반 CT 도구입니다.">Video-based cycle-time capture that turns machine and robot events into evidence, not another stopwatch sheet.</p>
-                <span class="status-row"><span class="status-pill" data-en="Working prototype" data-ko="작동 프로토타입">Working prototype</span></span>
-              </span>
-              <span class="solution-chevron" aria-hidden="true">+</span>
-            </button>
-            <div class="solution-detail" id="solution-ct-detail">
-              <div class="solution-detail-inner">
-                <div class="solution-content">
-                  <div class="solution-copy">
-                    <h4 data-en="What it does" data-ko="핵심 기능">What it does</h4>
-                    <p data-en="Flowmatic CT recognizes defined equipment states from video, timestamps transitions and automatically creates the event structure required for line balancing." data-ko="Flowmatic CT는 영상에서 지정한 설비 상태를 인식하고 전환 시점을 기록하여 라인 밸런싱에 필요한 이벤트 구조를 자동 생성합니다.">Flowmatic CT recognizes defined equipment states from video, timestamps transitions and automatically creates the event structure required for line balancing.</p>
-                    <ul class="capability-list">
-                      <li><span data-en="Camera/MP4 input and ROI-based event recognition" data-ko="카메라·MP4 입력 및 ROI 기반 이벤트 인식">Camera/MP4 input and ROI-based event recognition</span></li>
-                      <li><span data-en="Automatic start, end and duration event log" data-ko="시작·종료·소요시간 이벤트 로그 자동 생성">Automatic start, end and duration event log</span></li>
-                      <li><span data-en="Gantt chart, Worst-3 and cycle comparison" data-ko="Gantt Chart, Worst-3 및 사이클 비교">Gantt chart, Worst-3 and cycle comparison</span></li>
-                      <li><span data-en="Repeatable CT evidence for improvement reviews" data-ko="개선 검토에 재사용 가능한 CT 근거 확보">Repeatable CT evidence for improvement reviews</span></li>
-                    </ul>
-                  </div>
-                  <div class="media-zone">
-                    <div class="media-gallery" data-gallery="ct">
-                      <div class="media-placeholder">
-                        <div>
-                          <div class="play-mark">▶</div>
-                          <strong data-en="CT recognition demo slot" data-ko="CT 인식 데모 영역">CT recognition demo slot</strong>
-                          <span data-en="Add the recognition overlay, Gantt output, event log or a short line-balancing case video." data-ko="인식 오버레이, Gantt 결과, 이벤트 로그 또는 라인 밸런싱 사례 영상을 추가하십시오.">Add the recognition overlay, Gantt output, event log or a short line-balancing case video.</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="solution-card" data-solution="vision">
-            <button class="solution-trigger" type="button" aria-expanded="false" aria-controls="solution-vision-detail">
-              <span class="solution-number">03</span>
-              <span class="solution-summary">
-                <h3>Flowmatic Vision</h3>
-                <p data-en="Low-cost vision modules for internal-hole inspection, residual chip detection, position change and appearance anomalies." data-ko="홀 내부 검사, 칩 잔류, 위치 변화, 외관 이상을 저비용으로 감지하는 비전 모듈입니다.">Low-cost vision modules for internal-hole inspection, residual chip detection, position change and appearance anomalies.</p>
-                <span class="status-row"><span class="status-pill concept" data-en="Development track" data-ko="개발 트랙">Development track</span></span>
-              </span>
-              <span class="solution-chevron" aria-hidden="true">+</span>
-            </button>
-            <div class="solution-detail" id="solution-vision-detail">
-              <div class="solution-detail-inner">
-                <div class="solution-content">
-                  <div class="solution-copy">
-                    <h4 data-en="What it targets" data-ko="대상 영역">What it targets</h4>
-                    <p data-en="The goal is not to overbuild a premium vision cell. It is to make repeatable inspection available where manual inspection is expensive, inconsistent or difficult to record." data-ko="고가의 비전 셀을 과도하게 구축하는 것이 아니라, 수동검사가 비싸고 편차가 크며 기록이 어려운 지점에 반복 가능한 검사를 배치하는 것이 목표입니다.">The goal is not to overbuild a premium vision cell. It is to make repeatable inspection available where manual inspection is expensive, inconsistent or difficult to record.</p>
-                    <ul class="capability-list">
-                      <li><span data-en="Borescope and USB-camera multi-capture workflow" data-ko="내시경·USB 카메라 동시촬영 워크플로우">Borescope and USB-camera multi-capture workflow</span></li>
-                      <li><span data-en="Alignment correction for camera and fixture variation" data-ko="카메라·지그 편차에 대한 정렬 보정">Alignment correction for camera and fixture variation</span></li>
-                      <li><span data-en="Burr, chip residue and appearance anomaly screening" data-ko="버·칩 잔류·외관 이상 선별">Burr, chip residue and appearance anomaly screening</span></li>
-                      <li><span data-en="Inspection evidence linked to production events" data-ko="생산 이벤트와 연결되는 검사 근거">Inspection evidence linked to production events</span></li>
-                    </ul>
-                  </div>
-                  <div class="media-zone">
-                    <div class="media-gallery" data-gallery="vision">
-                      <div class="media-placeholder">
-                        <div>
-                          <div class="play-mark">◎</div>
-                          <strong data-en="Vision sample media slot" data-ko="비전 샘플 미디어 영역">Vision sample media slot</strong>
-                          <span data-en="Add normal/defect image pairs, borescope captures, detection overlays or a proof-of-concept video." data-ko="정상·불량 비교 이미지, 내시경 캡처, 검출 오버레이 또는 개념검증 영상을 추가하십시오.">Add normal/defect image pairs, borescope captures, detection overlays or a proof-of-concept video.</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="solution-card" data-solution="amr">
-            <button class="solution-trigger" type="button" aria-expanded="false" aria-controls="solution-amr-detail">
-              <span class="solution-number">04</span>
-              <span class="solution-summary">
-                <h3>Flowmatic AMR</h3>
-                <p data-en="A flexible material-flow concept that connects AMRs and collaborative robots to real production demand." data-ko="AMR과 협동로봇을 실제 생산수요에 연결하는 탄력형 물류 운영 개념입니다.">A flexible material-flow concept that connects AMRs and collaborative robots to real production demand.</p>
-                <span class="status-row"><span class="status-pill concept" data-en="System concept" data-ko="시스템 개념">System concept</span></span>
-              </span>
-              <span class="solution-chevron" aria-hidden="true">+</span>
-            </button>
-            <div class="solution-detail" id="solution-amr-detail">
-              <div class="solution-detail-inner">
-                <div class="solution-content">
-                  <div class="solution-copy">
-                    <h4 data-en="What it targets" data-ko="대상 영역">What it targets</h4>
-                    <p data-en="Instead of assigning one fixed automation unit to every line, Flowmatic AMR treats mobile robots as a shared production resource and dispatches them according to line demand." data-ko="라인마다 고정 자동화 설비를 하나씩 배치하는 대신, 이동형 로봇을 공유 생산자원으로 보고 라인 수요에 따라 배차하는 구조를 지향합니다.">Instead of assigning one fixed automation unit to every line, Flowmatic AMR treats mobile robots as a shared production resource and dispatches them according to line demand.</p>
-                    <ul class="capability-list">
-                      <li><span data-en="Input magazine replenishment and finished-part removal" data-ko="투입구 탄창 보급 및 완제품 배출">Input magazine replenishment and finished-part removal</span></li>
-                      <li><span data-en="Shared dispatch across multiple production lines" data-ko="복수 생산라인 간 공유 배차">Shared dispatch across multiple production lines</span></li>
-                      <li><span data-en="AMR + cobot task orchestration" data-ko="AMR·협동로봇 작업 오케스트레이션">AMR + cobot task orchestration</span></li>
-                      <li><span data-en="Expandable interface for inventory and vision events" data-ko="재고·비전 이벤트 확장 인터페이스">Expandable interface for inventory and vision events</span></li>
-                    </ul>
-                  </div>
-                  <div class="media-zone">
-                    <div class="media-gallery" data-gallery="amr">
-                      <div class="media-placeholder">
-                        <div>
-                          <div class="play-mark">↔</div>
-                          <strong data-en="AMR concept media slot" data-ko="AMR 개념 미디어 영역">AMR concept media slot</strong>
-                          <span data-en="Add a factory bird's-eye diagram, simulation, prototype movement video or dispatch dashboard capture." data-ko="공장 버드아이뷰, 시뮬레이션, 축소 시제품 이동 영상 또는 배차 화면을 추가하십시오.">Add a factory bird's-eye diagram, simulation, prototype movement video or dispatch dashboard capture.</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="pipeline">
-          <div class="section-title">
-            <h2>How It Works</h2>
-            <p data-en="Do not merely store data. Convert it into a decision or action that the production team can use immediately." data-ko="현장 데이터를 단순히 저장하지 않고, 생산팀이 바로 사용할 수 있는 판단과 행동으로 변환합니다.">Do not merely store data. Convert it into a decision or action that the production team can use immediately.</p>
-          </div>
-          <div class="flow-row">
-            <div class="flow-box"><span data-en="1. Capture NC / Vision / Sensor / Manual events" data-ko="1. NC / Vision / Sensor / Manual 이벤트 수집">1. Capture NC / Vision / Sensor / Manual events</span></div>
-            <div class="arrow">→</div>
-            <div class="flow-box"><span data-en="2. Structure by cycle, tool, defect and event" data-ko="2. Cycle, Tool, Defect, Event 단위 구조화">2. Structure by cycle, tool, defect and event</span></div>
-          </div>
-          <div class="flow-row">
-            <div class="flow-box"><span data-en="3. Detect bottlenecks, waste and abnormal patterns" data-ko="3. 병목·낭비·이상 패턴 분석">3. Detect bottlenecks, waste and abnormal patterns</span></div>
-            <div class="arrow">→</div>
-            <div class="flow-box"><span data-en="4. Output reports, alerts, recommendations and dispatch actions" data-ko="4. 보고서·알림·추천·배차 행동으로 출력">4. Output reports, alerts, recommendations and dispatch actions</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="vision">
-      <div class="container">
-        <div class="tagline">
-          <strong data-en="Build a line that produces quality regardless of operator skill." data-ko="“원숭이가 라인을 돌려도 양품이 나오게 한다.”">Build a line that produces quality regardless of operator skill.</strong>
-          <p data-en="Flowmatic transfers repeatable cognitive work from experienced people into the system. People should spend their attention on improvement, judgment and design—not repeated checking and manual reporting." data-ko="Flowmatic의 비전은 숙련자의 반복 인지업무를 시스템으로 이전하는 것입니다. 사람은 반복 확인과 수기 보고에서 벗어나 개선, 판단, 설계에 집중해야 합니다.">Flowmatic transfers repeatable cognitive work from experienced people into the system. People should spend their attention on improvement, judgment and design—not repeated checking and manual reporting.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="journey">
-      <div class="container">
-        <div class="section-title">
-          <h2 data-en="From Tools to an Operating Flow" data-ko="개별 도구에서 하나의 운영 흐름으로">From Tools to an Operating Flow</h2>
-          <p data-en="Each product solves a practical factory problem on its own. As the modules connect, Flowmatic evolves into a closed-loop operating system that observes, decides and acts." data-ko="각 제품은 단독으로도 현장의 문제를 해결합니다. 이 모듈들이 연결될수록 Flowmatic은 관찰하고, 판단하고, 행동하는 폐루프형 제조 운영체계로 진화합니다.">Each product solves a practical factory problem on its own. As the modules connect, Flowmatic evolves into a closed-loop operating system that observes, decides and acts.</p>
-        </div>
-
-        <div class="journey-shell">
-          <div class="journey-topline">
-            <div>
-              <div class="journey-kicker" data-en="Product &amp; Technology Journey" data-ko="제품·기술 개발 여정">Product &amp; Technology Journey</div>
-              <h3 data-en="What exists now — and what it becomes next" data-ko="지금 존재하는 것과, 앞으로 하나로 모일 모습">What exists now — and what it becomes next</h3>
-            </div>
-            <div class="journey-legend">
-              <span class="legend-chip live" data-en="Working now" data-ko="현재 작동">Working now</span>
-              <span class="legend-chip build" data-en="In development" data-ko="개발 진행">In development</span>
-              <span class="legend-chip plan" data-en="Planned" data-ko="개발 예정">Planned</span>
-            </div>
-          </div>
-
-          <div class="journey-scroll" aria-label="Flowmatic product roadmap">
-            <div class="journey-track">
-              <article class="milestone live">
-                <div class="milestone-node"></div>
-                <div class="milestone-card">
-                  <div class="milestone-date">2026.05</div>
-                  <h4>Flowmatic NC</h4>
-                  <p data-en="NC parsing, 3D toolpath review, cycle-time breakdown and model overlay establish the first engineering intelligence layer." data-ko="NC 파싱, 3D 공구경로, CT 분해, 모델 오버레이로 첫 번째 가공 엔지니어링 지능 계층을 구축합니다.">NC parsing, 3D toolpath review, cycle-time breakdown and model overlay establish the first engineering intelligence layer.</p>
-                  <span class="milestone-status live" data-en="Working prototype" data-ko="작동 프로토타입">Working prototype</span>
-                </div>
-              </article>
-
-              <article class="milestone live">
-                <div class="milestone-node"></div>
-                <div class="milestone-card">
-                  <div class="milestone-date">2026.06</div>
-                  <h4>Flowmatic CT</h4>
-                  <p data-en="Video becomes structured production evidence through automatic event logs, Gantt charts and bottleneck analysis." data-ko="영상이 자동 이벤트 로그, Gantt Chart, 병목 분석을 통해 구조화된 생산 근거로 바뀝니다.">Video becomes structured production evidence through automatic event logs, Gantt charts and bottleneck analysis.</p>
-                  <span class="milestone-status live" data-en="Working prototype" data-ko="작동 프로토타입">Working prototype</span>
-                </div>
-              </article>
-
-              <article class="milestone build">
-                <div class="milestone-node"></div>
-                <div class="milestone-card">
-                  <div class="milestone-date">2026 Q3</div>
-                  <h4>Vision + Quality</h4>
-                  <p data-en="Low-cost inspection, borescope capture, burr and residual-chip detection connect quality evidence to each production event." data-ko="저비용 검사, 내시경 촬영, 버·잔류칩 검출을 생산 이벤트별 품질 근거와 연결합니다.">Low-cost inspection, borescope capture, burr and residual-chip detection connect quality evidence to each production event.</p>
-                  <span class="milestone-status build" data-en="In development" data-ko="개발 진행">In development</span>
-                </div>
-              </article>
-
-              <article class="milestone build">
-                <div class="milestone-node"></div>
-                <div class="milestone-card">
-                  <div class="milestone-date">2026 Q4</div>
-                  <h4>Event Intelligence</h4>
-                  <p data-en="Production, quality, downtime and logistics events form one searchable history with Pareto analysis and automatic reporting." data-ko="생산·품질·정지·물류 이벤트를 하나의 검색 가능한 이력으로 만들고 Pareto 분석과 자동 보고를 수행합니다.">Production, quality, downtime and logistics events form one searchable history with Pareto analysis and automatic reporting.</p>
-                  <span class="milestone-status build" data-en="Architecture build" data-ko="아키텍처 구축">Architecture build</span>
-                </div>
-              </article>
-
-              <article class="milestone plan">
-                <div class="milestone-node"></div>
-                <div class="milestone-card">
-                  <div class="milestone-date">2027 H1</div>
-                  <h4>Work Standard + Auto Compensation</h4>
-                  <p data-en="Shape, tooling, work standards and measurement feedback connect to recommended process and NC corrections." data-ko="형상, 공구, 작업표준, 측정 피드백을 연결하여 공정 및 NC 보정 추천으로 이어갑니다.">Shape, tooling, work standards and measurement feedback connect to recommended process and NC corrections.</p>
-                  <span class="milestone-status plan" data-en="Planned" data-ko="개발 예정">Planned</span>
-                </div>
-              </article>
-
-              <article class="milestone plan">
-                <div class="milestone-node"></div>
-                <div class="milestone-card">
-                  <div class="milestone-date">2027 H2</div>
-                  <h4>Flowmatic AMR</h4>
-                  <p data-en="AMRs and collaborative robots become shared factory resources dispatched by inventory, cycle and equipment demand." data-ko="AMR과 협동로봇을 재고·사이클·설비 수요에 따라 배차되는 공용 생산자원으로 운영합니다.">AMRs and collaborative robots become shared factory resources dispatched by inventory, cycle and equipment demand.</p>
-                  <span class="milestone-status plan" data-en="Planned pilot" data-ko="실증 예정">Planned pilot</span>
-                </div>
-              </article>
-
-              <article class="milestone plan">
-                <div class="milestone-node"></div>
-                <div class="milestone-card">
-                  <div class="milestone-date">2028+</div>
-                  <h4>Flowmatic Factory OS</h4>
-                  <p data-en="NC, CT, vision, quality, material flow and reporting operate as one closed loop: observe, decide, act and learn." data-ko="NC, CT, 비전, 품질, 물류, 보고가 관찰→판단→행동→학습의 하나의 폐루프로 작동합니다.">NC, CT, vision, quality, material flow and reporting operate as one closed loop: observe, decide, act and learn.</p>
-                  <span class="milestone-status plan" data-en="Integrated vision" data-ko="통합 비전">Integrated vision</span>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <div class="journey-outcome">
-            <div>
-              <strong data-en="The value is not one more dashboard. It is the connection between tools." data-ko="가치는 대시보드 하나를 더 만드는 데 있지 않습니다. 각 도구가 서로 연결되는 데 있습니다.">The value is not one more dashboard. It is the connection between tools.</strong>
-              <span data-en="A detected event becomes analysis, analysis becomes a recommendation, and the recommendation becomes an action in the factory." data-ko="감지된 이벤트가 분석이 되고, 분석이 추천이 되며, 추천이 실제 현장 행동으로 이어집니다.">A detected event becomes analysis, analysis becomes a recommendation, and the recommendation becomes an action in the factory.</span>
-            </div>
-            <div class="journey-outcome-mark">DATA → ACTION</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="card" style="padding:38px; text-align:center;">
-          <h2 data-en="Change the flow of manufacturing with Flowmatic." data-ko="Flowmatic과 함께 제조현장의 흐름을 바꾸십시오.">Change the flow of manufacturing with Flowmatic.</h2>
-          <p style="color:var(--muted); max-width:760px; margin:0 auto 24px;" data-en="We welcome manufacturing companies, investors and partners working on CNC machining, automation, vision inspection, cycle-time improvement and lightweight smart-factory deployment." data-ko="CNC 가공, 자동화, 비전 검사, CT 개선, 경량형 스마트팩토리에 관심 있는 제조기업·투자자·파트너와의 협업을 기다립니다.">We welcome manufacturing companies, investors and partners working on CNC machining, automation, vision inspection, cycle-time improvement and lightweight smart-factory deployment.</p>
-          <a class="btn btn-primary" href="mailto:contact@flowmatic.example">contact@flowmatic.example</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-grid">
-      <div class="brand"><span class="logo">F</span><span>Flowmatic</span></div>
-      <div>© 2026 Flowmatic. Manufacturing Intelligence OS.</div>
-      <div class="footer-tools">
-        <button id="editor-launcher" class="btn btn-secondary btn-small" type="button"><span data-en="Media editor" data-ko="미디어 편집기">Media editor</span></button>
-      </div>
-    </div>
-  </footer>
-
-  <div class="editor-modal" id="media-editor-modal" aria-hidden="true">
-    <section class="editor-panel" role="dialog" aria-modal="true" aria-labelledby="editor-title">
-      <div class="editor-head">
-        <div>
-          <h3 id="editor-title" data-en="Flowmatic media editor" data-ko="Flowmatic 미디어 편집기">Flowmatic media editor</h3>
-          <div class="label" data-en="Add media and export a revised self-contained HTML file." data-ko="미디어를 추가하고 수정된 단일 HTML 파일을 내보냅니다.">Add media and export a revised self-contained HTML file.</div>
-        </div>
-        <button class="icon-button" id="editor-close" type="button" aria-label="Close">✕</button>
-      </div>
-      <div class="editor-body">
-        <div class="editor-note">
-          <strong data-en="How to open later:" data-ko="나중에 다시 여는 방법:">How to open later:</strong>
-          <span data-en=" open this HTML with ?edit=1 at the end of the address, or press Alt + Shift + M." data-ko=" HTML 주소 끝에 ?edit=1을 붙이거나 Alt + Shift + M을 누르십시오."> open this HTML with ?edit=1 at the end of the address, or press Alt + Shift + M.</span><br>
-          <span data-en="Local image/video files are embedded inside the HTML. Large videos will make the HTML very large; YouTube or a media-folder URL is better for production." data-ko="로컬 이미지·동영상은 HTML 내부에 포함됩니다. 큰 영상은 HTML 파일을 매우 크게 만들므로 실제 배포에서는 YouTube 또는 media 폴더 URL 방식이 더 적합합니다.">Local image/video files are embedded inside the HTML. Large videos will make the HTML very large; YouTube or a media-folder URL is better for production.</span>
-        </div>
-
-        <div class="form-grid">
-          <div class="field">
-            <label for="editor-solution" data-en="Solution" data-ko="솔루션">Solution</label>
-            <select id="editor-solution">
-              <option value="nc">Flowmatic NC</option>
-              <option value="ct">Flowmatic CT</option>
-              <option value="vision">Flowmatic Vision</option>
-              <option value="amr">Flowmatic AMR</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="editor-source" data-en="Media source" data-ko="미디어 소스">Media source</label>
-            <select id="editor-source">
-              <option value="file" data-en="Local file (embed in HTML)" data-ko="로컬 파일 (HTML 내부 포함)">Local file (embed in HTML)</option>
-              <option value="url" data-en="URL / YouTube / media folder" data-ko="URL / YouTube / media 폴더">URL / YouTube / media folder</option>
-            </select>
-          </div>
-
-          <div class="field full source-panel is-active" data-source-panel="file">
-            <label for="editor-file" data-en="Choose image or video" data-ko="이미지 또는 동영상 선택">Choose image or video</label>
-            <input id="editor-file" type="file" accept="image/*,video/*">
-          </div>
-
-          <div class="field full source-panel" data-source-panel="url">
-            <label for="editor-url" data-en="Media URL" data-ko="미디어 URL">Media URL</label>
-            <input id="editor-url" type="text" placeholder="media/nc-demo.mp4 or https://youtu.be/...">
-          </div>
-
-          <div class="field">
-            <label for="editor-title-en">Title (English)</label>
-            <input id="editor-title-en" type="text" placeholder="NC Toolpath Review">
-          </div>
-          <div class="field">
-            <label for="editor-title-ko">제목 (한국어)</label>
-            <input id="editor-title-ko" type="text" placeholder="NC 공구경로 검토">
-          </div>
-          <div class="field">
-            <label for="editor-caption-en">Caption (English)</label>
-            <textarea id="editor-caption-en" placeholder="Short explanation of the media"></textarea>
-          </div>
-          <div class="field">
-            <label for="editor-caption-ko">설명 (한국어)</label>
-            <textarea id="editor-caption-ko" placeholder="미디어에 대한 짧은 설명"></textarea>
-          </div>
-        </div>
-
-        <div class="editor-actions">
-          <button id="editor-add" class="btn btn-primary" type="button"><span data-en="Add to solution" data-ko="솔루션에 추가">Add to solution</span></button>
-          <button id="editor-export" class="btn btn-secondary" type="button"><span data-en="Export updated HTML" data-ko="수정 HTML 내보내기">Export updated HTML</span></button>
-          <span class="shortcut">Alt + Shift + M</span>
-        </div>
-        <div class="editor-status" id="editor-status" aria-live="polite"></div>
-      </div>
-    </section>
+<body>
+<div class="progress" id="progress"></div>
+<nav class="nav">
+  <a href="#top" class="logo">Flow<span>matic</span></a>
+  <button class="menuBtn" id="menuBtn" aria-label="Open menu">Menu</button>
+  <div class="links" id="navLinks">
+    <a href="#company">Company</a>
+    <a href="#problem">Problem</a>
+    <a href="#architecture">Factory OS</a>
+    <a href="#products">Products</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#contact" class="navCta">Talk to us</a>
   </div>
+</nav>
 
-  <script>
-    (() => {
-      const pageMeta = {
-        en: {
-          title: 'Flowmatic | Manufacturing Intelligence OS',
-          description: 'Flowmatic connects NC analysis, cycle-time intelligence, machine vision and flexible material flow into a modular Manufacturing Intelligence OS.'
-        },
-        ko: {
-          title: 'Flowmatic | 제조 지능화 운영체계',
-          description: 'Flowmatic은 NC 분석, 사이클타임 자동화, 비전 검사, AMR 물류를 연결하는 모듈형 Manufacturing Intelligence OS입니다.'
-        }
-      };
+<header class="hero" id="top">
+  <div style="position:relative;z-index:2">
+    <div class="kicker">Factory Operating Intelligence</div>
+    <h1>Make the factory flow.</h1>
+    <p>Flowmatic connects existing machines, robots, cameras, quality data and people into a factory that can sense, decide, dispatch and improve.</p>
+    <div class="heroActions">
+      <a class="btn primary" href="#architecture">Explore the Factory OS</a>
+      <a class="btn" href="#roadmap">See the roadmap</a>
+    </div>
+  </div>
+  <div class="heroPanel" aria-label="Flowmatic Factory OS concept diagram">
+    <div class="osMap">
+      <div class="signal"></div><div class="ring"></div>
+      <div class="core">Flowmatic<br/>Factory OS</div>
+      <div class="asset a1">CNC / G-code</div>
+      <div class="asset a2">Vision / Camera</div>
+      <div class="asset a3">AMR / Robot</div>
+      <div class="asset a4">Quality Data</div>
+      <div class="asset a5">People / Standards</div>
+    </div>
+  </div>
+</header>
 
-      let currentLanguage = 'en';
+<main>
+  <section class="section reveal" id="company">
+    <div class="sectionHead"><div class="eyebrow">Company Overview</div><h2>One intelligence layer for fragmented factory operations.</h2></div>
+    <p class="lead">Flowmatic builds software for brownfield factories where CNC machines, robots, cameras, inspection tools, operators and spreadsheets already exist — but still operate as disconnected islands.</p>
+    <p>Our platform connects these assets through a shared Event Layer and process-context model. It begins with practical modules such as NC toolpath analysis, camera-based cycle-time tracking and quality-event analysis, then expands toward AMR orchestration and closed-loop process control.</p>
+    <div class="badges"><span class="badge">Brownfield-first</span><span class="badge">Event-driven</span><span class="badge">Modular deployment</span><span class="badge">On-premise ready</span><span class="badge">Factory OS</span></div>
+  </section>
 
-      function applyLanguage(language) {
-        currentLanguage = language === 'ko' ? 'ko' : 'en';
-        document.documentElement.lang = currentLanguage;
-        document.documentElement.dataset.language = currentLanguage;
-        document.title = pageMeta[currentLanguage].title;
-        document.getElementById('meta-description').setAttribute('content', pageMeta[currentLanguage].description);
+  <section class="section reveal">
+    <div class="sectionHead"><div class="eyebrow">Mission</div><h2>Reduce the friction between information and action.</h2><p class="lead">Factory operations should not depend on memory, repeated manual reporting and disconnected decision-making.</p></div>
+    <div class="missionFlow"><div class="missionStep">Sense</div><div class="missionStep">Eventize</div><div class="missionStep">Understand</div><div class="missionStep">Prioritize</div><div class="missionStep">Act</div><div class="missionStep">Verify</div></div>
+  </section>
 
-        document.querySelectorAll('[data-en][data-ko]').forEach((element) => {
-          element.textContent = element.dataset[currentLanguage];
-        });
+  <section class="section reveal" id="problem">
+    <div class="sectionHead"><div class="eyebrow">The Problem</div><h2>Automation exists. Operational intelligence is missing.</h2><p>Factories already own machines, robots, sensors and software. Yet people still have to collect signals, interpret context, prioritize actions and continuously push the system forward.</p></div>
+    <div class="grid g3">
+      <div class="card"><h3>Hidden losses</h3><p>Cycle-time drift, micro-stoppages, tool wear, logistics delay and operator intervention often remain invisible until production loss has accumulated.</p></div>
+      <div class="card"><h3>Fragmented systems</h3><p>CNC, PLC, MES, robots, cameras, inspection files and Excel reports do not share one operational language.</p></div>
+      <div class="card"><h3>Human bottlenecks</h3><p>Experienced engineers repeatedly connect the dots between process, quality, equipment and logistics through manual judgment.</p></div>
+    </div>
+  </section>
 
-        document.querySelectorAll('[data-language-button]').forEach((button) => {
-          const active = button.dataset.languageButton === currentLanguage;
-          button.classList.toggle('is-active', active);
-          button.setAttribute('aria-pressed', String(active));
-        });
+  <section class="section reveal">
+    <div class="statement">Modern factories already have <span class="accent">eyes, hands and legs</span>. Flowmatic adds the <span class="accent">brain and nervous system</span>.</div>
+  </section>
 
-        document.querySelectorAll('.media-item[data-title-en]').forEach(updateMediaCaption);
-        try { localStorage.setItem('flowmatic-language', currentLanguage); } catch (error) {}
-      }
+  <section class="section dark reveal" id="architecture">
+    <div class="sectionHead"><div class="eyebrow">Platform Architecture</div><h2>The Factory OS stack.</h2><p>An event-driven architecture that connects existing assets into operating intelligence.</p></div>
+    <div class="architecture">
+      <div class="layer"><strong>01 · Factory Sensing</strong><span>Cameras, CNC programs, PLC signals, robots, inspection devices, AMRs and operators.</span></div>
+      <div class="layer"><strong>02 · Event Layer</strong><span>Standard events such as Cycle_Start, Tool_Change, Material_Low, Dimension_NG and Pallet_Full.</span></div>
+      <div class="layer"><strong>03 · Digital Context</strong><span>STEP/STL geometry, G-code, process sequences, work standards, equipment profiles and quality limits.</span></div>
+      <div class="layer"><strong>04 · Intelligence</strong><span>CT analytics, bottleneck detection, defect Pareto, tool-life logic, NC optimization and quality correlation.</span></div>
+      <div class="layer"><strong>05 · Orchestration</strong><span>AMR dispatch, robot tasking, operator calls, inspection reruns, tool-change tasks and compensation loops.</span></div>
+    </div>
+  </section>
 
-      document.querySelectorAll('[data-language-button]').forEach((button) => {
-        button.addEventListener('click', () => applyLanguage(button.dataset.languageButton));
-      });
+  <section class="section reveal" id="products">
+    <div class="sectionHead"><div class="eyebrow">Product Portfolio</div><h2>Modular products. One operating system.</h2><p>Each module creates immediate value on its own. Together, they build the Event DB and process context required for full Factory OS operation.</p></div>
+    <div class="portfolio">
+      <div class="card product soft"><span class="smallLabel">Machining</span><h3>Flowmatic NC</h3><p>3D G-code visualization, CT prediction, STEP overlay, toolpath comparison and optimization logic.</p><div class="productFoot">Validate before production</div></div>
+      <div class="card product"><span class="smallLabel">Cycle Time</span><h3>Flowmatic CT</h3><p>Camera-based cycle detection, automatic Gantt, worst-cycle extraction and bottleneck tracking.</p><div class="productFoot">See hidden time loss</div></div>
+      <div class="card product"><span class="smallLabel">Perception</span><h3>Flowmatic Vision</h3><p>Factory-state recognition for doors, robots, products, material level and low-cost inspection.</p><div class="productFoot">Add digital perception</div></div>
+      <div class="card product"><span class="smallLabel">Quality</span><h3>Flowmatic Quality</h3><p>Inspection history, defect classification, Pareto and process-linked root-cause tracing.</p><div class="productFoot">Connect defects to causes</div></div>
+      <div class="card product"><span class="smallLabel">Standard Work</span><h3>Work Standard</h3><p>Shape-aware work instructions linked to tooling, inspection, media, process notes and revision history.</p><div class="productFoot">Turn documents into context</div></div>
+      <div class="card product"><span class="smallLabel">Closed Loop</span><h3>Auto Compensation</h3><p>Measurement-trend analysis, safe correction recommendation, CNC compensation and verification.</p><div class="productFoot">Move from alert to control</div></div>
+      <div class="card product"><span class="smallLabel">Logistics</span><h3>Flowmatic Fleet</h3><p>AMR/cobot dispatch, material replenishment, finished-goods pickup and charging schedules.</p><div class="productFoot">Coordinate shared resources</div></div>
+      <div class="card product"><span class="smallLabel">Factory Memory</span><h3>Event Intelligence</h3><p>Loss ranking, action priority, automated reporting and process-knowledge accumulation.</p><div class="productFoot">Build operational memory</div></div>
+    </div>
+  </section>
 
-      try {
-        const savedLanguage = localStorage.getItem('flowmatic-language');
-        applyLanguage(savedLanguage === 'ko' ? 'ko' : 'en');
-      } catch (error) {
-        applyLanguage('en');
-      }
+  <section class="section reveal" id="implementation">
+    <div class="sectionHead"><div class="eyebrow">Implementation Map</div><h2>From signal to verified action.</h2><p>The first deployment is narrow and measurable. Expansion happens through the shared Event DB, not through a full factory rebuild.</p></div>
+    <div class="useCase">
+      <div class="flowPanel">
+        <h3>Example: proactive material replenishment</h3>
+        <div class="nodes"><span class="node">Camera</span><span class="arrow">→</span><span class="node">Event</span><span class="arrow">→</span><span class="node">Context</span><span class="arrow">→</span><span class="node">Decision</span><span class="arrow">→</span><span class="node">Dispatch</span></div>
+        <p>Material level falls below threshold. Flowmatic checks line cycle time, expected depletion and AMR availability, creates the dispatch task, then verifies arrival and refill.</p>
+        <div class="badges"><span class="badge">No full PLC rebuild</span><span class="badge">Camera-first option</span><span class="badge">Event verification</span></div>
+      </div>
+      <div class="terminal">
+        <div>&gt; read_video_roi(line_A_home)</div>
+        <div>event: Cycle_Start</div>
+        <div>event: Robot_Enter</div>
+        <div>event: Cycle_End | CT = 312.4s</div>
+        <div>analysis: +8.4s drift vs target</div>
+        <div>cause_candidate: OP40 / Tool T12</div>
+        <div>action: create tool-check task</div>
+        <div>forecast: material_low in 23 min</div>
+        <div>dispatch: AMR_02 → Line A</div>
+        <div class="mutedLine">verify: refill_complete</div>
+      </div>
+    </div>
+  </section>
 
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener('click', function (event) {
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            event.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      });
+  <section class="section reveal" id="deployment">
+    <div class="sectionHead"><div class="eyebrow">Deployment Strategy</div><h2>Start small. Expand by events.</h2></div>
+    <div class="deploy">
+      <div class="card soft"><div class="num">01</div><h3>Start with one measurable problem</h3><p>Deploy NC analysis, camera CT tracking or inspection-event management on one line and prove value through time, quality or labor savings.</p></div>
+      <div class="deployArrow">→</div>
+      <div class="card soft"><div class="num">02</div><h3>Grow into the operating layer</h3><p>Every additional module writes to the same Event DB. More connected signals create deeper context, better decisions and wider automation.</p></div>
+    </div>
+  </section>
 
-      document.querySelectorAll('.solution-trigger').forEach((trigger) => {
-        trigger.addEventListener('click', () => {
-          const card = trigger.closest('.solution-card');
-          const willOpen = !card.classList.contains('is-open');
+  <section class="section reveal" id="roadmap">
+    <div class="sectionHead"><div class="eyebrow">Long-Range Roadmap</div><h2>From reading the factory to improving the factory.</h2></div>
+    <div class="roadmap">
+      <div class="phase"><b><span class="phaseTag">Phase 1</span>Read</b><p>Package Flowmatic NC and CT into pilot-ready products. Build event logging, automatic Gantt and reporting.</p></div>
+      <div class="phase"><b><span class="phaseTag">Phase 2</span>Understand</b><p>Connect quality data, vision signals, work standards and process context into unified analytics.</p></div>
+      <div class="phase"><b><span class="phaseTag">Phase 3</span>Dispatch</b><p>Orchestrate AMR, robot, inspection and operator tasks based on real-time factory state.</p></div>
+      <div class="phase"><b><span class="phaseTag">Phase 4</span>Close Loop</b><p>Connect measurement feedback to CNC correction, tool-life optimization and process self-improvement.</p></div>
+      <div class="phase"><b><span class="phaseTag">Phase 5</span>Replicate</b><p>Turn accumulated factory know-how into reusable manufacturing protocols across lines and sites.</p></div>
+    </div>
+  </section>
 
-          document.querySelectorAll('.solution-card.is-open').forEach((openCard) => {
-            if (openCard !== card) {
-              openCard.classList.remove('is-open');
-              openCard.querySelector('.solution-trigger').setAttribute('aria-expanded', 'false');
-            }
-          });
+  <section class="section reveal" id="status">
+    <div class="sectionHead"><div class="eyebrow">Development Status</div><h2>Built from working prototypes and real manufacturing problems.</h2></div>
+    <div class="statusBoard">
+      <div class="statusList">
+        <div class="statusItem"><strong>Flowmatic NC</strong><span>3D toolpath viewer, G-code parsing, tool-level CT analysis, STEP/STL overlay and machine-profile logic.</span></div>
+        <div class="statusItem"><strong>Flowmatic CT</strong><span>Vision-based cycle detection, ROI logic, automatic Gantt and worst-cycle analysis.</span></div>
+        <div class="statusItem"><strong>Flowmatic Fleet</strong><span>AMR dispatch simulation for material replenishment, finished-goods pickup and battery-aware allocation.</span></div>
+        <div class="statusItem"><strong>Quality / Vision</strong><span>Multi-camera inspection, endoscope capture and process-linked quality-event concepts.</span></div>
+      </div>
+      <div class="card soft"><span class="smallLabel">Current Wedge</span><h3>Sell immediate value, then expand.</h3><p>NC analysis and camera-based CT intelligence provide low-friction entry points. They generate measurable customer value while establishing the Event Layer required for broader Factory OS deployment.</p><div class="badges"><span class="badge">Prototype-backed</span><span class="badge">Field-driven</span><span class="badge">Modular</span></div></div>
+    </div>
+  </section>
 
-          card.classList.toggle('is-open', willOpen);
-          trigger.setAttribute('aria-expanded', String(willOpen));
-          if (willOpen) {
-            window.setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 180);
-          }
-        });
-      });
+  <section class="section reveal">
+    <div class="sectionHead"><div class="eyebrow">Technology Principles</div><h2>Designed for real factory constraints.</h2></div>
+    <div class="principles">
+      <div class="principle"><b>Deterministic core</b><p>Safety-critical control is handled by verified rules, algorithms, vision models and statistical logic. LLMs assist with explanation, documents and interfaces.</p></div>
+      <div class="principle"><b>On-premise first</b><p>Manufacturing drawings, G-code and quality data can remain inside the factory network or edge-PC environment.</p></div>
+      <div class="principle"><b>Brownfield-first</b><p>The platform is designed for mixed equipment and existing plants, not only new greenfield factories.</p></div>
+    </div>
+  </section>
 
-      const modal = document.getElementById('media-editor-modal');
-      const launcher = document.getElementById('editor-launcher');
-      const closeButton = document.getElementById('editor-close');
-      const sourceSelect = document.getElementById('editor-source');
-      const addButton = document.getElementById('editor-add');
-      const exportButton = document.getElementById('editor-export');
-      const status = document.getElementById('editor-status');
+  <section class="section reveal">
+    <div class="sectionHead"><div class="eyebrow">Business Model</div><h2>Software at the core. Integration where it creates value.</h2></div>
+    <div class="grid g3">
+      <div class="card"><div class="num">01</div><h3>Software license</h3><p>Desktop Pro, web trial, line-level license and factory subscription.</p></div>
+      <div class="card"><div class="num">02</div><h3>Deployment project</h3><p>Equipment profiling, camera setup, integration, initial optimization and training.</p></div>
+      <div class="card"><div class="num">03</div><h3>Advanced modules</h3><p>Fleet orchestration, quality intelligence, auto compensation and closed-loop operations.</p></div>
+    </div>
+  </section>
 
-      const editorMode = new URLSearchParams(window.location.search).get('edit') === '1';
-      if (editorMode) document.body.classList.add('editor-mode');
+  <section class="section flush reveal">
+    <div class="vision">
+      <div class="eyebrow">Long-Term Vision</div>
+      <div class="visionQuote">Turn tacit shop-floor knowledge into executable manufacturing protocols.</div>
+      <p>As the Event DB grows, Flowmatic learns which tools work for which features, which conditions create defects, which corrections are effective, which logistics patterns create bottlenecks and which actions improve output.</p>
+      <p>The result is not another dashboard. It is an operating intelligence layer that helps factories sense, decide, act and continuously improve.</p>
+    </div>
+  </section>
+</main>
 
-      function setStatus(enText, koText, isError = false) {
-        status.textContent = currentLanguage === 'ko' ? koText : enText;
-        status.style.color = isError ? 'var(--danger)' : 'var(--accent)';
-      }
+<footer class="footer" id="contact">
+  <div class="footerInner">
+    <div><div class="kicker">Flowmatic Factory OS</div><h2>Make the factory flow.</h2><p>For pilot projects, technology partnerships and investor conversations.</p></div>
+    <div class="footerLinks"><a href="#company">Company Overview</a><a href="#architecture">Factory OS</a><a href="#products">Products</a><a href="#roadmap">Roadmap</a><button class="btn light" onclick="window.print()">Print company profile</button></div>
+  </div>
+  <div class="footerNote">Flowmatic · Factory Operating Intelligence for Brownfield Manufacturing</div>
+</footer>
+<button class="printBtn" onclick="window.print()">Print / Save PDF</button>
 
-      function openEditor() {
-        document.body.classList.add('editor-mode', 'modal-open');
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-      }
+<script>
+const progress=document.getElementById('progress');
+const updateProgress=()=>{const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;progress.style.width=(max?100*h.scrollTop/max:0)+'%'};
+window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
 
-      function closeEditor() {
-        document.body.classList.remove('modal-open');
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-      }
+const menuBtn=document.getElementById('menuBtn');
+const navLinks=document.getElementById('navLinks');
+menuBtn.addEventListener('click',()=>navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
 
-      launcher.addEventListener('click', openEditor);
-      closeButton.addEventListener('click', closeEditor);
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) closeEditor();
-      });
-      document.addEventListener('keydown', (event) => {
-        if (event.altKey && event.shiftKey && event.key.toLowerCase() === 'm') {
-          event.preventDefault();
-          openEditor();
-        }
-        if (event.key === 'Escape' && modal.classList.contains('is-open')) closeEditor();
-      });
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-      sourceSelect.addEventListener('change', () => {
-        document.querySelectorAll('[data-source-panel]').forEach((panel) => {
-          panel.classList.toggle('is-active', panel.dataset.sourcePanel === sourceSelect.value);
-        });
-      });
-
-      function youtubeEmbed(url) {
-        const patterns = [
-          /youtu\.be\/([a-zA-Z0-9_-]{6,})/,
-          /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{6,})/,
-          /youtube\.com\/embed\/([a-zA-Z0-9_-]{6,})/
-        ];
-        for (const pattern of patterns) {
-          const match = url.match(pattern);
-          if (match) return `https://www.youtube.com/embed/${match[1]}`;
-        }
-        return null;
-      }
-
-      function guessMediaType(url) {
-        const clean = url.split('?')[0].split('#')[0].toLowerCase();
-        if (/\.(png|jpe?g|gif|webp|svg|avif)$/.test(clean)) return 'image';
-        if (/\.(mp4|webm|ogg|mov|m4v)$/.test(clean)) return 'video';
-        if (youtubeEmbed(url)) return 'youtube';
-        return 'video';
-      }
-
-      function updateMediaCaption(mediaItem) {
-        const title = mediaItem.querySelector('.media-title');
-        const caption = mediaItem.querySelector('.media-caption');
-        if (title) title.textContent = mediaItem.dataset[currentLanguage === 'ko' ? 'titleKo' : 'titleEn'] || mediaItem.dataset.titleEn || mediaItem.dataset.titleKo || '';
-        if (caption) caption.textContent = mediaItem.dataset[currentLanguage === 'ko' ? 'captionKo' : 'captionEn'] || mediaItem.dataset.captionEn || mediaItem.dataset.captionKo || '';
-      }
-
-      function createMediaItem({ src, type, titleEn, titleKo, captionEn, captionKo }) {
-        const figure = document.createElement('figure');
-        figure.className = 'media-item';
-        figure.dataset.titleEn = titleEn || 'Flowmatic media';
-        figure.dataset.titleKo = titleKo || titleEn || 'Flowmatic 미디어';
-        figure.dataset.captionEn = captionEn || '';
-        figure.dataset.captionKo = captionKo || captionEn || '';
-
-        let media;
-        if (type === 'image') {
-          media = document.createElement('img');
-          media.loading = 'lazy';
-          media.alt = figure.dataset.titleEn;
-          media.src = src;
-        } else if (type === 'youtube') {
-          media = document.createElement('iframe');
-          media.src = youtubeEmbed(src) || src;
-          media.title = figure.dataset.titleEn;
-          media.loading = 'lazy';
-          media.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-          media.allowFullscreen = true;
-        } else {
-          media = document.createElement('video');
-          media.src = src;
-          media.controls = true;
-          media.preload = 'metadata';
-          media.playsInline = true;
-        }
-
-        const remove = document.createElement('button');
-        remove.type = 'button';
-        remove.className = 'media-remove';
-        remove.textContent = currentLanguage === 'ko' ? '삭제' : 'Remove';
-        remove.addEventListener('click', () => figure.remove());
-
-        const figcaption = document.createElement('figcaption');
-        figcaption.innerHTML = '<strong class="media-title"></strong><span class="media-caption"></span>';
-
-        figure.append(media, remove, figcaption);
-        updateMediaCaption(figure);
-        return figure;
-      }
-
-      function readFileAsDataURL(file) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = () => reject(reader.error || new Error('File read failed'));
-          reader.readAsDataURL(file);
-        });
-      }
-
-      addButton.addEventListener('click', async () => {
-        const solution = document.getElementById('editor-solution').value;
-        const gallery = document.querySelector(`[data-gallery="${solution}"]`);
-        const titleEn = document.getElementById('editor-title-en').value.trim();
-        const titleKo = document.getElementById('editor-title-ko').value.trim();
-        const captionEn = document.getElementById('editor-caption-en').value.trim();
-        const captionKo = document.getElementById('editor-caption-ko').value.trim();
-
-        if (!gallery) return;
-
-        try {
-          let src = '';
-          let type = 'video';
-
-          if (sourceSelect.value === 'file') {
-            const file = document.getElementById('editor-file').files[0];
-            if (!file) {
-              setStatus('Choose an image or video file first.', '먼저 이미지 또는 동영상 파일을 선택하십시오.', true);
-              return;
-            }
-            if (file.size > 25 * 1024 * 1024) {
-              const proceed = window.confirm(currentLanguage === 'ko'
-                ? '이 파일은 25MB를 넘습니다. HTML이 매우 커지고 로딩이 느려질 수 있습니다. 계속하시겠습니까?'
-                : 'This file is larger than 25 MB. The HTML may become very large and slow. Continue?');
-              if (!proceed) return;
-            }
-            src = await readFileAsDataURL(file);
-            type = file.type.startsWith('image/') ? 'image' : 'video';
-          } else {
-            src = document.getElementById('editor-url').value.trim();
-            if (!src) {
-              setStatus('Enter a media URL or relative file path.', '미디어 URL 또는 상대 파일 경로를 입력하십시오.', true);
-              return;
-            }
-            type = guessMediaType(src);
-          }
-
-          const item = createMediaItem({ src, type, titleEn, titleKo, captionEn, captionKo });
-          gallery.appendChild(item);
-
-          const card = gallery.closest('.solution-card');
-          card.classList.add('is-open');
-          card.querySelector('.solution-trigger').setAttribute('aria-expanded', 'true');
-          setStatus('Media added. Export the updated HTML when finished.', '미디어가 추가되었습니다. 완료 후 수정 HTML을 내보내십시오.');
-        } catch (error) {
-          setStatus('Could not add the media.', '미디어를 추가하지 못했습니다.', true);
-        }
-      });
-
-      exportButton.addEventListener('click', () => {
-        const clone = document.documentElement.cloneNode(true);
-        clone.lang = 'en';
-        clone.dataset.language = 'en';
-        clone.querySelector('body').classList.remove('modal-open', 'editor-mode');
-        clone.querySelector('#media-editor-modal').classList.remove('is-open');
-        clone.querySelector('#media-editor-modal').setAttribute('aria-hidden', 'true');
-        clone.querySelectorAll('.solution-card').forEach((card) => card.classList.remove('is-open'));
-        clone.querySelectorAll('.solution-trigger').forEach((button) => button.setAttribute('aria-expanded', 'false'));
-        clone.querySelector('#editor-status').textContent = '';
-
-        clone.querySelectorAll('[data-en][data-ko]').forEach((element) => {
-          element.textContent = element.dataset.en;
-        });
-        clone.querySelectorAll('[data-language-button]').forEach((button) => {
-          const active = button.dataset.languageButton === 'en';
-          button.classList.toggle('is-active', active);
-          button.setAttribute('aria-pressed', String(active));
-        });
-        clone.querySelectorAll('.media-item[data-title-en]').forEach((item) => {
-          const title = item.querySelector('.media-title');
-          const caption = item.querySelector('.media-caption');
-          if (title) title.textContent = item.dataset.titleEn || item.dataset.titleKo || '';
-          if (caption) caption.textContent = item.dataset.captionEn || item.dataset.captionKo || '';
-        });
-
-        const html = '<!DOCTYPE html>\n' + clone.outerHTML;
-        const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const download = document.createElement('a');
-        download.href = url;
-        download.download = 'flowmatic_company_site_updated.html';
-        document.body.appendChild(download);
-        download.click();
-        download.remove();
-        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-        setStatus('Updated HTML exported.', '수정된 HTML 파일을 내보냈습니다.');
-      });
-
-      document.querySelectorAll('.media-remove').forEach((button) => {
-        button.addEventListener('click', () => button.closest('.media-item').remove());
-      });
-    })();
-  </script>
-
-
-</body></html>
+const anchors=[...document.querySelectorAll('.links a[href^="#"]')];
+const sections=anchors.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const activeObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){anchors.forEach(a=>a.classList.remove('active'));const a=anchors.find(x=>x.getAttribute('href')==='#'+e.target.id);if(a)a.classList.add('active')}})},{rootMargin:'-35% 0px -55% 0px'});
+sections.forEach(s=>activeObserver.observe(s));
+</script>
+</body>
+</html>
