@@ -910,7 +910,11 @@
     // Example: nc: { type: 'video', src: 'media/nc-demo.mp4', title: 'Flowmatic NC demo' }
     // YouTube: { type: 'youtube', src: 'https://www.youtube.com/watch?v=VIDEO_ID', title: 'Demo' }
     const MEDIA_CONFIG = {
-      nc:        { type: '', src: '', title: 'Flowmatic NC demo' },
+      nc: {
+        type: 'video',
+        src: 'media/nc-demo.mp4',
+        title: 'Flowmatic NC demo'
+      },
       ct:        { type: '', src: '', title: 'Flowmatic CT demo' },
       vision:    { type: '', src: '', title: 'Flowmatic Vision demo' },
       quality:   { type: '', src: '', title: 'Flowmatic Quality demo' },
