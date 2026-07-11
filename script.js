@@ -2,6 +2,7 @@ const header = document.querySelector('[data-header]');
 const navToggle = document.querySelector('[data-nav-toggle]');
 const nav = document.querySelector('[data-nav]');
 const revealTargets = document.querySelectorAll('.reveal');
+const productCards = Array.from(document.querySelectorAll('.product-card')).filter((card) => card.querySelector('.product-link'));
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const langButtons = document.querySelectorAll('[data-lang-button]');
 const skipLink = document.querySelector('.skip-link');
@@ -79,6 +80,21 @@ function initReveal() {
     });
   }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
   revealTargets.forEach((target) => observer.observe(target));
+}
+
+function initProductCtas() {
+  if (!productCards.length) return;
+  if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+    productCards.forEach((card) => card.classList.add('is-cta-active'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-cta-active');
+    });
+  }, { threshold: 0.42, rootMargin: '-12% 0px -20% 0px' });
+  productCards.forEach((card) => observer.observe(card));
 }
 
 function initNavigation() {
@@ -292,6 +308,7 @@ updateHeaderState();
 initNavigation();
 initLanguageToggle();
 initReveal();
+initProductCtas();
 initDemoVideos();
 initCtExplainer();
 initAmrExplainer();

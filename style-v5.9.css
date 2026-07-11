@@ -1628,23 +1628,103 @@ body.nav-open .nav-toggle span:nth-of-type(3) {
 }
 
 .product-link {
+  --cta-click-width: clamp(82px, 32%, 132px);
+  position: relative;
+  isolation: isolate;
   margin-top: auto;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: 12px;
-  padding-top: 20px;
-  border-top: var(--border) solid var(--fm-black);
+  min-height: 64px;
+  padding: 14px 16px;
+  border: var(--border) solid transparent;
+  border-top-color: var(--fm-black);
+  background: transparent;
   font-weight: 900;
+  line-height: 1.05;
   text-decoration: none;
+  overflow: hidden;
+  transition:
+    background-color var(--duration-normal) var(--ease-flow),
+    border-color var(--duration-normal) var(--ease-flow),
+    padding var(--duration-normal) var(--ease-flow);
 }
 
-.product-link:hover span,
-.product-link:focus-visible span {
-  transform: translateX(8px);
+.product-link::before {
+  content: "Click!";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--cta-click-width);
+  border-right: var(--border) solid var(--fm-black);
+  background:
+    linear-gradient(90deg, transparent 0 calc(100% - 18px), var(--fm-white) calc(100% - 18px) calc(100% - 9px), var(--fm-blue) calc(100% - 9px) 100%),
+    var(--fm-yellow);
+  color: var(--fm-black);
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  transform: translateX(calc(-100% - var(--border)));
+  transition: transform var(--duration-normal) var(--ease-flow);
 }
 
-.product-link span {
-  transition: transform var(--duration-fast) var(--ease-flow);
+.product-link::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: 1;
+  width: 44px;
+  border-left: var(--border) solid var(--fm-black);
+  background:
+    linear-gradient(0deg, var(--fm-blue) 0 30%, var(--fm-black) 30% calc(30% + var(--border)), var(--fm-white) calc(30% + var(--border)) 62%, var(--fm-black) 62% calc(62% + var(--border)), var(--fm-red) calc(62% + var(--border)) 100%);
+  opacity: 0;
+  transform: translateX(100%);
+  transition:
+    opacity var(--duration-fast) var(--ease-flow),
+    transform var(--duration-normal) var(--ease-flow);
+}
+
+body[data-lang="en"] .product-link .lang-en.lang-inline,
+body[data-lang="ko"] .product-link .lang-ko.lang-inline {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.product-link > span[aria-hidden="true"] {
+  position: relative;
+  z-index: 2;
+  justify-self: end;
+  font-size: 1.15em;
+}
+
+.product-card:hover .product-link,
+.product-card:focus-within .product-link,
+.product-card.is-cta-active .product-link {
+  padding-left: calc(var(--cta-click-width) + 14px);
+  padding-right: 58px;
+  border-color: var(--fm-black);
+  background-color: var(--fm-yellow);
+}
+
+.product-card:hover .product-link::before,
+.product-card:focus-within .product-link::before,
+.product-card.is-cta-active .product-link::before,
+.product-card:hover .product-link::after,
+.product-card:focus-within .product-link::after,
+.product-card.is-cta-active .product-link::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.product-link:focus-visible {
+  outline: var(--border) solid var(--fm-blue);
+  outline-offset: 3px;
 }
 
 .product-mini {
