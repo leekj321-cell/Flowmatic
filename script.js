@@ -416,8 +416,8 @@ function initProductCtas() {
   };
   const updateCtas = () => {
     isScheduled = false;
-    const startY = window.innerHeight * 0.3;
-    const completeY = window.innerHeight * 0.1;
+    const startY = window.innerHeight * 0.9;
+    const completeY = window.innerHeight * 0.7;
     const travel = Math.max(startY - completeY, 1);
     const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
     getRows().forEach((row) => {
