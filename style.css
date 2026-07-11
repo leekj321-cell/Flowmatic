@@ -2852,3 +2852,82 @@ body.technology-page .detail-cta-copy .section-title[data-fit-text] { --fit-max:
     overflow-wrap: break-word;
   }
 }
+
+/* v5.9 — let mobile body copy wrap instead of clipping */
+@media (max-width: 768px) {
+  .cell p .copy-lines,
+  .cell p .copy-line,
+  .cell li .copy-lines,
+  .cell li .copy-line,
+  .strategy-core .kicker .copy-lines,
+  .strategy-core .kicker .copy-line,
+  .strategy-statement p .copy-lines,
+  .strategy-statement p .copy-line,
+  .detail-feature p .copy-lines,
+  .detail-feature p .copy-line {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .cell p .copy-line,
+  .cell li .copy-line,
+  .strategy-core .kicker .copy-line,
+  .strategy-statement p .copy-line,
+  .detail-feature p .copy-line {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  body[data-lang="ko"] .cell p .copy-line,
+  body[data-lang="ko"] .cell li .copy-line,
+  body[data-lang="ko"] .strategy-core .kicker .copy-line,
+  body[data-lang="ko"] .strategy-statement p .copy-line,
+  body[data-lang="ko"] .detail-feature p .copy-line {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .problem-card p,
+  .strategy-card p,
+  .strategy-core p,
+  .strategy-core .kicker,
+  .strategy-statement p,
+  .detail-feature p {
+    line-height: 1.5;
+  }
+
+  .hero-layer h2[data-fit-text] {
+    --fit-min: 20px;
+    --fit-max: 46px;
+  }
+
+  body.technology-page .detail-overview .hero-title[data-fit-text] {
+    --fit-min: 20px;
+    --fit-max: 48px;
+  }
+
+  body.technology-page .detail-feature .card-title-fit[data-fit-text] {
+    --fit-min: 15px;
+    --fit-max: 36px;
+  }
+
+  body.technology-page .detail-demo .section-title[data-fit-text],
+  body.technology-page .detail-cta-copy .section-title[data-fit-text] {
+    --fit-min: 20px;
+    --fit-max: 44px;
+  }
+
+  .action-router {
+    grid-template-columns: 1.15fr repeat(3, minmax(0, .86fr));
+    gap: 4px;
+  }
+
+  .router-core,
+  .action-node {
+    min-width: 0;
+    padding: 0 1px;
+    font-size: 9px;
+    overflow: hidden;
+  }
+}
