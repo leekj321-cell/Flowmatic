@@ -127,7 +127,7 @@ a {
 }
 
 .lang-button {
-  min-width: 52px;
+  min-width: 46px;
   height: 40px;
   border: 0;
   border-right: var(--border) solid var(--fm-black);
@@ -137,6 +137,12 @@ a {
   letter-spacing: 0.08em;
 }
 
+.lang-button[data-lang-button="ar"] {
+  min-width: 72px;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
 .lang-button:last-child { border-right: 0; }
 .lang-button.is-active { background: var(--fm-black); color: var(--fm-white); }
 .lang-button:focus-visible { outline: 3px solid var(--fm-yellow); outline-offset: -3px; }
@@ -144,8 +150,28 @@ a {
 .lang { display: none; }
 body[data-lang="en"] .lang-en.lang-inline { display: inline; }
 body[data-lang="ko"] .lang-ko.lang-inline { display: inline; }
+body[data-lang="ar"] .lang-ar.lang-inline { display: inline; }
 body[data-lang="en"] .lang-en.lang-block { display: block; }
 body[data-lang="ko"] .lang-ko.lang-block { display: block; }
+body[data-lang="ar"] .lang-ar.lang-block { display: block; }
+
+body[data-lang="ar"] .site-header,
+body[data-lang="ar"] .section-grid,
+body[data-lang="ar"] .product-link,
+body[data-lang="ar"] .tech-visual,
+body[data-lang="ar"] .demo-player {
+  direction: ltr;
+}
+
+body[data-lang="ar"] .lang-ar {
+  direction: rtl;
+  unicode-bidi: isolate;
+  letter-spacing: 0;
+}
+
+body[data-lang="ar"] .lang-ar.lang-block {
+  text-align: right;
+}
 
 .site-nav {
   display: flex;
@@ -962,11 +988,26 @@ body.nav-open .nav-toggle span:nth-of-type(3) {
   }
 
   .site-header {
-    padding: 0 16px;
+    padding: 0 10px;
   }
 
   .brand {
-    font-size: 20px;
+    font-size: 18px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .lang-button {
+    min-width: 36px;
+    height: 36px;
+    font-size: 11px;
+  }
+
+  .lang-button[data-lang-button="ar"] {
+    min-width: 62px;
+    font-size: 12px;
   }
 
   .nav-toggle {
@@ -1693,7 +1734,8 @@ body.nav-open .nav-toggle span:nth-of-type(3) {
 }
 
 body[data-lang="en"] .product-link .lang-en.lang-inline,
-body[data-lang="ko"] .product-link .lang-ko.lang-inline {
+body[data-lang="ko"] .product-link .lang-ko.lang-inline,
+body[data-lang="ar"] .product-link .lang-ar.lang-inline {
   position: relative;
   z-index: 2;
   display: inline-block;
@@ -2032,6 +2074,18 @@ body[data-lang="ko"] .product-link .lang-ko.lang-inline {
   .flow-explanation li{grid-template-columns:76px 1fr}.product-card{min-height:auto;padding-top:40px;padding-bottom:40px}.product-mini{height:190px}.detail-hero-copy,.detail-mark{min-height:auto;padding-top:64px;padding-bottom:64px}.tech-visual{display:flex;flex-direction:column;min-height:auto;gap:10px}.visual-label{margin-top:12px}.visual-arrow{min-height:36px;transform:rotate(90deg)}.nc-code-panel,.ct-camera-frame,.work-inputs,.tms-photo,.amr-line-box,.nc-path-stage,.ct-event-panel,.work-board,.tms-match,.operator-alert,.nc-result-panel,.ct-timeline,.work-guide-list,.tms-output,.amr-route-scene{min-height:280px;width:100%}.visual-label{order:initial}.ct-timeline{flex-direction:column}.ct-playhead{left:5px;right:5px;top:20px;bottom:auto;width:auto;height:5px;animation:ctPlayhead 4.8s linear infinite}.route-depot,.route-line{width:70%;height:25%;left:15%;right:auto}.route-depot{top:8%}.route-line{top:auto;bottom:8%}.route-track{left:49%;right:auto;top:33%;bottom:32%;width:5px;height:auto}.amr-cart-large{left:calc(50% - 22px);top:37%;animation:amrDispatch 5s var(--ease-flow) infinite}.amr-complete{left:18%;right:18%;bottom:16%;width:auto}.demo-player{min-height:260px}.video-placeholder{padding:22px}.detail-cta .cell{min-height:auto;padding-top:64px;padding-bottom:64px}
 }
 
+@media (max-width: 360px) {
+  body[data-lang="ar"] .mini-depot {
+    left: 68px;
+    width: 70px;
+    font-size: 8px;
+  }
+
+  body[data-lang="ar"] .mini-amr {
+    left: 110px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .story-stage::after,.story-packet,.machine-door,.machine-arm,.event-name,.event-scan-line,.action-node,.mini-amr,.closed-state,.mini-object,.mini-work-step,.mini-alert,.mini-amr-cart,.code-line,.nc-risk-zone,.ct-robot-arm,.ct-playhead,.work-cursor,.guide-active,.tms-photo::after,.tms-match strong,.material-gauge i,.amr-line-box strong,.operator-alert,.amr-cart-large,.amr-complete { animation:none!important; }
   .closed-state,.amr-complete{opacity:1}.material-gauge i{height:20%}.event-name{opacity:1}.mini-amr{transform:translate(100px,-20px)}
@@ -2228,6 +2282,7 @@ body.technology-page[data-lang="en"] .demo-copy .section-title {
 
 body[data-lang="ko"] .mini-roi::before { content: "기준 ROI"; }
 body[data-lang="en"] .mini-roi::before { content: "HOME ROI"; }
+body[data-lang="ar"] .mini-roi::before { content: "منطقة ROI"; }
 
 @media (max-width: 768px) {
   body.technology-page[data-lang="ko"] .detail-hero-copy .hero-title {
@@ -2475,6 +2530,10 @@ body[data-lang="en"] [data-fit-text] {
   letter-spacing: -.055em;
 }
 
+body[data-lang="ar"] [data-fit-text] {
+  letter-spacing: 0;
+}
+
 /* Prevent accidental word-orphan wrapping outside deliberate copy lines. */
 body[data-lang="ko"] p,
 body[data-lang="ko"] h1,
@@ -2494,6 +2553,15 @@ body[data-lang="en"] h3 {
   text-wrap: pretty;
 }
 
+body[data-lang="ar"] p,
+body[data-lang="ar"] h1,
+body[data-lang="ar"] h2,
+body[data-lang="ar"] h3 {
+  overflow-wrap: normal;
+  hyphens: none;
+  text-wrap: pretty;
+}
+
 /* Large copy gets a stable visual rhythm instead of viewport-driven overflow. */
 .hero-title { font-size: clamp(58px, 8vw, 126px); line-height: .94; }
 .section-title { font-size: clamp(44px, 6.1vw, 88px); line-height: 1.01; }
@@ -2502,6 +2570,9 @@ body[data-lang="en"] h3 {
 body[data-lang="ko"] .hero-title { font-size: clamp(54px, 7.2vw, 112px); line-height: 1.02; }
 body[data-lang="ko"] .section-title { font-size: clamp(42px, 5.5vw, 80px); line-height: 1.07; }
 body[data-lang="ko"] .vision-title { font-size: clamp(42px, 5vw, 76px); line-height: 1.1; }
+body[data-lang="ar"] .hero-title { font-size: clamp(52px, 7vw, 108px); line-height: 1.08; }
+body[data-lang="ar"] .section-title { font-size: clamp(40px, 5.3vw, 76px); line-height: 1.12; }
+body[data-lang="ar"] .vision-title { font-size: clamp(40px, 5vw, 72px); line-height: 1.14; }
 
 .flow-copy .section-title { max-width: none; }
 .flow-copy .body-large { max-width: none; }
