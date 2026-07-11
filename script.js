@@ -99,25 +99,52 @@ function initProductCtas() {
   }
   let isScheduled = false;
   const smoothStep = (value) => value * value * (3 - (2 * value));
+  const getLayoutTop = (element) => {
+    let top = 0;
+    let node = element;
+    while (node) {
+      top += node.offsetTop;
+      node = node.offsetParent;
+    }
+    return top;
+  };
+  const getRows = () => {
+    const rows = [];
+    productCards.forEach((card) => {
+      const link = card.querySelector('.product-link');
+      if (!link) return;
+      const top = getLayoutTop(card);
+      let row = rows.find((item) => Math.abs(item.top - top) < 8);
+      if (!row) {
+        row = { top, items: [] };
+        rows.push(row);
+      }
+      row.items.push({ card, link });
+    });
+    return rows;
+  };
+  const setCtaState = (card, link, progress) => {
+    const rect = link.getBoundingClientRect();
+    const clickWidth = Math.max(82, Math.min(rect.width * 0.32, 132));
+    link.style.setProperty('--cta-progress', progress.toFixed(3));
+    link.style.setProperty('--cta-click-offset', `${(-100 + (progress * 100)).toFixed(2)}%`);
+    link.style.setProperty('--cta-mondrian-offset', `${(100 - (progress * 100)).toFixed(2)}%`);
+    link.style.setProperty('--cta-left-padding', `${(16 + (progress * (clickWidth - 2))).toFixed(2)}px`);
+    link.style.setProperty('--cta-right-padding', `${(16 + (progress * 42)).toFixed(2)}px`);
+    card.classList.toggle('is-cta-active', progress >= 0.995);
+  };
   const updateCtas = () => {
     isScheduled = false;
     const startY = window.innerHeight * 0.6;
     const completeY = window.innerHeight * 0.4;
     const travel = Math.max(startY - completeY, 1);
-    productCards.forEach((card) => {
-      const link = card.querySelector('.product-link');
-      if (!link) return;
-      const rect = link.getBoundingClientRect();
-      const centerY = rect.top + (rect.height / 2);
+    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    getRows().forEach((row) => {
+      const rowBottom = Math.max(...row.items.map(({ card }) => getLayoutTop(card) + card.offsetHeight));
+      const centerY = rowBottom - 32 - scrollY;
       const rawProgress = (startY - centerY) / travel;
       const progress = smoothStep(Math.min(Math.max(rawProgress, 0), 1));
-      const clickWidth = Math.max(82, Math.min(rect.width * 0.32, 132));
-      link.style.setProperty('--cta-progress', progress.toFixed(3));
-      link.style.setProperty('--cta-click-offset', `${(-100 + (progress * 100)).toFixed(2)}%`);
-      link.style.setProperty('--cta-mondrian-offset', `${(100 - (progress * 100)).toFixed(2)}%`);
-      link.style.setProperty('--cta-left-padding', `${(16 + (progress * (clickWidth - 2))).toFixed(2)}px`);
-      link.style.setProperty('--cta-right-padding', `${(16 + (progress * 42)).toFixed(2)}px`);
-      card.classList.toggle('is-cta-active', progress >= 0.995);
+      row.items.forEach(({ card, link }) => setCtaState(card, link, progress));
     });
   };
   const requestUpdate = () => {
@@ -127,6 +154,7 @@ function initProductCtas() {
   };
   window.addEventListener('scroll', requestUpdate, { passive: true });
   window.addEventListener('resize', requestUpdate);
+  window.addEventListener('flowmatic:layout-change', requestUpdate);
   updateCtas();
 }
 
@@ -327,7 +355,10 @@ function fitSemanticText() {
 function scheduleSemanticFit() {
   window.clearTimeout(fitTextTimer);
   fitTextTimer = window.setTimeout(() => {
-    window.requestAnimationFrame(() => window.requestAnimationFrame(fitSemanticText));
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      fitSemanticText();
+      window.dispatchEvent(new Event('flowmatic:layout-change'));
+    }));
   }, 32);
 }
 

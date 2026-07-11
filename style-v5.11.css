@@ -1708,8 +1708,6 @@ body[data-lang="ko"] .product-link .lang-ko.lang-inline {
   font-size: 1.15em;
 }
 
-.product-card:hover .product-link,
-.product-card:focus-within .product-link,
 .product-card.is-cta-active .product-link {
   padding-left: calc(var(--cta-click-width) + 14px);
   padding-right: 58px;
@@ -1717,11 +1715,7 @@ body[data-lang="ko"] .product-link .lang-ko.lang-inline {
   background-color: var(--fm-yellow);
 }
 
-.product-card:hover .product-link::before,
-.product-card:focus-within .product-link::before,
 .product-card.is-cta-active .product-link::before,
-.product-card:hover .product-link::after,
-.product-card:focus-within .product-link::after,
 .product-card.is-cta-active .product-link::after {
   opacity: 1;
   transform: translateX(0);
