@@ -2746,3 +2746,109 @@ body.technology-page .detail-cta-copy .section-title[data-fit-text] { --fit-max:
     line-height: 1.42;
   }
 }
+
+/* v5.8 — mobile clipping guard */
+@media (max-width: 768px) {
+  .section-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .section-grid > .cell,
+  .span-3,
+  .span-4,
+  .span-5,
+  .span-6,
+  .span-7,
+  .span-8,
+  .span-12,
+  .field-flow .flow-copy,
+  .flow-visual-cell,
+  .product-card,
+  .explainer-copy,
+  .explainer-stage,
+  .demo-copy,
+  .demo-cell,
+  .detail-overview .detail-hero-copy,
+  .detail-overview .detail-animation,
+  .detail-animation,
+  .detail-feature,
+  .detail-demo .demo-copy,
+  .detail-demo .demo-cell,
+  .detail-cta-copy,
+  .detail-cta-actions {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .cell {
+    padding-left: clamp(20px, 6vw, 28px);
+    padding-right: clamp(20px, 6vw, 28px);
+  }
+
+  [data-fit-text] {
+    --fit-reserve: 8px;
+  }
+
+  .hero-title[data-fit-text] {
+    --fit-min: 30px;
+    --fit-max: 58px;
+  }
+
+  .section-title[data-fit-text] {
+    --fit-min: 26px;
+    --fit-max: 52px;
+  }
+
+  .vision-title[data-fit-text] {
+    --fit-min: 19px;
+    --fit-max: 44px;
+  }
+
+  .hero-layer h2[data-fit-text] {
+    --fit-min: 24px;
+    --fit-max: 50px;
+  }
+
+  .hero-layer-support[data-fit-text] {
+    --fit-min: 17px;
+    --fit-max: 26px;
+  }
+
+  .body-large[data-fit-text],
+  .copy-body[data-fit-text] {
+    --fit-min: 15px;
+    --fit-max: 27px;
+  }
+
+  .card-title-fit[data-fit-text] {
+    --fit-min: 17px;
+    --fit-max: 42px;
+  }
+
+  .strategy-statement h3[data-fit-text] {
+    --fit-min: 22px;
+    --fit-max: 32px;
+  }
+
+  body.technology-page .detail-overview .hero-title[data-fit-text] {
+    --fit-min: 24px;
+    --fit-max: 54px;
+  }
+
+  body.technology-page .detail-demo .section-title[data-fit-text],
+  body.technology-page .detail-cta-copy .section-title[data-fit-text] {
+    --fit-min: 24px;
+    --fit-max: 50px;
+  }
+
+  .copy-body[data-fit-text] .copy-lines,
+  .copy-body[data-fit-text] .copy-line {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .copy-body[data-fit-text] .copy-line {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+}

@@ -239,7 +239,11 @@ function fitSemanticText() {
     if (!lines.length || availableWidth <= 0) return;
 
     const computedSize = Number.parseFloat(getComputedStyle(element).fontSize) || 32;
-    const minSize = Number.parseFloat(element.dataset.fitMin || '') || 18;
+    const cssMin = readCssNumber(element, '--fit-min', NaN);
+    const dataMin = Number.parseFloat(element.dataset.fitMin || '');
+    const minSize = Number.isFinite(cssMin)
+      ? cssMin
+      : (Number.isFinite(dataMin) ? dataMin : 18);
     const dataMax = Number.parseFloat(element.dataset.fitMax || '');
     const cssMax = readCssNumber(element, '--fit-max', computedSize);
     const maxSize = Math.max(minSize, Number.isFinite(dataMax) ? dataMax : cssMax);
