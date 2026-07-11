@@ -1629,6 +1629,11 @@ body.nav-open .nav-toggle span:nth-of-type(3) {
 
 .product-link {
   --cta-click-width: clamp(82px, 32%, 132px);
+  --cta-progress: 0;
+  --cta-left-padding: 16px;
+  --cta-right-padding: 16px;
+  --cta-click-offset: calc(-100% - var(--border));
+  --cta-mondrian-offset: 100%;
   position: relative;
   isolation: isolate;
   margin-top: auto;
@@ -1637,18 +1642,15 @@ body.nav-open .nav-toggle span:nth-of-type(3) {
   align-items: center;
   gap: 12px;
   min-height: 64px;
-  padding: 14px 16px;
-  border: var(--border) solid transparent;
+  padding: 14px var(--cta-right-padding) 14px var(--cta-left-padding);
+  border: var(--border) solid rgb(10 10 10 / var(--cta-progress));
   border-top-color: var(--fm-black);
-  background: transparent;
+  background-color: rgb(255 210 31 / var(--cta-progress));
   font-weight: 900;
   line-height: 1.05;
   text-decoration: none;
   overflow: hidden;
-  transition:
-    background-color var(--duration-normal) var(--ease-flow),
-    border-color var(--duration-normal) var(--ease-flow),
-    padding var(--duration-normal) var(--ease-flow);
+  transition: outline-color var(--duration-fast) var(--ease-flow);
 }
 
 .product-link::before {
@@ -1667,8 +1669,11 @@ body.nav-open .nav-toggle span:nth-of-type(3) {
   font-size: 13px;
   font-weight: 900;
   text-transform: uppercase;
-  transform: translateX(calc(-100% - var(--border)));
-  transition: transform var(--duration-normal) var(--ease-flow);
+  opacity: var(--cta-progress);
+  transform: translateX(var(--cta-click-offset));
+  transition:
+    opacity var(--duration-fast) var(--ease-flow),
+    transform var(--duration-normal) var(--ease-flow);
 }
 
 .product-link::after {
@@ -1680,8 +1685,8 @@ body.nav-open .nav-toggle span:nth-of-type(3) {
   border-left: var(--border) solid var(--fm-black);
   background:
     linear-gradient(0deg, var(--fm-blue) 0 30%, var(--fm-black) 30% calc(30% + var(--border)), var(--fm-white) calc(30% + var(--border)) 62%, var(--fm-black) 62% calc(62% + var(--border)), var(--fm-red) calc(62% + var(--border)) 100%);
-  opacity: 0;
-  transform: translateX(100%);
+  opacity: var(--cta-progress);
+  transform: translateX(var(--cta-mondrian-offset));
   transition:
     opacity var(--duration-fast) var(--ease-flow),
     transform var(--duration-normal) var(--ease-flow);

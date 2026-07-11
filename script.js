@@ -68,7 +68,7 @@ function toggleNav() {
 }
 
 function initReveal() {
-  if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+  if (prefersReducedMotion || !('requestAnimationFrame' in window)) {
     revealTargets.forEach((target) => target.classList.add('is-visible'));
     return;
   }
@@ -85,16 +85,49 @@ function initReveal() {
 function initProductCtas() {
   if (!productCards.length) return;
   if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-    productCards.forEach((card) => card.classList.add('is-cta-active'));
+    productCards.forEach((card) => {
+      const link = card.querySelector('.product-link');
+      if (!link) return;
+      card.classList.add('is-cta-active');
+      link.style.setProperty('--cta-progress', '1');
+      link.style.setProperty('--cta-click-offset', '0%');
+      link.style.setProperty('--cta-mondrian-offset', '0%');
+      link.style.setProperty('--cta-left-padding', 'calc(var(--cta-click-width) + 14px)');
+      link.style.setProperty('--cta-right-padding', '58px');
+    });
     return;
   }
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-cta-active');
+  let isScheduled = false;
+  const smoothStep = (value) => value * value * (3 - (2 * value));
+  const updateCtas = () => {
+    isScheduled = false;
+    const startY = window.innerHeight * 0.6;
+    const completeY = window.innerHeight * 0.4;
+    const travel = Math.max(startY - completeY, 1);
+    productCards.forEach((card) => {
+      const link = card.querySelector('.product-link');
+      if (!link) return;
+      const rect = link.getBoundingClientRect();
+      const centerY = rect.top + (rect.height / 2);
+      const rawProgress = (startY - centerY) / travel;
+      const progress = smoothStep(Math.min(Math.max(rawProgress, 0), 1));
+      const clickWidth = Math.max(82, Math.min(rect.width * 0.32, 132));
+      link.style.setProperty('--cta-progress', progress.toFixed(3));
+      link.style.setProperty('--cta-click-offset', `${(-100 + (progress * 100)).toFixed(2)}%`);
+      link.style.setProperty('--cta-mondrian-offset', `${(100 - (progress * 100)).toFixed(2)}%`);
+      link.style.setProperty('--cta-left-padding', `${(16 + (progress * (clickWidth - 2))).toFixed(2)}px`);
+      link.style.setProperty('--cta-right-padding', `${(16 + (progress * 42)).toFixed(2)}px`);
+      card.classList.toggle('is-cta-active', progress >= 0.995);
     });
-  }, { threshold: 0.42, rootMargin: '-12% 0px -20% 0px' });
-  productCards.forEach((card) => observer.observe(card));
+  };
+  const requestUpdate = () => {
+    if (isScheduled) return;
+    isScheduled = true;
+    requestAnimationFrame(updateCtas);
+  };
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  updateCtas();
 }
 
 function initNavigation() {
