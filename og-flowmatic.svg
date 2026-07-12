@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Flowmatic</title>
+  <desc id="desc">Flowmatic operational intelligence graphic</desc>
+  <rect width="1200" height="630" fill="#FAFAF7"/>
+  <rect x="40" y="40" width="1120" height="550" fill="#FAFAF7" stroke="#0A0A0A" stroke-width="10"/>
+  <rect x="70" y="70" width="310" height="220" fill="#FFD21F" stroke="#0A0A0A" stroke-width="8"/>
+  <rect x="380" y="70" width="350" height="220" fill="#0057D9" stroke="#0A0A0A" stroke-width="8"/>
+  <rect x="730" y="70" width="400" height="220" fill="#FAFAF7" stroke="#0A0A0A" stroke-width="8"/>
+  <rect x="70" y="290" width="230" height="270" fill="#E3342F" stroke="#0A0A0A" stroke-width="8"/>
+  <rect x="300" y="290" width="430" height="270" fill="#FAFAF7" stroke="#0A0A0A" stroke-width="8"/>
+  <rect x="730" y="290" width="400" height="270" fill="#D9D9D2" stroke="#0A0A0A" stroke-width="8"/>
+  <text x="105" y="430" fill="#0A0A0A" font-family="Arial, Helvetica, sans-serif" font-size="112" font-weight="900">Flowmatic</text>
+  <text x="108" y="505" fill="#0A0A0A" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800">Operational Intelligence for Manufacturing</text>
+</svg>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowmatic NC | مراجعة مسار الأداة قبل التشغيل</title>
+<meta name="description" content="حوّل NC وG-code إلى مسارات أداة مرئية وزمن دورة تقديري ونقاط مراجعة قبل التشغيل.">
+<meta name="theme-color" content="#FAFAF7">
+<link rel="canonical" href="https://flowmatic-os.com/ar/nc/">
+<link rel="alternate" hreflang="ko" href="https://flowmatic-os.com/ko/nc/">
+<link rel="alternate" hreflang="en" href="https://flowmatic-os.com/en/nc/">
+<link rel="alternate" hreflang="ar" href="https://flowmatic-os.com/ar/nc/">
+<link rel="alternate" hreflang="x-default" href="https://flowmatic-os.com/ko/nc/">
+<meta property="og:title" content="Flowmatic NC | مراجعة مسار الأداة قبل التشغيل">
+<meta property="og:description" content="حوّل NC وG-code إلى مسارات أداة مرئية وزمن دورة تقديري ونقاط مراجعة قبل التشغيل.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://flowmatic-os.com/ar/nc/">
+<meta property="og:image" content="https://flowmatic-os.com/og-flowmatic.svg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style-v5.19.css">
+</head>
+<body class="technology-page flowmatic-nc" data-lang="ar" data-static-lang="true">
+<a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
+<header class="site-header" data-header>
+<a aria-label="Flowmatic home" class="brand" href="/ar/#hero"><span aria-hidden="true" class="brand-mark"></span><span>Flowmatic</span></a>
+<div class="header-actions">
+<nav class="site-nav" data-nav id="site-nav"><a href="/ar/#approach">النهج</a><a href="/ar/#flow">طريقة العمل</a><a href="/ar/#products">المنتجات</a><a href="/ar/#contact">ناقش مشروعًا تجريبيًا</a></nav>
+<div aria-label="Language switcher" class="lang-switcher"><a class="lang-button" data-lang-link="ko" hreflang="ko" lang="ko" href="/ko/nc/">KR</a><a class="lang-button" data-lang-link="en" hreflang="en" lang="en" href="/en/nc/">EN</a><a class="lang-button is-active" data-lang-link="ar" hreflang="ar" lang="ar" href="/ar/nc/">العربية</a></div>
+<button aria-controls="site-nav" aria-expanded="false" class="nav-toggle" data-nav-toggle type="button"><span class="sr-only">فتح القائمة</span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main">
+<section aria-labelledby="tech-title" class="detail-overview section-grid">
+<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">Flowmatic NC</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title"><span class="copy-lines"><span class="copy-line">شاهد مسار الأداة</span><span class="copy-line">قبل التشغيل.</span></span></h1><p class="body-large">اقرأ الكود وأعد بناء الحركة. راجع المسار قبل تشغيل الماكينة.</p><div class="detail-meta"><span class="status-badge is-demo">العرض متاح</span><span>معدة واحدة · عملية واحدة · مجموعة برامج NC ممثلة</span></div><a class="detail-inline-back" href="/ar/#products">← كل المنتجات</a></div>
+<div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">تسلسل التشغيل الحالي</p></div><div aria-label="NC code becomes a visual toolpath and review result" class="tech-visual nc-explainer" data-tech-animation="nc">
+<div class="visual-label label-input">1 · قراءة الكود</div><div class="nc-code-panel"><span class="code-line active">N120 G01 X20. Y40. F800</span><span class="code-line">N130 G02 X60. Y40. R20.</span><span class="code-line risk-line">N140 G00 Z-4.0</span><span class="code-line">N150 M81 INDEX</span></div><div class="visual-arrow arrow-a">→</div>
+<div class="visual-label label-process">2 · إعادة بناء الحركة</div><div class="nc-path-stage"><svg aria-hidden="true" viewBox="0 0 420 270"><path class="nc-route" d="M40 220 L40 55 L180 55 Q230 55 230 110 L230 165 L365 165 L365 225"></path><circle class="nc-moving-tool" r="11"><animateMotion dur="6s" path="M40 220 L40 55 L180 55 Q230 55 230 110 L230 165 L365 165 L365 225" repeatCount="indefinite"></animateMotion></circle><circle class="nc-risk-zone" cx="230" cy="150" r="24"></circle></svg><span class="risk-caption">تحقق من الحركة السريعة</span></div><div class="visual-arrow arrow-b">→</div>
+<div class="visual-label label-output">3 · المراجعة قبل التشغيل</div><div class="nc-result-panel"><span><b>CT</b> 213.4 s</span><span><b>الأدوات</b> 12</span><span class="result-alert"><b>مراجعة</b> 1 path</span></div></div></div><article class="cell span-4 detail-feature reveal delay-1"><span>01</span><h3 class="semantic-copy card-title-fit" data-fit-min="19" data-fit-text><span class="copy-lines"><span class="copy-line">حلّل برنامج NC.</span></span></h3><p>استخرج الأدوات والتغذية والإحداثيات وحركات الفهرسة.</p></article>
+<article class="cell span-4 detail-feature reveal delay-2"><span>02</span><h3 class="semantic-copy card-title-fit" data-fit-min="19" data-fit-text><span class="copy-lines"><span class="copy-line">أعد بناء الحركة.</span></span></h3><p>اعرض أين تتحرك الأداة وبأي ترتيب.</p></article>
+<article class="cell span-4 detail-feature reveal delay-3"><span>03</span><h3 class="semantic-copy card-title-fit" data-fit-min="19" data-fit-text><span class="copy-lines"><span class="copy-line">راجع قبل التشغيل.</span></span></h3><p>تحقق من زمن الدورة والحركات الخطرة قبل تشغيل الماكينة.</p></article></section>
+<section aria-labelledby="demo-title" class="detail-demo section-grid"><div class="cell span-4 demo-copy reveal"><p class="eyebrow">عرض المنتج</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title"><span class="copy-lines"><span class="copy-line">عرض Flowmatic NC العملي</span></span></h2><p class="body-large">حوّل NC وG-code إلى مسارات أداة مرئية وزمن دورة تقديري ونقاط مراجعة قبل التشغيل.</p></div>
+<div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="/flowmatic_nc_demo" data-video-title="Flowmatic NC demo"><video aria-label="Flowmatic NC demo" controls hidden playsinline preload="metadata" poster="/og-flowmatic.svg" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>لا يستطيع هذا المتصفح تشغيل الفيديو. راجع الملخص أسفل المشغل.</strong></p></div></div><p class="video-summary">حوّل NC وG-code إلى مسارات أداة مرئية وزمن دورة تقديري ونقاط مراجعة قبل التشغيل.</p></div></section>
+<section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">بيانات التحقق التجريبي</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title"><span class="copy-lines"><span class="copy-line">مراجعة مسار الأداة قبل التشغيل</span></span></h2><p class="body-large">حوّل NC وG-code إلى مسارات أداة مرئية وزمن دورة تقديري ونقاط مراجعة قبل التشغيل.</p></div><article class="cell spec-card span-4 reveal delay-1"><span>01</span><h3>المستخدمون المستهدفون</h3><ul><li>مبرمجو CNC</li><li>مهندسو الإنتاج</li><li>مسؤولو مراجعة التشغيل</li></ul></article>
+<article class="cell spec-card span-4 reveal delay-2"><span>02</span><h3>المدخلات</h3><ul><li>برنامج NC/G-code</li><li>معلومات الأدوات والإحداثيات والتغذية الموجودة في البرنامج</li></ul></article>
+<article class="cell spec-card span-4 reveal delay-3"><span>03</span><h3>الأحداث التشغيلية</h3><ul><li>نقطة مراجعة حركة سريعة</li><li>مرشح خطر مسار</li><li>مراجعة زمن الدورة</li></ul></article>
+<article class="cell spec-card span-4 reveal delay-1"><span>04</span><h3>النتائج</h3><ul><li>تصور مسار الأداة</li><li>تسلسل الحركة</li><li>زمن دورة تقديري</li><li>نقاط مراجعة قبل التشغيل</li></ul></article>
+<article class="cell spec-card span-4 reveal delay-2"><span>05</span><h3>شروط التطبيق التجريبي</h3><ul><li>يتم التحقق من الصيغ المدعومة باستخدام وحدة التحكم والبرنامج الفعلي</li><li>يقتصر أول مشروع تجريبي على معدة واحدة أو عائلة برامج واحدة</li></ul></article>
+<article class="cell spec-card span-4 reveal delay-3"><span>06</span><h3>مؤشرات KPI المرشحة</h3><ul><li>وقت المراجعة قبل التشغيل</li><li>عدد عناصر المراجعة المكتشفة قبل التشغيل</li><li>عدد تكرارات تعديل البرنامج</li></ul></article><div class="cell yellow span-12 reveal"><p class="body-large"><strong>نطاق المشروع التجريبي:</strong> معدة واحدة · عملية واحدة · مجموعة برامج NC ممثلة</p></div></section>
+<section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">منتجات مرتبطة</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title"><span class="copy-lines"><span class="copy-line">وحدات متصلة</span><span class="copy-line">في نفس التدفق التشغيلي</span></span></h2><ul class="related-list"><li><a href="/ar/tms/">Flowmatic TMS — إدارة الأدوات</a> — إدارة عمر الأدوات والمخزون والموقع</li><li><a href="/ar/work-standard/">Flowmatic Work Standard</a> — إرشادات عمل خطوة بخطوة</li></ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="/ar/?interest=nc#contact">ناقش مشروعًا تجريبيًا</a><a class="fm-button" href="/ar/#products">كل المنتجات</a></div></section>
+</main><footer class="site-footer">
+<strong>Flowmatic</strong>
+<p>لا يحتاج المصنع إلى نظام إضافي، بل يحتاج إلى تدفق العمليات.</p>
+<a href="/ar/#hero">الرئيسية</a>
+</footer><script src="/script.js?v=5.16"></script></body></html>

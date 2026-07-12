@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://flowmatic-os.com/sitemap.xml
