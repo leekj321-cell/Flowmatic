@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 BASE_URL = "https://flowmatic-os.com"
-CSS_HREF = "/style-v5.19.css"
-SCRIPT_SRC = "/script.js?v=5.16"
+CSS_HREF = "/style-v5.20.css"
+SCRIPT_SRC = "/script.js?v=5.17"
 OG_IMAGE = f"{BASE_URL}/og-flowmatic.svg"
 
 
@@ -89,11 +89,12 @@ HOME = {
         "title": "Flowmatic | 제조 현장 운영 인텔리전스",
         "description": "Flowmatic은 카메라, NC 코드, 작업자 입력을 운영 이벤트로 바꾸고 알림·검토·호출·안내에 연결하는 제조 현장 운영 인텔리전스입니다.",
         "eyebrow": "제조 현장 운영 인텔리전스",
-        "h1": "현장 이벤트를|다음 행동으로 연결합니다.",
-        "body": "Flowmatic은 카메라, NC 코드, 작업자 입력을 사이클 손실, 경로 위험, 자재 요구, 작업 안내로 바꾸고 알림·검토·호출·안내에 연결합니다. 기존 설비와 작업 방식은 그대로 유지합니다.",
-        "primary": "제품 데모 보기",
-        "secondary": "파일럿 상담",
+        "h1": "The Elegant Engineering.|Intelligent Operations.|Flowmatic.",
+        "body": "현장의 물리적 움직임을 Event로 바꾸고, Event를 판단으로, 판단을 사람과 기계의 행동으로 연결하는 Engineering Intelligence 플랫폼.",
+        "primary": "시스템 보기",
+        "secondary": "로드맵 보기",
         "support": "공장에는 시스템 하나를 더 얹기보다, 끊긴 운영이 흐르도록 해야 합니다.",
+        "brand_subcopy": "Engineering Intelligence for the physical world.",
         "problem_title": "생산은 계속됩니다.|판단은 뒤늦게 따라옵니다.",
         "problem_body": "현장은 멈추지 않습니다. 중요한 이벤트와 다음 행동은 뒤늦게 드러납니다.",
         "strategy_title": "현장을 바꾸기 전에|흐름을 읽습니다.",
@@ -115,11 +116,12 @@ HOME = {
         "title": "Flowmatic | Operational Intelligence for Manufacturing",
         "description": "Flowmatic turns camera, NC-code, and operator signals into actionable manufacturing events, alerts, reviews, guidance, and material calls.",
         "eyebrow": "Operational Intelligence for Manufacturing",
-        "h1": "Turn factory events|into the next action.",
-        "body": "Flowmatic turns camera, NC-code, and operator signals into cycle loss, path risk, material demand, and work guidance—then connects each event to an alert, review, call, or guide without replacing the systems already running your factory.",
-        "primary": "View product demos",
-        "secondary": "Discuss a pilot",
+        "h1": "The Elegant Engineering.|Intelligent Operations.|Flowmatic.",
+        "body": "Flowmatic turns factory motion into events, events into decisions, and decisions into coordinated action.",
+        "primary": "Explore the System",
+        "secondary": "See the Roadmap",
         "support": "A factory does not need one more system. It needs operations to flow.",
+        "brand_subcopy": "Engineering Intelligence for the physical world.",
         "problem_title": "Production keeps moving.|Decisions arrive late.",
         "problem_body": "The field never stops. Important events and the next action often appear too late.",
         "strategy_title": "Read the flow|before changing the field.",
@@ -141,11 +143,12 @@ HOME = {
         "title": "Flowmatic | ذكاء تشغيلي للتصنيع",
         "description": "يحوّل Flowmatic إشارات المصنع إلى أحداث تشغيلية قابلة للتنفيذ وتنبيهات ومراجعات وإرشادات وطلبات مواد.",
         "eyebrow": "ذكاء تشغيلي للتصنيع",
-        "h1": "حوّل أحداث المصنع|إلى الإجراء التالي.",
-        "body": "يحوّل Flowmatic إشارات الكاميرات وبرامج NC ومدخلات المشغّلين إلى أحداث تشغيلية مثل فقدان زمن الدورة، ومخاطر مسار الأداة، وطلب المواد، وإرشادات العمل، ثم يربط كل حدث بتنبيه أو مراجعة أو طلب أو إرشاد، من دون استبدال الأنظمة القائمة في المصنع.",
-        "primary": "شاهد عروض المنتجات",
-        "secondary": "ناقش مشروعًا تجريبيًا",
+        "h1": "The Elegant Engineering.|Intelligent Operations.|Flowmatic.",
+        "body": "يحوّل Flowmatic حركة المصنع إلى أحداث، والأحداث إلى قرارات، والقرارات إلى أفعال منسقة بين الإنسان والآلة.",
+        "primary": "استكشف النظام",
+        "secondary": "شاهد خارطة الطريق",
         "support": "لا يحتاج المصنع إلى نظام إضافي، بل يحتاج إلى تدفق العمليات.",
+        "brand_subcopy": "Engineering Intelligence for the physical world.",
         "problem_title": "الإنتاج يستمر بالحركة.|والقرارات تصل متأخرة.",
         "problem_body": "الميدان لا يتوقف. وغالبًا ما تظهر الأحداث المهمة والإجراء التالي بعد فوات الوقت.",
         "strategy_title": "اقرأ التدفق|قبل تغيير الميدان.",
@@ -254,6 +257,229 @@ PILOT_STEPS = {
 }
 
 
+STRATEGIC_NARRATIVE = {
+    "ko": {
+        "title": "Cycle Time에서|Factory OS까지",
+        "body": "Flowmatic은 처음부터 거대한 Factory OS를 판매하지 않는다. 가장 먼저 공장에서 누구나 이해할 수 있는 진실, Cycle Time에서 시작한다.",
+        "support": "Flowmatic CT는 공장의 시간축을 만든다. 그 시간축은 Event DB가 되고, Event DB는 가공, 품질, 작업자 부하, 소재 흐름, 업무배정, 이동형 자동화를 하나로 연결한다.",
+        "steps": ["CT", "Event DB", "NC / Quality / Human Factors", "Material Flow", "Operator / Fleet", "Mobile Automation", "Factory OS"],
+    },
+    "en": {
+        "title": "From Cycle Time|to Factory OS",
+        "body": "Flowmatic does not begin by selling a giant Factory OS. It starts with the smallest visible truth in the factory: cycle time.",
+        "support": "Flowmatic CT creates the factory time axis. That time axis becomes Event DB. Event DB connects machining, quality, human workload, material flow, task assignment, and mobile automation.",
+        "steps": ["CT", "Event DB", "NC / Quality / Human Factors", "Material Flow", "Operator / Fleet", "Mobile Automation", "Factory OS"],
+    },
+    "ar": {
+        "title": "من زمن الدورة|إلى Factory OS",
+        "body": "لا يبدأ Flowmatic ببيع نظام مصنع ضخم. يبدأ من الحقيقة الأصغر والأوضح في المصنع: زمن الدورة.",
+        "support": "ينشئ Flowmatic CT محور الزمن في المصنع. يتحول هذا المحور إلى Event DB يربط التشغيل والجودة وعبء العمل وتدفق المواد وتوزيع المهام والأتمتة المتنقلة.",
+        "steps": ["CT", "Event DB", "NC / Quality / Human Factors", "Material Flow", "Operator / Fleet", "Mobile Automation", "Factory OS"],
+    },
+}
+
+
+MATERIAL_FLOW = {
+    "ko": {
+        "title": "소재 흐름 운영지능",
+        "statement": "재고의 실제 위치에서|라인사이드 투입까지",
+        "body": "Flowmatic은 공장을 측정하는 데서 멈추지 않는다. 측정된 사실을 소재 이동, 작업 배정, 라스트미터 실행으로 연결한다.",
+        "support": "Flowmatic은 사람이 부족을 발견하기 전에 소재가 흐르도록 만든다.",
+        "flow": ["Drone Inventory", "Material Truth", "AMR Dispatch", "Last-meter Docking", "Line-side Input", "Verification"],
+        "cards": [
+            ("Drone Inventory", "드론은 이동형 재고 센서가 된다. 파렛트 위치, 랙 상태, 재고 불일치, 빈 랙, 실제 소재 유무를 확인한다.", ["Stock_Counted", "Stock_Mismatch", "Pallet_Located", "Pallet_Missing", "Wrong_Location", "Empty_Rack", "Material_Available"]),
+            ("AMR Material Feeding", "AMR는 라인이 멈춘 뒤 호출되는 것이 아니라, 멈추기 전에 배차된다. Flowmatic은 CT, 소비속도, 소재 위치, Agent 상태를 기반으로 보급 Task를 생성한다.", ["Shortage_Risk", "Replenishment_Task", "AMR_Dispatched"]),
+            ("Last-meter Logistics", "라인 근처까지 가져오는 것만으로는 충분하지 않다. Flowmatic은 도킹, 매거진 장착, 빈 용기 회수, 투입 완료 확인까지 라스트미터를 닫는다.", ["AMR_Arrived", "Docking_Complete", "Magazine_Loaded", "Material_Input_Confirmed", "Empty_Magazine_Removed", "Line_Replenished", "AMR_Released"]),
+        ],
+    },
+    "en": {
+        "title": "Material Flow Intelligence",
+        "statement": "From inventory truth|to line-side input",
+        "body": "Flowmatic does not stop at measuring the factory. It connects measurement to material movement, task assignment, and last-meter execution.",
+        "support": "Flowmatic makes material flow before people have to notice the shortage.",
+        "flow": ["Drone Inventory", "Material Truth", "AMR Dispatch", "Last-meter Docking", "Line-side Input", "Verification"],
+        "cards": [
+            ("Drone Inventory", "Drones become mobile inventory sensors. They verify pallet location, rack status, stock mismatch, empty racks, and actual material availability.", ["Stock_Counted", "Stock_Mismatch", "Pallet_Located", "Pallet_Missing", "Wrong_Location", "Empty_Rack", "Material_Available"]),
+            ("AMR Material Feeding", "AMRs are dispatched before the line stops. Flowmatic uses CT, consumption speed, material location, and agent availability to create replenishment tasks.", ["Shortage_Risk", "Replenishment_Task", "AMR_Dispatched"]),
+            ("Last-meter Logistics", "Delivery near the line is not enough. Flowmatic closes the last meters: docking, magazine loading, empty container removal, and input confirmation.", ["AMR_Arrived", "Docking_Complete", "Magazine_Loaded", "Material_Input_Confirmed", "Empty_Magazine_Removed", "Line_Replenished", "AMR_Released"]),
+        ],
+    },
+    "ar": {
+        "title": "ذكاء تدفق المواد",
+        "statement": "من حقيقة المخزون|إلى إدخال جانب الخط",
+        "body": "لا يتوقف Flowmatic عند قياس المصنع. يربط القياس بحركة المواد وتوزيع المهام وتنفيذ آخر أمتار.",
+        "support": "يجعل Flowmatic المواد تتحرك قبل أن يلاحظ الناس النقص.",
+        "flow": ["Drone Inventory", "Material Truth", "AMR Dispatch", "Last-meter Docking", "Line-side Input", "Verification"],
+        "cards": [
+            ("Drone Inventory", "تتحول الطائرات المسيّرة إلى حساسات مخزون متنقلة تتحقق من موقع المنصات وحالة الرفوف والتباين والرفوف الفارغة وتوفر المواد.", ["Stock_Counted", "Stock_Mismatch", "Pallet_Located", "Pallet_Missing", "Wrong_Location", "Empty_Rack", "Material_Available"]),
+            ("AMR Material Feeding", "يتم إرسال AMR قبل توقف الخط. يستخدم Flowmatic زمن الدورة وسرعة الاستهلاك وموقع المادة وحالة الوكلاء لإنشاء مهام التزويد.", ["Shortage_Risk", "Replenishment_Task", "AMR_Dispatched"]),
+            ("Last-meter Logistics", "الوصول قرب الخط لا يكفي. يغلق Flowmatic آخر الأمتار: الإرساء، تحميل المجلة، إزالة الحاوية الفارغة، وتأكيد الإدخال.", ["AMR_Arrived", "Docking_Complete", "Magazine_Loaded", "Material_Input_Confirmed", "Empty_Magazine_Removed", "Line_Replenished", "AMR_Released"]),
+        ],
+    },
+}
+
+
+MOBILE_AUTOMATION = {
+    "ko": {
+        "title": "물류를 넘어,|이동형 자동화로",
+        "body": "Flowmatic은 소재만 움직이는 것이 아니다. 자동화 능력 자체를 필요한 곳으로 이동시킨다.",
+        "support": "모든 설비 주변에 고정 자동화를 구축하는 대신, Flowmatic은 지금 자동화가 필요한 설비로 이동형 자동화를 보낸다.",
+        "highlight": "AMR는 단순 운반차량이 아니다. Flowmatic 안에서 AMR는 이동형 실행 플랫폼이 된다.",
+        "safety": "PLC와 설비 컨트롤러는 설비 내부 제어와 안전을 담당한다. Flowmatic은 기존 설비 주변의 외부 공정흐름, 이동형 자동화 Task, 소재 흐름, 완료 검증을 조정한다.",
+        "levels": [
+            ("Level 1", "운반 Agent", "창고에서 라인으로, 라인에서 완제품으로, 빈 파렛트를 투입 지점으로 이동한다."),
+            ("Level 2", "라스트미터 물류", "도킹, 매거진 정렬, 라인사이드 투입, 빈 용기 회수를 닫는다."),
+            ("Level 3", "이동형 머신텐딩", "AMR + 로봇암이 로딩, 언로딩, 지그 배치, 트레이 교환, 사이클 시작 요청을 수행한다."),
+            ("Level 4", "유연한 라인 자동화", "하나의 이동형 자동화 셀이 여러 설비를 지원한다."),
+            ("Level 5", "재구성 가능한 공장 자동화", "Orchestrator가 손실, 우선순위, 생산계획에 따라 자동화 능력을 배정한다."),
+        ],
+    },
+    "en": {
+        "title": "Beyond Logistics:|Mobile Automation",
+        "body": "Flowmatic does not stop at moving materials. It moves automation itself.",
+        "support": "Instead of building fixed automation around every machine, Flowmatic brings mobile automation to the machine that needs it now.",
+        "highlight": "AMR is not only a vehicle. In Flowmatic, it becomes a mobile execution platform.",
+        "safety": "PLC and machine controllers remain responsible for internal machine control and safety. Flowmatic coordinates external process orchestration, mobile automation tasks, material flow, and verification around existing machines.",
+        "levels": [
+            ("Level 1", "Transport Agent", "Warehouse to line. Line to finished goods. Empty pallet to input point."),
+            ("Level 2", "Last-meter Logistics", "Docking, magazine alignment, line-side input, empty container return."),
+            ("Level 3", "Mobile Machine Tending", "AMR + robot arm performs loading, unloading, jig placement, tray exchange, and cycle start request."),
+            ("Level 4", "Flexible Line Automation", "A mobile automation cell serves multiple machines without fixed automation around every line."),
+            ("Level 5", "Reconfigurable Factory Automation", "Automation capability becomes assignable by the Orchestrator according to loss, priority, and production plan."),
+        ],
+    },
+    "ar": {
+        "title": "ما بعد اللوجستيات:|الأتمتة المتنقلة",
+        "body": "لا يكتفي Flowmatic بتحريك المواد. بل ينقل قدرة الأتمتة نفسها.",
+        "support": "بدل بناء أتمتة ثابتة حول كل آلة، يرسل Flowmatic الأتمتة المتنقلة إلى الآلة التي تحتاجها الآن.",
+        "highlight": "AMR ليس مركبة فقط. داخل Flowmatic يصبح منصة تنفيذ متنقلة.",
+        "safety": "تبقى PLC ومتحكمات الماكينات مسؤولة عن التحكم الداخلي والسلامة. ينسق Flowmatic تدفق العملية الخارجي، ومهام الأتمتة المتنقلة، وتدفق المواد، والتحقق حول المعدات القائمة.",
+        "levels": [
+            ("Level 1", "Transport Agent", "من المخزن إلى الخط، ومن الخط إلى البضائع النهائية، ومنصة فارغة إلى نقطة الإدخال."),
+            ("Level 2", "Last-meter Logistics", "الإرساء، محاذاة المجلة، إدخال جانب الخط، وإرجاع الحاوية الفارغة."),
+            ("Level 3", "Mobile Machine Tending", "AMR + ذراع روبوت ينفذ التحميل والتفريغ ووضع الجيج وتبديل الصواني وطلب بدء الدورة."),
+            ("Level 4", "Flexible Line Automation", "خلية أتمتة متنقلة تخدم عدة آلات دون أتمتة ثابتة حول كل خط."),
+            ("Level 5", "Reconfigurable Factory Automation", "تصبح قدرة الأتمتة قابلة للتوزيع بواسطة Orchestrator حسب الخسارة والأولوية وخطة الإنتاج."),
+        ],
+    },
+}
+
+
+ORCHESTRATOR = {
+    "ko": {
+        "title": "Orchestrator는|가장 가까운 Agent를 고르지 않는다.",
+        "body": "Flowmatic은 전체 공장손실을 가장 적게 만드는 Agent를 선택한다.",
+        "agents": ["Operator", "Inspector", "Maintenance Engineer", "Production Engineer", "AMR", "AGV", "Forklift", "Drone", "Collaborative Robot", "Mobile Automation Cell", "AMR + Robot Arm"],
+        "cost": ["Production Loss", "Travel Time", "Waiting Time", "Deadline Risk", "Skill Mismatch", "Workload", "Task Switching", "Safety Risk", "Battery Risk", "Payload Constraint", "Automation Capability Fit"],
+        "notes": [
+            "사람에게는 인지부하, 숙련도, 안전, 작업전환이 중요하다.",
+            "AMR에는 배터리, 적재량, 경로, 충전상태가 중요하다.",
+            "이동형 자동화 셀에는 설비 호환성, 도킹, 로봇 도달범위, 그리퍼, I/O 허가가 중요하다.",
+        ],
+    },
+    "en": {
+        "title": "The Orchestrator|does not choose the nearest agent.",
+        "body": "Flowmatic chooses the agent that minimizes total factory loss.",
+        "agents": ["Operator", "Inspector", "Maintenance Engineer", "Production Engineer", "AMR", "AGV", "Forklift", "Drone", "Collaborative Robot", "Mobile Automation Cell", "AMR + Robot Arm"],
+        "cost": ["Production Loss", "Travel Time", "Waiting Time", "Deadline Risk", "Skill Mismatch", "Workload", "Task Switching", "Safety Risk", "Battery Risk", "Payload Constraint", "Automation Capability Fit"],
+        "notes": [
+            "For people, cognitive load, skill, safety, and task switching matter.",
+            "For AMRs, battery, payload, route, and charging state matter.",
+            "For mobile automation cells, compatibility, docking, robot reach, gripper, and I/O permission matter.",
+        ],
+    },
+    "ar": {
+        "title": "Orchestrator|لا يختار الأقرب فقط.",
+        "body": "يختار Flowmatic الوكيل الذي يقلل خسارة المصنع الكلية.",
+        "agents": ["Operator", "Inspector", "Maintenance Engineer", "Production Engineer", "AMR", "AGV", "Forklift", "Drone", "Collaborative Robot", "Mobile Automation Cell", "AMR + Robot Arm"],
+        "cost": ["Production Loss", "Travel Time", "Waiting Time", "Deadline Risk", "Skill Mismatch", "Workload", "Task Switching", "Safety Risk", "Battery Risk", "Payload Constraint", "Automation Capability Fit"],
+        "notes": [
+            "بالنسبة للناس، الحمل المعرفي والمهارة والسلامة وتبديل المهام مهمة.",
+            "بالنسبة إلى AMR، البطارية والحمولة والمسار وحالة الشحن مهمة.",
+            "بالنسبة لخلايا الأتمتة المتنقلة، التوافق والإرساء ومدى الروبوت والقابض وتصريح I/O مهمة.",
+        ],
+    },
+}
+
+
+BROWNFIELD = {
+    "ko": {
+        "title": "Brownfield 공장을 위한 전략",
+        "body": "Flowmatic은 이미 설비를 보유한 공장을 위해 설계된다. 라인 전체를 새로 구축하는 대신, 기존 자산 위에 감지, Event, 소재 흐름, 업무배정, 이동형 자동화를 더한다.",
+        "cards": ["Existing Machines", "Event Layer", "Material Flow", "Mobile Automation", "Reconfigurable Brownfield Factory"],
+        "points": ["기존 설비를 사용한다.", "감지능력을 더한다.", "Event 이력을 축적한다.", "소재 흐름을 조정한다.", "필요한 곳에 이동형 자동화를 보낸다.", "공장 전체를 갈아엎지 않고 생산성을 끌어올린다."],
+    },
+    "en": {
+        "title": "Built for|Brownfield Factories",
+        "body": "Flowmatic is designed for factories that already have machines. Instead of rebuilding the entire line, Flowmatic adds sensing, events, material flow, task orchestration, and mobile automation around existing assets.",
+        "cards": ["Existing Machines", "Event Layer", "Material Flow", "Mobile Automation", "Reconfigurable Brownfield Factory"],
+        "points": ["Use existing machines.", "Add sensing.", "Build Event history.", "Coordinate material flow.", "Send mobile automation where needed.", "Improve productivity without rebuilding the entire factory."],
+    },
+    "ar": {
+        "title": "مصمم لمصانع|Brownfield",
+        "body": "صُمم Flowmatic للمصانع التي تمتلك آلات بالفعل. بدل إعادة بناء الخط بالكامل، يضيف الاستشعار والأحداث وتدفق المواد وتنسيق المهام والأتمتة المتنقلة حول الأصول القائمة.",
+        "cards": ["Existing Machines", "Event Layer", "Material Flow", "Mobile Automation", "Reconfigurable Brownfield Factory"],
+        "points": ["استخدم الآلات القائمة.", "أضف الاستشعار.", "ابنِ سجل Event.", "نسق تدفق المواد.", "أرسل الأتمتة المتنقلة حيث تلزم.", "حسّن الإنتاجية دون إعادة بناء المصنع بالكامل."],
+    },
+}
+
+
+ROADMAP = {
+    "ko": [
+        ("Phase 1", "Model-free CT", "공장의 시간축을 만든다."),
+        ("Phase 2", "Event DB", "Cycle을 재사용 가능한 공장 Event로 전환한다."),
+        ("Phase 3", "NC + Quality", "실제 시간, 프로그램 로직, 품질결과를 연결한다."),
+        ("Phase 4", "Material Flow", "소재 부족을 예측하고, 소재 위치를 확인하고, 보급을 배차한다."),
+        ("Phase 5", "Operator + Fleet", "사람, AMR, 지게차, 드론에게 Task를 배정한다."),
+        ("Phase 6", "Last-meter Logistics", "운반과 실제 라인 투입 사이의 마지막 간극을 닫는다."),
+        ("Phase 7", "Mobile Automation", "자동화 능력 자체를 필요한 설비로 이동시킨다."),
+        ("Phase 8", "Factory OS", "공장을 재구성 가능한 Engineering Intelligence 시스템으로 운영한다."),
+    ],
+    "en": [
+        ("Phase 1", "Model-free CT", "Create the factory time axis."),
+        ("Phase 2", "Event DB", "Turn cycles into reusable factory events."),
+        ("Phase 3", "NC + Quality", "Connect actual time, program logic, and quality outcomes."),
+        ("Phase 4", "Material Flow", "Predict shortages, locate material, dispatch replenishment."),
+        ("Phase 5", "Operator + Fleet", "Assign tasks to people, AMRs, forklifts, and drones."),
+        ("Phase 6", "Last-meter Logistics", "Close the gap between delivery and actual line-side input."),
+        ("Phase 7", "Mobile Automation", "Move automation capability to machines that need it now."),
+        ("Phase 8", "Factory OS", "Coordinate the factory as a reconfigurable Engineering Intelligence system."),
+    ],
+    "ar": [
+        ("Phase 1", "Model-free CT", "إنشاء محور زمن المصنع."),
+        ("Phase 2", "Event DB", "تحويل الدورات إلى أحداث مصنع قابلة لإعادة الاستخدام."),
+        ("Phase 3", "NC + Quality", "ربط الوقت الفعلي ومنطق البرنامج ونتائج الجودة."),
+        ("Phase 4", "Material Flow", "توقع النقص، تحديد موقع المواد، وإرسال التزويد."),
+        ("Phase 5", "Operator + Fleet", "توزيع المهام على الناس وAMR والرافعات والطائرات المسيّرة."),
+        ("Phase 6", "Last-meter Logistics", "إغلاق الفجوة بين التسليم والإدخال الفعلي بجانب الخط."),
+        ("Phase 7", "Mobile Automation", "نقل قدرة الأتمتة إلى الآلات التي تحتاجها الآن."),
+        ("Phase 8", "Factory OS", "تنسيق المصنع كنظام Engineering Intelligence قابل لإعادة التكوين."),
+    ],
+}
+
+
+FINAL_VISION = {
+    "ko": {
+        "title": "사람이 없는 공장이|목표가 아니다.",
+        "body": "Flowmatic이 만들려는 것은 사람이 좋은 제품을 만들기 위해 시스템과 싸우지 않아도 되는 공장이다.",
+        "lines": ["작업자는 무엇을 해야 할지 찾느라 시간을 쓰지 않는다.", "엔지니어는 반복 측정과 보고서 정리에 시간을 쓰지 않는다.", "관리자는 뒤늦은 보고를 기다리지 않는다.", "설비는 이유 없이 대기하지 않는다.", "소재는 사람이 부족을 발견할 때까지 기다리지 않는다.", "AMR는 특정 라인에 묶이지 않는다.", "재고의 진실은 실사 때만 드러나지 않는다.", "이동형 자동화는 필요한 설비로 이동한다.", "품질문제는 개인의 부주의로만 결론나지 않는다.", "숙련자의 경험은 퇴사와 함께 사라지지 않는다."],
+        "close": "Flowmatic은 엔지니어링 판단을 운영지능으로 바꾼다.",
+    },
+    "en": {
+        "title": "Not a factory|without people.",
+        "body": "Flowmatic is trying to create a factory where people no longer need to fight the system to produce good work.",
+        "lines": ["Operators do not waste time searching for what to do.", "Engineers do not waste time measuring and cleaning reports.", "Managers do not wait for delayed summaries.", "Machines do not wait without explanation.", "Materials do not wait for people to notice shortage.", "AMRs are not trapped as line-dedicated assets.", "Inventory truth is not discovered only during audit.", "Mobile automation moves to where it is needed.", "Quality problems are not reduced to personal blame.", "Skilled knowledge does not disappear when people leave."],
+        "close": "Flowmatic turns engineering judgment into operating intelligence.",
+    },
+    "ar": {
+        "title": "ليس مصنعًا|بلا أشخاص.",
+        "body": "يريد Flowmatic مصنعًا لا يضطر فيه الناس إلى مقاومة النظام لإنتاج عمل جيد.",
+        "lines": ["لا يضيع المشغّلون وقتهم في البحث عما يجب فعله.", "لا يضيع المهندسون وقتهم في القياس المتكرر وتنظيف التقارير.", "لا ينتظر المديرون ملخصات متأخرة.", "لا تنتظر الآلات بلا تفسير.", "لا تنتظر المواد حتى يلاحظ الناس النقص.", "لا تبقى AMR أصولًا مقيدة بخط واحد.", "لا تظهر حقيقة المخزون فقط أثناء الجرد.", "تتحرك الأتمتة المتنقلة إلى حيث تلزم.", "لا تُختزل مشاكل الجودة في لوم شخصي.", "لا تختفي خبرة المهرة عندما يغادرون."],
+        "close": "يحوّل Flowmatic الحكم الهندسي إلى ذكاء تشغيلي.",
+    },
+}
+
+
 PRODUCTS = {
     "nc": {
         "name": "Flowmatic NC",
@@ -294,22 +520,22 @@ PRODUCTS = {
         "class": "flowmatic-ct",
         "status": "demo",
         "video": "/flowmatic_ct_demo",
-        "title": {"ko": "Flowmatic CT | 사이클 자동 측정", "en": "Flowmatic CT | Automatic Cycle Measurement", "ar": "Flowmatic CT | قياس زمن الدورة تلقائيًا"},
-        "description": {"ko": "고정 카메라와 ROI로 시작·종료를 감지하고 사이클타임과 공정 타임라인을 자동 생성합니다.", "en": "Detect cycle start and end from a fixed camera ROI and build cycle time and process timelines automatically.", "ar": "اكتشف بداية الدورة ونهايتها من ROI لكاميرا ثابتة وأنشئ زمن الدورة وخط العملية تلقائيًا."},
-        "outcome": {"ko": "사이클 자동 측정", "en": "Automatic cycle measurement", "ar": "قياس زمن الدورة تلقائيًا"},
-        "card_desc": {"ko": "카메라 속 반복 움직임을 사이클 이벤트와 시간 데이터로 바꿉니다.", "en": "Turn repeated camera motion into cycle events and time data.", "ar": "حوّل الحركة المتكررة في الكاميرا إلى أحداث دورة وبيانات زمنية."},
+        "title": {"ko": "Flowmatic CT | Model-free Cycle Intelligence", "en": "Flowmatic CT | Model-free Cycle Intelligence", "ar": "Flowmatic CT | ذكاء دورة بلا نموذج"},
+        "description": {"ko": "학습데이터, 라벨링, GPU 추론, 전용 객체모델 없이 사용자가 지정한 움직임을 Cycle Event, Gantt, 이상 Cycle 증거영상으로 변환합니다.", "en": "Measure cycle events, Gantt timelines, and abnormal-cycle evidence without training data, labeling, GPU inference, or a custom object model.", "ar": "يقيس أحداث الدورة ومخططات Gantt وأدلة الدورات غير الطبيعية دون بيانات تدريب أو وسم أو استدلال GPU أو نموذج كائن مخصص."},
+        "outcome": {"ko": "Model-free Cycle Intelligence", "en": "Model-free Cycle Intelligence", "ar": "ذكاء دورة بلا نموذج"},
+        "card_desc": {"ko": "대상을 선택하고 ROI를 정의한 뒤 사이클을 측정해 손실을 드러냅니다.", "en": "Select a target, define the ROI, measure the cycle, and reveal the loss.", "ar": "حدد الهدف، عرّف ROI، قِس الدورة، واكشف الخسارة."},
         "cta": {"ko": "CT 데모 보기", "en": "View CT demo", "ar": "شاهد عرض CT"},
-        "hero": {"ko": "움직임만으로|사이클을 측정합니다.", "en": "Measure the cycle|from the motion.", "ar": "قِس الدورة|من الحركة."},
-        "hero_body": {"ko": "고정 카메라가 사이클 이벤트를 감지합니다. 타임라인은 자동으로 만들어집니다.", "en": "A fixed camera detects cycle events. The timeline is built automatically.", "ar": "تكتشف كاميرا ثابتة أحداث الدورة. ويتم إنشاء الخط الزمني تلقائيًا."},
+        "hero": {"ko": "Select. Define.|Measure. Reveal.", "en": "Select. Define.|Measure. Reveal.", "ar": "حدد. عرّف.|قِس. اكشف."},
+        "hero_body": {"ko": "Flowmatic CT는 학습데이터, 라벨링, GPU 추론, 전용 객체모델이 필요하지 않다. 사용자가 공정 Cycle을 대표하는 움직임을 지정하면 CSRT 추적, ROI 로직, 결정론적 상태머신이 그 움직임을 Cycle Event, Gantt, 이상 Cycle 증거영상으로 변환한다.", "en": "Flowmatic CT does not need training data, labeling, GPU inference, or a custom object model. A user selects the motion that represents the process cycle. CSRT tracking, ROI logic, and a deterministic state machine convert that motion into cycle events, Gantt charts, and abnormal-cycle evidence.", "ar": "لا يحتاج Flowmatic CT إلى بيانات تدريب أو وسم أو استدلال GPU أو نموذج كائن مخصص. يحدد المستخدم الحركة التي تمثل دورة العملية، ثم تحولها CSRT وROI ومنطق الحالة الحتمي إلى أحداث دورة ومخططات Gantt وأدلة دورة غير طبيعية."},
         "steps": {
             "ko": [("01", "기준 영역을 관찰합니다.", "고정 카메라와 ROI로 반복 위치를 관찰합니다."), ("02", "사이클의 시작과 끝을 잡습니다.", "현장 움직임의 변화에서 시작과 종료를 잡습니다."), ("03", "시간 데이터로 정리합니다.", "검출한 이벤트를 사이클타임과 공정 타임라인으로 정리합니다.")],
             "en": [("01", "Watch a reference area.", "Observe repeated positions with a fixed camera and ROI."), ("02", "Detect the cycle boundary.", "Detect start and finish from changes in field movement."), ("03", "Build time data.", "Turn detected events into cycle time and a process timeline.")],
             "ar": [("01", "راقب منطقة مرجعية.", "راقب المواضع المتكررة بكاميرا ثابتة وROI."), ("02", "اكتشف حدود الدورة.", "اكتشف البداية والنهاية من تغيرات حركة الميدان."), ("03", "ابنِ بيانات الوقت.", "حوّل الأحداث المكتشفة إلى زمن دورة وخط زمني للعملية.")],
         },
         "audiences": {"ko": ["생산기술 엔지니어", "라인 관리자", "개선 활동 담당자"], "en": ["Manufacturing engineers", "Line managers", "Improvement teams"], "ar": ["مهندسو الإنتاج", "مديرو الخطوط", "فرق التحسين"]},
-        "inputs": {"ko": ["고정 카메라 영상", "ROI", "시작·종료 기준"], "en": ["Fixed camera video", "ROI", "Start/end criteria"], "ar": ["فيديو كاميرا ثابتة", "ROI", "معايير البداية والنهاية"]},
+        "inputs": {"ko": ["User-selected Target", "CSRT Tracking", "Bird’s-eye ROI", "Deterministic State Machine"], "en": ["User-selected Target", "CSRT Tracking", "Bird’s-eye ROI", "Deterministic State Machine"], "ar": ["User-selected Target", "CSRT Tracking", "Bird’s-eye ROI", "Deterministic State Machine"]},
         "events": {"ko": ["사이클 시작", "사이클 종료", "사이클 완료", "변동 검토 후보"], "en": ["Cycle start", "Cycle end", "Cycle complete", "Variation review candidate"], "ar": ["بداية الدورة", "نهاية الدورة", "اكتمال الدورة", "مرشح مراجعة التغير"]},
-        "outputs": {"ko": ["사이클타임", "공정 타임라인", "반복 사이클 기록"], "en": ["Cycle time", "Process timeline", "Repeated cycle records"], "ar": ["زمن الدورة", "خط العملية", "سجلات الدورات المتكررة"]},
+        "outputs": {"ko": ["Cycle Event", "Gantt", "Abnormal-cycle Evidence"], "en": ["Cycle Event", "Gantt", "Abnormal-cycle Evidence"], "ar": ["Cycle Event", "Gantt", "Abnormal-cycle Evidence"]},
         "conditions": {"ko": ["고정된 카메라 위치", "검증 가능한 ROI", "조명과 시야 변화 확인", "영상 저장·보관 범위 사전 합의"], "en": ["Fixed camera position", "Verifiable ROI", "Lighting and view-change check", "Prior agreement on video storage and retention"], "ar": ["موضع كاميرا ثابت", "ROI قابل للتحقق", "فحص الإضاءة وتغير زاوية الرؤية", "اتفاق مسبق على حفظ الفيديو وفترة الاحتفاظ"]},
         "kpis": {"ko": ["자동 측정 커버리지", "수기 기록 시간", "사이클 변동 폭", "검토가 필요한 이상 이벤트 수"], "en": ["Automatic measurement coverage", "Manual recording time", "Cycle variation range", "Abnormal events requiring review"], "ar": ["تغطية القياس التلقائي", "وقت التسجيل اليدوي", "نطاق تغير الدورة", "الأحداث غير الطبيعية التي تحتاج مراجعة"]},
         "pilot_scope": {"ko": "한 개 작업 위치 또는 설비 · 반복 공정 한 종류", "en": "One work position or machine · one repeated process", "ar": "موقع عمل أو معدة واحدة · عملية متكررة واحدة"},
@@ -368,29 +594,29 @@ PRODUCTS = {
     },
     "amr": {
         "name": "Flowmatic AMR",
-        "display": {"ko": "Flowmatic AMR Calling + Operator", "en": "Flowmatic AMR Calling + Operator", "ar": "Flowmatic AMR Calling + Operator"},
+        "display": {"ko": "Flowmatic Fleet + Material Flow", "en": "Flowmatic Fleet + Material Flow", "ar": "Flowmatic Fleet + Material Flow"},
         "class": "flowmatic-amr",
         "status": "preview",
-        "title": {"ko": "Flowmatic AMR | 자재 호출과 AMR 배차", "en": "Flowmatic AMR | Material Calling and Dispatch", "ar": "Flowmatic AMR | طلب المواد وإرسال الروبوت المتنقل"},
-        "description": {"ko": "자재 요구를 작업자 알림과 AMR 배차로 연결하고 보급 완료까지 이벤트 상태를 추적합니다.", "en": "Connect material demand to operator alerts and AMR dispatch, then track the event through supply completion.", "ar": "اربط طلب المواد بتنبيهات المشغّل وإرسال AMR، ثم تتبع الحدث حتى اكتمال التزويد."},
-        "outcome": {"ko": "자재 호출과 AMR 배차", "en": "Material calls and AMR dispatch", "ar": "طلب المواد وإرسال الروبوت المتنقل"},
-        "card_desc": {"ko": "자재 요구를 작업자 알림과 AMR 배차로 연결합니다.", "en": "Connect material demand to an operator alert and AMR dispatch.", "ar": "اربط طلب المواد بتنبيه المشغّل وإرسال AMR."},
+        "title": {"ko": "Flowmatic AMR | Fleet와 라스트미터 소재 흐름", "en": "Flowmatic AMR | Fleet and Last-meter Material Flow", "ar": "Flowmatic AMR | الأسطول وتدفق المواد في آخر أمتار"},
+        "description": {"ko": "자재 요구를 Fleet 배정, 보급 이동, 라인사이드 투입 확인으로 연결하고 보급 완료까지 이벤트 상태를 추적합니다.", "en": "Connect material demand to fleet assignment, replenishment movement, and line-side input confirmation, then track the event through completion.", "ar": "اربط طلب المواد بتوزيع الأسطول وحركة التزويد وتأكيد الإدخال بجانب الخط، ثم تتبع الحدث حتى اكتماله."},
+        "outcome": {"ko": "Fleet와 라스트미터 실행", "en": "Fleet and last-meter execution", "ar": "تنفيذ الأسطول وآخر أمتار"},
+        "card_desc": {"ko": "자재 요구를 Fleet 배정, 보급 이동, 라인사이드 투입 확인으로 연결합니다.", "en": "Connect material demand to fleet assignment, replenishment movement, and line-side input confirmation.", "ar": "اربط طلب المواد بتوزيع الأسطول وحركة التزويد وتأكيد الإدخال بجانب الخط."},
         "cta": {"ko": "작동 방식 보기", "en": "See how it works", "ar": "شاهد طريقة العمل"},
-        "hero": {"ko": "라인이 기다리기 전에|자재를 호출합니다.", "en": "Call material|before the line waits.", "ar": "اطلب المواد|قبل أن ينتظر الخط."},
-        "hero_body": {"ko": "자재 요구를 감지해 작업자에게 알립니다. 정지로 이어지기 전에 AMR 배차 요청으로 연결합니다.", "en": "Detect demand and alert the operator. Connect the request to AMR dispatch before shortage becomes downtime.", "ar": "اكتشف الطلب ونبّه المشغّل. اربط الطلب بإرسال AMR قبل أن يتحول النقص إلى توقف."},
+        "hero": {"ko": "라인이 기다리기 전에|소재를 흐르게 합니다.", "en": "Move material|before the line waits.", "ar": "حرّك المواد|قبل أن ينتظر الخط."},
+        "hero_body": {"ko": "자재 요구를 감지해 작업자와 Fleet에 연결합니다. 부족이 정지로 이어지기 전에 보급, 도킹, 투입 확인까지 닫습니다.", "en": "Detect demand and connect it to operators and the fleet. Close replenishment, docking, and input confirmation before shortage becomes downtime.", "ar": "اكتشف الطلب واربطه بالمشغّلين والأسطول. أغلق التزويد والإرساء وتأكيد الإدخال قبل أن يتحول النقص إلى توقف."},
         "steps": {
-            "ko": [("01", "자재 요구를 감지합니다.", "잔량 신호나 호출 입력을 자재 요구 이벤트로 바꿉니다."), ("02", "필요한 사람에게 알립니다.", "대상 라인과 필요한 행동을 분명하게 보여줍니다."), ("03", "배차하고 흐름을 닫습니다.", "보급 완료를 확인하고 이벤트 상태를 닫습니다.")],
-            "en": [("01", "Detect demand.", "Turn stock signals or call inputs into a material-demand event."), ("02", "Alert the right person.", "Show the target line and the required action clearly."), ("03", "Dispatch and close the loop.", "Confirm supply completion and close the event state.")],
-            "ar": [("01", "اكتشف الطلب.", "حوّل إشارات المخزون أو مدخلات الطلب إلى حدث طلب مواد."), ("02", "نبّه الشخص المناسب.", "اعرض الخط المستهدف والإجراء المطلوب بوضوح."), ("03", "أرسل وأغلق الحلقة.", "أكد اكتمال التزويد وأغلق حالة الحدث.")],
+            "ko": [("01", "자재 요구를 감지합니다.", "잔량, CT, 소비속도, 재고 위치를 자재 요구 이벤트로 바꿉니다."), ("02", "Agent를 배정합니다.", "사람, AMR, 지게차, 드론 상태를 보고 전체 손실이 낮은 실행 경로를 고릅니다."), ("03", "라스트미터를 닫습니다.", "도착, 도킹, 투입 확인, 빈 용기 회수까지 이벤트 상태를 닫습니다.")],
+            "en": [("01", "Detect demand.", "Turn level, CT, consumption speed, and material location into a material-demand event."), ("02", "Assign the agent.", "Use operator, AMR, forklift, and drone state to choose the lower-loss execution path."), ("03", "Close the last meter.", "Track arrival, docking, input confirmation, and empty-container return until the event closes.")],
+            "ar": [("01", "اكتشف الطلب.", "حوّل المستوى وزمن الدورة وسرعة الاستهلاك وموقع المادة إلى حدث طلب مواد."), ("02", "وزّع الوكيل.", "استخدم حالة المشغّل وAMR والرافعة والطائرة المسيّرة لاختيار مسار تنفيذ أقل خسارة."), ("03", "أغلق آخر أمتار.", "تتبع الوصول والإرساء وتأكيد الإدخال وإرجاع الحاوية الفارغة حتى إغلاق الحدث.")],
         },
-        "audiences": {"ko": ["라인 작업자", "물류 운영자", "AMR 관제 담당자"], "en": ["Line operators", "Logistics operators", "AMR control staff"], "ar": ["مشغّلو الخط", "مشغّلو اللوجستيات", "مسؤولو مراقبة AMR"]},
-        "inputs": {"ko": ["자재 잔량 신호 또는 수동 호출", "라인·보급소 매핑", "AMR 상태 또는 연동 인터페이스"], "en": ["Material level signal or manual call", "Line-depot mapping", "AMR status or integration interface"], "ar": ["إشارة كمية المواد أو طلب يدوي", "ربط الخط بموقع التزويد", "حالة AMR أو واجهة التكامل"]},
-        "events": {"ko": ["자재 부족", "호출 확인", "배차 요청", "공급 완료", "예외 또는 실패"], "en": ["Material low", "Call confirmed", "Dispatch request", "Supply complete", "Exception or failure"], "ar": ["نقص المواد", "تأكيد الطلب", "طلب الإرسال", "اكتمال التزويد", "استثناء أو فشل"]},
-        "outputs": {"ko": ["대상 작업자 알림", "배차 요청 상태", "공급 진행 상태", "완료 확인"], "en": ["Target operator alert", "Dispatch request status", "Supply progress state", "Completion confirmation"], "ar": ["تنبيه المشغّل المستهدف", "حالة طلب الإرسال", "حالة تقدم التزويد", "تأكيد الاكتمال"]},
-        "conditions": {"ko": ["AMR 인터페이스와 호출 권한 확인", "안전 규칙과 예외 처리 기준 확인", "초기 파일럿은 사람 승인 후 배차를 기본값으로 사용"], "en": ["Confirm AMR interface and call authority", "Confirm safety rules and exception criteria", "Use human-approved dispatch as the default first pilot mode"], "ar": ["تأكيد واجهة AMR وصلاحية الطلب", "تأكيد قواعد السلامة ومعايير الاستثناء", "اعتماد موافقة الإنسان قبل الإرسال كإعداد أولي"]},
-        "kpis": {"ko": ["자재 대기시간", "호출부터 배차까지의 시간", "배차부터 공급 완료까지의 시간", "자재 부족으로 인한 라인 정지 횟수"], "en": ["Material waiting time", "Call-to-dispatch time", "Dispatch-to-supply-complete time", "Line stops caused by material shortage"], "ar": ["وقت انتظار المواد", "الوقت من الطلب إلى الإرسال", "الوقت من الإرسال إلى اكتمال التزويد", "عدد توقفات الخط بسبب نقص المواد"]},
-        "pilot_scope": {"ko": "라인 한 곳 · 보급소 한 곳 · 대표 자재 경로 한 개", "en": "One line · one depot · one representative material route", "ar": "خط واحد · نقطة تزويد واحدة · مسار مواد ممثل واحد"},
-        "related": ["work-standard"],
+        "audiences": {"ko": ["라인 작업자", "물류 운영자", "Fleet 관제 담당자"], "en": ["Line operators", "Logistics operators", "Fleet control staff"], "ar": ["مشغّلو الخط", "مشغّلو اللوجستيات", "مسؤولو مراقبة الأسطول"]},
+        "inputs": {"ko": ["CT와 소비속도", "자재 위치와 보급소 매핑", "AMR, 지게차, 드론 상태 또는 연동 인터페이스"], "en": ["CT and consumption speed", "Material location and depot mapping", "AMR, forklift, drone status or integration interface"], "ar": ["زمن الدورة وسرعة الاستهلاك", "موقع المادة وربط المستودع", "حالة AMR والرافعة والطائرة المسيّرة أو واجهة التكامل"]},
+        "events": {"ko": ["Shortage_Risk", "Replenishment_Task", "AMR_Dispatched", "AMR_Arrived", "Docking_Complete", "Material_Input_Confirmed", "AMR_Released"], "en": ["Shortage_Risk", "Replenishment_Task", "AMR_Dispatched", "AMR_Arrived", "Docking_Complete", "Material_Input_Confirmed", "AMR_Released"], "ar": ["Shortage_Risk", "Replenishment_Task", "AMR_Dispatched", "AMR_Arrived", "Docking_Complete", "Material_Input_Confirmed", "AMR_Released"]},
+        "outputs": {"ko": ["대상 작업자 알림", "Agent 배정 상태", "보급 진행 상태", "라인사이드 투입 확인", "Fleet 해제"], "en": ["Target operator alert", "Agent assignment state", "Replenishment progress state", "Line-side input confirmation", "Fleet release"], "ar": ["تنبيه المشغّل المستهدف", "حالة توزيع الوكيل", "حالة تقدم التزويد", "تأكيد الإدخال بجانب الخط", "تحرير الأسطول"]},
+        "conditions": {"ko": ["Fleet 인터페이스와 호출 권한 확인", "안전 규칙과 예외 처리 기준 확인", "초기 파일럿은 사람 승인 후 배차를 기본값으로 사용", "라스트미터 투입 확인 방식 사전 합의"], "en": ["Confirm fleet interface and call authority", "Confirm safety rules and exception criteria", "Use human-approved dispatch as the default first pilot mode", "Agree on last-meter input confirmation method"], "ar": ["تأكيد واجهة الأسطول وصلاحية الطلب", "تأكيد قواعد السلامة ومعايير الاستثناء", "اعتماد موافقة الإنسان قبل الإرسال كإعداد أولي", "الاتفاق على طريقة تأكيد الإدخال في آخر أمتار"]},
+        "kpis": {"ko": ["자재 대기시간", "부족 예측부터 Agent 배정까지의 시간", "배정부터 투입 확인까지의 시간", "자재 부족으로 인한 라인 정지 횟수"], "en": ["Material waiting time", "Shortage-risk-to-agent-assignment time", "Assignment-to-input-confirmation time", "Line stops caused by material shortage"], "ar": ["وقت انتظار المواد", "الوقت من خطر النقص إلى توزيع الوكيل", "الوقت من التوزيع إلى تأكيد الإدخال", "عدد توقفات الخط بسبب نقص المواد"]},
+        "pilot_scope": {"ko": "라인 한 곳 · 보급소 한 곳 · 대표 자재 경로 한 개 · 라스트미터 확인 한 종류", "en": "One line · one depot · one representative material route · one last-meter confirmation method", "ar": "خط واحد · نقطة تزويد واحدة · مسار مواد ممثل واحد · طريقة تأكيد واحدة لآخر أمتار"},
+        "related": ["ct", "work-standard"],
     },
 }
 
@@ -532,6 +758,96 @@ def product_cards(lang: str) -> str:
     return "\n".join(cards)
 
 
+def progression_section(lang: str) -> str:
+    data = STRATEGIC_NARRATIVE[lang]
+    steps = "".join(
+        f'<span class="progression-step {"is-core" if i in (0, 1, 6) else ""}">{e(step)}</span>'
+        for i, step in enumerate(data["steps"])
+    )
+    return f"""<section aria-labelledby="progression-title" class="vision-progress section-grid" id="system">
+<div class="cell span-5 reveal"><p class="eyebrow">Strategic wedge</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="progression-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<div class="cell blue span-7 reveal delay-1"><p class="body-large">{e(data["support"])}</p><div class="progression-chain">{steps}</div></div>
+</section>"""
+
+
+def material_flow_section(lang: str) -> str:
+    data = MATERIAL_FLOW[lang]
+    flow = "".join(f'<span>{e(item)}</span>' for item in data["flow"])
+    cards = "\n".join(
+        f"""<article class="cell material-card span-4 reveal delay-{i+1}"><p class="eyebrow">Material Flow</p><h3>{e(title)}</h3><p>{e(body)}</p>{ul(events)}</article>"""
+        for i, (title, body, events) in enumerate(data["cards"])
+    )
+    return f"""<section aria-labelledby="material-title" class="material-flow section-grid" id="material-flow">
+<div class="cell span-7 reveal"><p class="eyebrow">Material Flow Intelligence</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="material-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<div class="cell yellow span-5 reveal delay-1"><h3 class="block-statement">{lines(data["statement"])}</h3><p>{e(data["support"])}</p></div>
+<div class="cell span-12 reveal delay-2"><div class="mondrian-flow">{flow}</div></div>
+{cards}
+</section>"""
+
+
+def mobile_automation_section(lang: str) -> str:
+    data = MOBILE_AUTOMATION[lang]
+    levels = "\n".join(
+        f"""<article class="automation-level reveal delay-{(i % 3) + 1}"><span>{e(level)}</span><h3>{e(title)}</h3><p>{e(body)}</p></article>"""
+        for i, (level, title, body) in enumerate(data["levels"])
+    )
+    return f"""<section aria-labelledby="automation-title" class="mobile-automation section-grid" id="mobile-automation">
+<div class="cell span-8 reveal"><p class="eyebrow">Mobile Automation</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="automation-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p><p class="body-large">{e(data["support"])}</p></div>
+<div class="cell red span-4 reveal delay-1"><h3 class="block-statement">{e(data["highlight"])}</h3></div>
+<div class="cell span-12 automation-ladder">{levels}</div>
+<div class="cell blue span-12 reveal"><p class="body-large">{e(data["safety"])}</p></div>
+</section>"""
+
+
+def orchestrator_section(lang: str) -> str:
+    data = ORCHESTRATOR[lang]
+    agents = "".join(f"<span>{e(agent)}</span>" for agent in data["agents"])
+    cost = " + ".join(data["cost"])
+    notes = "".join(f"<li>{e(note)}</li>" for note in data["notes"])
+    return f"""<section aria-labelledby="orchestrator-title" class="orchestrator section-grid" id="orchestrator">
+<div class="cell span-7 reveal"><p class="eyebrow">Orchestrator</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="orchestrator-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<div class="cell yellow span-5 reveal delay-1"><p class="eyebrow">Total Cost</p><code class="cost-function">Total Cost = {e(cost)}</code></div>
+<div class="cell span-12 reveal delay-2"><div class="agent-cloud">{agents}</div></div>
+<div class="cell gray span-12 reveal"><ul class="related-list">{notes}</ul></div>
+</section>"""
+
+
+def brownfield_section(lang: str) -> str:
+    data = BROWNFIELD[lang]
+    cards = "".join(
+        f'<span class="brownfield-card {"is-result" if i == len(data["cards"]) - 1 else ""}">{e(item)}</span>'
+        for i, item in enumerate(data["cards"])
+    )
+    return f"""<section aria-labelledby="brownfield-title" class="brownfield section-grid" id="brownfield">
+<div class="cell span-6 reveal"><p class="eyebrow">Brownfield strategy</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="brownfield-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<div class="cell blue span-6 reveal delay-1"><div class="brownfield-equation">{cards}</div></div>
+<div class="cell yellow span-12 reveal delay-2">{ul(data["points"])}</div>
+</section>"""
+
+
+def roadmap_section(lang: str) -> str:
+    rows = "\n".join(
+        f"""<article class="roadmap-item reveal delay-{(i % 4) + 1}"><span>{e(phase)}</span><h3>{e(title)}</h3><p>{e(body)}</p></article>"""
+        for i, (phase, title, body) in enumerate(ROADMAP[lang])
+    )
+    title = {"ko": "장기 로드맵", "en": "Long-term roadmap", "ar": "خارطة الطريق طويلة المدى"}[lang]
+    subtitle = {"ko": "Model-free CT에서 Factory OS까지", "en": "From Model-free CT to Factory OS", "ar": "من Model-free CT إلى Factory OS"}[lang]
+    return f"""<section aria-labelledby="roadmap-title" class="roadmap section-grid" id="roadmap">
+<div class="cell span-12 reveal"><p class="eyebrow">{e(title)}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="roadmap-title">{lines(subtitle)}</h2></div>
+<div class="cell span-12 roadmap-grid">{rows}</div>
+</section>"""
+
+
+def final_vision_section(lang: str) -> str:
+    data = FINAL_VISION[lang]
+    items = "".join(f"<li>{e(item)}</li>" for item in data["lines"])
+    return f"""<section aria-labelledby="final-vision-title" class="final-vision section-grid" id="vision">
+<div class="cell blue span-7 reveal"><p class="eyebrow">Final vision</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="final-vision-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<div class="cell span-5 reveal delay-1"><ul class="vision-list">{items}</ul></div>
+<div class="cell yellow span-12 reveal delay-2"><h3 class="block-statement">{e(data["close"])}</h3></div>
+</section>"""
+
+
 def tech_visual(slug: str, lang: str) -> str:
     if slug == "nc":
         label = {"ko": ["1 · 코드 읽기", "2 · 움직임 재구성", "3 · 가공 전 검토", "급속 이동 확인", "공구", "검토"], "en": ["1 · READ THE CODE", "2 · REBUILD THE MOTION", "3 · REVIEW BEFORE CUTTING", "CHECK RAPID MOVE", "TOOLS", "REVIEW"], "ar": ["1 · قراءة الكود", "2 · إعادة بناء الحركة", "3 · المراجعة قبل التشغيل", "تحقق من الحركة السريعة", "الأدوات", "مراجعة"]}[lang]
@@ -557,8 +873,8 @@ def tech_visual(slug: str, lang: str) -> str:
 <div class="visual-label label-input">{label[0]}</div><div class="tms-photo"><span class="scan-corner c1"></span><span class="scan-corner c2"></span><span class="scan-corner c3"></span><span class="scan-corner c4"></span><strong>T12 / D12</strong></div><div class="visual-arrow arrow-a">→</div>
 <div class="visual-label label-process">{label[1]}</div><div class="tms-match"><span>{label[3]}</span><span>{label[4]}</span><strong>{label[5]}</strong></div><div class="visual-arrow arrow-b">→</div>
 <div class="visual-label label-output">{label[2]}</div><div class="tms-output"><span><b>{label[6]}</b> 72%</span><span><b>{label[7]}</b> 08</span><span><b>{label[8]}</b> A-12</span></div></div>"""
-    label = {"ko": ["1 · 자재 부족 감지", "2 · 작업자 알림", "3 · AMR 배차", "A 라인", "자재 부족", "FLOWMATIC OPERATOR", "확인", "보급소", "보급 완료"], "en": ["1 · MATERIAL RUNS LOW", "2 · ALERT THE OPERATOR", "3 · DISPATCH THE AMR", "LINE A", "MATERIAL LOW", "FLOWMATIC OPERATOR", "ACKNOWLEDGE", "DEPOT", "SUPPLY COMPLETE"], "ar": ["1 · انخفاض المواد", "2 · تنبيه المشغّل", "3 · إرسال AMR", "الخط A", "نقص المواد", "FLOWMATIC OPERATOR", "تأكيد", "المستودع", "اكتمل التزويد"]}[lang]
-    return f"""<div aria-label="Material low event becomes operator alert and AMR dispatch" class="tech-visual amr-explainer" data-tech-animation="amr">
+    label = {"ko": ["1 · 자재 부족 감지", "2 · Agent 배정", "3 · 라스트미터 실행", "A 라인", "자재 부족", "FLOWMATIC OPERATOR", "확인", "보급소", "투입 확인"], "en": ["1 · MATERIAL RUNS LOW", "2 · ASSIGN THE AGENT", "3 · LAST-METER EXECUTION", "LINE A", "MATERIAL LOW", "FLOWMATIC OPERATOR", "ACKNOWLEDGE", "DEPOT", "INPUT CONFIRMED"], "ar": ["1 · انخفاض المواد", "2 · توزيع الوكيل", "3 · تنفيذ آخر أمتار", "الخط A", "نقص المواد", "FLOWMATIC OPERATOR", "تأكيد", "المستودع", "تأكيد الإدخال"]}[lang]
+    return f"""<div aria-label="Material low event becomes fleet assignment and last-meter execution" class="tech-visual amr-explainer" data-tech-animation="amr">
 <div class="visual-label label-input">{label[0]}</div><div class="amr-line-box"><span>{label[3]}</span><div class="material-gauge"><i></i></div><strong>{label[4]}</strong></div><div class="visual-arrow arrow-a">→</div>
 <div class="visual-label label-process">{label[1]}</div><div class="operator-alert"><span>{label[5]}</span><strong data-amr-message>CALL REQUEST</strong><button tabindex="-1" type="button">{label[6]}</button></div><div class="visual-arrow arrow-b">→</div>
 <div class="visual-label label-output">{label[2]}</div><div class="amr-route-scene"><span class="route-depot">{label[7]}</span><span class="route-line">{label[3]}</span><span class="route-track"></span><span class="amr-cart-large"></span><span class="amr-complete">{label[8]}</span></div></div>"""
@@ -579,12 +895,13 @@ def home_page(lang: str, canonical_path: str) -> str:
 {header(lang, "home")}
 <main id="main">
 <section aria-labelledby="hero-title" class="hero section-grid" id="hero">
-<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#demo-workflows">{e(h["primary"])}</a><a class="fm-button" href="#contact">{e(h["secondary"])}</a></div><p class="hero-support">{e(h["support"])}</p></div>
-<div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Flowmatic</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines(h["eyebrow"])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
+<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#system">{e(h["primary"])}</a><a class="fm-button" href="#roadmap">{e(h["secondary"])}</a></div></div>
+<div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event|Decision → Action","en":"Motion → Event|Decision → Action","ar":"Motion → Event|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
 <div class="cell yellow hero-note span-4 reveal delay-2"><strong>{e(FLOW_STEPS[lang][0][0])}</strong><span>{e(FLOW_STEPS[lang][0][1])}</span></div>
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>{e(h["primary"])}</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
+{progression_section(lang)}
 <section aria-labelledby="problem-title" class="problem section-grid">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"해결하는 운영 문제","en":"Operational gaps","ar":"فجوات التشغيل"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="problem-title">{lines(h["problem_title"])}</h2><p class="body-large">{e(h["problem_body"])}</p></div>{problem}</section>
 <section aria-labelledby="strategy-title" class="strategy section-grid" id="approach">
@@ -601,6 +918,12 @@ def home_page(lang: str, canonical_path: str) -> str:
 <article class="cell workflow-card span-6 reveal delay-1"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h3>Flowmatic NC</h3><div class="workflow-flow">{e(workflow_nc)}</div><a class="fm-button primary" href="{page_path(lang, "nc")}">{e(PRODUCTS["nc"]["cta"][lang])}</a></article>
 <article class="cell workflow-card blue span-6 reveal delay-2"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h3>Flowmatic CT</h3><div class="workflow-flow">{e(workflow_ct)}</div><a class="fm-button primary" href="{page_path(lang, "ct")}">{e(PRODUCTS["ct"]["cta"][lang])}</a></article>
 </section>
+{material_flow_section(lang)}
+{mobile_automation_section(lang)}
+{orchestrator_section(lang)}
+{brownfield_section(lang)}
+{roadmap_section(lang)}
+{final_vision_section(lang)}
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
 <section aria-labelledby="contact-title" class="cta section-grid" id="contact">

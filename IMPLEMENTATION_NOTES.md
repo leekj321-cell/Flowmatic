@@ -1,6 +1,6 @@
 # Flowmatic Implementation Notes
 
-- 작성일: 2026-07-12
+- 작성일: 2026-07-13
 - 기술 스택: 순수 정적 HTML/CSS/JavaScript, GitHub Pages 배포
 - 배포 플랫폼: GitHub Pages + CNAME `flowmatic-os.com`
 - 다국어 처리 방식: `/ko/`, `/en/`, `/ar/` 정적 HTML을 생성하며 각 HTML에는 해당 언어만 렌더링합니다. 기존 루트 URL과 `*.html` 제품 URL은 한국어 호환 페이지로 유지합니다.
