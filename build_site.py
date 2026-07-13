@@ -8,6 +8,7 @@ from pathlib import Path
 BASE_URL = "https://flowmatic-os.com"
 CSS_HREF = "/style-v5.20.css"
 SCRIPT_SRC = "/script.js?v=5.17"
+NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 OG_IMAGE = f"{BASE_URL}/og-flowmatic.svg"
 
 
@@ -945,6 +946,141 @@ def demo_panel(product: dict, slug: str, lang: str) -> str:
 <div class="cell span-8 demo-cell reveal delay-1"><div class="development-panel"><span class="status-badge is-preview">{e(LANGS[lang]["development_preview"])}</span><h3>{e(product["name"])}</h3><ul><li><strong>{e(LANGS[lang]["current_scope"])}:</strong> {e(scope)}</li><li><strong>{e(LANGS[lang]["pilot_input"])}:</strong> {e(product["inputs"][lang][0])}</li><li><strong>{e(LANGS[lang]["pilot_result"])}:</strong> {e(product["outputs"][lang][0])}</li></ul><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a></div></div>"""
 
 
+NC_BROWSER_DEMO = {
+    "ko": {
+        "eyebrow": "TRY FLOWMATIC NC",
+        "title": "NC 프로그램을 열면,|시간의 구조가 보입니다.",
+        "body": "G-code 파일을 브라우저에서 직접 분석해 절삭, 급속이송, 공구교환으로 구성된 이론상 프로그램 시간을 확인합니다.",
+        "privacy": "파일은 이 브라우저 안에서만 분석되며 서버로 전송되지 않습니다.",
+        "drop": "NC, CNC, TAP 또는 TXT 파일을 여기에 놓으세요.",
+        "open": "NC 파일 열기",
+        "sample": "샘플 실행",
+        "reset": "초기화",
+        "recalculate": "다시 계산",
+        "settings": "계산 설정",
+        "rapid_feed": "Rapid Feed",
+        "default_feed": "Default Cutting Feed",
+        "tool_change": "Tool Change Time",
+        "file": "파일",
+        "size": "크기",
+        "lines": "전체 행 수",
+        "motions": "계산 가능한 이동",
+        "excluded": "제외된 명령",
+        "result": "이론상 프로그램 예상시간",
+        "condition": "프로그램에 기록된 좌표와 이송속도를 기준으로 계산한 이론값입니다.",
+        "disclaimer": "실제 설비 시간은 가감속, 공구교환 동작, 스핀들 응답, PLC 대기, 클램핑, 매크로, 서브프로그램 및 설비 고유 동작에 따라 달라질 수 있습니다.",
+        "status": "Analysis Status",
+        "empty": "샘플을 실행하거나 로컬 NC 파일을 선택하세요.",
+        "cutting": "Cutting",
+        "rapid": "Rapid",
+        "tool_change_label": "Tool Change",
+        "tools": "Tools",
+        "motion_blocks": "Motion Blocks",
+        "excluded_blocks": "Excluded Blocks",
+        "warnings": "경고 및 계산 제외 항목",
+        "show_all": "전체 경고 보기",
+        "tool_results": "공구별 시간",
+        "preview": "G-code 미리보기",
+    },
+    "en": {
+        "eyebrow": "TRY FLOWMATIC NC",
+        "title": "Open the program.|See where the time goes.",
+        "body": "Analyze basic G-code movements directly in your browser and review the theoretical time structure.",
+        "privacy": "Your file is analyzed locally in this browser and is not uploaded.",
+        "drop": "Drop an NC, CNC, TAP, TXT, or MIN file here.",
+        "open": "Open NC file",
+        "sample": "Run sample",
+        "reset": "Reset",
+        "recalculate": "Recalculate",
+        "settings": "Calculation settings",
+        "rapid_feed": "Rapid Feed",
+        "default_feed": "Default Cutting Feed",
+        "tool_change": "Tool Change Time",
+        "file": "File",
+        "size": "Size",
+        "lines": "Lines",
+        "motions": "Calculated moves",
+        "excluded": "Excluded blocks",
+        "result": "Theoretical Program Time",
+        "condition": "Calculated from programmed coordinates and feed rates.",
+        "disclaimer": "Actual machine time can vary with acceleration, tool-change motion, spindle response, PLC waiting, clamping, macros, subprograms, and machine-specific behavior.",
+        "status": "Analysis Status",
+        "empty": "Run the sample or choose a local NC file.",
+        "cutting": "Cutting",
+        "rapid": "Rapid",
+        "tool_change_label": "Tool Change",
+        "tools": "Tools",
+        "motion_blocks": "Motion Blocks",
+        "excluded_blocks": "Excluded Blocks",
+        "warnings": "Warnings and excluded items",
+        "show_all": "Show all warnings",
+        "tool_results": "Time by tool",
+        "preview": "G-code preview",
+    },
+    "ar": {
+        "eyebrow": "TRY FLOWMATIC NC",
+        "title": "افتح البرنامج.|واكتشف أين يذهب الوقت.",
+        "body": "حلّل حركات G-code الأساسية مباشرة داخل المتصفح وراجع بنية الوقت النظرية.",
+        "privacy": "يتم تحليل ملفك محليًا داخل هذا المتصفح ولا يتم رفعه إلى الخادم.",
+        "drop": "ضع ملف NC أو CNC أو TAP أو TXT أو MIN هنا.",
+        "open": "فتح ملف NC",
+        "sample": "تشغيل العينة",
+        "reset": "إعادة ضبط",
+        "recalculate": "إعادة الحساب",
+        "settings": "إعدادات الحساب",
+        "rapid_feed": "Rapid Feed",
+        "default_feed": "Default Cutting Feed",
+        "tool_change": "Tool Change Time",
+        "file": "الملف",
+        "size": "الحجم",
+        "lines": "عدد الأسطر",
+        "motions": "الحركات المحسوبة",
+        "excluded": "الأوامر المستبعدة",
+        "result": "Theoretical Program Time",
+        "condition": "محسوب من الإحداثيات وسرعات التغذية المكتوبة في البرنامج.",
+        "disclaimer": "قد يختلف وقت الماكينة الفعلي بسبب التسارع، وحركة تغيير الأداة، واستجابة المغزل، وانتظار PLC، والتثبيت، والماكرو، والبرامج الفرعية، وسلوك المعدة الخاص.",
+        "status": "Analysis Status",
+        "empty": "شغّل العينة أو اختر ملف NC محليًا.",
+        "cutting": "Cutting",
+        "rapid": "Rapid",
+        "tool_change_label": "Tool Change",
+        "tools": "Tools",
+        "motion_blocks": "Motion Blocks",
+        "excluded_blocks": "Excluded Blocks",
+        "warnings": "التحذيرات والعناصر المستبعدة",
+        "show_all": "عرض كل التحذيرات",
+        "tool_results": "الوقت حسب الأداة",
+        "preview": "معاينة G-code",
+    },
+}
+
+
+def nc_browser_demo_section(lang: str) -> str:
+    t = NC_BROWSER_DEMO[lang]
+    return f"""<section aria-labelledby="nc-browser-demo-title" class="nc-browser-demo-lite section-grid" data-nc-demo-lite>
+<div class="cell span-12 nc-demo-title-cell reveal"><p class="eyebrow">{e(t["eyebrow"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="nc-browser-demo-title">{lines(t["title"])}</h2><p class="body-large">{e(t["body"])}</p></div>
+<div class="cell span-5 nc-demo-input-cell reveal delay-1">
+<div class="nc-demo-dropzone" data-nc-dropzone tabindex="0" role="button" aria-controls="nc-demo-file"><strong>{e(t["drop"])}</strong><span>{e(t["privacy"])}</span></div>
+<input accept=".nc,.cnc,.tap,.txt,.min" class="sr-only" data-nc-file id="nc-demo-file" type="file">
+<div class="nc-demo-actions"><label class="fm-button primary" for="nc-demo-file">{e(t["open"])}</label><button class="fm-button" data-nc-sample type="button">{e(t["sample"])}</button><button class="fm-button" data-nc-reset type="button">{e(t["reset"])}</button></div>
+<p class="nc-demo-privacy">{e(t["privacy"])}</p>
+<dl class="nc-demo-file-meta"><div><dt>{e(t["file"])}</dt><dd data-nc-meta="file">—</dd></div><div><dt>{e(t["size"])}</dt><dd data-nc-meta="size">—</dd></div><div><dt>{e(t["lines"])}</dt><dd data-nc-meta="lines">—</dd></div><div><dt>{e(t["motions"])}</dt><dd data-nc-meta="motions">—</dd></div><div><dt>{e(t["excluded"])}</dt><dd data-nc-meta="excluded">—</dd></div></dl>
+<details class="nc-demo-settings"><summary>{e(t["settings"])}</summary><div class="nc-demo-setting-grid"><label>{e(t["rapid_feed"])}<input data-nc-setting="rapidFeed" inputmode="decimal" min="1" step="100" type="number" value="20000"><span>mm/min</span></label><label>{e(t["default_feed"])}<input data-nc-setting="defaultFeed" inputmode="decimal" min="1" step="10" type="number" value="1000"><span>mm/min</span></label><label>{e(t["tool_change"])}<input data-nc-setting="toolChange" inputmode="decimal" min="0" step="0.1" type="number" value="6.0"><span>sec/change</span></label></div><button class="fm-button primary" data-nc-recalculate type="button">{e(t["recalculate"])}</button></details>
+</div>
+<div class="cell span-7 nc-demo-result-cell reveal delay-2" aria-live="polite">
+<p class="eyebrow">{e(t["result"])}</p><strong class="nc-demo-total" data-nc-result="total">—</strong><p class="nc-demo-condition">{e(t["condition"])}</p>
+<div class="nc-demo-status"><span>{e(t["status"])}</span><strong data-nc-result="status">{e(t["empty"])}</strong></div>
+<div class="nc-demo-kpi-grid"><article><span>{e(t["cutting"])}</span><strong data-nc-result="cutting">—</strong></article><article><span>{e(t["rapid"])}</span><strong data-nc-result="rapid">—</strong></article><article><span>{e(t["tool_change_label"])}</span><strong data-nc-result="toolChange">—</strong></article><article><span>{e(t["tools"])}</span><strong data-nc-result="tools">—</strong></article><article><span>{e(t["motion_blocks"])}</span><strong data-nc-result="motionBlocks">—</strong></article><article><span>{e(t["excluded_blocks"])}</span><strong data-nc-result="excludedBlocks">—</strong></article></div>
+<div class="nc-demo-timebar" aria-label="{e(t["result"])}"><span data-nc-bar="cutting"></span><span data-nc-bar="rapid"></span><span data-nc-bar="toolChange"></span></div>
+<div class="nc-demo-legend"><span>{e(t["cutting"])}</span><span>{e(t["rapid"])}</span><span>{e(t["tool_change_label"])}</span></div>
+<p class="nc-demo-disclaimer">{e(t["disclaimer"])}</p>
+</div>
+<div class="cell span-6 nc-demo-warning-cell reveal"><h3>{e(t["warnings"])}</h3><div data-nc-alert role="alert" hidden></div><ul data-nc-warnings></ul><button class="fm-button" data-nc-show-warnings type="button" hidden>{e(t["show_all"])}</button></div>
+<div class="cell span-6 nc-demo-tool-cell reveal delay-1"><h3>{e(t["tool_results"])}</h3><div class="nc-demo-tool-list" data-nc-tools role="table" aria-label="{e(t["tool_results"])}"></div></div>
+<div class="cell span-12 nc-demo-preview-cell reveal"><h3>{e(t["preview"])}</h3><div class="nc-demo-preview" data-nc-preview aria-label="{e(t["preview"])}"></div></div>
+</section>"""
+
+
 def product_page(lang: str, slug: str, canonical_path: str) -> str:
     product = PRODUCTS[slug]
     title = product["title"][lang]
@@ -962,6 +1098,8 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
     ]
     specs = "\n".join(f'<article class="cell spec-card span-4 reveal delay-{(i % 3) + 1}"><span>{i+1:02}</span><h3>{e(head)}</h3>{ul(items)}</article>' for i, (head, items) in enumerate(spec_cards))
     related_items = "".join(f'<li><a href="{page_path(lang, rel)}">{e(product_name(PRODUCTS[rel], lang))}</a> — {e(PRODUCTS[rel]["outcome"][lang])}</li>' for rel in product["related"])
+    nc_demo = f"\n{nc_browser_demo_section(lang)}" if slug == "nc" else ""
+    extra_script = f'<script src="{NC_DEMO_SRC}"></script>' if slug == "nc" else ""
     html = f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
 {meta_head(lang, slug, title, description, canonical_path)}
@@ -971,10 +1109,10 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
 <section aria-labelledby="tech-title" class="detail-overview section-grid">
 <div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta"><span class="status-badge {status_class}">{e(status_label)}</span><span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(LANGS[lang]["all_products"])}</a></div>
 <div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
-<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>
+<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}
 <section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
 <section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#products">{e(LANGS[lang]["all_products"])}</a></div></section>
-</main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
+</main>{footer(lang)}<script src="{SCRIPT_SRC}"></script>{extra_script}</body></html>"""
     return html
 
 
@@ -999,6 +1137,7 @@ def notes() -> str:
 - 배포 플랫폼: GitHub Pages + CNAME `flowmatic-os.com`
 - 다국어 처리 방식: `/ko/`, `/en/`, `/ar/` 정적 HTML을 생성하며 각 HTML에는 해당 언어만 렌더링합니다. 기존 루트 URL과 `*.html` 제품 URL은 한국어 호환 페이지로 유지합니다.
 - 데모 영상 파일: `flowmatic_nc_demo.mp4`, `flowmatic_ct_demo.mp4`; 두 제품 페이지의 `<video>`는 `controls`, `playsinline`, `preload="metadata"`, `poster`를 사용합니다.
+- NC 공개 브라우저 데모: `/nc-demo-lite.js`, `/nc-demo-lite-worker.js`, `/demo-data/flowmatic-nc-sample.nc`; 업로드 없이 브라우저 내부에서 기본 G-code 이동시간만 계산합니다.
 - 개발 프리뷰 제품: Work Standard, TMS, AMR은 빈 비디오 플레이어 없이 개발 상태 패널, 파일럿 입력, 확인 결과, 문의 CTA를 표시합니다.
 - 실제 문의 목적지: 저장소에서 검증된 이메일, 폼 엔드포인트, 예약 링크를 찾지 못했습니다. 안전한 폴백으로 모든 CTA를 Contact 섹션과 `interest` query parameter로 연결했습니다.
 - 적용한 안전한 폴백: 고객사, 성과 수치, 보안 인증, 배포 방식, 지원 컨트롤러, 회사 주소, 전화번호, 이메일은 추측해 표시하지 않았습니다.
