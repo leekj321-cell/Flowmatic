@@ -4,12 +4,12 @@ Static Flowmatic website for GitHub Pages and `flowmatic-os.com`.
 
 ## Structure
 
-- `/`, `/nc.html`, `/ct.html`, `/work-standard.html`, `/tms.html`, `/amr.html`: Korean compatibility URLs for existing links.
+- `/`, `/nc.html`, `/ct.html`, `/quality.html`, `/work-standard.html`, `/tms.html`, `/amr.html`: Korean compatibility URLs for existing links.
 - `/ko/`, `/en/`, `/ar/`: language-specific canonical pages.
 - `/ko/{product}/`, `/en/{product}/`, `/ar/{product}/`: language-specific product pages.
 - `build_site.py`: static page generator for the multilingual HTML output.
-- `style-v5.19.css`: current stylesheet.
-- `script.js`: navigation, reveal, product CTA, text fitting, and demo-video loader.
+- `style-v5.20.css`: current stylesheet.
+- `script.js`: navigation, reveal, product CTA, text fitting, demo-video loader, and local-only `mailto:` inquiry composer.
 
 ## Demo Videos
 
@@ -18,7 +18,11 @@ The current working demo videos are:
 - `flowmatic_nc_demo.mp4`
 - `flowmatic_ct_demo.mp4`
 
-Work Standard, TMS, and AMR pages intentionally show development-preview panels instead of empty video players.
+Flowmatic Quality shows working-prototype and integration status without claiming a public demo. Work Standard, TMS, and AMR pages intentionally show development-preview panels instead of empty video players.
+
+## Contact
+
+The site displays `contact@flowmatic-os.com`. Inquiry fields stay in the browser and are used only to open a prefilled draft in the visitor's email application.
 
 ## Build
 

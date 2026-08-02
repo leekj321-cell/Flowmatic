@@ -272,7 +272,8 @@ function initLanguageToggle() {
 
 function initContactInterest() {
   const label = document.querySelector('[data-interest-label]');
-  if (!label) return;
+  const select = document.querySelector('[data-contact-product]');
+  if (!label && !select) return;
   const params = new URLSearchParams(window.location.search);
   const interest = params.get('interest') || 'all';
   const labels = {
@@ -280,29 +281,106 @@ function initContactInterest() {
       all: '전체 / 미정',
       nc: 'Flowmatic NC',
       ct: 'Flowmatic CT',
+      quality: 'Flowmatic Quality',
       'work-standard': 'Flowmatic Work Standard',
       tms: 'Flowmatic TMS',
-      amr: 'Flowmatic AMR'
+      amr: 'Flowmatic Fleet + Material Flow'
     },
     en: {
       all: 'All / undecided',
       nc: 'Flowmatic NC',
       ct: 'Flowmatic CT',
+      quality: 'Flowmatic Quality',
       'work-standard': 'Flowmatic Work Standard',
       tms: 'Flowmatic TMS',
-      amr: 'Flowmatic AMR'
+      amr: 'Flowmatic Fleet + Material Flow'
     },
     ar: {
       all: 'الكل / غير محدد',
       nc: 'Flowmatic NC',
       ct: 'Flowmatic CT',
+      quality: 'Flowmatic Quality',
       'work-standard': 'Flowmatic Work Standard',
       tms: 'Flowmatic TMS',
-      amr: 'Flowmatic AMR'
+      amr: 'Flowmatic Fleet + Material Flow'
     }
   };
   const lang = getCurrentLanguage();
-  label.textContent = labels[lang]?.[interest] || labels[lang]?.all || interest;
+  if (label) label.textContent = labels[lang]?.[interest] || labels[lang]?.all || interest;
+  if (select && [...select.options].some((option) => option.value === interest)) select.value = interest;
+}
+
+const CONTACT_EMAIL = 'contact@flowmatic-os.com';
+const CONTACT_BODY_LABELS = {
+  ko: {
+    organization: '회사 / 조직', name: '이름 / 직책', product: '관심 제품', process: '대상 공정',
+    problem: '해결하려는 운영 문제', signals: '사용 가능한 입력 신호', kpi: '확인할 KPI', preference: '희망 연락 방식'
+  },
+  en: {
+    organization: 'Company / organization', name: 'Name / role', product: 'Product interest', process: 'Target process',
+    problem: 'Operational problem to solve', signals: 'Available input signals', kpi: 'KPI to verify', preference: 'Preferred contact method'
+  },
+  ar: {
+    organization: 'الشركة / المؤسسة', name: 'الاسم / الدور', product: 'المنتج محل الاهتمام', process: 'العملية المستهدفة',
+    problem: 'المشكلة التشغيلية المراد حلها', signals: 'إشارات الإدخال المتاحة', kpi: 'مؤشر KPI المطلوب التحقق منه', preference: 'طريقة التواصل المفضلة'
+  }
+};
+
+async function copyContactEmail(button, status) {
+  let copied = false;
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+      copied = true;
+    } else {
+      const helper = document.createElement('textarea');
+      helper.value = CONTACT_EMAIL;
+      helper.setAttribute('readonly', '');
+      helper.style.position = 'fixed';
+      helper.style.opacity = '0';
+      document.body.appendChild(helper);
+      helper.select();
+      copied = document.execCommand('copy');
+      helper.remove();
+    }
+  } catch (_) {
+    copied = false;
+  }
+  if (status) status.textContent = copied ? button.dataset.copySuccess : button.dataset.copyFailed;
+}
+
+function initContactForm() {
+  const form = document.querySelector('[data-contact-form]');
+  const copyButton = document.querySelector('[data-copy-email]');
+  const copyStatus = document.querySelector('[data-copy-status]');
+  if (copyButton) copyButton.addEventListener('click', () => copyContactEmail(copyButton, copyStatus));
+  if (!form) return;
+  const formStatus = form.querySelector('[data-contact-form-status]');
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) {
+      if (formStatus) formStatus.textContent = form.dataset.requiredMessage || '';
+      return;
+    }
+    if (formStatus) formStatus.textContent = '';
+    const data = new FormData(form);
+    const productSelect = form.querySelector('[name="product"]');
+    const selectedProduct = productSelect?.selectedOptions?.[0]?.textContent?.trim() || 'All / undecided';
+    const targetProcess = String(data.get('process') || '').trim();
+    const subject = `[Flowmatic Pilot] ${selectedProduct} - ${targetProcess}`;
+    const labels = CONTACT_BODY_LABELS[getCurrentLanguage()] || CONTACT_BODY_LABELS.en;
+    const body = [
+      `${labels.organization}: ${String(data.get('organization') || '').trim()}`,
+      `${labels.name}: ${String(data.get('name') || '').trim()}`,
+      `${labels.product}: ${selectedProduct}`,
+      `${labels.process}: ${targetProcess}`,
+      `${labels.problem}: ${String(data.get('problem') || '').trim()}`,
+      `${labels.signals}: ${String(data.get('signals') || '').trim()}`,
+      `${labels.kpi}: ${String(data.get('kpi') || '').trim()}`,
+      `${labels.preference}: ${String(data.get('preference') || '').trim()}`
+    ].join('\n');
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
 }
 
 function initDemoVideos() {
@@ -503,6 +581,7 @@ initNavigation();
 initArabicLanguageSpans();
 initLanguageToggle();
 initContactInterest();
+initContactForm();
 initReveal();
 initProductCtas();
 initDemoVideos();

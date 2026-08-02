@@ -6,8 +6,9 @@ from pathlib import Path
 
 
 BASE_URL = "https://flowmatic-os.com"
-CSS_HREF = "/style-v5.20.css"
-SCRIPT_SRC = "/script.js?v=5.17"
+CONTACT_EMAIL = "contact@flowmatic-os.com"
+CSS_HREF = "/style-v5.20.css?v=5.21"
+SCRIPT_SRC = "/script.js?v=5.18"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 OG_IMAGE = f"{BASE_URL}/og-flowmatic.svg"
 
@@ -85,12 +86,78 @@ LANGS = {
 }
 
 
+CONTACT_FORM = {
+    "ko": {
+        "organization": "회사 / 조직",
+        "name": "이름 / 직책",
+        "product": "관심 제품",
+        "process": "대상 공정",
+        "problem": "해결하려는 운영 문제",
+        "signals": "사용 가능한 입력 신호",
+        "kpi": "확인할 KPI",
+        "preference": "희망 연락 방식",
+        "submit": "이메일 앱에서 문의 작성",
+        "copy": "이메일 주소 복사",
+        "copied": "이메일 주소를 복사했습니다.",
+        "copy_failed": "복사하지 못했습니다. 이메일 주소를 직접 선택해 주세요.",
+        "direct": "직접 이메일 보내기",
+        "privacy": "입력 내용은 이 사이트에서 전송하거나 저장하지 않습니다. 버튼을 누르면 사용자의 이메일 앱에서 초안이 열립니다.",
+        "required": "대상 공정을 입력해 주세요.",
+    },
+    "en": {
+        "organization": "Company / organization",
+        "name": "Name / role",
+        "product": "Product interest",
+        "process": "Target process",
+        "problem": "Operational problem to solve",
+        "signals": "Available input signals",
+        "kpi": "KPI to verify",
+        "preference": "Preferred contact method",
+        "submit": "Compose in your email app",
+        "copy": "Copy email address",
+        "copied": "Email address copied.",
+        "copy_failed": "Could not copy automatically. Please select the email address.",
+        "direct": "Email Flowmatic directly",
+        "privacy": "This site does not send or store your entries. The button opens a draft in your email application.",
+        "required": "Enter a target process.",
+    },
+    "ar": {
+        "organization": "الشركة / المؤسسة",
+        "name": "الاسم / الدور",
+        "product": "المنتج محل الاهتمام",
+        "process": "العملية المستهدفة",
+        "problem": "المشكلة التشغيلية المراد حلها",
+        "signals": "إشارات الإدخال المتاحة",
+        "kpi": "مؤشر KPI المطلوب التحقق منه",
+        "preference": "طريقة التواصل المفضلة",
+        "submit": "إنشاء الرسالة في تطبيق البريد",
+        "copy": "نسخ عنوان البريد",
+        "copied": "تم نسخ عنوان البريد.",
+        "copy_failed": "تعذر النسخ تلقائيًا. يرجى تحديد عنوان البريد يدويًا.",
+        "direct": "إرسال بريد مباشرة إلى Flowmatic",
+        "privacy": "لا يرسل هذا الموقع مدخلاتك ولا يخزنها. يفتح الزر مسودة في تطبيق البريد لديك.",
+        "required": "أدخل العملية المستهدفة.",
+    },
+}
+
+
+CONTACT_PRODUCT_OPTIONS = [
+    ("all", "All / undecided"),
+    ("ct", "Flowmatic CT"),
+    ("nc", "Flowmatic NC"),
+    ("quality", "Flowmatic Quality"),
+    ("work-standard", "Flowmatic Work Standard"),
+    ("tms", "Flowmatic TMS"),
+    ("amr", "Flowmatic Fleet + Material Flow"),
+]
+
+
 HOME = {
     "ko": {
         "title": "Flowmatic | 제조 현장 운영 인텔리전스",
         "description": "Flowmatic은 카메라, NC 코드, 작업자 입력을 운영 이벤트로 바꾸고 알림·검토·호출·안내에 연결하는 제조 현장 운영 인텔리전스입니다.",
         "eyebrow": "제조 현장 운영 인텔리전스",
-        "h1": "The Elegant Engineering.|Intelligent Operations.|Flowmatic.",
+        "h1": "Elegant Engineering.|Intelligent Operations.|Flowmatic.",
         "body": "현장의 물리적 움직임을 Event로 바꾸고, Event를 판단으로, 판단을 사람과 기계의 행동으로 연결하는 Engineering Intelligence 플랫폼.",
         "primary": "시스템 보기",
         "secondary": "로드맵 보기",
@@ -100,10 +167,10 @@ HOME = {
         "problem_body": "현장은 멈추지 않습니다. 중요한 이벤트와 다음 행동은 뒤늦게 드러납니다.",
         "strategy_title": "현장을 바꾸기 전에|흐름을 읽습니다.",
         "strategy_body": "지금 돌아가는 라인에서 시작합니다. 가치를 만드는 설비와 작업 방식, 사람을 그대로 살립니다. 먼저 이벤트를 보이게 만들고, 다음 행동 하나를 연결한 뒤, 가치가 확인되면 자동화합니다.",
-        "flow_title": "Observe → Eventize|Act → Confirm",
+        "flow_title": "Observe → Eventize →|Act → Confirm",
         "flow_body": "공식 운영 논리는 하나입니다. 신호를 읽고, 운영 이벤트로 바꾸고, 다음 행동에 연결한 뒤, 응답을 확인합니다.",
         "products_title": "제품은 상태와 검증 범위가|분명해야 합니다.",
-        "products_body": "NC와 CT는 실제 데모로 확인할 수 있습니다. Work Standard, TMS, AMR은 작동 개념과 현재 개발 상태를 보여줍니다.",
+        "products_body": "CT와 NC는 실제 데모로 확인할 수 있습니다. Quality는 작동 프로토타입과 연동 상태를, Work Standard, TMS, Fleet는 현재 개발 범위를 보여줍니다.",
         "workflow_title": "Demo workflows",
         "workflow_body": "고객 수치 대신 실제 데모로 확인 가능한 흐름만 보여줍니다.",
         "pilot_title": "기존 라인을 바꾸지 않고,|이벤트 하나부터 검증합니다.",
@@ -111,13 +178,13 @@ HOME = {
         "contact_title": "현재 라인을 바꾸지 않고,|이벤트 하나부터 검증하세요.",
         "contact_body": "대상 공정과 해결하려는 문제를 알려주시면 입력 신호, 다음 행동, 측정할 KPI를 기준으로 파일럿 범위를 정리합니다.",
         "contact_cta": "파일럿 상담 요청",
-        "contact_fallback": "실제 문의 이메일 또는 폼 엔드포인트가 저장소에서 확인되지 않아, 모든 CTA는 이 Contact 섹션으로 안전하게 연결됩니다.",
+        "contact_fallback": "공식 이메일로 파일럿 범위를 문의할 수 있습니다.",
     },
     "en": {
         "title": "Flowmatic | Operational Intelligence for Manufacturing",
         "description": "Flowmatic turns camera, NC-code, and operator signals into actionable manufacturing events, alerts, reviews, guidance, and material calls.",
         "eyebrow": "Operational Intelligence for Manufacturing",
-        "h1": "The Elegant Engineering.|Intelligent Operations.|Flowmatic.",
+        "h1": "Elegant Engineering.|Intelligent Operations.|Flowmatic.",
         "body": "Flowmatic turns factory motion into events, events into decisions, and decisions into coordinated action.",
         "primary": "Explore the System",
         "secondary": "See the Roadmap",
@@ -127,10 +194,10 @@ HOME = {
         "problem_body": "The field never stops. Important events and the next action often appear too late.",
         "strategy_title": "Read the flow|before changing the field.",
         "strategy_body": "Start with the line as it is. Keep the equipment, workflow, and people already creating value. Make the event visible first, connect one next action, and automate only after the value is proven.",
-        "flow_title": "Observe → Eventize|Act → Confirm",
+        "flow_title": "Observe → Eventize →|Act → Confirm",
         "flow_body": "Flowmatic uses one operating logic: observe the signal, turn it into an event, connect a next action, and confirm the response.",
         "products_title": "Product status and pilot scope|should be explicit.",
-        "products_body": "NC and CT include working demos. Work Standard, TMS, and AMR show their operating concept and current development status.",
+        "products_body": "CT and NC include working demos. Quality shows its working prototype and integration status. Work Standard, TMS, and Fleet show their current development scope.",
         "workflow_title": "Demo workflows",
         "workflow_body": "Without verified customer metrics, the site shows only workflows that can be inspected through actual demos.",
         "pilot_title": "Validate one event|without replacing the line.",
@@ -138,13 +205,13 @@ HOME = {
         "contact_title": "Validate one event|without replacing the line.",
         "contact_body": "Share the process and operational problem. We will define a pilot around the input signal, the next action, and the KPI to verify.",
         "contact_cta": "Request a pilot discussion",
-        "contact_fallback": "No verified email or form endpoint was found in the repository, so every CTA safely routes to this Contact section.",
+        "contact_fallback": "Use the official email to discuss a pilot scope.",
     },
     "ar": {
         "title": "Flowmatic | ذكاء تشغيلي للتصنيع",
         "description": "يحوّل Flowmatic إشارات المصنع إلى أحداث تشغيلية قابلة للتنفيذ وتنبيهات ومراجعات وإرشادات وطلبات مواد.",
         "eyebrow": "ذكاء تشغيلي للتصنيع",
-        "h1": "The Elegant Engineering.|Intelligent Operations.|Flowmatic.",
+        "h1": "Elegant Engineering.|Intelligent Operations.|Flowmatic.",
         "body": "يحوّل Flowmatic حركة المصنع إلى أحداث، والأحداث إلى قرارات، والقرارات إلى أفعال منسقة بين الإنسان والآلة.",
         "primary": "استكشف النظام",
         "secondary": "شاهد خارطة الطريق",
@@ -154,10 +221,10 @@ HOME = {
         "problem_body": "الميدان لا يتوقف. وغالبًا ما تظهر الأحداث المهمة والإجراء التالي بعد فوات الوقت.",
         "strategy_title": "اقرأ التدفق|قبل تغيير الميدان.",
         "strategy_body": "ابدأ من الخط كما هو. حافظ على المعدات وسير العمل والأشخاص الذين يصنعون القيمة. اجعل الحدث مرئيًا أولًا، ثم اربطه بإجراء تالٍ واحد، ولا تؤتمت إلا بعد إثبات القيمة.",
-        "flow_title": "الرصد → تحويل الإشارة إلى حدث|ربط الإجراء → التأكيد",
+        "flow_title": "الرصد → تحويل الإشارة إلى حدث →|ربط الإجراء → التأكيد",
         "flow_body": "يستخدم Flowmatic منطق تشغيل واحدًا: قراءة الإشارة، تحويلها إلى حدث، ربطها بإجراء تالٍ، ثم تأكيد الاستجابة.",
         "products_title": "يجب أن تكون حالة المنتج|ونطاق التحقق واضحين.",
-        "products_body": "يتضمن NC وCT عروضًا عملية، بينما يوضح Work Standard وTMS وAMR مفهوم التشغيل وحالة التطوير الحالية.",
+        "products_body": "يتضمن CT وNC عروضًا عملية. وتعرض Quality النموذج الأولي العامل وحالة التكامل، بينما تعرض Work Standard وTMS وFleet نطاق التطوير الحالي.",
         "workflow_title": "تدفقات العروض",
         "workflow_body": "من دون مقاييس عملاء موثقة، يعرض الموقع فقط التدفقات التي يمكن فحصها من خلال العروض الفعلية.",
         "pilot_title": "تحقق من حدث واحد|من دون استبدال الخط.",
@@ -165,7 +232,7 @@ HOME = {
         "contact_title": "تحقق من حدث واحد|من دون استبدال الخط.",
         "contact_body": "شارك العملية والمشكلة التشغيلية. سنحدد نطاقًا تجريبيًا حول إشارة الإدخال والإجراء التالي ومؤشر KPI المراد التحقق منه.",
         "contact_cta": "اطلب نقاشًا تجريبيًا",
-        "contact_fallback": "لم يتم العثور في المستودع على بريد تواصل أو نقطة إرسال موثقة، لذلك تنتقل كل أزرار CTA بأمان إلى قسم التواصل هذا.",
+        "contact_fallback": "استخدم البريد الرسمي لمناقشة نطاق مشروع تجريبي.",
     },
 }
 
@@ -262,7 +329,7 @@ STRATEGIC_NARRATIVE = {
     "ko": {
         "title": "Cycle Time에서|Factory OS까지",
         "body": "Flowmatic은 처음부터 거대한 Factory OS를 판매하지 않는다. 가장 먼저 공장에서 누구나 이해할 수 있는 진실, Cycle Time에서 시작한다.",
-        "support": "Flowmatic CT는 공장의 시간축을 만든다. 그 시간축은 Event DB가 되고, Event DB는 가공, 품질, 작업자 부하, 소재 흐름, 업무배정, 이동형 자동화를 하나로 연결한다.",
+        "support": "Flowmatic CT는 공장의 시간축을 만든다. 그 시간축은 Event DB가 되고, Event DB는 가공, 품질, 작업자 부하, 자재 흐름, 업무배정, 이동형 자동화를 하나로 연결한다.",
         "steps": ["CT", "Event DB", "NC / Quality / Human Factors", "Material Flow", "Operator / Fleet", "Mobile Automation", "Factory OS"],
     },
     "en": {
@@ -280,16 +347,41 @@ STRATEGIC_NARRATIVE = {
 }
 
 
+AXIS_NARRATIVE = {
+    "ko": {
+        "copy": "Flowmatic CT는 공장의 시간축을 만듭니다. Flowmatic Quality는 그 시간 안에서 어떤 결과가 만들어졌는지를 기록합니다. Event DB는 언제 작업이 일어났고, 어떤 품질 결과로 이어졌으며, 다음에 어떤 행동이 필요한지를 연결합니다.",
+        "ct": "공장 시간축",
+        "quality": "결과축",
+        "down": "CT 시간축을 Event DB에 연결",
+        "up": "Quality 결과축을 Event DB에 연결",
+    },
+    "en": {
+        "copy": "Flowmatic CT creates the factory time axis. Flowmatic Quality records the outcome created on that time axis. Event DB connects when work happened, what result it produced, and what action should follow.",
+        "ct": "Factory Time Axis",
+        "quality": "Outcome Axis",
+        "down": "Connect the CT time axis to Event DB",
+        "up": "Connect the Quality outcome axis to Event DB",
+    },
+    "ar": {
+        "copy": "ينشئ Flowmatic CT محور الزمن في المصنع. ويسجل Flowmatic Quality النتيجة التي تشكلت على هذا المحور. ويربط Event DB وقت حدوث العمل والنتيجة التي أنتجها والإجراء الذي ينبغي أن يتبع.",
+        "ct": "محور زمن المصنع",
+        "quality": "محور النتائج",
+        "down": "ربط محور زمن CT بقاعدة Event DB",
+        "up": "ربط محور نتائج Quality بقاعدة Event DB",
+    },
+}
+
+
 MATERIAL_FLOW = {
     "ko": {
-        "title": "소재 흐름 운영지능",
+        "title": "자재 흐름 운영지능",
         "statement": "재고의 실제 위치에서|라인사이드 투입까지",
-        "body": "Flowmatic은 공장을 측정하는 데서 멈추지 않는다. 측정된 사실을 소재 이동, 작업 배정, 라스트미터 실행으로 연결한다.",
-        "support": "Flowmatic은 사람이 부족을 발견하기 전에 소재가 흐르도록 만든다.",
+        "body": "Flowmatic은 공장을 측정하는 데서 멈추지 않는다. 측정된 사실을 자재 이동, 작업 배정, 라스트미터 실행으로 연결한다.",
+        "support": "Flowmatic은 사람이 부족을 발견하기 전에 자재가 흐르도록 만든다.",
         "flow": ["Drone Inventory", "Material Truth", "AMR Dispatch", "Last-meter Docking", "Line-side Input", "Verification"],
         "cards": [
-            ("Drone Inventory", "드론은 이동형 재고 센서가 된다. 파렛트 위치, 랙 상태, 재고 불일치, 빈 랙, 실제 소재 유무를 확인한다.", ["Stock_Counted", "Stock_Mismatch", "Pallet_Located", "Pallet_Missing", "Wrong_Location", "Empty_Rack", "Material_Available"]),
-            ("AMR Material Feeding", "AMR는 라인이 멈춘 뒤 호출되는 것이 아니라, 멈추기 전에 배차된다. Flowmatic은 CT, 소비속도, 소재 위치, Agent 상태를 기반으로 보급 Task를 생성한다.", ["Shortage_Risk", "Replenishment_Task", "AMR_Dispatched"]),
+            ("Drone Inventory", "드론은 이동형 재고 센서가 된다. 파렛트 위치, 랙 상태, 재고 불일치, 빈 랙, 실제 자재 유무를 확인한다.", ["Stock_Counted", "Stock_Mismatch", "Pallet_Located", "Pallet_Missing", "Wrong_Location", "Empty_Rack", "Material_Available"]),
+            ("AMR Material Feeding", "AMR는 라인이 멈춘 뒤 호출되는 것이 아니라, 멈추기 전에 배차된다. Flowmatic은 CT, 소비속도, 자재 위치, Agent 상태를 기반으로 보급 Task를 생성한다.", ["Shortage_Risk", "Replenishment_Task", "AMR_Dispatched"]),
             ("Last-meter Logistics", "라인 근처까지 가져오는 것만으로는 충분하지 않다. Flowmatic은 도킹, 매거진 장착, 빈 용기 회수, 투입 완료 확인까지 라스트미터를 닫는다.", ["AMR_Arrived", "Docking_Complete", "Magazine_Loaded", "Material_Input_Confirmed", "Empty_Magazine_Removed", "Line_Replenished", "AMR_Released"]),
         ],
     },
@@ -323,10 +415,10 @@ MATERIAL_FLOW = {
 MOBILE_AUTOMATION = {
     "ko": {
         "title": "물류를 넘어,|이동형 자동화로",
-        "body": "Flowmatic은 소재만 움직이는 것이 아니다. 자동화 능력 자체를 필요한 곳으로 이동시킨다.",
+        "body": "Flowmatic은 자재만 움직이는 것이 아니다. 자동화 능력 자체를 필요한 곳으로 이동시킨다.",
         "support": "모든 설비 주변에 고정 자동화를 구축하는 대신, Flowmatic은 지금 자동화가 필요한 설비로 이동형 자동화를 보낸다.",
         "highlight": "AMR는 단순 운반차량이 아니다. Flowmatic 안에서 AMR는 이동형 실행 플랫폼이 된다.",
-        "safety": "PLC와 설비 컨트롤러는 설비 내부 제어와 안전을 담당한다. Flowmatic은 기존 설비 주변의 외부 공정흐름, 이동형 자동화 Task, 소재 흐름, 완료 검증을 조정한다.",
+        "safety": "PLC와 설비 컨트롤러는 설비 내부 제어와 안전을 담당한다. Flowmatic은 기존 설비 주변의 외부 공정흐름, 이동형 자동화 Task, 자재 흐름, 완료 검증을 조정한다.",
         "levels": [
             ("Level 1", "운반 Agent", "창고에서 라인으로, 라인에서 완제품으로, 빈 파렛트를 투입 지점으로 이동한다."),
             ("Level 2", "라스트미터 물류", "도킹, 매거진 정렬, 라인사이드 투입, 빈 용기 회수를 닫는다."),
@@ -406,9 +498,9 @@ ORCHESTRATOR = {
 BROWNFIELD = {
     "ko": {
         "title": "Brownfield 공장을 위한 전략",
-        "body": "Flowmatic은 이미 설비를 보유한 공장을 위해 설계된다. 라인 전체를 새로 구축하는 대신, 기존 자산 위에 감지, Event, 소재 흐름, 업무배정, 이동형 자동화를 더한다.",
+        "body": "Flowmatic은 이미 설비를 보유한 공장을 위해 설계된다. 라인 전체를 새로 구축하는 대신, 기존 자산 위에 감지, Event, 자재 흐름, 업무배정, 이동형 자동화를 더한다.",
         "cards": ["Existing Machines", "Event Layer", "Material Flow", "Mobile Automation", "Reconfigurable Brownfield Factory"],
-        "points": ["기존 설비를 사용한다.", "감지능력을 더한다.", "Event 이력을 축적한다.", "소재 흐름을 조정한다.", "필요한 곳에 이동형 자동화를 보낸다.", "공장 전체를 갈아엎지 않고 생산성을 끌어올린다."],
+        "points": ["기존 설비를 사용한다.", "감지능력을 더한다.", "Event 이력을 축적한다.", "자재 흐름을 조정한다.", "필요한 곳에 이동형 자동화를 보낸다.", "공장 전체를 갈아엎지 않고 생산성을 끌어올린다."],
     },
     "en": {
         "title": "Built for|Brownfield Factories",
@@ -430,7 +522,7 @@ ROADMAP = {
         ("Phase 1", "Model-free CT", "공장의 시간축을 만든다."),
         ("Phase 2", "Event DB", "Cycle을 재사용 가능한 공장 Event로 전환한다."),
         ("Phase 3", "NC + Quality", "실제 시간, 프로그램 로직, 품질결과를 연결한다."),
-        ("Phase 4", "Material Flow", "소재 부족을 예측하고, 소재 위치를 확인하고, 보급을 배차한다."),
+        ("Phase 4", "Material Flow", "자재 부족을 예측하고, 자재 위치를 확인하고, 보급을 배차한다."),
         ("Phase 5", "Operator + Fleet", "사람, AMR, 지게차, 드론에게 Task를 배정한다."),
         ("Phase 6", "Last-meter Logistics", "운반과 실제 라인 투입 사이의 마지막 간극을 닫는다."),
         ("Phase 7", "Mobile Automation", "자동화 능력 자체를 필요한 설비로 이동시킨다."),
@@ -463,7 +555,7 @@ FINAL_VISION = {
     "ko": {
         "title": "사람이 없는 공장이|목표가 아니다.",
         "body": "Flowmatic이 만들려는 것은 사람이 좋은 제품을 만들기 위해 시스템과 싸우지 않아도 되는 공장이다.",
-        "lines": ["작업자는 무엇을 해야 할지 찾느라 시간을 쓰지 않는다.", "엔지니어는 반복 측정과 보고서 정리에 시간을 쓰지 않는다.", "관리자는 뒤늦은 보고를 기다리지 않는다.", "설비는 이유 없이 대기하지 않는다.", "소재는 사람이 부족을 발견할 때까지 기다리지 않는다.", "AMR는 특정 라인에 묶이지 않는다.", "재고의 진실은 실사 때만 드러나지 않는다.", "이동형 자동화는 필요한 설비로 이동한다.", "품질문제는 개인의 부주의로만 결론나지 않는다.", "숙련자의 경험은 퇴사와 함께 사라지지 않는다."],
+        "lines": ["작업자는 무엇을 해야 할지 찾느라 시간을 쓰지 않는다.", "엔지니어는 반복 측정과 보고서 정리에 시간을 쓰지 않는다.", "관리자는 뒤늦은 보고를 기다리지 않는다.", "설비는 이유 없이 대기하지 않는다.", "자재는 사람이 부족을 발견할 때까지 기다리지 않는다.", "AMR는 특정 라인에 묶이지 않는다.", "재고의 진실은 실사 때만 드러나지 않는다.", "이동형 자동화는 필요한 설비로 이동한다.", "품질문제는 개인의 부주의로만 결론나지 않는다.", "숙련자의 경험은 퇴사와 함께 사라지지 않는다."],
         "close": "Flowmatic은 엔지니어링 판단을 운영지능으로 바꾼다.",
     },
     "en": {
@@ -598,12 +690,12 @@ PRODUCTS = {
         "display": {"ko": "Flowmatic Fleet + Material Flow", "en": "Flowmatic Fleet + Material Flow", "ar": "Flowmatic Fleet + Material Flow"},
         "class": "flowmatic-amr",
         "status": "preview",
-        "title": {"ko": "Flowmatic AMR | Fleet와 라스트미터 소재 흐름", "en": "Flowmatic AMR | Fleet and Last-meter Material Flow", "ar": "Flowmatic AMR | الأسطول وتدفق المواد في آخر أمتار"},
+        "title": {"ko": "Flowmatic AMR | Fleet와 라스트미터 자재 흐름", "en": "Flowmatic AMR | Fleet and Last-meter Material Flow", "ar": "Flowmatic AMR | الأسطول وتدفق المواد في آخر أمتار"},
         "description": {"ko": "자재 요구를 Fleet 배정, 보급 이동, 라인사이드 투입 확인으로 연결하고 보급 완료까지 이벤트 상태를 추적합니다.", "en": "Connect material demand to fleet assignment, replenishment movement, and line-side input confirmation, then track the event through completion.", "ar": "اربط طلب المواد بتوزيع الأسطول وحركة التزويد وتأكيد الإدخال بجانب الخط، ثم تتبع الحدث حتى اكتماله."},
         "outcome": {"ko": "Fleet와 라스트미터 실행", "en": "Fleet and last-meter execution", "ar": "تنفيذ الأسطول وآخر أمتار"},
         "card_desc": {"ko": "자재 요구를 Fleet 배정, 보급 이동, 라인사이드 투입 확인으로 연결합니다.", "en": "Connect material demand to fleet assignment, replenishment movement, and line-side input confirmation.", "ar": "اربط طلب المواد بتوزيع الأسطول وحركة التزويد وتأكيد الإدخال بجانب الخط."},
         "cta": {"ko": "작동 방식 보기", "en": "See how it works", "ar": "شاهد طريقة العمل"},
-        "hero": {"ko": "라인이 기다리기 전에|소재를 흐르게 합니다.", "en": "Move material|before the line waits.", "ar": "حرّك المواد|قبل أن ينتظر الخط."},
+        "hero": {"ko": "라인이 기다리기 전에|자재를 흐르게 합니다.", "en": "Move material|before the line waits.", "ar": "حرّك المواد|قبل أن ينتظر الخط."},
         "hero_body": {"ko": "자재 요구를 감지해 작업자와 Fleet에 연결합니다. 부족이 정지로 이어지기 전에 보급, 도킹, 투입 확인까지 닫습니다.", "en": "Detect demand and connect it to operators and the fleet. Close replenishment, docking, and input confirmation before shortage becomes downtime.", "ar": "اكتشف الطلب واربطه بالمشغّلين والأسطول. أغلق التزويد والإرساء وتأكيد الإدخال قبل أن يتحول النقص إلى توقف."},
         "steps": {
             "ko": [("01", "자재 요구를 감지합니다.", "잔량, CT, 소비속도, 재고 위치를 자재 요구 이벤트로 바꿉니다."), ("02", "Agent를 배정합니다.", "사람, AMR, 지게차, 드론 상태를 보고 전체 손실이 낮은 실행 경로를 고릅니다."), ("03", "라스트미터를 닫습니다.", "도착, 도킹, 투입 확인, 빈 용기 회수까지 이벤트 상태를 닫습니다.")],
@@ -619,6 +711,106 @@ PRODUCTS = {
         "pilot_scope": {"ko": "라인 한 곳 · 보급소 한 곳 · 대표 자재 경로 한 개 · 라스트미터 확인 한 종류", "en": "One line · one depot · one representative material route · one last-meter confirmation method", "ar": "خط واحد · نقطة تزويد واحدة · مسار مواد ممثل واحد · طريقة تأكيد واحدة لآخر أمتار"},
         "related": ["ct", "work-standard"],
     },
+    "quality": {
+        "name": "Flowmatic Quality",
+        "class": "flowmatic-quality",
+        "status": "working",
+        "status_badges": {
+            "ko": [("is-working", "작동 프로토타입"), ("is-progress", "Inspection–Dashboard 연동 진행 중")],
+            "en": [("is-working", "Working prototype"), ("is-progress", "Inspection–Dashboard integration in progress")],
+            "ar": [("is-working", "نموذج أولي عامل"), ("is-progress", "تكامل Inspection–Dashboard قيد التنفيذ")],
+        },
+        "title": {
+            "ko": "Flowmatic Quality | 검사 증빙과 운영 데이터 연결",
+            "en": "Flowmatic Quality | Inspection Evidence and Operating Data",
+            "ar": "Flowmatic Quality | ربط أدلة الفحص ببيانات التشغيل",
+        },
+        "description": {
+            "ko": "멀티카메라 촬영, 양품·불량 판정, 증빙 이미지와 생산수량을 하나의 검사 이벤트로 연결합니다.",
+            "en": "Connect multi-camera capture, OK/NG decisions, inspection evidence, and production counts as one inspection event.",
+            "ar": "اربط الالتقاط متعدد الكاميرات وقرارات OK/NG وأدلة الفحص وكميات الإنتاج في حدث فحص واحد.",
+        },
+        "outcome": {
+            "ko": "검사 결과를 증거와|운영 데이터로 연결합니다.",
+            "en": "Connect every inspection result|to evidence and operating data.",
+            "ar": "اربط كل نتيجة فحص|بالأدلة وبيانات التشغيل.",
+        },
+        "card_desc": {
+            "ko": "멀티카메라 촬영, 양품·불량 판정, 증빙 이미지와 생산수량을 하나의 검사 이벤트로 연결합니다.",
+            "en": "Connect multi-camera capture, OK/NG decisions, inspection evidence, and production counts as one inspection event.",
+            "ar": "اربط الالتقاط متعدد الكاميرات وقرارات OK/NG وأدلة الفحص وكميات الإنتاج في حدث فحص واحد.",
+        },
+        "cta": {"ko": "Quality 작동 방식 보기", "en": "Explore Flowmatic Quality", "ar": "استكشف Flowmatic Quality"},
+        "hero": {"ko": "검사 결과를|운영 이벤트로 닫습니다.", "en": "Close every inspection|as an operating event.", "ar": "أغلق كل فحص|كحدث تشغيلي."},
+        "hero_body": {
+            "ko": "품목, LOT, 작업장, 증빙, 판정과 수량을 하나의 검사 이력으로 연결합니다.",
+            "en": "Connect item, LOT, workplace, evidence, verdict, and counts in one inspection history.",
+            "ar": "اربط الصنف وLOT وموقع العمل والأدلة والحكم والكميات في سجل فحص واحد.",
+        },
+        "steps": {
+            "ko": [("01", "촬영하고 증빙을 만듭니다.", "멀티카메라 촬영과 LOT·촬영 일시를 증빙 이미지에 연결합니다."), ("02", "OK/NG 판정을 기록합니다.", "수동 판정을 공통 verdict 구조로 남기고 지능형 판정 모듈을 연결할 기반을 만듭니다."), ("03", "Dashboard 수량을 맞춥니다.", "총수량·양품·불량과 모듈별 현황을 집계해 Quality Dashboard로 전달합니다."), ("04", "검사 이벤트를 종결합니다.", "품목·LOT·작업장·증빙·결과를 하나의 이벤트 이력으로 닫습니다.")],
+            "en": [("01", "Capture and create evidence.", "Connect multi-camera capture with LOT and capture time in the evidence record."), ("02", "Record the OK/NG verdict.", "Store manual decisions through a common verdict structure ready for future intelligent modules."), ("03", "Reconcile dashboard counts.", "Aggregate total, OK, NG, and module-level status for the Quality Dashboard."), ("04", "Close the inspection event.", "Close item, LOT, workplace, evidence, and result as one event history.")],
+            "ar": [("01", "التقاط وإنشاء الدليل.", "اربط الالتقاط متعدد الكاميرات مع LOT ووقت الالتقاط في سجل الأدلة."), ("02", "تسجيل حكم OK/NG.", "احفظ القرار اليدوي عبر بنية verdict مشتركة جاهزة للوحدات الذكية مستقبلًا."), ("03", "مطابقة كميات Dashboard.", "اجمع الإجمالي وOK وNG وحالة كل وحدة لإرسالها إلى Quality Dashboard."), ("04", "إغلاق حدث الفحص.", "أغلق الصنف وLOT وموقع العمل والأدلة والنتيجة كسجل حدث واحد.")],
+        },
+        "audiences": {
+            "ko": ["품질 검사 담당자", "생산 현장 관리자", "품질 데이터 분석 담당자"],
+            "en": ["Quality inspectors", "Production supervisors", "Quality-data analysts"],
+            "ar": ["مفتشو الجودة", "مشرفو الإنتاج", "محللو بيانات الجودة"],
+        },
+        "inputs": {
+            "ko": ["멀티카메라 이미지", "품목·LOT·작업장 정보", "수동 OK/NG 판정", "생산수량과 Inspection 모듈 결과"],
+            "en": ["Multi-camera images", "Item, LOT, and workplace data", "Manual OK/NG verdict", "Production counts and Inspection-module results"],
+            "ar": ["صور متعددة الكاميرات", "بيانات الصنف وLOT وموقع العمل", "حكم OK/NG يدوي", "كميات الإنتاج ونتائج وحدات Inspection"],
+        },
+        "events": {
+            "ko": ["Inspection_Started", "Capture_Completed", "Inspection_OK", "Inspection_NG", "Defect_Recorded", "Evidence_Saved"],
+            "en": ["Inspection_Started", "Capture_Completed", "Inspection_OK", "Inspection_NG", "Defect_Recorded", "Evidence_Saved"],
+            "ar": ["Inspection_Started", "Capture_Completed", "Inspection_OK", "Inspection_NG", "Defect_Recorded", "Evidence_Saved"],
+        },
+        "outputs": {
+            "ko": ["총 검사수량", "양품수량", "불량수량과 불량률", "증빙 이미지", "모듈별 현황", "품목 그룹 통합 현황"],
+            "en": ["Total inspected", "OK count", "NG count and defect rate", "Evidence images", "Status by module", "Consolidated item-group status"],
+            "ar": ["إجمالي الفحوص", "عدد OK", "عدد NG ونسبة العيوب", "صور الأدلة", "حالة كل وحدة", "حالة مجموعة الأصناف المجمعة"],
+        },
+        "conditions": {
+            "ko": ["카메라와 촬영 순서의 현장 검증", "품목·LOT 식별 규칙 확정", "수동 판정 책임과 수정 권한 정의", "Dashboard 전송 규격과 재처리 기준 합의"],
+            "en": ["Validate cameras and capture order on site", "Confirm item and LOT identification rules", "Define manual-verdict responsibility and edit authority", "Agree dashboard-transfer schema and retry criteria"],
+            "ar": ["التحقق ميدانيًا من الكاميرات وترتيب الالتقاط", "تأكيد قواعد تعريف الصنف وLOT", "تحديد مسؤولية الحكم اليدوي وصلاحية التعديل", "الاتفاق على مخطط نقل Dashboard ومعايير إعادة المعالجة"],
+        },
+        "kpis": {
+            "ko": ["검사 기록 시간", "증빙 누락률", "수량 집계 시간", "Inspection–Dashboard 데이터 불일치율", "불량 발생부터 Dashboard 반영까지의 시간", "수작업 보고서 작성시간"],
+            "en": ["Inspection recording time", "Missing-evidence rate", "Count aggregation time", "Inspection–Dashboard data mismatch rate", "Time from defect to dashboard update", "Manual report preparation time"],
+            "ar": ["وقت تسجيل الفحص", "نسبة الأدلة المفقودة", "وقت تجميع الكميات", "نسبة عدم تطابق بيانات Inspection–Dashboard", "الوقت من العيب إلى تحديث Dashboard", "وقت إعداد التقرير يدويًا"],
+        },
+        "pilot_scope": {
+            "ko": "품목 그룹 한 개 · Inspection 모듈 한 개 · 대표 카메라 구성 · Dashboard 집계 한 흐름",
+            "en": "One item group · one Inspection module · representative camera setup · one dashboard aggregation flow",
+            "ar": "مجموعة أصناف واحدة · وحدة Inspection واحدة · إعداد كاميرات ممثل · تدفق تجميع Dashboard واحد",
+        },
+        "related": ["ct", "nc"],
+    },
+}
+
+
+PRODUCTS = {slug: PRODUCTS[slug] for slug in ("ct", "quality", "nc", "work-standard", "tms", "amr")}
+
+
+QUALITY_STATUS = {
+    "ko": [
+        ("Implemented", ["멀티카메라 촬영 및 증빙 생성", "LOT·촬영 일시가 포함된 증빙 이미지"]),
+        ("Integration in progress", ["수동 OK/NG verdict 화면", "Inspection 결과와 Quality Dashboard 수량 연동"]),
+        ("Architecture target", ["Inspection 애플리케이션당 최대 16대 카메라", "2대 이상 카메라의 빠른 순차 촬영", "AI 모듈 공통 verdict interface", "품목 그룹당 최대 10개 독립 Inspection 모듈과 통합 집계"]),
+    ],
+    "en": [
+        ("Implemented", ["Multi-camera capture and evidence creation", "Evidence image with LOT and capture time"]),
+        ("Integration in progress", ["Manual OK/NG verdict view", "Inspection-result and Quality-Dashboard count integration"]),
+        ("Architecture target", ["Up to 16 cameras per Inspection application", "Fast sequential capture across two or more cameras", "Common verdict interface for AI modules", "Up to 10 independent Inspection modules per item group with consolidated counts"]),
+    ],
+    "ar": [
+        ("Implemented", ["التقاط متعدد الكاميرات وإنشاء الأدلة", "صورة دليل تتضمن LOT ووقت الالتقاط"]),
+        ("Integration in progress", ["واجهة حكم OK/NG يدوي", "تكامل نتيجة Inspection وكميات Quality Dashboard"]),
+        ("Architecture target", ["حتى 16 كاميرا لكل تطبيق Inspection", "التقاط تسلسلي سريع عبر كاميرتين أو أكثر", "واجهة verdict مشتركة لوحدات AI", "حتى 10 وحدات Inspection مستقلة لكل مجموعة أصناف مع كميات مجمعة"]),
+    ],
 }
 
 
@@ -648,6 +840,17 @@ def product_name(product: dict, lang: str) -> str:
     return product.get("display", {}).get(lang) or product["name"]
 
 
+def status_badges(product: dict, lang: str) -> str:
+    custom = product.get("status_badges", {}).get(lang)
+    if custom:
+        return '<span class="status-badge-list">' + "".join(
+            f'<span class="status-badge {e(css_class)}">{e(label)}</span>' for css_class, label in custom
+        ) + "</span>"
+    if product["status"] == "demo":
+        return f'<span class="status-badge is-demo">{e(LANGS[lang]["demo_available"])}</span>'
+    return f'<span class="status-badge is-preview">{e(LANGS[lang]["development_preview"])}</span>'
+
+
 def hreflang_links(slug: str, canonical_path: str) -> str:
     links = [f'<link rel="canonical" href="{abs_url(canonical_path)}">']
     for lang in LANGS:
@@ -670,6 +873,7 @@ def meta_head(lang: str, slug: str, title: str, description: str, canonical_path
 <meta property="og:url" content="{abs_url(canonical_path)}">
 <meta property="og:image" content="{OG_IMAGE}">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Organization","name":"Flowmatic","url":"{BASE_URL}/","email":"{CONTACT_EMAIL}"}}</script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{CSS_HREF}">
 </head>"""
@@ -706,7 +910,8 @@ def footer(lang: str) -> str:
     return f"""<footer class="site-footer">
 <strong>Flowmatic</strong>
 <p>{e(h["support"])}</p>
-<a href="{page_path(lang)}#hero">{e(LANGS[lang]["home"])}</a>
+<div class="footer-links"><a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><a href="{page_path(lang)}#hero">{e(LANGS[lang]["home"])}</a></div>
+<small>© 2026 Flowmatic</small>
 </footer>"""
 
 
@@ -731,6 +936,9 @@ def mini_visual(slug: str, lang: str) -> str:
         return '<div aria-hidden="true" class="product-mini mini-nc"><svg viewBox="0 0 320 180"><path class="mini-path" d="M35 140 L35 45 L145 45 L145 92 L270 92 L270 145"></path><circle class="mini-tool" r="9"><animateMotion dur="4s" path="M35 140 L35 45 L145 45 L145 92 L270 92 L270 145" repeatCount="indefinite"></animateMotion></circle></svg></div>'
     if slug == "ct":
         return '<div aria-hidden="true" class="product-mini mini-ct"><span class="mini-roi"></span><span class="mini-object"></span><span class="mini-timer">00:12.4</span><span class="mini-cycle-bar"></span></div>'
+    if slug == "quality":
+        labels = {"ko": ["촬영", "판정", "집계"], "en": ["CAPTURE", "VERDICT", "COUNT"], "ar": ["التقاط", "حكم", "تجميع"]}[lang]
+        return f'<div aria-hidden="true" class="product-mini mini-quality"><span>{e(labels[0])}</span><i>→</i><span>OK / NG</span><i>→</i><span>{e(labels[2])}</span></div>'
     if slug == "work-standard":
         return '<div aria-hidden="true" class="product-mini mini-work"><span class="mini-hand"></span><span class="mini-work-step s1">01</span><span class="mini-work-step s2">02</span><span class="mini-work-step s3">03</span></div>'
     if slug == "tms":
@@ -746,14 +954,12 @@ def mini_visual(slug: str, lang: str) -> str:
 def product_cards(lang: str) -> str:
     cards = []
     for i, (slug, product) in enumerate(PRODUCTS.items(), start=1):
-        status_class = "is-demo" if product["status"] == "demo" else "is-preview"
-        status_label = LANGS[lang]["demo_available"] if product["status"] == "demo" else LANGS[lang]["development_preview"]
         cards.append(f"""<article class="cell product-card span-4 reveal delay-{((i - 1) % 3) + 1}">
 {mini_visual(slug, lang)}
 <p class="eyebrow">{e(product_name(product, lang))}</p>
 <h3 class="semantic-copy card-title-fit" data-fit-min="22" data-fit-text>{lines(product["outcome"][lang])}</h3>
 <p>{e(product["card_desc"][lang])}</p>
-<span class="status-badge {status_class}">{e(status_label)}</span>
+{status_badges(product, lang)}
 <a class="product-link" href="{page_path(lang, slug)}"><span class="product-link-label">{e(product["cta"][lang])}</span><span aria-hidden="true">→</span></a>
 </article>""")
     return "\n".join(cards)
@@ -761,6 +967,7 @@ def product_cards(lang: str) -> str:
 
 def progression_section(lang: str) -> str:
     data = STRATEGIC_NARRATIVE[lang]
+    axis = AXIS_NARRATIVE[lang]
     steps = "".join(
         f'<span class="progression-step {"is-core" if i in (0, 1, 6) else ""}">{e(step)}</span>'
         for i, step in enumerate(data["steps"])
@@ -768,6 +975,7 @@ def progression_section(lang: str) -> str:
     return f"""<section aria-labelledby="progression-title" class="vision-progress section-grid" id="system">
 <div class="cell span-5 reveal"><p class="eyebrow">Strategic wedge</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="progression-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
 <div class="cell blue span-7 reveal delay-1"><p class="body-large">{e(data["support"])}</p><div class="progression-chain">{steps}</div></div>
+<div class="cell span-12 axis-narrative reveal delay-2"><p class="body-large">{e(axis["copy"])}</p><div class="quality-axis-diagram" role="group" aria-label="CT and Quality axes connected by Event DB"><div class="axis-node axis-ct"><strong>Flowmatic CT</strong><span>{e(axis["ct"])}</span></div><span class="axis-arrow axis-arrow-down" aria-label="{e(axis["down"])}">↓</span><div class="axis-node axis-event"><strong>Event DB</strong></div><span class="axis-arrow axis-arrow-up" aria-label="{e(axis["up"])}">↑</span><div class="axis-node axis-quality"><strong>Flowmatic Quality</strong><span>{e(axis["quality"])}</span></div></div></div>
 </section>"""
 
 
@@ -862,6 +1070,16 @@ def tech_visual(slug: str, lang: str) -> str:
 <div class="visual-label label-input">{label[0]}</div><div class="ct-camera-frame"><span class="ct-camera-tag">CAMERA</span><span class="ct-roi">{label[3]}</span><span class="ct-robot-arm"></span><span class="ct-machine-door"></span></div><div class="visual-arrow arrow-a">→</div>
 <div class="visual-label label-process">{label[1]}</div><div class="ct-event-panel"><strong class="ct-state" data-ct-state>HOME</strong><span class="ct-event start-event">{label[4]}</span><span class="ct-event end-event">{label[5]}</span><span class="ct-live-timer" data-ct-timer>00:00.0</span></div><div class="visual-arrow arrow-b">→</div>
 <div class="visual-label label-output">{label[2]}</div><div class="ct-timeline"><span class="ct-segment load">LOAD</span><span class="ct-segment machine">MACHINE</span><span class="ct-segment unload">UNLOAD</span><span class="ct-playhead"></span><span class="ct-result"><b>{label[6]}</b><span data-ct-result>12.4 s</span></span></div></div>"""
+    if slug == "quality":
+        label = {
+            "ko": ["1 · 촬영 및 증빙", "2 · OK / NG 판정", "3 · Dashboard 집계", "LOT · 촬영 일시", "수동 verdict", "총수량", "양품", "불량"],
+            "en": ["1 · CAPTURE + EVIDENCE", "2 · OK / NG VERDICT", "3 · DASHBOARD COUNTS", "LOT · CAPTURE TIME", "MANUAL VERDICT", "TOTAL", "OK", "NG"],
+            "ar": ["1 · الالتقاط والأدلة", "2 · حكم OK / NG", "3 · تجميع Dashboard", "LOT · وقت الالتقاط", "حكم يدوي", "الإجمالي", "OK", "NG"],
+        }[lang]
+        return f"""<div aria-label="Inspection capture becomes a verdict and dashboard count" class="tech-visual quality-explainer" data-tech-animation="quality">
+<div class="visual-label label-input">{label[0]}</div><div class="quality-capture"><span class="quality-camera q1"></span><span class="quality-camera q2"></span><span class="quality-evidence">{label[3]}</span></div><div class="visual-arrow arrow-a">→</div>
+<div class="visual-label label-process">{label[1]}</div><div class="quality-verdict"><span>{label[4]}</span><strong class="quality-ok">OK</strong><strong class="quality-ng">NG</strong></div><div class="visual-arrow arrow-b">→</div>
+<div class="visual-label label-output">{label[2]}</div><div class="quality-counts"><span><b>{label[5]}</b> 240</span><span><b>{label[6]}</b> 236</span><span><b>{label[7]}</b> 4</span></div></div>"""
     if slug == "work-standard":
         label = {"ko": ["1 · 공정·공구 데이터", "2 · 작업자 시점", "3 · 단계별 안내", "공구", "경로", "자세", "01 · 공구 장착", "02 · 표면 확인", "03 · 결과 확인"], "en": ["1 · PROCESS + TOOL DATA", "2 · OPERATOR VIEW", "3 · STEP-BY-STEP GUIDE", "TOOL", "PATH", "POSTURE", "01 · LOAD TOOL", "02 · CHECK SURFACE", "03 · CONFIRM RESULT"], "ar": ["1 · بيانات العملية والأداة", "2 · عرض المشغّل", "3 · دليل خطوة بخطوة", "الأداة", "المسار", "الوضعية", "01 · تحميل الأداة", "02 · فحص السطح", "03 · تأكيد النتيجة"]}[lang]
         return f"""<div aria-label="Process data becomes operator guidance" class="tech-visual work-explainer" data-tech-animation="work">
@@ -881,6 +1099,38 @@ def tech_visual(slug: str, lang: str) -> str:
 <div class="visual-label label-output">{label[2]}</div><div class="amr-route-scene"><span class="route-depot">{label[7]}</span><span class="route-line">{label[3]}</span><span class="route-track"></span><span class="amr-cart-large"></span><span class="amr-complete">{label[8]}</span></div></div>"""
 
 
+def contact_section(lang: str) -> str:
+    h = HOME[lang]
+    t = CONTACT_FORM[lang]
+    all_label = {"ko": "전체 / 미정", "en": "All / undecided", "ar": "الكل / غير محدد"}[lang]
+    options = "".join(
+        f'<option value="{e(value)}">{e(all_label if value == "all" else label)}</option>'
+        for value, label in CONTACT_PRODUCT_OPTIONS
+    )
+    fields = [
+        ("organization", t["organization"], "input", "organization"),
+        ("name", t["name"], "input", "name"),
+        ("process", t["process"], "input", "off"),
+        ("problem", t["problem"], "textarea", "off"),
+        ("signals", t["signals"], "textarea", "off"),
+        ("kpi", t["kpi"], "textarea", "off"),
+        ("preference", t["preference"], "input", "off"),
+    ]
+    controls = []
+    for field, label, control, autocomplete in fields:
+        required = ' required aria-required="true"' if field == "process" else ""
+        if control == "textarea":
+            element = f'<textarea id="contact-{field}" name="{field}" rows="3"{required}></textarea>'
+        else:
+            element = f'<input id="contact-{field}" name="{field}" type="text" autocomplete="{autocomplete}"{required}>'
+        controls.append(f'<div class="contact-field"><label for="contact-{field}">{e(label)}</label>{element}</div>')
+    controls.insert(2, f'<div class="contact-field"><label for="contact-product">{e(t["product"])}</label><select id="contact-product" name="product" data-contact-product>{options}</select></div>')
+    return f"""<section aria-labelledby="contact-title" class="cta contact-section section-grid" id="contact">
+<div class="cell span-5 contact-intro reveal"><p class="eyebrow">{e(LANGS[lang]["contact"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="contact-title">{lines(h["contact_title"])}</h2><p class="body-large">{e(h["contact_body"])}</p><div class="contact-email-panel"><a class="contact-email" data-contact-email href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><div class="contact-email-actions"><a class="fm-button primary" href="mailto:{CONTACT_EMAIL}">{e(t["direct"])}</a><button class="fm-button" data-copy-email data-copy-success="{e(t["copied"])}" data-copy-failed="{e(t["copy_failed"])}" type="button">{e(t["copy"])}</button></div><p class="contact-copy-status" data-copy-status aria-live="polite"></p></div></div>
+<div class="cell yellow span-7 contact-form-cell reveal delay-1"><form action="mailto:{CONTACT_EMAIL}" data-contact-form data-required-message="{e(t["required"])}" novalidate><div class="contact-form-grid">{"".join(controls)}</div><p class="contact-privacy">{e(t["privacy"])}</p><button class="fm-button primary contact-submit" type="submit">{e(t["submit"])}</button><p class="contact-form-status" data-contact-form-status aria-live="polite"></p></form></div>
+</section>"""
+
+
 def home_page(lang: str, canonical_path: str) -> str:
     h = HOME[lang]
     logic_cards = "".join(f'<li><strong>{e(title)}</strong><span>{e(body)}</span></li>' for title, body in FLOW_STEPS[lang])
@@ -897,7 +1147,7 @@ def home_page(lang: str, canonical_path: str) -> str:
 <main id="main">
 <section aria-labelledby="hero-title" class="hero section-grid" id="hero">
 <div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#system">{e(h["primary"])}</a><a class="fm-button" href="#roadmap">{e(h["secondary"])}</a></div></div>
-<div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event|Decision → Action","en":"Motion → Event|Decision → Action","ar":"Motion → Event|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
+<div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event →|Decision → Action","en":"Motion → Event →|Decision → Action","ar":"Motion → Event →|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
 <div class="cell yellow hero-note span-4 reveal delay-2"><strong>{e(FLOW_STEPS[lang][0][0])}</strong><span>{e(FLOW_STEPS[lang][0][1])}</span></div>
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>{e(h["primary"])}</span><span aria-hidden="true" class="scroll-line"></span></div>
@@ -927,10 +1177,7 @@ def home_page(lang: str, canonical_path: str) -> str:
 {final_vision_section(lang)}
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
-<section aria-labelledby="contact-title" class="cta section-grid" id="contact">
-<div class="cell span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["contact"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="contact-title">{lines(h["contact_title"])}</h2><p class="body-large">{e(h["contact_body"])}</p><p class="contact-interest"><span>{e(LANGS[lang]["selected_interest"])}</span><strong data-interest-label>All / undecided</strong></p></div>
-<div class="cell yellow span-4 contact-note reveal delay-1"><p><strong>{e(h["contact_cta"])}</strong></p><p>{e(h["contact_fallback"])}</p><ul><li>{e({"ko":"대상 공정","en":"Target process","ar":"العملية المستهدفة"}[lang])}</li><li>{e({"ko":"해결하려는 운영 문제","en":"Operational problem to solve","ar":"المشكلة التشغيلية المراد حلها"}[lang])}</li><li>{e({"ko":"확인할 입력 신호와 KPI","en":"Input signal and KPI to verify","ar":"إشارة الإدخال ومؤشر KPI للتحقق"}[lang])}</li></ul></div>
-</section>
+{contact_section(lang)}
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
     return html
 
@@ -941,9 +1188,20 @@ def demo_panel(product: dict, slug: str, lang: str) -> str:
         summary = product["description"][lang]
         return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(title)}</h2><p class="body-large">{e(summary)}</p></div>
 <div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="{e(product["video"])}" data-video-title="{e(product["name"])} demo"><video aria-label="{e(product["name"])} demo" controls hidden playsinline preload="metadata" poster="/og-flowmatic.svg" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>{e(LANGS[lang]["video_unavailable"])}</strong></p></div></div><p class="video-summary">{e(summary)}</p></div>"""
-    scope = {"ko": "작동 개념", "en": "Operating concept", "ar": "مفهوم التشغيل"}[lang]
-    return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(LANGS[lang]["development_preview"])}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>
-<div class="cell span-8 demo-cell reveal delay-1"><div class="development-panel"><span class="status-badge is-preview">{e(LANGS[lang]["development_preview"])}</span><h3>{e(product["name"])}</h3><ul><li><strong>{e(LANGS[lang]["current_scope"])}:</strong> {e(scope)}</li><li><strong>{e(LANGS[lang]["pilot_input"])}:</strong> {e(product["inputs"][lang][0])}</li><li><strong>{e(LANGS[lang]["pilot_result"])}:</strong> {e(product["outputs"][lang][0])}</li></ul><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a></div></div>"""
+    scope = {"ko": "작동 개념과 현재 연동 범위", "en": "Operating concept and current integration scope", "ar": "مفهوم التشغيل ونطاق التكامل الحالي"}[lang]
+    eyebrow = product.get("status_badges", {}).get(lang, [("", LANGS[lang]["development_preview"])])[0][1]
+    return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(eyebrow)}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>
+<div class="cell span-8 demo-cell reveal delay-1"><div class="development-panel">{status_badges(product, lang)}<h3>{e(product_name(product, lang))}</h3><ul><li><strong>{e(LANGS[lang]["current_scope"])}:</strong> {e(scope)}</li><li><strong>{e(LANGS[lang]["pilot_input"])}:</strong> {e(product["inputs"][lang][0])}</li><li><strong>{e(LANGS[lang]["pilot_result"])}:</strong> {e(product["outputs"][lang][0])}</li></ul><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a></div></div>"""
+
+
+def quality_status_section(lang: str) -> str:
+    cards = []
+    classes = ["is-implemented", "is-progress", "is-target"]
+    for i, (status, items) in enumerate(QUALITY_STATUS[lang]):
+        cards.append(f'<article class="cell quality-status-card span-4 {classes[i]} reveal delay-{i+1}"><p class="eyebrow">{e(status)}</p>{ul(items)}</article>')
+    title = {"ko": "구현 상태를|명확히 구분합니다.", "en": "Implementation status|is explicit.", "ar": "حالة التنفيذ|واضحة ومحددة."}[lang]
+    body = {"ko": "현재 작동하는 범위와 연동 중인 범위, 목표 아키텍처를 구분해 표시합니다.", "en": "Working scope, integration work, and architecture targets are shown separately.", "ar": "يتم عرض النطاق العامل وأعمال التكامل وأهداف البنية بشكل منفصل."}[lang]
+    return f'<section aria-labelledby="quality-status-title" class="quality-status section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Flowmatic Quality status</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="quality-status-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>{"".join(cards)}</section>'
 
 
 NC_BROWSER_DEMO = {
@@ -1085,9 +1343,8 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
     product = PRODUCTS[slug]
     title = product["title"][lang]
     description = product["description"][lang]
-    status_label = LANGS[lang]["demo_available"] if product["status"] == "demo" else LANGS[lang]["development_preview"]
-    status_class = "is-demo" if product["status"] == "demo" else "is-preview"
-    steps = "\n".join(f'<article class="cell span-4 detail-feature reveal delay-{i+1}"><span>{num}</span><h3 class="semantic-copy card-title-fit" data-fit-min="19" data-fit-text>{lines(head)}</h3><p>{e(body)}</p></article>' for i, (num, head, body) in enumerate(product["steps"][lang]))
+    step_span = 3 if slug == "quality" else 4
+    steps = "\n".join(f'<article class="cell span-{step_span} detail-feature reveal delay-{(i % 4) + 1}"><span>{num}</span><h3 class="semantic-copy card-title-fit" data-fit-min="19" data-fit-text>{lines(head)}</h3><p>{e(body)}</p></article>' for i, (num, head, body) in enumerate(product["steps"][lang]))
     spec_cards = [
         ("대상 사용자" if lang == "ko" else "Target users" if lang == "en" else "المستخدمون المستهدفون", product["audiences"][lang]),
         ("입력" if lang == "ko" else "Inputs" if lang == "en" else "المدخلات", product["inputs"][lang]),
@@ -1099,6 +1356,7 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
     specs = "\n".join(f'<article class="cell spec-card span-4 reveal delay-{(i % 3) + 1}"><span>{i+1:02}</span><h3>{e(head)}</h3>{ul(items)}</article>' for i, (head, items) in enumerate(spec_cards))
     related_items = "".join(f'<li><a href="{page_path(lang, rel)}">{e(product_name(PRODUCTS[rel], lang))}</a> — {e(PRODUCTS[rel]["outcome"][lang])}</li>' for rel in product["related"])
     nc_demo = f"\n{nc_browser_demo_section(lang)}" if slug == "nc" else ""
+    quality_status = f"\n{quality_status_section(lang)}" if slug == "quality" else ""
     extra_script = f'<script src="{NC_DEMO_SRC}"></script>' if slug == "nc" else ""
     html = f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
@@ -1107,9 +1365,9 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
 {header(lang, slug)}
 <main id="main">
 <section aria-labelledby="tech-title" class="detail-overview section-grid">
-<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta"><span class="status-badge {status_class}">{e(status_label)}</span><span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(LANGS[lang]["all_products"])}</a></div>
+<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(LANGS[lang]["all_products"])}</a></div>
 <div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
-<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}
+<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}
 <section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
 <section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#products">{e(LANGS[lang]["all_products"])}</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script>{extra_script}</body></html>"""
@@ -1138,10 +1396,10 @@ def notes() -> str:
 - 다국어 처리 방식: `/ko/`, `/en/`, `/ar/` 정적 HTML을 생성하며 각 HTML에는 해당 언어만 렌더링합니다. 기존 루트 URL과 `*.html` 제품 URL은 한국어 호환 페이지로 유지합니다.
 - 데모 영상 파일: `flowmatic_nc_demo.mp4`, `flowmatic_ct_demo.mp4`; 두 제품 페이지의 `<video>`는 `controls`, `playsinline`, `preload="metadata"`, `poster`를 사용합니다.
 - NC 공개 브라우저 데모: `/nc-demo-lite.js`, `/nc-demo-lite-worker.js`, `/demo-data/flowmatic-nc-sample.nc`; 업로드 없이 브라우저 내부에서 기본 G-code 이동시간만 계산합니다.
+- Flowmatic Quality: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; 작동 프로토타입, Inspection–Dashboard 연동 진행 상태, 구현/연동/목표 아키텍처를 구분해 표시합니다.
 - 개발 프리뷰 제품: Work Standard, TMS, AMR은 빈 비디오 플레이어 없이 개발 상태 패널, 파일럿 입력, 확인 결과, 문의 CTA를 표시합니다.
-- 실제 문의 목적지: 저장소에서 검증된 이메일, 폼 엔드포인트, 예약 링크를 찾지 못했습니다. 안전한 폴백으로 모든 CTA를 Contact 섹션과 `interest` query parameter로 연결했습니다.
-- 적용한 안전한 폴백: 고객사, 성과 수치, 보안 인증, 배포 방식, 지원 컨트롤러, 회사 주소, 전화번호, 이메일은 추측해 표시하지 않았습니다.
-- 사용자 확인 필요: 실제 문의 이메일 또는 폼 엔드포인트, 개인정보처리방침 URL, 법인명/주소/전화번호, 아랍어 최종 감수, Work Standard/TMS/AMR의 출시 상태.
+- 공식 문의 목적지: `{CONTACT_EMAIL}`. 사이트는 문의 입력을 전송하거나 저장하지 않고, 사용자의 이메일 앱에 제목과 본문이 채워진 `mailto:` 초안을 엽니다.
+- 사용자 확인 필요: 개인정보처리방침 URL, 법인명/주소/전화번호, 아랍어 최종 감수, Quality의 실제 연동 상태, Work Standard/TMS/AMR의 출시 상태.
 """
 
 
