@@ -9,7 +9,7 @@ Static Flowmatic website for GitHub Pages and `flowmatic-os.com`.
 - `/ko/{product}/`, `/en/{product}/`, `/ar/{product}/`: language-specific product pages.
 - `build_site.py`: static page generator for the multilingual HTML output.
 - `style-v5.20.css`: current stylesheet.
-- `script.js`: navigation, reveal, product CTA, text fitting, demo-video loader, and local-only `mailto:` inquiry composer.
+- `script.js`: navigation, reveal, product CTA, text fitting, demo-video loader, and AJAX inquiry submission.
 
 ## Demo Videos
 
@@ -22,7 +22,7 @@ Flowmatic Quality shows working-prototype and integration status without claimin
 
 ## Contact
 
-The site displays `contact@flowmatic-os.com`. Inquiry fields stay in the browser and are used only to open a prefilled draft in the visitor's email application.
+The site displays `contact@flowmatic-os.com`. The contact form submits to a Formspree endpoint that delivers inquiries to this verified recipient address.
 
 ## Build
 

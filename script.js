@@ -311,21 +311,6 @@ function initContactInterest() {
 }
 
 const CONTACT_EMAIL = 'contact@flowmatic-os.com';
-const CONTACT_BODY_LABELS = {
-  ko: {
-    organization: '회사 / 조직', name: '이름 / 직책', product: '관심 제품', process: '대상 공정',
-    problem: '해결하려는 운영 문제', signals: '사용 가능한 입력 신호', kpi: '확인할 KPI', preference: '희망 연락 방식'
-  },
-  en: {
-    organization: 'Company / organization', name: 'Name / role', product: 'Product interest', process: 'Target process',
-    problem: 'Operational problem to solve', signals: 'Available input signals', kpi: 'KPI to verify', preference: 'Preferred contact method'
-  },
-  ar: {
-    organization: 'الشركة / المؤسسة', name: 'الاسم / الدور', product: 'المنتج محل الاهتمام', process: 'العملية المستهدفة',
-    problem: 'المشكلة التشغيلية المراد حلها', signals: 'إشارات الإدخال المتاحة', kpi: 'مؤشر KPI المطلوب التحقق منه', preference: 'طريقة التواصل المفضلة'
-  }
-};
-
 async function copyContactEmail(button, status) {
   let copied = false;
   try {
@@ -356,30 +341,37 @@ function initContactForm() {
   if (copyButton) copyButton.addEventListener('click', () => copyContactEmail(copyButton, copyStatus));
   if (!form) return;
   const formStatus = form.querySelector('[data-contact-form-status]');
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) {
       if (formStatus) formStatus.textContent = form.dataset.requiredMessage || '';
       return;
     }
-    if (formStatus) formStatus.textContent = '';
-    const data = new FormData(form);
-    const productSelect = form.querySelector('[name="product"]');
-    const selectedProduct = productSelect?.selectedOptions?.[0]?.textContent?.trim() || 'All / undecided';
-    const targetProcess = String(data.get('process') || '').trim();
-    const subject = `[Flowmatic Pilot] ${selectedProduct} - ${targetProcess}`;
-    const labels = CONTACT_BODY_LABELS[getCurrentLanguage()] || CONTACT_BODY_LABELS.en;
-    const body = [
-      `${labels.organization}: ${String(data.get('organization') || '').trim()}`,
-      `${labels.name}: ${String(data.get('name') || '').trim()}`,
-      `${labels.product}: ${selectedProduct}`,
-      `${labels.process}: ${targetProcess}`,
-      `${labels.problem}: ${String(data.get('problem') || '').trim()}`,
-      `${labels.signals}: ${String(data.get('signals') || '').trim()}`,
-      `${labels.kpi}: ${String(data.get('kpi') || '').trim()}`,
-      `${labels.preference}: ${String(data.get('preference') || '').trim()}`
-    ].join('\n');
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const endpoint = form.getAttribute('action')?.trim();
+    if (!endpoint) {
+      if (formStatus) formStatus.textContent = form.dataset.unavailableMessage || '';
+      return;
+    }
+    const submitButton = form.querySelector('[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+    if (formStatus) formStatus.textContent = form.dataset.sendingMessage || '';
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+      if (!response.ok) throw new Error(`Contact request failed: ${response.status}`);
+      const brief = form.querySelector('[name="brief"]')?.defaultValue || '';
+      form.reset();
+      const briefField = form.querySelector('[name="brief"]');
+      if (briefField) briefField.value = brief;
+      if (formStatus) formStatus.textContent = form.dataset.successMessage || '';
+    } catch (_) {
+      if (formStatus) formStatus.textContent = form.dataset.failedMessage || '';
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
 }
 

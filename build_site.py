@@ -7,8 +7,9 @@ from pathlib import Path
 
 BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
-CSS_HREF = "/style-v5.20.css?v=5.21"
-SCRIPT_SRC = "/script.js?v=5.18"
+CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
+CSS_HREF = "/style-v5.20.css?v=5.22"
+SCRIPT_SRC = "/script.js?v=5.19"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 OG_IMAGE = f"{BASE_URL}/og-flowmatic.svg"
 
@@ -89,54 +90,54 @@ LANGS = {
 CONTACT_FORM = {
     "ko": {
         "organization": "회사 / 조직",
-        "name": "이름 / 직책",
+        "name": "이름",
         "product": "관심 제품",
-        "process": "대상 공정",
-        "problem": "해결하려는 운영 문제",
-        "signals": "사용 가능한 입력 신호",
-        "kpi": "확인할 KPI",
-        "preference": "희망 연락 방식",
-        "submit": "이메일 앱에서 문의 작성",
+        "brief": "운영 문제 / 입력 신호 / 목표 KPI",
+        "brief_template": "해결하려는 문제 :\n사용 가능한 입력 신호 :\n목표 KPI :",
+        "contact": "이메일 주소 / 휴대폰 번호(국가)",
+        "submit": "문의 보내기",
         "copy": "이메일 주소 복사",
         "copied": "이메일 주소를 복사했습니다.",
         "copy_failed": "복사하지 못했습니다. 이메일 주소를 직접 선택해 주세요.",
-        "direct": "직접 이메일 보내기",
-        "privacy": "입력 내용은 이 사이트에서 전송하거나 저장하지 않습니다. 버튼을 누르면 사용자의 이메일 앱에서 초안이 열립니다.",
-        "required": "대상 공정을 입력해 주세요.",
+        "required": "필수 항목을 입력해 주세요.",
+        "sending": "문의 내용을 전송하고 있습니다.",
+        "sent": "문의가 전송되었습니다. 확인 후 연락드리겠습니다.",
+        "failed": "전송하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+        "unavailable": "문의 전송 설정을 확인하고 있습니다.",
     },
     "en": {
         "organization": "Company / organization",
-        "name": "Name / role",
+        "name": "Name",
         "product": "Product interest",
-        "process": "Target process",
-        "problem": "Operational problem to solve",
-        "signals": "Available input signals",
-        "kpi": "KPI to verify",
-        "preference": "Preferred contact method",
-        "submit": "Compose in your email app",
+        "brief": "Operational problem / input signals / target KPI",
+        "brief_template": "Problem to solve:\nAvailable input signals:\nTarget KPI:",
+        "contact": "Email address / mobile number (country)",
+        "submit": "Send inquiry",
         "copy": "Copy email address",
         "copied": "Email address copied.",
         "copy_failed": "Could not copy automatically. Please select the email address.",
-        "direct": "Email Flowmatic directly",
-        "privacy": "This site does not send or store your entries. The button opens a draft in your email application.",
-        "required": "Enter a target process.",
+        "required": "Complete the required fields.",
+        "sending": "Sending your inquiry.",
+        "sent": "Your inquiry has been sent. We will be in touch.",
+        "failed": "The inquiry could not be sent. Please try again shortly.",
+        "unavailable": "The inquiry delivery setup is being checked.",
     },
     "ar": {
         "organization": "الشركة / المؤسسة",
-        "name": "الاسم / الدور",
+        "name": "الاسم",
         "product": "المنتج محل الاهتمام",
-        "process": "العملية المستهدفة",
-        "problem": "المشكلة التشغيلية المراد حلها",
-        "signals": "إشارات الإدخال المتاحة",
-        "kpi": "مؤشر KPI المطلوب التحقق منه",
-        "preference": "طريقة التواصل المفضلة",
-        "submit": "إنشاء الرسالة في تطبيق البريد",
+        "brief": "المشكلة التشغيلية / إشارات الإدخال / مؤشر KPI المستهدف",
+        "brief_template": "المشكلة المراد حلها:\nإشارات الإدخال المتاحة:\nمؤشر KPI المستهدف:",
+        "contact": "عنوان البريد / رقم الجوال (الدولة)",
+        "submit": "إرسال الاستفسار",
         "copy": "نسخ عنوان البريد",
         "copied": "تم نسخ عنوان البريد.",
         "copy_failed": "تعذر النسخ تلقائيًا. يرجى تحديد عنوان البريد يدويًا.",
-        "direct": "إرسال بريد مباشرة إلى Flowmatic",
-        "privacy": "لا يرسل هذا الموقع مدخلاتك ولا يخزنها. يفتح الزر مسودة في تطبيق البريد لديك.",
-        "required": "أدخل العملية المستهدفة.",
+        "required": "يرجى إكمال الحقول المطلوبة.",
+        "sending": "جارٍ إرسال استفسارك.",
+        "sent": "تم إرسال استفسارك. سنتواصل معك قريبًا.",
+        "failed": "تعذر إرسال الاستفسار. يرجى المحاولة بعد قليل.",
+        "unavailable": "يجري التحقق من إعداد إرسال الاستفسارات.",
     },
 }
 
@@ -176,7 +177,7 @@ HOME = {
         "pilot_title": "기존 라인을 바꾸지 않고,|이벤트 하나부터 검증합니다.",
         "deploy_note": "배포 구조, 데이터 저장 위치, 보관 기간, 접근 권한, 기존 시스템 연동 범위는 파일럿 설계 단계에서 확인합니다.",
         "contact_title": "현재 라인을 바꾸지 않고,|이벤트 하나부터 검증하세요.",
-        "contact_body": "대상 공정과 해결하려는 문제를 알려주시면 입력 신호, 다음 행동, 측정할 KPI를 기준으로 파일럿 범위를 정리합니다.",
+        "contact_body": "해결하려는 문제와 사용 가능한 입력 신호, 목표 KPI를 알려주시면 파일럿 범위를 정리합니다.",
         "contact_cta": "파일럿 상담 요청",
         "contact_fallback": "공식 이메일로 파일럿 범위를 문의할 수 있습니다.",
     },
@@ -203,7 +204,7 @@ HOME = {
         "pilot_title": "Validate one event|without replacing the line.",
         "deploy_note": "Deployment architecture, data location, retention, access control, and integration scope are confirmed during pilot design.",
         "contact_title": "Validate one event|without replacing the line.",
-        "contact_body": "Share the process and operational problem. We will define a pilot around the input signal, the next action, and the KPI to verify.",
+        "contact_body": "Share the problem, available input signals, and target KPI. We will turn them into a focused pilot scope.",
         "contact_cta": "Request a pilot discussion",
         "contact_fallback": "Use the official email to discuss a pilot scope.",
     },
@@ -230,7 +231,7 @@ HOME = {
         "pilot_title": "تحقق من حدث واحد|من دون استبدال الخط.",
         "deploy_note": "يتم تأكيد بنية النشر وموقع البيانات وفترة الاحتفاظ وصلاحيات الوصول ونطاق التكامل أثناء تصميم المشروع التجريبي.",
         "contact_title": "تحقق من حدث واحد|من دون استبدال الخط.",
-        "contact_body": "شارك العملية والمشكلة التشغيلية. سنحدد نطاقًا تجريبيًا حول إشارة الإدخال والإجراء التالي ومؤشر KPI المراد التحقق منه.",
+        "contact_body": "شارك المشكلة وإشارات الإدخال المتاحة ومؤشر KPI المستهدف، وسنحدد نطاقًا تجريبيًا مركزًا.",
         "contact_cta": "اطلب نقاشًا تجريبيًا",
         "contact_fallback": "استخدم البريد الرسمي لمناقشة نطاق مشروع تجريبي.",
     },
@@ -1107,27 +1108,16 @@ def contact_section(lang: str) -> str:
         f'<option value="{e(value)}">{e(all_label if value == "all" else label)}</option>'
         for value, label in CONTACT_PRODUCT_OPTIONS
     )
-    fields = [
-        ("organization", t["organization"], "input", "organization"),
-        ("name", t["name"], "input", "name"),
-        ("process", t["process"], "input", "off"),
-        ("problem", t["problem"], "textarea", "off"),
-        ("signals", t["signals"], "textarea", "off"),
-        ("kpi", t["kpi"], "textarea", "off"),
-        ("preference", t["preference"], "input", "off"),
+    controls = [
+        f'<div class="contact-field"><label for="contact-organization">{e(t["organization"])}</label><input id="contact-organization" name="organization" type="text" autocomplete="organization" required aria-required="true"></div>',
+        f'<div class="contact-field"><label for="contact-name">{e(t["name"])}</label><input id="contact-name" name="name" type="text" autocomplete="name" required aria-required="true"></div>',
+        f'<div class="contact-field contact-field-wide"><label for="contact-product">{e(t["product"])}</label><select id="contact-product" name="product" data-contact-product>{options}</select></div>',
+        f'<div class="contact-field contact-field-wide"><label for="contact-brief">{e(t["brief"])}</label><textarea id="contact-brief" name="brief" rows="8" required aria-required="true">{e(t["brief_template"])}</textarea></div>',
+        f'<div class="contact-field contact-field-wide"><label for="contact-reply">{e(t["contact"])}</label><input id="contact-reply" name="reply" type="text" autocomplete="email" required aria-required="true"></div>',
     ]
-    controls = []
-    for field, label, control, autocomplete in fields:
-        required = ' required aria-required="true"' if field == "process" else ""
-        if control == "textarea":
-            element = f'<textarea id="contact-{field}" name="{field}" rows="3"{required}></textarea>'
-        else:
-            element = f'<input id="contact-{field}" name="{field}" type="text" autocomplete="{autocomplete}"{required}>'
-        controls.append(f'<div class="contact-field"><label for="contact-{field}">{e(label)}</label>{element}</div>')
-    controls.insert(2, f'<div class="contact-field"><label for="contact-product">{e(t["product"])}</label><select id="contact-product" name="product" data-contact-product>{options}</select></div>')
     return f"""<section aria-labelledby="contact-title" class="cta contact-section section-grid" id="contact">
-<div class="cell span-5 contact-intro reveal"><p class="eyebrow">{e(LANGS[lang]["contact"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="contact-title">{lines(h["contact_title"])}</h2><p class="body-large">{e(h["contact_body"])}</p><div class="contact-email-panel"><a class="contact-email" data-contact-email href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><div class="contact-email-actions"><a class="fm-button primary" href="mailto:{CONTACT_EMAIL}">{e(t["direct"])}</a><button class="fm-button" data-copy-email data-copy-success="{e(t["copied"])}" data-copy-failed="{e(t["copy_failed"])}" type="button">{e(t["copy"])}</button></div><p class="contact-copy-status" data-copy-status aria-live="polite"></p></div></div>
-<div class="cell yellow span-7 contact-form-cell reveal delay-1"><form action="mailto:{CONTACT_EMAIL}" data-contact-form data-required-message="{e(t["required"])}" novalidate><div class="contact-form-grid">{"".join(controls)}</div><p class="contact-privacy">{e(t["privacy"])}</p><button class="fm-button primary contact-submit" type="submit">{e(t["submit"])}</button><p class="contact-form-status" data-contact-form-status aria-live="polite"></p></form></div>
+<div class="cell span-5 contact-intro reveal"><p class="eyebrow">{e(LANGS[lang]["contact"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="contact-title">{lines(h["contact_title"])}</h2><p class="body-large">{e(h["contact_body"])}</p><div class="contact-email-panel"><a class="contact-email" data-contact-email href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><div class="contact-email-actions"><button class="fm-button" data-copy-email data-copy-success="{e(t["copied"])}" data-copy-failed="{e(t["copy_failed"])}" type="button">{e(t["copy"])}</button></div><p class="contact-copy-status" data-copy-status aria-live="polite"></p></div></div>
+<div class="cell yellow span-7 contact-form-cell reveal delay-1"><form action="{CONTACT_ENDPOINT}" data-contact-form data-required-message="{e(t["required"])}" data-sending-message="{e(t["sending"])}" data-success-message="{e(t["sent"])}" data-failed-message="{e(t["failed"])}" data-unavailable-message="{e(t["unavailable"])}" method="post" novalidate><input name="_subject" type="hidden" value="Flowmatic website inquiry"><input name="language" type="hidden" value="{e(lang)}"><div aria-hidden="true" class="contact-honeypot"><label for="contact-company-website">Website</label><input id="contact-company-website" name="_gotcha" tabindex="-1" type="text" autocomplete="off"></div><div class="contact-form-grid">{"".join(controls)}</div><button class="fm-button primary contact-submit" type="submit">{e(t["submit"])}</button><p class="contact-form-status" data-contact-form-status aria-live="polite"></p></form></div>
 </section>"""
 
 
@@ -1398,7 +1388,7 @@ def notes() -> str:
 - NC 공개 브라우저 데모: `/nc-demo-lite.js`, `/nc-demo-lite-worker.js`, `/demo-data/flowmatic-nc-sample.nc`; 업로드 없이 브라우저 내부에서 기본 G-code 이동시간만 계산합니다.
 - Flowmatic Quality: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; 작동 프로토타입, Inspection–Dashboard 연동 진행 상태, 구현/연동/목표 아키텍처를 구분해 표시합니다.
 - 개발 프리뷰 제품: Work Standard, TMS, AMR은 빈 비디오 플레이어 없이 개발 상태 패널, 파일럿 입력, 확인 결과, 문의 CTA를 표시합니다.
-- 공식 문의 목적지: `{CONTACT_EMAIL}`. 사이트는 문의 입력을 전송하거나 저장하지 않고, 사용자의 이메일 앱에 제목과 본문이 채워진 `mailto:` 초안을 엽니다.
+- 공식 문의 목적지: `{CONTACT_EMAIL}`. 문의 폼은 Formspree 엔드포인트를 통해 AJAX로 제출하며, 성공·실패 상태를 페이지 안에서 안내합니다.
 - 사용자 확인 필요: 개인정보처리방침 URL, 법인명/주소/전화번호, 아랍어 최종 감수, Quality의 실제 연동 상태, Work Standard/TMS/AMR의 출시 상태.
 """
 
