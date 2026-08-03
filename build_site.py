@@ -8,10 +8,13 @@ from pathlib import Path
 BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
-CSS_HREF = "/style-v5.20.css?v=5.22"
+CSS_HREF = "/style-v5.20.css?v=5.23"
 SCRIPT_SRC = "/script.js?v=5.19"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
-OG_IMAGE = f"{BASE_URL}/og-flowmatic.svg"
+BRAND_PATH = "/assets/branding"
+BRAND_MARK = f"{BRAND_PATH}/flowmatic-logo-mark.svg"
+OG_IMAGE = f"{BASE_URL}{BRAND_PATH}/flowmatic-og.png"
+QR_SIGNATURE = f"{BRAND_PATH}/flowmatic-qr-contact-signature.svg"
 
 
 LANGS = {
@@ -866,7 +869,7 @@ def meta_head(lang: str, slug: str, title: str, description: str, canonical_path
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)}</title>
 <meta name="description" content="{e(description)}">
-<meta name="theme-color" content="#FAFAF7">
+<meta name="theme-color" content="#FFFFFF">
 {hreflang_links(slug, canonical_path)}
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(description)}">
@@ -874,8 +877,13 @@ def meta_head(lang: str, slug: str, title: str, description: str, canonical_path
 <meta property="og:url" content="{abs_url(canonical_path)}">
 <meta property="og:image" content="{OG_IMAGE}">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Organization","name":"Flowmatic","url":"{BASE_URL}/","email":"{CONTACT_EMAIL}"}}</script>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="twitter:image" content="{OG_IMAGE}">
+<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Organization","name":"Flowmatic","url":"{BASE_URL}/","email":"{CONTACT_EMAIL}","logo":"{BASE_URL}{BRAND_PATH}/flowmatic-logo-mark.png","image":"{OG_IMAGE}"}}</script>
+<link rel="icon" href="{BRAND_MARK}" type="image/svg+xml">
+<link rel="icon" href="{BRAND_PATH}/flowmatic-favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="{BRAND_PATH}/apple-touch-icon.png">
+<link rel="mask-icon" href="{BRAND_MARK}" color="#111111">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="{CSS_HREF}">
 </head>"""
 
@@ -897,7 +905,7 @@ def header(lang: str, slug: str) -> str:
     )
     return f"""<a class="skip-link" href="#main">{e(t["skip"])}</a>
 <header class="site-header" data-header>
-<a aria-label="Flowmatic home" class="brand" href="{home}#hero"><span aria-hidden="true" class="brand-mark"></span><span>Flowmatic</span></a>
+<a aria-label="Flowmatic home" class="brand" href="{home}#hero"><img alt="" aria-hidden="true" class="brand-mark" height="30" src="{BRAND_MARK}" width="30"><span>Flowmatic</span></a>
 <div class="header-actions">
 <nav class="site-nav" data-nav id="site-nav">{nav_html}</nav>
 <div aria-label="Language switcher" class="lang-switcher">{lang_html}</div>
@@ -909,7 +917,7 @@ def header(lang: str, slug: str) -> str:
 def footer(lang: str) -> str:
     h = HOME[lang]
     return f"""<footer class="site-footer">
-<strong>Flowmatic</strong>
+<a aria-label="Flowmatic home" class="footer-brand" href="{page_path(lang)}#hero"><img alt="" aria-hidden="true" class="brand-mark" height="34" src="{BRAND_MARK}" width="34"><strong>Flowmatic</strong></a>
 <p>{e(h["support"])}</p>
 <div class="footer-links"><a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><a href="{page_path(lang)}#hero">{e(LANGS[lang]["home"])}</a></div>
 <small>© 2026 Flowmatic</small>
@@ -1100,6 +1108,11 @@ def tech_visual(slug: str, lang: str) -> str:
 <div class="visual-label label-output">{label[2]}</div><div class="amr-route-scene"><span class="route-depot">{label[7]}</span><span class="route-line">{label[3]}</span><span class="route-track"></span><span class="amr-cart-large"></span><span class="amr-complete">{label[8]}</span></div></div>"""
 
 
+def qr_contact_signature(qr_alt: str) -> str:
+    """Render the reusable official QR contact signature component."""
+    return f'<figure class="qr-contact-signature"><a aria-label="{e(qr_alt)}" href="{BASE_URL}/"><img alt="{e(qr_alt)}" decoding="async" height="1400" loading="lazy" src="{QR_SIGNATURE}" width="1200"></a></figure>'
+
+
 def contact_section(lang: str) -> str:
     h = HOME[lang]
     t = CONTACT_FORM[lang]
@@ -1115,8 +1128,13 @@ def contact_section(lang: str) -> str:
         f'<div class="contact-field contact-field-wide"><label for="contact-brief">{e(t["brief"])}</label><textarea id="contact-brief" name="brief" rows="8" required aria-required="true">{e(t["brief_template"])}</textarea></div>',
         f'<div class="contact-field contact-field-wide"><label for="contact-reply">{e(t["contact"])}</label><input id="contact-reply" name="reply" type="text" autocomplete="email" required aria-required="true"></div>',
     ]
+    qr_alt = {
+        "ko": "Flowmatic 공식 QR 연락 시그니처. 스캔하면 flowmatic-os.com을 엽니다.",
+        "en": "Flowmatic official QR contact signature. Scan to open flowmatic-os.com.",
+        "ar": "توقيع اتصال QR الرسمي لـ Flowmatic. امسح الرمز لفتح flowmatic-os.com.",
+    }[lang]
     return f"""<section aria-labelledby="contact-title" class="cta contact-section section-grid" id="contact">
-<div class="cell span-5 contact-intro reveal"><p class="eyebrow">{e(LANGS[lang]["contact"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="contact-title">{lines(h["contact_title"])}</h2><p class="body-large">{e(h["contact_body"])}</p><div class="contact-email-panel"><a class="contact-email" data-contact-email href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><div class="contact-email-actions"><button class="fm-button" data-copy-email data-copy-success="{e(t["copied"])}" data-copy-failed="{e(t["copy_failed"])}" type="button">{e(t["copy"])}</button></div><p class="contact-copy-status" data-copy-status aria-live="polite"></p></div></div>
+<div class="cell span-5 contact-intro reveal"><p class="eyebrow">{e(LANGS[lang]["contact"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="contact-title">{lines(h["contact_title"])}</h2><p class="body-large">{e(h["contact_body"])}</p><div class="contact-email-panel"><a class="contact-email" data-contact-email href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><div class="contact-email-actions"><button class="fm-button" data-copy-email data-copy-success="{e(t["copied"])}" data-copy-failed="{e(t["copy_failed"])}" type="button">{e(t["copy"])}</button></div><p class="contact-copy-status" data-copy-status aria-live="polite"></p></div>{qr_contact_signature(qr_alt)}</div>
 <div class="cell yellow span-7 contact-form-cell reveal delay-1"><form action="{CONTACT_ENDPOINT}" data-contact-form data-required-message="{e(t["required"])}" data-sending-message="{e(t["sending"])}" data-success-message="{e(t["sent"])}" data-failed-message="{e(t["failed"])}" data-unavailable-message="{e(t["unavailable"])}" method="post" novalidate><input name="_subject" type="hidden" value="Flowmatic website inquiry"><input name="language" type="hidden" value="{e(lang)}"><div aria-hidden="true" class="contact-honeypot"><label for="contact-company-website">Website</label><input id="contact-company-website" name="_gotcha" tabindex="-1" type="text" autocomplete="off"></div><div class="contact-form-grid">{"".join(controls)}</div><button class="fm-button primary contact-submit" type="submit">{e(t["submit"])}</button><p class="contact-form-status" data-contact-form-status aria-live="polite"></p></form></div>
 </section>"""
 
@@ -1177,7 +1195,7 @@ def demo_panel(product: dict, slug: str, lang: str) -> str:
         title = {"ko": f"{product['name']} 실제 데모", "en": f"{product['name']} working demo", "ar": f"عرض {product['name']} العملي"}[lang]
         summary = product["description"][lang]
         return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(title)}</h2><p class="body-large">{e(summary)}</p></div>
-<div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="{e(product["video"])}" data-video-title="{e(product["name"])} demo"><video aria-label="{e(product["name"])} demo" controls hidden playsinline preload="metadata" poster="/og-flowmatic.svg" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>{e(LANGS[lang]["video_unavailable"])}</strong></p></div></div><p class="video-summary">{e(summary)}</p></div>"""
+<div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="{e(product["video"])}" data-video-title="{e(product["name"])} demo"><video aria-label="{e(product["name"])} demo" controls hidden playsinline preload="metadata" poster="{BRAND_PATH}/flowmatic-og.svg" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>{e(LANGS[lang]["video_unavailable"])}</strong></p></div></div><p class="video-summary">{e(summary)}</p></div>"""
     scope = {"ko": "작동 개념과 현재 연동 범위", "en": "Operating concept and current integration scope", "ar": "مفهوم التشغيل ونطاق التكامل الحالي"}[lang]
     eyebrow = product.get("status_badges", {}).get(lang, [("", LANGS[lang]["development_preview"])])[0][1]
     return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(eyebrow)}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>
@@ -1388,6 +1406,8 @@ def notes() -> str:
 - NC 공개 브라우저 데모: `/nc-demo-lite.js`, `/nc-demo-lite-worker.js`, `/demo-data/flowmatic-nc-sample.nc`; 업로드 없이 브라우저 내부에서 기본 G-code 이동시간만 계산합니다.
 - Flowmatic Quality: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; 작동 프로토타입, Inspection–Dashboard 연동 진행 상태, 구현/연동/목표 아키텍처를 구분해 표시합니다.
 - 개발 프리뷰 제품: Work Standard, TMS, AMR은 빈 비디오 플레이어 없이 개발 상태 패널, 파일럿 입력, 확인 결과, 문의 CTA를 표시합니다.
+- 공식 브랜드 마크: 좌상단 파랑, 좌하단 빨강, 우측 노랑 2칸의 2×2 마크를 `/assets/branding/`에서 단일 관리합니다. 헤더·푸터·파비콘·앱 아이콘·OG 이미지가 같은 원본을 사용합니다.
+- 공식 QR 연락 시그니처: `{BASE_URL}/`로 연결하며 `{CONTACT_EMAIL}`을 함께 표시합니다. Contact 영역과 외부 자료에서 재사용할 SVG/PNG를 제공합니다.
 - 공식 문의 목적지: `{CONTACT_EMAIL}`. 문의 폼은 Formspree 엔드포인트를 통해 AJAX로 제출하며, 성공·실패 상태를 페이지 안에서 안내합니다.
 - 사용자 확인 필요: 개인정보처리방침 URL, 법인명/주소/전화번호, 아랍어 최종 감수, Quality의 실제 연동 상태, Work Standard/TMS/AMR의 출시 상태.
 """

@@ -10,6 +10,10 @@ Static Flowmatic website for GitHub Pages and `flowmatic-os.com`.
 - `build_site.py`: static page generator for the multilingual HTML output.
 - `style-v5.20.css`: current stylesheet.
 - `script.js`: navigation, reveal, product CTA, text fitting, demo-video loader, and AJAX inquiry submission.
+- `/assets/branding/`: official logo, app-icon, social-preview, and QR contact-signature assets.
+- `BRANDING.md`: official color, logo-layout, and QR usage rules.
+- `ROLLBACK.md`: pre-branding recovery tag and backup archive reference.
+- `tools/generate_brand_assets.py`: deterministic source for SVG, PNG, ICO, OG, and QR assets.
 
 ## Demo Videos
 
@@ -23,6 +27,10 @@ Flowmatic Quality shows working-prototype and integration status without claimin
 ## Contact
 
 The site displays `contact@flowmatic-os.com`. The contact form submits to a Formspree endpoint that delivers inquiries to this verified recipient address.
+
+## Branding
+
+All pages use one 2×2 Flowmatic mark: blue top-left, red bottom-left, and yellow in both right cells. Header, footer, favicon, manifest icons, structured data, and social previews reference the same `/assets/branding/` source set. The Contact section includes the official scan-tested QR signature for `https://flowmatic-os.com/`.
 
 ## Build
 
