@@ -188,7 +188,10 @@ def main() -> None:
     draw_mark(1024).save(BRAND / "flowmatic-logo-mark.png", optimize=True)
     (BRAND / "flowmatic-logo-horizontal.svg").write_text(horizontal_svg(), encoding="utf-8")
     horizontal_png().save(BRAND / "flowmatic-logo-horizontal.png", optimize=True)
-    draw_mark(256).save(BRAND / "flowmatic-favicon.ico", sizes=[(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
+    favicon = draw_mark(256)
+    favicon_sizes = [(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)]
+    favicon.save(BRAND / "flowmatic-favicon.ico", sizes=favicon_sizes)
+    favicon.save(ROOT / "favicon.ico", sizes=favicon_sizes)
     for size, filename in (
         (180, "apple-touch-icon.png"),
         (192, "android-chrome-192x192.png"),

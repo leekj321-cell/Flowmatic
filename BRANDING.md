@@ -20,6 +20,7 @@ The canonical vector and its derived files live in `/assets/branding/`:
 - `flowmatic-logo-mark.svg` / `.png`
 - `flowmatic-logo-horizontal.svg` / `.png`
 - `flowmatic-favicon.ico`
+- `/favicon.ico` compatibility copy for browser history and origin fallback
 - `apple-touch-icon.png`
 - `android-chrome-192x192.png`
 - `android-chrome-512x512.png`

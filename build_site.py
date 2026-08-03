@@ -12,6 +12,7 @@ CSS_HREF = "/style-v5.20.css?v=5.23"
 SCRIPT_SRC = "/script.js?v=5.19"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 BRAND_PATH = "/assets/branding"
+BRAND_VERSION = "20260803.2"
 BRAND_MARK = f"{BRAND_PATH}/flowmatic-logo-mark.svg"
 OG_IMAGE = f"{BASE_URL}{BRAND_PATH}/flowmatic-og.png"
 QR_SIGNATURE = f"{BRAND_PATH}/flowmatic-qr-contact-signature.svg"
@@ -879,11 +880,12 @@ def meta_head(lang: str, slug: str, title: str, description: str, canonical_path
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{OG_IMAGE}">
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"Organization","name":"Flowmatic","url":"{BASE_URL}/","email":"{CONTACT_EMAIL}","logo":"{BASE_URL}{BRAND_PATH}/flowmatic-logo-mark.png","image":"{OG_IMAGE}"}}</script>
-<link rel="icon" href="{BRAND_MARK}" type="image/svg+xml">
-<link rel="icon" href="{BRAND_PATH}/flowmatic-favicon.ico" sizes="any">
-<link rel="apple-touch-icon" sizes="180x180" href="{BRAND_PATH}/apple-touch-icon.png">
-<link rel="mask-icon" href="{BRAND_MARK}" color="#111111">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="{BRAND_MARK}?v={BRAND_VERSION}" sizes="any" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico?v={BRAND_VERSION}" sizes="16x16 32x32 48x48" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico?v={BRAND_VERSION}" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="180x180" href="{BRAND_PATH}/apple-touch-icon.png?v={BRAND_VERSION}">
+<link rel="mask-icon" href="{BRAND_MARK}?v={BRAND_VERSION}" color="#111111">
+<link rel="manifest" href="/site.webmanifest?v={BRAND_VERSION}">
 <link rel="stylesheet" href="{CSS_HREF}">
 </head>"""
 
