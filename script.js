@@ -156,24 +156,14 @@ function initReveal() {
     revealTargets.forEach((target) => target.classList.add('is-visible'));
     return;
   }
-  const hashTarget = window.location.hash ? document.querySelector(window.location.hash) : null;
-  revealTargets.forEach((target) => {
-    const rect = target.getBoundingClientRect();
-    const isInitialViewport = rect.top < window.innerHeight * 1.08 && rect.bottom > -24;
-    const isHashContext = hashTarget && (target === hashTarget || hashTarget.contains(target) || target.contains(hashTarget));
-    if (isInitialViewport || isHashContext) target.classList.add('is-visible');
-  });
-  document.documentElement.classList.add('motion-ready');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('is-visible');
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.04, rootMargin: '20% 0px 20% 0px' });
-  revealTargets.forEach((target) => {
-    if (!target.classList.contains('is-visible')) observer.observe(target);
-  });
+  }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+  revealTargets.forEach((target) => observer.observe(target));
 }
 
 function initProductCtas() {
@@ -572,17 +562,6 @@ function scheduleSemanticFit() {
   }, 32);
 }
 
-function alignHashTarget() {
-  if (!window.location.hash) return;
-  const target = document.querySelector(window.location.hash);
-  if (!target) return;
-  target.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
-  if (target.classList.contains('reveal')) target.classList.add('is-visible');
-  const headerOffset = (header?.offsetHeight || 0) + (document.querySelector('.detail-local-nav')?.offsetHeight || 0) + 12;
-  const targetTop = target.getBoundingClientRect().top + window.scrollY - headerOffset;
-  window.scrollTo({ top: Math.max(0, targetTop), behavior: 'auto' });
-}
-
 window.addEventListener('scroll', updateHeaderState, { passive: true });
 window.addEventListener('resize', () => {
   if (window.innerWidth > 768) closeNav();
@@ -601,8 +580,4 @@ initDemoVideos();
 initCtExplainer();
 initAmrExplainer();
 scheduleSemanticFit();
-window.addEventListener('load', () => window.setTimeout(alignHashTarget, 180), { once: true });
-if (document.fonts?.ready) document.fonts.ready.then(() => {
-  scheduleSemanticFit();
-  window.setTimeout(alignHashTarget, 180);
-});
+if (document.fonts?.ready) document.fonts.ready.then(scheduleSemanticFit);
