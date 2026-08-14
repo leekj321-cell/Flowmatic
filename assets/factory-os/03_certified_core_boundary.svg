@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img"><style>
+:root{--b:#1565D8;--r:#E53935;--y:#F4C20D;--k:#111;--bg:#FAFAF7;--g:#D9D9D4}
+text{font-family:Arial,Helvetica,sans-serif;fill:var(--k)}
+.box{fill:white;stroke:var(--k);stroke-width:1.5}.core{fill:#eef4ff;stroke:var(--b);stroke-width:2}.tower{fill:#fff7cc;stroke:var(--k);stroke-width:2}
+.flow{stroke:var(--k);stroke-width:2;fill:none;stroke-dasharray:5 6;animation:dash 8s linear infinite}.pulse{animation:pulse 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes dash{to{stroke-dashoffset:-88}}@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+@media (prefers-reduced-motion: reduce){.flow,.pulse{animation:none!important}}
+</style><rect width="100%" height="100%" fill="#FAFAF7"/><text x="60" y="70" font-size="28" font-weight="700">Keep the certified core. Automate the manual gap.</text>
+<rect class="box" x="70" y="155" width="235" height="145" rx="6"/><text x="187" y="195" text-anchor="middle" font-size="19" font-weight="700">PLC / SAFETY</text><text x="187" y="228" text-anchor="middle" font-size="13">interlock · E-stop · certified control</text><text x="187" y="260" text-anchor="middle" font-size="12">KEEP</text>
+<rect class="box" x="340" y="155" width="235" height="145" rx="6"/><text x="457" y="195" text-anchor="middle" font-size="19" font-weight="700">CAM</text><text x="457" y="228" text-anchor="middle" font-size="13">complex toolpath generation</text><text x="457" y="260" text-anchor="middle" font-size="12">KEEP</text>
+<rect class="box" x="610" y="155" width="235" height="145" rx="6"/><text x="727" y="195" text-anchor="middle" font-size="19" font-weight="700">METROLOGY</text><text x="727" y="228" text-anchor="middle" font-size="13">µm measurement · CMM</text><text x="727" y="260" text-anchor="middle" font-size="12">KEEP</text>
+<rect class="box" x="880" y="155" width="235" height="145" rx="6"/><text x="997" y="195" text-anchor="middle" font-size="19" font-weight="700">ERP / MES</text><text x="997" y="228" text-anchor="middle" font-size="13">system of record</text><text x="997" y="260" text-anchor="middle" font-size="12">CONNECT</text>
+<path class="flow" d="M187 300V385 M457 300V385 M727 300V385 M997 300V385"/>
+<rect class="core" x="180" y="385" width="840" height="150" rx="8"/><text x="600" y="430" text-anchor="middle" font-size="24" font-weight="700">FLOWMATIC MANUAL-GAP LAYER</text><text x="600" y="468" text-anchor="middle" font-size="14">observe · context · prioritize · workflow · evidence · confirm</text><text x="600" y="500" text-anchor="middle" font-size="13">Replace repetitive coordination, not certified control.</text></svg>
