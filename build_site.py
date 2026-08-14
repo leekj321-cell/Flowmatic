@@ -181,25 +181,25 @@ HOME = {
         "description": "Flowmatic은 카메라, NC 코드, 작업자 입력을 운영 이벤트로 바꾸고 알림·검토·호출·안내에 연결하는 제조 현장 운영 인텔리전스입니다.",
         "eyebrow": "제조 현장 운영 인텔리전스",
         "h1": "Elegant Engineering.|Intelligent Operations.|Flowmatic.",
-        "body": "현장의 물리적 움직임을 Event로 바꾸고, Event를 판단으로, 판단을 사람과 기계의 행동으로 연결하는 Engineering Intelligence 플랫폼.",
+        "body": "현장 신호를 Event로 구조화하고, 도메인별 판단을 사람과 설비의 후속 행동에 연결하는 Engineering Intelligence 플랫폼.",
         "primary": "시스템 보기",
         "secondary": "로드맵 보기",
-        "support": "공장에는 시스템 하나를 더 얹기보다, 끊긴 운영이 흐르도록 해야 합니다.",
+        "support": "기존 설비와 업무체계를 유지한 채 단절된 운영 정보를 연결합니다.",
         "brand_subcopy": "Engineering Intelligence for the physical world.",
-        "problem_title": "생산은 계속됩니다.|판단은 뒤늦게 따라옵니다.",
-        "problem_body": "현장은 멈추지 않습니다. 중요한 이벤트와 다음 행동은 뒤늦게 드러납니다.",
-        "strategy_title": "현장을 바꾸기 전에|흐름을 읽습니다.",
-        "strategy_body": "지금 돌아가는 라인에서 시작합니다. 가치를 만드는 설비와 작업 방식, 사람을 그대로 살립니다. 먼저 이벤트를 보이게 만들고, 다음 행동 하나를 연결한 뒤, 가치가 확인되면 자동화합니다.",
+        "problem_title": "운영 신호는 실시간.|판단은 사후.",
+        "problem_body": "지연·위험·자재 요구 등 핵심 이벤트가 분산되어 대응 시점을 놓칩니다.",
+        "strategy_title": "현장 변경 최소화.|운영 가시성 우선.",
+        "strategy_body": "기존 설비와 작업 방식은 유지합니다. 신호를 Event로 구조화하고 책임 있는 후속 행동과 KPI를 연결합니다. 자동화는 검증 결과에 따라 단계적으로 적용합니다.",
         "flow_title": "Observe → Eventize →|Act → Confirm",
-        "flow_body": "공식 운영 논리는 하나입니다. 신호를 읽고, 운영 이벤트로 바꾸고, 다음 행동에 연결한 뒤, 응답을 확인합니다.",
-        "products_title": "제품은 상태와 검증 범위가|분명해야 합니다.",
-        "products_body": "CT와 NC는 실제 데모로 확인할 수 있습니다. Quality는 작동 프로토타입과 연동 상태를, Work Standard, TMS, Fleet는 현재 개발 범위를 보여줍니다.",
+        "flow_body": "신호 수집, Event 변환, 행동 연결, 결과 확인의 4단계 운영 구조입니다.",
+        "products_title": "제품별 구현 상태와|검증 범위.",
+        "products_body": "CT·NC는 공개 데모, Quality는 작동 프로토타입, Work Standard·TMS·Fleet는 개발 범위로 구분합니다.",
         "workflow_title": "Demo workflows",
-        "workflow_body": "고객 수치 대신 실제 데모로 확인 가능한 흐름만 보여줍니다.",
-        "pilot_title": "기존 라인을 바꾸지 않고,|이벤트 하나부터 검증합니다.",
-        "deploy_note": "배포 구조, 데이터 저장 위치, 보관 기간, 접근 권한, 기존 시스템 연동 범위는 파일럿 설계 단계에서 확인합니다.",
-        "contact_title": "현재 라인을 바꾸지 않고,|이벤트 하나부터 검증하세요.",
-        "contact_body": "해결하려는 문제와 사용 가능한 입력 신호, 목표 KPI를 알려주시면 파일럿 범위를 정리합니다.",
+        "workflow_body": "공개 데모와 검증 가능한 구현 범위만 표시합니다.",
+        "pilot_title": "기존 라인 유지.|단일 Event 파일럿.",
+        "deploy_note": "파일럿 설계 항목: 배포 구조, 데이터 위치·보관 기간, 접근 권한, 기존 시스템 연동 범위.",
+        "contact_title": "기존 라인 유지.|단일 Event 검증.",
+        "contact_body": "운영 문제, 입력 신호, 목표 KPI를 기준으로 파일럿 범위를 정의합니다.",
         "contact_cta": "파일럿 상담 요청",
         "contact_fallback": "공식 이메일로 파일럿 범위를 문의할 수 있습니다.",
     },
@@ -265,10 +265,10 @@ for _lang, _values in HOME_OVERRIDES.items():
 
 PROBLEM_CARDS = {
     "ko": [
-        ("01", "사이클 손실을|바로 봅니다.", "대응할 수 있을 때 지연을 발견합니다."),
-        ("02", "가공 전에|위험을 봅니다.", "코드 속 위험한 이동을 눈앞에 꺼내놓습니다."),
-        ("03", "기다리기 전에|자재를 부릅니다.", "라인이 기다리기 전에 자재 요구를 알립니다."),
-        ("04", "숙련자의 판단을|표준으로 남깁니다.", "숙련자의 판단을 누구나 이어받을 수 있게 만듭니다."),
+        ("01", "사이클 손실|조기 식별", "대응 가능 시점에 지연 구간을 식별합니다."),
+        ("02", "가공 전|경로 위험 검토", "NC 코드의 위험 이동을 가공 전에 시각화합니다."),
+        ("03", "자재 부족|선제 대응", "라인 정지 전에 자재 요구 Event를 생성합니다."),
+        ("04", "숙련 판단|표준화", "개인 경험을 반복 가능한 작업 기준으로 전환합니다."),
     ],
     "en": [
         ("01", "See cycle loss|sooner.", "Find the delay while there is still time to respond."),
@@ -287,10 +287,10 @@ PROBLEM_CARDS = {
 
 PRINCIPLES = {
     "ko": [
-        ("01", "잘 돌아가는 것|위에 쌓습니다.", "가치를 만드는 설비와 작업 방식, 현장 경험을 살립니다."),
-        ("02", "자동화보다|먼저 관찰합니다.", "대응을 자동화하기 전에 이벤트부터 분명하게 만듭니다."),
-        ("03", "하나의 다음 행동을|연결합니다.", "이벤트를 안내, 알림, 호출, 검토 중 하나의 행동으로 잇습니다."),
-        ("04", "최종 판단은|사람이 맡습니다.", "반복은 자동화하되 승인과 예외 판단은 사람이 맡습니다."),
+        ("01", "기존 자산|유지", "검증된 설비·업무 절차·현장 경험을 유지합니다."),
+        ("02", "관찰|우선", "자동화 전에 신호와 Event를 정의합니다."),
+        ("03", "단일 행동|연결", "Event별 알림·검토·안내·호출을 지정합니다."),
+        ("04", "Human-in-the-loop", "반복은 자동화하고 승인·예외는 담당자가 결정합니다."),
     ],
     "en": [
         ("01", "Build on|what works.", "Keep the equipment, workflow, and experience that already create value."),
@@ -309,10 +309,10 @@ PRINCIPLES = {
 
 FLOW_STEPS = {
     "ko": [
-        ("관찰", "카메라, NC 코드, 작업자 입력 등 실제 작업에서 신호를 읽습니다."),
-        ("이벤트화", "원시 신호를 지연, 위험, 수요 등 운영 이벤트로 바꿉니다."),
-        ("행동 연결", "이벤트를 알림, 검토, 안내, 호출 중 하나의 다음 행동으로 연결합니다."),
-        ("확인", "사람 또는 설비의 응답을 확인하고 이벤트를 종결합니다."),
+        ("관찰", "카메라·NC 코드·작업자 입력에서 현장 신호를 수집합니다."),
+        ("이벤트화", "원시 신호를 지연·위험·수요 Event로 변환합니다."),
+        ("행동 연결", "Event별 알림·검토·안내·호출을 지정합니다."),
+        ("확인", "사람 또는 설비의 응답을 기록하고 Event를 종결합니다."),
     ],
     "en": [
         ("Observe", "Read signals from real work: camera, NC code, operator input, and field data."),
@@ -331,10 +331,10 @@ FLOW_STEPS = {
 
 PILOT_STEPS = {
     "ko": [
-        ("01", "이벤트 선택", "사이클 완료, 경로 위험, 작업 단계, 공구 부족, 자재 요구 중 하나를 고릅니다."),
-        ("02", "입력 확인", "카메라, NC 파일, 작업자 입력, 기준 데이터, 인터페이스를 확인합니다."),
-        ("03", "다음 행동 연결", "알림, 검토, 안내, 호출 중 하나를 연결합니다."),
-        ("04", "KPI 확인", "사전에 합의한 KPI로 계속 적용할지 결정합니다."),
+        ("01", "Event 정의", "사이클 완료·경로 위험·작업 단계·공구 부족·자재 요구 중 하나를 선정합니다."),
+        ("02", "입력 검증", "카메라·NC 파일·작업자 입력·기준 데이터·인터페이스를 검증합니다."),
+        ("03", "행동 지정", "알림·검토·안내·호출 중 하나를 연결합니다."),
+        ("04", "KPI 평가", "합의된 KPI를 기준으로 확대 적용 여부를 결정합니다."),
     ],
     "en": [
         ("01", "Choose one event", "Pick cycle complete, path risk, work step, tool shortage, or material demand."),
@@ -618,10 +618,10 @@ PRODUCTS = {
         "outcome": {"ko": "가공 전 공구 경로 검토", "en": "Pre-cut toolpath review", "ar": "مراجعة مسار الأداة قبل التشغيل"},
         "card_desc": {"ko": "G-code를 공구 움직임과 사이클타임, 검토 지점으로 바꿉니다.", "en": "Turn G-code into visible motion, cycle time, and review points.", "ar": "حوّل G-code إلى حركة مرئية وزمن دورة ونقاط مراجعة."},
         "cta": {"ko": "NC 데모 보기", "en": "View NC demo", "ar": "شاهد عرض NC"},
-        "hero": {"ko": "가공 전에|공구 경로를 봅니다.", "en": "See the toolpath|before cutting.", "ar": "شاهد مسار الأداة|قبل التشغيل."},
-        "hero_body": {"ko": "코드를 읽고 공구 움직임을 재구성합니다. 설비를 돌리기 전에 경로를 확인합니다.", "en": "Read the code and rebuild the motion. Review the path before the machine runs.", "ar": "اقرأ الكود وأعد بناء الحركة. راجع المسار قبل تشغيل الماكينة."},
+        "hero": {"ko": "가공 전|공구 경로 검토", "en": "See the toolpath|before cutting.", "ar": "شاهد مسار الأداة|قبل التشغيل."},
+        "hero_body": {"ko": "NC 코드를 해석해 공구 움직임·예상 사이클타임·위험 경로를 시각화합니다.", "en": "Read the code and rebuild the motion. Review the path before the machine runs.", "ar": "اقرأ الكود وأعد بناء الحركة. راجع المسار قبل تشغيل الماكينة."},
         "steps": {
-            "ko": [("01", "NC 프로그램을 해석합니다.", "공구, 이송, 좌표, 인덱스 동작을 읽어냅니다."), ("02", "공구 움직임을 재구성합니다.", "공구가 움직일 위치와 순서를 보여줍니다."), ("03", "가공 전에 검토합니다.", "설비를 돌리기 전에 사이클타임과 위험 경로를 확인합니다.")],
+            "ko": [("01", "NC 프로그램 해석", "공구·이송·좌표·인덱스 동작을 추출합니다."), ("02", "공구 움직임 재구성", "공구의 이동 위치와 순서를 시각화합니다."), ("03", "가공 전 검토", "예상 사이클타임과 위험 경로를 확인합니다.")],
             "en": [("01", "Parse the NC program.", "Extract tools, feeds, coordinates, and index moves."), ("02", "Reconstruct the motion.", "Show where the tool moves and in what order."), ("03", "Review before cutting.", "Check cycle time and risky moves before the machine runs.")],
             "ar": [("01", "حلّل برنامج NC.", "استخرج الأدوات والتغذية والإحداثيات وحركات الفهرسة."), ("02", "أعد بناء الحركة.", "اعرض أين تتحرك الأداة وبأي ترتيب."), ("03", "راجع قبل التشغيل.", "تحقق من زمن الدورة والحركات الخطرة قبل تشغيل الماكينة.")],
         },
@@ -645,9 +645,9 @@ PRODUCTS = {
         "card_desc": {"ko": "대상을 선택하고 ROI를 정의한 뒤 사이클을 측정해 손실을 드러냅니다.", "en": "Select a target, define the ROI, measure the cycle, and reveal the loss.", "ar": "حدد الهدف، عرّف ROI، قِس الدورة، واكشف الخسارة."},
         "cta": {"ko": "CT 데모 보기", "en": "View CT demo", "ar": "شاهد عرض CT"},
         "hero": {"ko": "Select. Define.|Measure. Reveal.", "en": "Select. Define.|Measure. Reveal.", "ar": "حدد. عرّف.|قِس. اكشف."},
-        "hero_body": {"ko": "Flowmatic CT는 학습데이터, 라벨링, GPU 추론, 전용 객체모델이 필요하지 않다. 사용자가 공정 Cycle을 대표하는 움직임을 지정하면 CSRT 추적, ROI 로직, 결정론적 상태머신이 그 움직임을 Cycle Event, Gantt, 이상 Cycle 증거영상으로 변환한다.", "en": "Flowmatic CT does not need training data, labeling, GPU inference, or a custom object model. A user selects the motion that represents the process cycle. CSRT tracking, ROI logic, and a deterministic state machine convert that motion into cycle events, Gantt charts, and abnormal-cycle evidence.", "ar": "لا يحتاج Flowmatic CT إلى بيانات تدريب أو وسم أو استدلال GPU أو نموذج كائن مخصص. يحدد المستخدم الحركة التي تمثل دورة العملية، ثم تحولها CSRT وROI ومنطق الحالة الحتمي إلى أحداث دورة ومخططات Gantt وأدلة دورة غير طبيعية."},
+        "hero_body": {"ko": "학습데이터·라벨링·GPU 추론·전용 객체모델 없이 지정 움직임을 추적합니다. CSRT·ROI·결정론적 상태머신이 Cycle Event·Gantt·이상 Cycle 증거영상으로 변환합니다.", "en": "Flowmatic CT does not need training data, labeling, GPU inference, or a custom object model. A user selects the motion that represents the process cycle. CSRT tracking, ROI logic, and a deterministic state machine convert that motion into cycle events, Gantt charts, and abnormal-cycle evidence.", "ar": "لا يحتاج Flowmatic CT إلى بيانات تدريب أو وسم أو استدلال GPU أو نموذج كائن مخصص. يحدد المستخدم الحركة التي تمثل دورة العملية، ثم تحولها CSRT وROI ومنطق الحالة الحتمي إلى أحداث دورة ومخططات Gantt وأدلة دورة غير طبيعية."},
         "steps": {
-            "ko": [("01", "기준 영역을 관찰합니다.", "고정 카메라와 ROI로 반복 위치를 관찰합니다."), ("02", "사이클의 시작과 끝을 잡습니다.", "현장 움직임의 변화에서 시작과 종료를 잡습니다."), ("03", "시간 데이터로 정리합니다.", "검출한 이벤트를 사이클타임과 공정 타임라인으로 정리합니다.")],
+            "ko": [("01", "기준 영역 관찰", "고정 카메라와 ROI로 반복 위치를 추적합니다."), ("02", "사이클 경계 검출", "움직임 변화에서 시작과 종료를 판정합니다."), ("03", "시간 데이터 생성", "검출 Event를 사이클타임과 공정 타임라인으로 변환합니다.")],
             "en": [("01", "Watch a reference area.", "Observe repeated positions with a fixed camera and ROI."), ("02", "Detect the cycle boundary.", "Detect start and finish from changes in field movement."), ("03", "Build time data.", "Turn detected events into cycle time and a process timeline.")],
             "ar": [("01", "راقب منطقة مرجعية.", "راقب المواضع المتكررة بكاميرا ثابتة وROI."), ("02", "اكتشف حدود الدورة.", "اكتشف البداية والنهاية من تغيرات حركة الميدان."), ("03", "ابنِ بيانات الوقت.", "حوّل الأحداث المكتشفة إلى زمن دورة وخط زمني للعملية.")],
         },
@@ -669,10 +669,10 @@ PRODUCTS = {
         "outcome": {"ko": "작업자 단계별 안내", "en": "Step-by-step operator guidance", "ar": "إرشادات عمل خطوة بخطوة"},
         "card_desc": {"ko": "공정 지식을 작업자가 바로 쓰는 단계별 안내로 바꿉니다.", "en": "Turn process knowledge into a clear, step-by-step operator view.", "ar": "حوّل معرفة العملية إلى عرض واضح للمشغّل خطوة بخطوة."},
         "cta": {"ko": "작동 방식 보기", "en": "See how it works", "ar": "شاهد طريقة العمل"},
-        "hero": {"ko": "공정 지식을|작업 안내로 바꿉니다.", "en": "Turn process knowledge|into clear guidance.", "ar": "حوّل معرفة العملية|إلى إرشاد واضح."},
-        "hero_body": {"ko": "필요한 공구, 경로, 자세, 다음 단계를 보여줍니다. 모든 안내는 작업자 시점에 맞춥니다.", "en": "Show the right tool, path, posture, and next step. Keep the view aligned with the operator.", "ar": "اعرض الأداة والمسار والوضعية والخطوة التالية الصحيحة. واجعل العرض متوافقًا مع المشغّل."},
+        "hero": {"ko": "공정 지식의|작업자 표준화", "en": "Turn process knowledge|into clear guidance.", "ar": "حوّل معرفة العملية|إلى إرشاد واضح."},
+        "hero_body": {"ko": "공구·경로·자세·확인 항목을 실제 작업 순서에 맞춘 단계별 안내로 제공합니다.", "en": "Show the right tool, path, posture, and next step. Keep the view aligned with the operator.", "ar": "اعرض الأداة والمسار والوضعية والخطوة التالية الصحيحة. واجعل العرض متوافقًا مع المشغّل."},
         "steps": {
-            "ko": [("01", "공정 정보를 모읍니다.", "공구, 경로, 자세, 작업 순서를 한 장면에 모읍니다."), ("02", "작업자 시점으로 다시 보여줍니다.", "실제 작업 순서와 작업자 시야에 맞춰 다시 보여줍니다."), ("03", "다음 작업을 안내합니다.", "필요한 확인과 다음 행동을 알맞은 순간에 보여줍니다.")],
+            "ko": [("01", "공정 정보 구조화", "공구·경로·자세·작업 순서를 단계별로 정리합니다."), ("02", "작업자 시점 구성", "실제 작업 순서와 시야에 맞춰 정보를 배치합니다."), ("03", "후속 작업 안내", "필수 확인 항목과 다음 행동을 작업 시점에 제공합니다.")],
             "en": [("01", "Gather the process context.", "Bring tools, paths, posture, and sequence into one scene."), ("02", "Reframe it for the operator.", "Present the information in the order the work is performed."), ("03", "Guide the next step.", "Show the next check and action at the right moment.")],
             "ar": [("01", "اجمع سياق العملية.", "اجمع الأدوات والمسارات والوضعية والتسلسل في مشهد واحد."), ("02", "أعد صياغته للمشغّل.", "اعرض المعلومات حسب ترتيب تنفيذ العمل."), ("03", "وجّه الخطوة التالية.", "اعرض الفحص والإجراء التالي في اللحظة المناسبة.")],
         },
@@ -695,10 +695,10 @@ PRODUCTS = {
         "outcome": {"ko": "공구 수명·재고·위치 관리", "en": "Tool life, stock, and location management", "ar": "إدارة عمر الأدوات والمخزون والموقع"},
         "card_desc": {"ko": "공구 식별, 수명, 재고, 위치를 하나의 운영 정보로 묶습니다.", "en": "Keep tool identity, life, stock, and location in one operating record.", "ar": "اجمع هوية الأداة وعمرها ومخزونها وموقعها في سجل تشغيلي واحد."},
         "cta": {"ko": "작동 방식 보기", "en": "See how it works", "ar": "شاهد طريقة العمل"},
-        "hero": {"ko": "실물 공구를|공정과 연결합니다.", "en": "Connect every tool|to its process.", "ar": "اربط كل أداة|بعمليتها."},
-        "hero_body": {"ko": "실물 공구를 식별해 공정과 연결합니다. 수명과 재고, 위치 정보를 함께 맞춥니다.", "en": "Identify the physical tool and match the process. Keep life, stock, and location information aligned.", "ar": "عرّف الأداة الفعلية وطابقها مع العملية. حافظ على توافق العمر والمخزون والموقع."},
+        "hero": {"ko": "공구 식별·공정 매핑·|수명 관리", "en": "Connect every tool|to its process.", "ar": "اربط كل أداة|بعمليتها."},
+        "hero_body": {"ko": "실물 공구의 식별 정보와 공정·수명·재고·위치·사용 상태를 단일 운영 기록으로 관리합니다.", "en": "Identify the physical tool and match the process. Keep life, stock, and location information aligned.", "ar": "عرّف الأداة الفعلية وطابقها مع العملية. حافظ على توافق العمر والمخزون والموقع."},
         "steps": {
-            "ko": [("01", "실물 공구를 식별합니다.", "라벨이나 사진에서 공구 식별 정보를 읽습니다."), ("02", "공정과 연결합니다.", "대응하는 공정 기록을 찾아 확인합니다."), ("03", "운영 정보를 최신으로 유지합니다.", "수명, 재고, 위치, 사용 상태를 함께 갱신합니다.")],
+            "ko": [("01", "공구 식별", "라벨·사진에서 공구 ID를 추출합니다."), ("02", "공정 매핑", "공구와 공정 기록의 대응 관계를 확인합니다."), ("03", "운영 정보 갱신", "수명·재고·위치·사용 상태를 갱신합니다.")],
             "en": [("01", "Identify the physical tool.", "Read the tool identity from a label or photo."), ("02", "Match it to the process.", "Find and confirm the corresponding process record."), ("03", "Keep the record current.", "Update life, stock, location, and usage together.")],
             "ar": [("01", "عرّف الأداة الفعلية.", "اقرأ هوية الأداة من ملصق أو صورة."), ("02", "طابقها مع العملية.", "اعثر على سجل العملية المقابل وأكده."), ("03", "حافظ على السجل محدثًا.", "حدّث العمر والمخزون والموقع والاستخدام معًا.")],
         },
@@ -721,10 +721,10 @@ PRODUCTS = {
         "outcome": {"ko": "Fleet와 라스트미터 실행", "en": "Fleet and last-meter execution", "ar": "تنفيذ الأسطول وآخر أمتار"},
         "card_desc": {"ko": "자재 요구를 Fleet 배정, 보급 이동, 라인사이드 투입 확인으로 연결합니다.", "en": "Connect material demand to fleet assignment, replenishment movement, and line-side input confirmation.", "ar": "اربط طلب المواد بتوزيع الأسطول وحركة التزويد وتأكيد الإدخال بجانب الخط."},
         "cta": {"ko": "작동 방식 보기", "en": "See how it works", "ar": "شاهد طريقة العمل"},
-        "hero": {"ko": "라인이 기다리기 전에|자재를 흐르게 합니다.", "en": "Move material|before the line waits.", "ar": "حرّك المواد|قبل أن ينتظر الخط."},
-        "hero_body": {"ko": "자재 요구를 감지해 작업자와 Fleet에 연결합니다. 부족이 정지로 이어지기 전에 보급, 도킹, 투입 확인까지 닫습니다.", "en": "Detect demand and connect it to operators and the fleet. Close replenishment, docking, and input confirmation before shortage becomes downtime.", "ar": "اكتشف الطلب واربطه بالمشغّلين والأسطول. أغلق التزويد والإرساء وتأكيد الإدخال قبل أن يتحول النقص إلى توقف."},
+        "hero": {"ko": "자재 요구부터|라인 투입 확인까지", "en": "Move material|before the line waits.", "ar": "حرّك المواد|قبل أن ينتظر الخط."},
+        "hero_body": {"ko": "자재 부족 감지, 실행자 배정, 보급 이동, 도킹, 라인사이드 투입 확인을 단일 Event로 추적합니다.", "en": "Detect demand and connect it to operators and the fleet. Close replenishment, docking, and input confirmation before shortage becomes downtime.", "ar": "اكتشف الطلب واربطه بالمشغّلين والأسطول. أغلق التزويد والإرساء وتأكيد الإدخال قبل أن يتحول النقص إلى توقف."},
         "steps": {
-            "ko": [("01", "자재 요구를 감지합니다.", "잔량, CT, 소비속도, 재고 위치를 자재 요구 이벤트로 바꿉니다."), ("02", "Agent를 배정합니다.", "사람, AMR, 지게차, 드론 상태를 보고 전체 손실이 낮은 실행 경로를 고릅니다."), ("03", "라스트미터를 닫습니다.", "도착, 도킹, 투입 확인, 빈 용기 회수까지 이벤트 상태를 닫습니다.")],
+            "ko": [("01", "자재 요구 Event 생성", "잔량·CT·소비속도·재고 위치를 자재 요구 Event로 변환합니다."), ("02", "실행자 배정", "사람·AMR·지게차·드론 상태를 기준으로 실행 경로를 선정합니다."), ("03", "라스트미터 종결", "도착·도킹·투입 확인·빈 용기 회수까지 Event 상태를 추적합니다.")],
             "en": [("01", "Detect demand.", "Turn level, CT, consumption speed, and material location into a material-demand event."), ("02", "Assign the agent.", "Use operator, AMR, forklift, and drone state to choose the lower-loss execution path."), ("03", "Close the last meter.", "Track arrival, docking, input confirmation, and empty-container return until the event closes.")],
             "ar": [("01", "اكتشف الطلب.", "حوّل المستوى وزمن الدورة وسرعة الاستهلاك وموقع المادة إلى حدث طلب مواد."), ("02", "وزّع الوكيل.", "استخدم حالة المشغّل وAMR والرافعة والطائرة المسيّرة لاختيار مسار تنفيذ أقل خسارة."), ("03", "أغلق آخر أمتار.", "تتبع الوصول والإرساء وتأكيد الإدخال وإرجاع الحاوية الفارغة حتى إغلاق الحدث.")],
         },
@@ -767,14 +767,14 @@ PRODUCTS = {
             "ar": "اربط الالتقاط متعدد الكاميرات وقرارات OK/NG وأدلة الفحص وكميات الإنتاج في حدث فحص واحد.",
         },
         "cta": {"ko": "Quality 작동 방식 보기", "en": "Explore Flowmatic Quality", "ar": "استكشف Flowmatic Quality"},
-        "hero": {"ko": "검사 결과를|운영 이벤트로 닫습니다.", "en": "Close every inspection|as an operating event.", "ar": "أغلق كل فحص|كحدث تشغيلي."},
+        "hero": {"ko": "검사 결과의|운영 Event화", "en": "Close every inspection|as an operating event.", "ar": "أغلق كل فحص|كحدث تشغيلي."},
         "hero_body": {
             "ko": "품목, LOT, 작업장, 증빙, 판정과 수량을 하나의 검사 이력으로 연결합니다.",
             "en": "Connect item, LOT, workplace, evidence, verdict, and counts in one inspection history.",
             "ar": "اربط الصنف وLOT وموقع العمل والأدلة والحكم والكميات في سجل فحص واحد.",
         },
         "steps": {
-            "ko": [("01", "촬영하고 증빙을 만듭니다.", "멀티카메라 촬영과 LOT·촬영 일시를 증빙 이미지에 연결합니다."), ("02", "OK/NG 판정을 기록합니다.", "수동 판정을 공통 verdict 구조로 남기고 지능형 판정 모듈을 연결할 기반을 만듭니다."), ("03", "Dashboard 수량을 맞춥니다.", "총수량·양품·불량과 모듈별 현황을 집계해 Quality Dashboard로 전달합니다."), ("04", "검사 이벤트를 종결합니다.", "품목·LOT·작업장·증빙·결과를 하나의 이벤트 이력으로 닫습니다.")],
+            "ko": [("01", "검사 증빙 생성", "멀티카메라 촬영과 LOT·촬영 일시를 증빙 이미지에 연결합니다."), ("02", "OK/NG 판정 기록", "수동 판정을 공통 verdict 구조로 저장하고 지능형 판정 연동 기반을 구성합니다."), ("03", "Dashboard 집계", "총수량·양품·불량·모듈별 현황을 Quality Dashboard로 전달합니다."), ("04", "검사 Event 종결", "품목·LOT·작업장·증빙·결과를 단일 Event 이력으로 저장합니다.")],
             "en": [("01", "Capture and create evidence.", "Connect multi-camera capture with LOT and capture time in the evidence record."), ("02", "Record the OK/NG verdict.", "Store manual decisions through a common verdict structure ready for future intelligent modules."), ("03", "Reconcile dashboard counts.", "Aggregate total, OK, NG, and module-level status for the Quality Dashboard."), ("04", "Close the inspection event.", "Close item, LOT, workplace, evidence, and result as one event history.")],
             "ar": [("01", "التقاط وإنشاء الدليل.", "اربط الالتقاط متعدد الكاميرات مع LOT ووقت الالتقاط في سجل الأدلة."), ("02", "تسجيل حكم OK/NG.", "احفظ القرار اليدوي عبر بنية verdict مشتركة جاهزة للوحدات الذكية مستقبلًا."), ("03", "مطابقة كميات Dashboard.", "اجمع الإجمالي وOK وNG وحالة كل وحدة لإرسالها إلى Quality Dashboard."), ("04", "إغلاق حدث الفحص.", "أغلق الصنف وLOT وموقع العمل والأدلة والنتيجة كسجل حدث واحد.")],
         },
@@ -1059,7 +1059,7 @@ def intelligence_domains_section(lang: str) -> str:
         cards.append(f"""<article class="cell domain-card span-6 reveal delay-{(i % 2) + 1}">
 <div class="domain-card-head"><p class="eyebrow">{e(domain["status"][lang])}</p><span>{i + 1:02}</span></div><h3>{e(domain["name"])}</h3><p>{e(domain["body"][lang])}</p><div class="intelligence-flow compact">{e(domain["flow"])}</div><ul class="domain-components">{component_list}</ul><a class="product-link" href="{page_path(lang, domain["slug"])}"><span>{e({"ko":"자세히 보기","en":"Explore domain","ar":"استكشف المجال"}[lang])}</span><span aria-hidden="true">→</span></a></article>""")
     title = {"ko":"네 개의 전문 지능.|하나의 공장 운영 언어.","en":"Four specialized intelligence domains.|One factory operating language.","ar":"أربعة مجالات ذكاء متخصصة.|لغة تشغيل واحدة للمصنع."}[lang]
-    body = {"ko":"Quality · Machining · Operations · Logistics Intelligence가 Shared Manufacturing Context와 Event 언어를 공유합니다.","en":"Quality, Machining, Operations, and Logistics Intelligence share Manufacturing Context and an Event language.","ar":"تشترك مجالات ذكاء الجودة والتشغيل والعمليات واللوجستيات في سياق التصنيع ولغة الأحداث."}[lang]
+    body = {"ko":"Quality · Machining · Operations · Logistics Intelligence를 공통 Manufacturing Context와 Event 체계로 통합합니다.","en":"Quality, Machining, Operations, and Logistics Intelligence share Manufacturing Context and an Event language.","ar":"تشترك مجالات ذكاء الجودة والتشغيل والعمليات واللوجستيات في سياق التصنيع ولغة الأحداث."}[lang]
     return f"""<section aria-labelledby="products-title" class="intelligence-domains section-grid" id="products">
 <div class="cell span-7 reveal"><p class="eyebrow">Factory Operating Intelligence</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="products-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>
 <div class="cell span-5 reveal delay-1">{factory_asset(f"{FACTORY_OS_ASSET_PATH}/00_factory_os_four_axes.svg", "Four Flowmatic intelligence domains connected to shared manufacturing context")}</div>{''.join(cards)}</section>"""
@@ -1087,7 +1087,7 @@ def component_hierarchy_section(lang: str) -> str:
         f'<article class="cell component-group span-3 reveal delay-{i + 1}"><h3>{e(title)}</h3><ul>{"".join(f"<li><a href=\"{page_path(lang, slug)}\">{e(label)}</a></li>" for label, slug in items)}</ul></article>'
         for i, (title, items) in enumerate(groups)
     )
-    title = {"ko":"기존 제품은 사라지지 않습니다.|상위 지능축 아래에서 역할이 선명해집니다.","en":"Existing products remain.|Their role is clearer within each intelligence domain.","ar":"تبقى المنتجات الحالية.|ويصبح دورها أوضح داخل كل مجال ذكاء."}[lang]
+    title = {"ko":"기존 제품 유지.|지능 도메인별 역할 구분.","en":"Existing products remain.|Their role is clearer within each intelligence domain.","ar":"تبقى المنتجات الحالية.|ويصبح دورها أوضح داخل كل مجال ذكاء."}[lang]
     return f'<section aria-labelledby="components-title" class="component-hierarchy section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Component hierarchy</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="components-title">{lines(title)}</h2></div>{cards}</section>'
 
 
@@ -1096,8 +1096,8 @@ def built_evidence_section(lang: str) -> str:
         f'<article class="cell evidence-card span-3 reveal delay-{i + 1}"><p class="eyebrow">{e(status[lang])}</p><h3>{e(name)}</h3><p>{e(body[lang])}</p><a class="product-link" href="{page_path(lang, slug)}"><span>{e({"ko":"확인하기","en":"Inspect","ar":"فحص"}[lang])}</span><span aria-hidden="true">→</span></a></article>'
         for i, (name, status, body, slug) in enumerate(EVIDENCE)
     )
-    title = {"ko":"구축된 증거와|다음 통합을 구분합니다.","en":"Separate built evidence|from the next integration.","ar":"نفصل الدليل المبني|عن التكامل التالي."}[lang]
-    body = {"ko":"공개 데모·작동 프로토타입·내부 검증 MVP의 상태를 그대로 표시합니다.","en":"Public demos, working prototypes, and internally validated MVPs are labeled as they are.","ar":"تُعرض حالة العروض العامة والنماذج العاملة وMVP الخاضع للتحقق الداخلي كما هي."}[lang]
+    title = {"ko":"구현 증거와|후속 통합 범위.","en":"Separate built evidence|from the next integration.","ar":"نفصل الدليل المبني|عن التكامل التالي."}[lang]
+    body = {"ko":"공개 데모·작동 프로토타입·내부 검증 MVP를 상태별로 구분합니다.","en":"Public demos, working prototypes, and internally validated MVPs are labeled as they are.","ar":"تُعرض حالة العروض العامة والنماذج العاملة وMVP الخاضع للتحقق الداخلي كما هي."}[lang]
     return f'<section aria-labelledby="evidence-title" class="built-evidence section-grid" id="demo-workflows"><div class="cell span-12 reveal"><p class="eyebrow">Built evidence</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="evidence-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>{cards}</section>'
 
 
@@ -1106,7 +1106,7 @@ def deployment_modes_section(lang: str) -> str:
         f'<article class="cell deployment-mode span-6 reveal delay-{i + 1}"><p class="eyebrow">{e(status[lang])}</p><h3>{e(name)}</h3><p>{e(body[lang])}</p></article>'
         for i, (name, body, status) in enumerate(DEPLOYMENT_MODES)
     )
-    title = {"ko":"현재 공장에서 시작하고,|미래 공장의 Event model까지 확장합니다.","en":"Start from the existing factory.|Extend toward future Event-model design.","ar":"ابدأ من المصنع القائم.|وامتد نحو تصميم نموذج أحداث المستقبل."}[lang]
+    title = {"ko":"Brownfield 우선.|Greenfield 확장.","en":"Start from the existing factory.|Extend toward future Event-model design.","ar":"ابدأ من المصنع القائم.|وامتد نحو تصميم نموذج أحداث المستقبل."}[lang]
     return f'<section aria-labelledby="deployment-title" class="deployment-modes section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Deployment modes</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="deployment-title">{lines(title)}</h2></div>{cards}</section>'
 
 
@@ -1340,7 +1340,7 @@ def home_page(lang: str, canonical_path: str) -> str:
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"해결하는 운영 문제","en":"Operational gaps","ar":"فجوات التشغيل"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="problem-title">{lines(h["problem_title"])}</h2><p class="body-large">{e(h["problem_body"])}</p></div>{problem}</section>
 <section aria-labelledby="strategy-title" class="strategy section-grid" id="approach">
 <div class="cell span-8 reveal"><p class="eyebrow">{e({"ko":"현장 중심 설계","en":"Field-first design","ar":"تصميم يبدأ من الميدان"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="strategy-title">{lines(h["strategy_title"])}</h2><p class="body-large">{e(h["strategy_body"])}</p></div>
-<div class="cell blue span-4 reveal delay-1 strategy-core"><p class="kicker">Minimal intervention / Maximum clarity</p><h3>{e({"ko":"지능은 현장에 맞아야 합니다.","en":"Intelligence should fit the field.","ar":"يجب أن يناسب الذكاء أرض الواقع."}[lang])}</h3><p>{e(h["support"])}</p></div>{principles}</section>
+<div class="cell blue span-4 reveal delay-1 strategy-core"><p class="kicker">Minimal intervention / Maximum clarity</p><h3>{e({"ko":"현장 제약 기반 설계","en":"Intelligence should fit the field.","ar":"يجب أن يناسب الذكاء أرض الواقع."}[lang])}</h3><p>{e(h["support"])}</p></div>{principles}</section>
 {certified_core_section(lang)}
 <section aria-labelledby="flow-title" class="field-flow section-grid" id="flow">
 <div class="cell span-5 flow-copy reveal"><p class="eyebrow">{e({"ko":"Flowmatic 작동 방식","en":"How Flowmatic works","ar":"كيف يعمل Flowmatic"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="flow-title">{lines(h["flow_title"])}</h2><p class="body-large">{e(h["flow_body"])}</p><ol class="flow-explanation">{logic_cards}</ol></div>
@@ -1376,16 +1376,16 @@ def quality_status_section(lang: str) -> str:
     classes = ["is-implemented", "is-progress", "is-target"]
     for i, (status, items) in enumerate(QUALITY_STATUS[lang]):
         cards.append(f'<article class="cell quality-status-card span-4 {classes[i]} reveal delay-{i+1}"><p class="eyebrow">{e(status)}</p>{ul(items)}</article>')
-    title = {"ko": "구현 상태를|명확히 구분합니다.", "en": "Implementation status|is explicit.", "ar": "حالة التنفيذ|واضحة ومحددة."}[lang]
-    body = {"ko": "현재 작동하는 범위와 연동 중인 범위, 목표 아키텍처를 구분해 표시합니다.", "en": "Working scope, integration work, and architecture targets are shown separately.", "ar": "يتم عرض النطاق العامل وأعمال التكامل وأهداف البنية بشكل منفصل."}[lang]
+    title = {"ko": "구현·연동·목표|범위 구분", "en": "Implementation status|is explicit.", "ar": "حالة التنفيذ|واضحة ومحددة."}[lang]
+    body = {"ko": "현재 구현, 연동 진행, 목표 아키텍처를 단계별로 구분합니다.", "en": "Working scope, integration work, and architecture targets are shown separately.", "ar": "يتم عرض النطاق العامل وأعمال التكامل وأهداف البنية بشكل منفصل."}[lang]
     return f'<section aria-labelledby="quality-status-title" class="quality-status section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Flowmatic Quality status</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="quality-status-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>{"".join(cards)}</section>'
 
 
 NC_BROWSER_DEMO = {
     "ko": {
         "eyebrow": "TRY FLOWMATIC NC",
-        "title": "NC 프로그램을 열면,|시간의 구조가 보입니다.",
-        "body": "G-code 파일을 브라우저에서 직접 분석해 절삭, 급속이송, 공구교환으로 구성된 이론상 프로그램 시간을 확인합니다.",
+        "title": "NC 프로그램의|시간 구조 분석",
+        "body": "G-code의 절삭·급속이송·공구교환을 분석해 이론상 프로그램 시간을 산출합니다.",
         "privacy": "파일은 이 브라우저 안에서만 분석되며 서버로 전송되지 않습니다.",
         "drop": "NC, CNC, TAP 또는 TXT 파일을 여기에 놓으세요.",
         "open": "NC 파일 열기",
