@@ -4649,10 +4649,329 @@ html[dir="rtl"] .contact-email {
 }
 
 @media (max-width: 380px) {
+  .lang-button[data-lang-button="ar"] {
+    min-width: 52px;
+  }
+
   .contact-email-panel,
   .contact-form-cell,
   .axis-node,
   .quality-status-card {
+    padding: 18px;
+  }
+}
+
+/* Factory Operating Intelligence information architecture — 2026-08-14 */
+.factory-asset {
+  margin: 0;
+  height: 100%;
+  border: var(--border) solid var(--fm-black);
+  background: var(--fm-white);
+  overflow: hidden;
+}
+
+.factory-asset picture,
+.factory-asset img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.factory-asset img {
+  object-fit: contain;
+}
+
+.certified-core-card,
+.domain-card,
+.component-group,
+.evidence-card,
+.deployment-mode,
+.quality-v513-card,
+.intelligence-section-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.certified-core-card h3,
+.domain-card h3,
+.component-group h3,
+.evidence-card h3,
+.deployment-mode h3,
+.quality-v513-card h3,
+.intelligence-section-card h2 {
+  margin: 0;
+  font-size: clamp(24px, 2.3vw, 38px);
+  line-height: .98;
+}
+
+.domain-card:nth-of-type(2),
+.quality-v513-card:nth-of-type(2) {
+  background: var(--fm-yellow);
+}
+
+.domain-card:nth-of-type(3),
+.evidence-card:nth-of-type(3) {
+  background: var(--fm-blue);
+  color: var(--fm-white);
+}
+
+.domain-card:nth-of-type(4),
+.intelligence-details .guardrail-panel {
+  background: var(--fm-red);
+  color: var(--fm-white);
+}
+
+.domain-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.domain-card-head > span {
+  font-size: 24px;
+  font-weight: 950;
+}
+
+.domain-components,
+.component-group ul,
+.intelligence-section-card ul {
+  margin: 0;
+  padding-inline-start: 20px;
+}
+
+.domain-components {
+  flex: 1;
+}
+
+.intelligence-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 24px;
+  border: 2px solid currentColor;
+}
+
+.intelligence-flow > span,
+.intelligence-flow.compact {
+  flex: 1 1 120px;
+  padding: 12px;
+  border-inline-end: 2px solid currentColor;
+  font-size: 13px;
+  font-weight: 950;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.intelligence-flow > span:last-child {
+  border-inline-end: 0;
+}
+
+.intelligence-flow.compact {
+  display: block;
+  margin-top: 0;
+  border: 2px solid currentColor;
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+
+.platform-entities {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+  background: var(--fm-yellow);
+}
+
+.platform-entities .eyebrow {
+  flex-basis: 100%;
+}
+
+.platform-entities span {
+  padding: 8px 10px;
+  border: 2px solid var(--fm-black);
+  background: var(--fm-white);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.platform-stack {
+  display: grid;
+  gap: 0;
+  padding: 0;
+}
+
+.platform-layer {
+  display: grid;
+  grid-template-columns: minmax(220px, .8fr) minmax(0, 1.4fr);
+  gap: 24px;
+  align-items: center;
+  padding: clamp(22px, 3vw, 42px);
+  border-bottom: var(--border) solid var(--fm-black);
+}
+
+.platform-layer:last-child {
+  border-bottom: 0;
+}
+
+.platform-layer:nth-child(1) { background: var(--fm-yellow); }
+.platform-layer:nth-child(2) { background: var(--fm-white); }
+.platform-layer:nth-child(3) { background: var(--fm-blue); color: var(--fm-white); }
+.platform-layer:nth-child(4) { background: var(--fm-red); color: var(--fm-white); }
+
+.platform-layer h3 {
+  margin: 0;
+  font-size: clamp(25px, 3vw, 46px);
+  line-height: .95;
+}
+
+.component-group ul {
+  display: grid;
+  gap: 10px;
+}
+
+.component-group a {
+  color: inherit;
+  font-weight: 900;
+}
+
+.evidence-card .product-link,
+.domain-card .product-link {
+  margin-top: auto;
+}
+
+.deployment-mode:first-of-type {
+  background: var(--fm-blue);
+  color: var(--fm-white);
+}
+
+.deployment-mode:last-of-type {
+  background: var(--fm-yellow);
+}
+
+.component-context .cell {
+  gap: 18px;
+}
+
+.component-context .product-link {
+  max-width: 420px;
+}
+
+.quality-v513 .factory-asset {
+  min-height: 360px;
+}
+
+.intelligence-hero .factory-asset {
+  min-height: min(64vw, 760px);
+}
+
+.intelligence-flow.vertical {
+  display: grid;
+  margin-top: 28px;
+}
+
+.intelligence-flow.vertical > span {
+  border-inline-end: 0;
+  border-bottom: 2px solid currentColor;
+  text-align: start;
+}
+
+.intelligence-flow.vertical > span:last-child {
+  border-bottom: 0;
+}
+
+.guardrail-panel .eyebrow,
+.guardrail-panel .body-large {
+  color: inherit;
+}
+
+html[dir="rtl"] .product-link > span[aria-hidden="true"] {
+  transform: scaleX(-1);
+}
+
+body[data-lang="ar"] .section-grid > .cell,
+body[data-lang="ar"] .section-grid > article {
+  direction: rtl;
+  text-align: right;
+}
+
+body[data-lang="ar"] .brand-hero-title,
+body[data-lang="ar"] .brand-hero-title .copy-lines,
+body[data-lang="ar"] .hero-copy > .body-large,
+body[data-lang="ar"] .field-story,
+body[data-lang="ar"] .tech-visual,
+body[data-lang="ar"] .factory-asset,
+body[data-lang="ar"] .intelligence-flow,
+body[data-lang="ar"] .platform-stack {
+  direction: ltr;
+  text-align: left;
+}
+
+body[data-lang="ar"] .brand-hero-title .copy-lines {
+  display: block;
+  margin-right: auto;
+  margin-left: 0;
+}
+
+body[data-lang="ar"] .hero-copy .brand-hero-title {
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+}
+
+body[data-lang="ar"] .section-grid .hero-title,
+body[data-lang="ar"] .section-grid .section-title {
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+}
+
+body[data-lang="ar"] .section-grid .hero-title .copy-lines,
+body[data-lang="ar"] .section-grid .section-title .copy-lines {
+  display: block;
+  max-width: 100%;
+}
+
+body[data-lang="ar"] .platform-layer,
+body[data-lang="ar"] .intelligence-flow.vertical > span {
+  direction: rtl;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .platform-layer {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .intelligence-flow > span {
+    flex-basis: 100%;
+    border-inline-end: 0;
+    border-bottom: 2px solid currentColor;
+  }
+
+  .intelligence-flow > span:last-child {
+    border-bottom: 0;
+  }
+
+  .quality-v513 .factory-asset,
+  .intelligence-hero .factory-asset {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 380px) {
+  .certified-core-card,
+  .domain-card,
+  .component-group,
+  .evidence-card,
+  .deployment-mode,
+  .quality-v513-card,
+  .intelligence-section-card,
+  .platform-layer,
+  .platform-entities {
     padding: 18px;
   }
 }

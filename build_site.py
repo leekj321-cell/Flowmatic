@@ -4,11 +4,25 @@ from datetime import date
 from html import escape
 from pathlib import Path
 
+from factory_os_v2 import (
+    ASSET_PATH as FACTORY_OS_ASSET_PATH,
+    CERTIFIED_CORE,
+    COMPONENT_CONTEXT,
+    DEPLOYMENT_MODES,
+    DOMAINS,
+    EVIDENCE,
+    HOME_OVERRIDES,
+    PAGES as FACTORY_OS_PAGES,
+    PLATFORM,
+    QUALITY_V513,
+    ROADMAP as FACTORY_OS_ROADMAP,
+)
+
 
 BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
-CSS_HREF = "/style-v5.20.css?v=5.23"
+CSS_HREF = "/style-v5.20.css?v=5.24"
 SCRIPT_SRC = "/script.js?v=5.19"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 BRAND_PATH = "/assets/branding"
@@ -25,7 +39,7 @@ LANGS = {
         "dir": "ltr",
         "skip": "본문으로 건너뛰기",
         "open": "메뉴 열기",
-        "nav": {"approach": "설계 원칙", "flow": "작동 방식", "products": "제품", "contact": "파일럿 상담"},
+        "nav": {"approach": "설계 원칙", "flow": "작동 방식", "products": "Intelligence", "contact": "파일럿 상담"},
         "home": "홈",
         "all_products": "전체 제품 보기",
         "product_demo": "제품 데모",
@@ -48,7 +62,7 @@ LANGS = {
         "dir": "ltr",
         "skip": "Skip to content",
         "open": "Open menu",
-        "nav": {"approach": "Approach", "flow": "How it works", "products": "Products", "contact": "Discuss a pilot"},
+        "nav": {"approach": "Approach", "flow": "How it works", "products": "Intelligence", "contact": "Discuss a pilot"},
         "home": "Home",
         "all_products": "All products",
         "product_demo": "Product demo",
@@ -71,7 +85,7 @@ LANGS = {
         "dir": "rtl",
         "skip": "تجاوز إلى المحتوى",
         "open": "فتح القائمة",
-        "nav": {"approach": "النهج", "flow": "طريقة العمل", "products": "المنتجات", "contact": "ناقش مشروعًا تجريبيًا"},
+        "nav": {"approach": "النهج", "flow": "طريقة العمل", "products": "الذكاء", "contact": "ناقش مشروعًا تجريبيًا"},
         "home": "الرئيسية",
         "all_products": "كل المنتجات",
         "product_demo": "عرض المنتج",
@@ -148,9 +162,13 @@ CONTACT_FORM = {
 
 CONTACT_PRODUCT_OPTIONS = [
     ("all", "All / undecided"),
+    ("quality", "Quality Intelligence"),
+    ("machining-intelligence", "Machining Intelligence"),
+    ("operations-intelligence", "Operations Intelligence"),
+    ("logistics-intelligence", "Logistics Intelligence"),
+    ("platform", "Flowmatic Platform / Factory OS"),
     ("ct", "Flowmatic CT"),
     ("nc", "Flowmatic NC"),
-    ("quality", "Flowmatic Quality"),
     ("work-standard", "Flowmatic Work Standard"),
     ("tms", "Flowmatic TMS"),
     ("amr", "Flowmatic Fleet + Material Flow"),
@@ -240,6 +258,9 @@ HOME = {
         "contact_fallback": "استخدم البريد الرسمي لمناقشة نطاق مشروع تجريبي.",
     },
 }
+
+for _lang, _values in HOME_OVERRIDES.items():
+    HOME[_lang].update(_values)
 
 
 PROBLEM_CARDS = {
@@ -799,6 +820,46 @@ PRODUCTS = {
 
 PRODUCTS = {slug: PRODUCTS[slug] for slug in ("ct", "quality", "nc", "work-standard", "tms", "amr")}
 
+PRODUCTS["ct"]["status_badges"] = {
+    "ko": [("is-demo", "Functional prototype · 현장 검증 중")],
+    "en": [("is-demo", "Functional prototype · field validation ongoing")],
+    "ar": [("is-demo", "نموذج وظيفي · التحقق الميداني مستمر")],
+}
+PRODUCTS["nc"]["status_badges"] = {
+    "ko": [("is-demo", "Public browser demo"), ("is-progress", "Desktop functional prototype")],
+    "en": [("is-demo", "Public browser demo"), ("is-progress", "Desktop functional prototype")],
+    "ar": [("is-demo", "عرض متصفح عام"), ("is-progress", "نموذج مكتبي وظيفي")],
+}
+PRODUCTS["quality"]["status_badges"] = {
+    "ko": [("is-demo", "v0.5.13 working prototype"), ("is-progress", "Inspection integration in progress")],
+    "en": [("is-demo", "v0.5.13 working prototype"), ("is-progress", "Inspection integration in progress")],
+    "ar": [("is-demo", "نموذج v0.5.13 عامل"), ("is-progress", "تكامل Inspection قيد التنفيذ")],
+}
+PRODUCTS["work-standard"]["status_badges"] = {
+    lang: [("is-preview", label)] for lang, label in {
+        "ko": "Symbolic prototype", "en": "Symbolic prototype", "ar": "نموذج رمزي"
+    }.items()
+}
+PRODUCTS["tms"]["status_badges"] = {
+    lang: [("is-preview", label)] for lang, label in {
+        "ko": "Tool engineering context · development preview",
+        "en": "Tool engineering context · development preview",
+        "ar": "سياق هندسة الأداة · معاينة تطوير",
+    }.items()
+}
+PRODUCTS["amr"]["display"] = {
+    "ko": "Logistics Intelligence / Fleet + Material Flow",
+    "en": "Logistics Intelligence / Fleet + Material Flow",
+    "ar": "ذكاء اللوجستيات / الأسطول وتدفق المواد",
+}
+PRODUCTS["amr"]["status_badges"] = {
+    lang: [("is-preview", label)] for lang, label in {
+        "ko": "AMR = execution actor · safety integration pending",
+        "en": "AMR = execution actor · safety integration pending",
+        "ar": "AMR منفذ · تكامل السلامة قيد التحقق",
+    }.items()
+}
+
 
 QUALITY_STATUS = {
     "ko": [
@@ -902,7 +963,7 @@ def header(lang: str, slug: str) -> str:
     ]
     nav_html = "".join(f'<a href="{home}#{key}">{e(label)}</a>' for key, label in anchors)
     lang_html = "".join(
-        f'<a class="lang-button{" is-active" if code == lang else ""}" data-lang-link="{code}" hreflang="{code}" lang="{code}" href="{page_path(code, slug)}">{e(meta["label"])}</a>'
+        f'<a class="lang-button{" is-active" if code == lang else ""}" data-lang-button="{code}" data-lang-link="{code}" hreflang="{code}" lang="{code}" href="{page_path(code, slug)}">{e(meta["label"])}</a>'
         for code, meta in LANGS.items()
     )
     return f"""<a class="skip-link" href="#main">{e(t["skip"])}</a>
@@ -974,6 +1035,118 @@ def product_cards(lang: str) -> str:
 <a class="product-link" href="{page_path(lang, slug)}"><span class="product-link-label">{e(product["cta"][lang])}</span><span aria-hidden="true">→</span></a>
 </article>""")
     return "\n".join(cards)
+
+
+def factory_asset(src: str, alt: str) -> str:
+    png = src[:-4] + ".png" if src.endswith(".svg") else src
+    return f'<figure class="factory-asset"><picture><source srcset="{e(src)}" type="image/svg+xml"><img alt="{e(alt)}" decoding="async" height="720" loading="lazy" src="{e(png)}" width="1200"></picture></figure>'
+
+
+def certified_core_section(lang: str) -> str:
+    cards = "".join(
+        f'<article class="cell certified-core-card span-3 reveal delay-{i + 1}"><h3>{e(title)}</h3><p>{e(body[lang])}</p></article>'
+        for i, (title, body) in enumerate(CERTIFIED_CORE["cards"])
+    )
+    return f"""<section aria-labelledby="certified-core-title" class="certified-core section-grid" id="certified-core">
+<div class="cell span-8 reveal"><p class="eyebrow">Certified core boundary</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="certified-core-title">{lines(CERTIFIED_CORE["title"][lang])}</h2><p class="body-large">{e(CERTIFIED_CORE["body"][lang])}</p></div>
+<div class="cell span-4 reveal delay-1">{factory_asset(f"{FACTORY_OS_ASSET_PATH}/03_certified_core_boundary.svg", "Flowmatic certified core boundary")}</div>{cards}</section>"""
+
+
+def intelligence_domains_section(lang: str) -> str:
+    cards = []
+    for i, domain in enumerate(DOMAINS):
+        component_list = "".join(f"<li>{e(item)}</li>" for item in domain["components"])
+        cards.append(f"""<article class="cell domain-card span-6 reveal delay-{(i % 2) + 1}">
+<div class="domain-card-head"><p class="eyebrow">{e(domain["status"][lang])}</p><span>{i + 1:02}</span></div><h3>{e(domain["name"])}</h3><p>{e(domain["body"][lang])}</p><div class="intelligence-flow compact">{e(domain["flow"])}</div><ul class="domain-components">{component_list}</ul><a class="product-link" href="{page_path(lang, domain["slug"])}"><span>{e({"ko":"자세히 보기","en":"Explore domain","ar":"استكشف المجال"}[lang])}</span><span aria-hidden="true">→</span></a></article>""")
+    title = {"ko":"네 개의 전문 지능.|하나의 공장 운영 언어.","en":"Four specialized intelligence domains.|One factory operating language.","ar":"أربعة مجالات ذكاء متخصصة.|لغة تشغيل واحدة للمصنع."}[lang]
+    body = {"ko":"Quality · Machining · Operations · Logistics Intelligence가 Shared Manufacturing Context와 Event 언어를 공유합니다.","en":"Quality, Machining, Operations, and Logistics Intelligence share Manufacturing Context and an Event language.","ar":"تشترك مجالات ذكاء الجودة والتشغيل والعمليات واللوجستيات في سياق التصنيع ولغة الأحداث."}[lang]
+    return f"""<section aria-labelledby="products-title" class="intelligence-domains section-grid" id="products">
+<div class="cell span-7 reveal"><p class="eyebrow">Factory Operating Intelligence</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="products-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>
+<div class="cell span-5 reveal delay-1">{factory_asset(f"{FACTORY_OS_ASSET_PATH}/00_factory_os_four_axes.svg", "Four Flowmatic intelligence domains connected to shared manufacturing context")}</div>{''.join(cards)}</section>"""
+
+
+def platform_architecture_section(lang: str) -> str:
+    layers = "".join(
+        f'<article class="platform-layer reveal delay-{(i % 4) + 1}"><div><p class="eyebrow">{e(status[lang])}</p><h3>{e(name)}</h3></div><p>{e(body[lang])}</p></article>'
+        for i, (name, status, body) in enumerate(PLATFORM["layers"])
+    )
+    entities = "".join(f"<span>{e(item)}</span>" for item in PLATFORM["entities"])
+    return f"""<section aria-labelledby="platform-title" class="platform-architecture section-grid" id="system">
+<div class="cell span-7 reveal"><p class="eyebrow">Shared context → Event Core → Control Tower</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="platform-title">{lines(PLATFORM["title"][lang])}</h2><p class="body-large">{e(PLATFORM["body"][lang])}</p><a class="fm-button primary" href="{page_path(lang, 'platform')}">{e({"ko":"플랫폼 아키텍처 보기","en":"Explore the platform architecture","ar":"استكشف بنية المنصة"}[lang])}</a></div>
+<div class="cell span-5 platform-entities reveal delay-1"><p class="eyebrow">Manufacturing Context</p>{entities}</div><div class="cell span-12 platform-stack">{layers}</div></section>"""
+
+
+def component_hierarchy_section(lang: str) -> str:
+    groups = [
+        ("Quality Intelligence", [("Quality", "quality")]),
+        ("Machining Intelligence", [("NC", "nc"), ("CT", "ct"), ("Work Standard", "work-standard"), ("TMS Engineering Context", "tms")]),
+        ("Operations Intelligence", [("Operations MVP", "operations-intelligence")]),
+        ("Logistics Intelligence", [("Fleet + Material Flow", "logistics-intelligence"), ("AMR execution actor", "amr")]),
+    ]
+    cards = "".join(
+        f'<article class="cell component-group span-3 reveal delay-{i + 1}"><h3>{e(title)}</h3><ul>{"".join(f"<li><a href=\"{page_path(lang, slug)}\">{e(label)}</a></li>" for label, slug in items)}</ul></article>'
+        for i, (title, items) in enumerate(groups)
+    )
+    title = {"ko":"기존 제품은 사라지지 않습니다.|상위 지능축 아래에서 역할이 선명해집니다.","en":"Existing products remain.|Their role is clearer within each intelligence domain.","ar":"تبقى المنتجات الحالية.|ويصبح دورها أوضح داخل كل مجال ذكاء."}[lang]
+    return f'<section aria-labelledby="components-title" class="component-hierarchy section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Component hierarchy</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="components-title">{lines(title)}</h2></div>{cards}</section>'
+
+
+def built_evidence_section(lang: str) -> str:
+    cards = "".join(
+        f'<article class="cell evidence-card span-3 reveal delay-{i + 1}"><p class="eyebrow">{e(status[lang])}</p><h3>{e(name)}</h3><p>{e(body[lang])}</p><a class="product-link" href="{page_path(lang, slug)}"><span>{e({"ko":"확인하기","en":"Inspect","ar":"فحص"}[lang])}</span><span aria-hidden="true">→</span></a></article>'
+        for i, (name, status, body, slug) in enumerate(EVIDENCE)
+    )
+    title = {"ko":"구축된 증거와|다음 통합을 구분합니다.","en":"Separate built evidence|from the next integration.","ar":"نفصل الدليل المبني|عن التكامل التالي."}[lang]
+    body = {"ko":"공개 데모·작동 프로토타입·내부 검증 MVP의 상태를 그대로 표시합니다.","en":"Public demos, working prototypes, and internally validated MVPs are labeled as they are.","ar":"تُعرض حالة العروض العامة والنماذج العاملة وMVP الخاضع للتحقق الداخلي كما هي."}[lang]
+    return f'<section aria-labelledby="evidence-title" class="built-evidence section-grid" id="demo-workflows"><div class="cell span-12 reveal"><p class="eyebrow">Built evidence</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="evidence-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>{cards}</section>'
+
+
+def deployment_modes_section(lang: str) -> str:
+    cards = "".join(
+        f'<article class="cell deployment-mode span-6 reveal delay-{i + 1}"><p class="eyebrow">{e(status[lang])}</p><h3>{e(name)}</h3><p>{e(body[lang])}</p></article>'
+        for i, (name, body, status) in enumerate(DEPLOYMENT_MODES)
+    )
+    title = {"ko":"현재 공장에서 시작하고,|미래 공장의 Event model까지 확장합니다.","en":"Start from the existing factory.|Extend toward future Event-model design.","ar":"ابدأ من المصنع القائم.|وامتد نحو تصميم نموذج أحداث المستقبل."}[lang]
+    return f'<section aria-labelledby="deployment-title" class="deployment-modes section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Deployment modes</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="deployment-title">{lines(title)}</h2></div>{cards}</section>'
+
+
+def component_context_section(lang: str, slug: str) -> str:
+    parent, copy = COMPONENT_CONTEXT[slug]
+    label = "Quality Intelligence" if parent == "quality" else FACTORY_OS_PAGES[parent]["label"]
+    return f'<section aria-label="Component context" class="component-context section-grid"><div class="cell yellow span-12 reveal"><p class="eyebrow">Component context</p><p class="body-large">{e(copy[lang])}</p><a class="product-link" href="{page_path(lang, parent)}"><span>{e(label)}</span><span aria-hidden="true">→</span></a></div></section>'
+
+
+def quality_v513_section(lang: str) -> str:
+    cards = "".join(
+        f'<article class="cell quality-v513-card span-3 reveal delay-{i + 1}"><h3>{e(title)}</h3><p>{e(body[lang])}</p></article>'
+        for i, (title, body) in enumerate(QUALITY_V513["cards"])
+    )
+    flow = "".join(f"<span>{e(step)}</span>" for step in QUALITY_V513["flow"])
+    return f"""<section aria-labelledby="quality-v513-title" class="quality-v513 section-grid">
+<div class="cell span-7 reveal"><p class="eyebrow">Quality Intelligence v0.5.13</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="quality-v513-title">{lines(QUALITY_V513["title"][lang])}</h2><p class="body-large">{e(QUALITY_V513["body"][lang])}</p><div class="intelligence-flow">{flow}</div></div>
+<div class="cell span-5 reveal delay-1">{factory_asset(f"{FACTORY_OS_ASSET_PATH}/02_quality_intelligence_v513.svg", "Flowmatic Quality Intelligence v0.5.13 workflow")}</div>{cards}</section>"""
+
+
+def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
+    data = FACTORY_OS_PAGES[slug]
+    flow = "".join(f"<span>{e(step)}</span>" for step in data["flow"])
+    sections = "".join(
+        f'<article class="cell intelligence-section-card span-6 reveal delay-{(i % 2) + 1}"><p class="eyebrow">{e(status[lang])}</p><h2>{e(title)}</h2><p>{e(body[lang])}</p>{ul(items)}</article>'
+        for i, (title, status, body, items) in enumerate(data["sections"])
+    )
+    asset_alt = f'{data["label"]} architecture'
+    asset = f'<div class="cell span-12 reveal">{factory_asset(data["asset"], asset_alt)}</div>' if data.get("asset") else ""
+    guardrail = {"ko":"공개 범위 경계","en":"Public scope boundary","ar":"حدود النطاق العام"}[lang]
+    back = {"ko":"전체 지능축 보기","en":"View all intelligence domains","ar":"عرض جميع مجالات الذكاء"}[lang]
+    contact = {"ko":"파일럿 상담","en":"Discuss a pilot","ar":"ناقش مشروعًا تجريبيًا"}[lang]
+    return f"""<!doctype html>
+<html lang="{lang}" dir="{LANGS[lang]["dir"]}">
+{meta_head(lang, slug, data["title"][lang], data["description"][lang], canonical_path)}
+<body class="intelligence-page" data-lang="{lang}" data-static-lang="true">{header(lang, slug)}<main id="main">
+<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div>{asset}</section>
+<section aria-label="Architecture details" class="intelligence-details section-grid">{sections}<div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">{e(guardrail)}</p><p class="body-large">{e(data["guardrail"][lang])}</p></div></section>
+<section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(contact)}</a><a class="fm-button" href="{page_path(lang, 'platform')}">Flowmatic Platform / Factory OS</a></div></section>
+</main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
 
 
 def progression_section(lang: str) -> str:
@@ -1048,10 +1221,11 @@ def brownfield_section(lang: str) -> str:
 def roadmap_section(lang: str) -> str:
     rows = "\n".join(
         f"""<article class="roadmap-item reveal delay-{(i % 4) + 1}"><span>{e(phase)}</span><h3>{e(title)}</h3><p>{e(body)}</p></article>"""
-        for i, (phase, title, body) in enumerate(ROADMAP[lang])
+        for i, (phase, title, copy) in enumerate(FACTORY_OS_ROADMAP)
+        for body in (copy[lang],)
     )
-    title = {"ko": "장기 로드맵", "en": "Long-term roadmap", "ar": "خارطة الطريق طويلة المدى"}[lang]
-    subtitle = {"ko": "Model-free CT에서 Factory OS까지", "en": "From Model-free CT to Factory OS", "ar": "من Model-free CT إلى Factory OS"}[lang]
+    title = {"ko": "5단계 통합 로드맵", "en": "Five-stage integration roadmap", "ar": "خارطة تكامل من خمس مراحل"}[lang]
+    subtitle = {"ko": "전문 지능에서|배포 템플릿까지", "en": "From specialized intelligence|to deployment templates", "ar": "من الذكاء المتخصص|إلى قوالب النشر"}[lang]
     return f"""<section aria-labelledby="roadmap-title" class="roadmap section-grid" id="roadmap">
 <div class="cell span-12 reveal"><p class="eyebrow">{e(title)}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="roadmap-title">{lines(subtitle)}</h2></div>
 <div class="cell span-12 roadmap-grid">{rows}</div>
@@ -1162,29 +1336,22 @@ def home_page(lang: str, canonical_path: str) -> str:
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>{e(h["primary"])}</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
-{progression_section(lang)}
 <section aria-labelledby="problem-title" class="problem section-grid">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"해결하는 운영 문제","en":"Operational gaps","ar":"فجوات التشغيل"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="problem-title">{lines(h["problem_title"])}</h2><p class="body-large">{e(h["problem_body"])}</p></div>{problem}</section>
 <section aria-labelledby="strategy-title" class="strategy section-grid" id="approach">
 <div class="cell span-8 reveal"><p class="eyebrow">{e({"ko":"현장 중심 설계","en":"Field-first design","ar":"تصميم يبدأ من الميدان"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="strategy-title">{lines(h["strategy_title"])}</h2><p class="body-large">{e(h["strategy_body"])}</p></div>
 <div class="cell blue span-4 reveal delay-1 strategy-core"><p class="kicker">Minimal intervention / Maximum clarity</p><h3>{e({"ko":"지능은 현장에 맞아야 합니다.","en":"Intelligence should fit the field.","ar":"يجب أن يناسب الذكاء أرض الواقع."}[lang])}</h3><p>{e(h["support"])}</p></div>{principles}</section>
+{certified_core_section(lang)}
 <section aria-labelledby="flow-title" class="field-flow section-grid" id="flow">
 <div class="cell span-5 flow-copy reveal"><p class="eyebrow">{e({"ko":"Flowmatic 작동 방식","en":"How Flowmatic works","ar":"كيف يعمل Flowmatic"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="flow-title">{lines(h["flow_title"])}</h2><p class="body-large">{e(h["flow_body"])}</p><ol class="flow-explanation">{logic_cards}</ol></div>
 <div class="cell span-7 flow-visual-cell reveal delay-1">{field_story(lang)}</div>
 </section>
-<section aria-labelledby="products-title" class="product-index section-grid" id="products">
-<div class="cell span-12 reveal"><p class="eyebrow">Flowmatic Products</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="products-title">{lines(h["products_title"])}</h2><p class="body-large">{e(h["products_body"])}</p></div>{product_cards(lang)}</section>
-<section aria-labelledby="workflow-title" class="demo-workflows section-grid" id="demo-workflows">
-<div class="cell span-12 reveal"><p class="eyebrow">Demo workflows</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="workflow-title">{lines(h["workflow_title"])}</h2><p class="body-large">{e(h["workflow_body"])}</p></div>
-<article class="cell workflow-card span-6 reveal delay-1"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h3>Flowmatic NC</h3><div class="workflow-flow">{e(workflow_nc)}</div><a class="fm-button primary" href="{page_path(lang, "nc")}">{e(PRODUCTS["nc"]["cta"][lang])}</a></article>
-<article class="cell workflow-card blue span-6 reveal delay-2"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h3>Flowmatic CT</h3><div class="workflow-flow">{e(workflow_ct)}</div><a class="fm-button primary" href="{page_path(lang, "ct")}">{e(PRODUCTS["ct"]["cta"][lang])}</a></article>
-</section>
-{material_flow_section(lang)}
-{mobile_automation_section(lang)}
-{orchestrator_section(lang)}
-{brownfield_section(lang)}
+{intelligence_domains_section(lang)}
+{platform_architecture_section(lang)}
+{component_hierarchy_section(lang)}
+{built_evidence_section(lang)}
+{deployment_modes_section(lang)}
 {roadmap_section(lang)}
-{final_vision_section(lang)}
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
 {contact_section(lang)}
@@ -1377,7 +1544,8 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
 <section aria-labelledby="tech-title" class="detail-overview section-grid">
 <div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(LANGS[lang]["all_products"])}</a></div>
 <div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
-<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}
+{component_context_section(lang, slug)}
+<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}{quality_v513_section(lang) if slug == "quality" else ""}
 <section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
 <section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#products">{e(LANGS[lang]["all_products"])}</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script>{extra_script}</body></html>"""
@@ -1393,6 +1561,7 @@ def sitemap() -> str:
     urls = ["/", "/ko/", "/en/", "/ar/"]
     for lang in LANGS:
         urls.extend(page_path(lang, slug) for slug in PRODUCTS)
+        urls.extend(page_path(lang, slug) for slug in FACTORY_OS_PAGES)
     body = "\n".join(f"  <url><loc>{abs_url(path)}</loc></url>" for path in urls)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{body}\n</urlset>\n'
 
@@ -1407,6 +1576,9 @@ def notes() -> str:
 - 데모 영상 파일: `flowmatic_nc_demo.mp4`, `flowmatic_ct_demo.mp4`; 두 제품 페이지의 `<video>`는 `controls`, `playsinline`, `preload="metadata"`, `poster`를 사용합니다.
 - NC 공개 브라우저 데모: `/nc-demo-lite.js`, `/nc-demo-lite-worker.js`, `/demo-data/flowmatic-nc-sample.nc`; 업로드 없이 브라우저 내부에서 기본 G-code 이동시간만 계산합니다.
 - Flowmatic Quality: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; 작동 프로토타입, Inspection–Dashboard 연동 진행 상태, 구현/연동/목표 아키텍처를 구분해 표시합니다.
+- Factory Operating Intelligence: Quality / Machining / Operations / Logistics 네 지능축과 Shared Manufacturing Context → Event Core → 계획된 Control Tower 구조를 `/{{lang}}/platform/`에서 설명합니다.
+- 신규 정식 URL: `/{{lang}}/machining-intelligence/`, `/{{lang}}/operations-intelligence/`, `/{{lang}}/logistics-intelligence/`, `/{{lang}}/platform/`; 기존 NC/CT/Quality/Work Standard/TMS/AMR URL은 하위 컴포넌트 페이지로 유지합니다.
+- Operations Intelligence: Functional MVP / internal validation 상태로 표시하며, Tracked Operational Cost를 완전 제조원가나 회계원가로 표현하지 않습니다.
 - 개발 프리뷰 제품: Work Standard, TMS, AMR은 빈 비디오 플레이어 없이 개발 상태 패널, 파일럿 입력, 확인 결과, 문의 CTA를 표시합니다.
 - 공식 브랜드 마크: 좌상단 파랑, 좌하단 빨강, 우측 노랑 2칸의 2×2 마크를 `/assets/branding/`에서 단일 관리합니다. 헤더·푸터·파비콘·앱 아이콘·OG 이미지가 같은 원본을 사용합니다.
 - 공식 QR 연락 시그니처: `{BASE_URL}/`로 연결하며 `{CONTACT_EMAIL}`을 함께 표시합니다. Contact 영역과 외부 자료에서 재사용할 SVG/PNG를 제공합니다.
@@ -1423,6 +1595,8 @@ def main() -> None:
         write(Path(lang) / "index.html", home_page(lang, page_path(lang)))
         for slug in PRODUCTS:
             write(Path(lang) / slug / "index.html", product_page(lang, slug, page_path(lang, slug)))
+        for slug in FACTORY_OS_PAGES:
+            write(Path(lang) / slug / "index.html", intelligence_page(lang, slug, page_path(lang, slug)))
     write(Path("robots.txt"), "User-agent: *\nAllow: /\nSitemap: https://flowmatic-os.com/sitemap.xml\n")
     write(Path("sitemap.xml"), sitemap())
     write(Path("IMPLEMENTATION_NOTES.md"), notes())
