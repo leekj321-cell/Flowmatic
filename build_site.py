@@ -22,8 +22,8 @@ from factory_os_v2 import (
 BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
-CSS_HREF = "/style-v5.20.css?v=5.24"
-SCRIPT_SRC = "/script.js?v=5.19"
+CSS_HREF = "/style-v5.20.css?v=6.0"
+SCRIPT_SRC = "/script.js?v=6.0"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 BRAND_PATH = "/assets/branding"
 BRAND_VERSION = "20260803.2"
@@ -987,6 +987,16 @@ def footer(lang: str) -> str:
 </footer>"""
 
 
+def detail_local_nav(lang: str) -> str:
+    labels = {
+        "ko": ["개요", "작동 흐름", "증거·상태", "파일럿"],
+        "en": ["Overview", "Workflow", "Evidence", "Pilot"],
+        "ar": ["نظرة عامة", "سير العمل", "الدليل", "المشروع التجريبي"],
+    }[lang]
+    links = "".join(f'<a href="#{anchor}">{e(label)}</a>' for anchor, label in zip(("overview", "workflow", "evidence", "pilot-scope"), labels))
+    return f'<nav aria-label="Product page" class="detail-local-nav">{links}</nav>'
+
+
 def field_story(lang: str) -> str:
     labels = {
         "ko": ["현장 읽기", "이벤트 생성", "다음 행동 선택", "응답 확인", "카메라", "NC 코드", "작업자", "현장 데이터", "데이터 입력", "이벤트", "이벤트 입력", "행동", "행동 입력", "종결", "안내", "알림", "호출", "작업자<br><b>확인</b>", "보급소", "라인", "이벤트 종결", "사이클 완료", "자재 부족", "경로 위험"],
@@ -1001,6 +1011,34 @@ def field_story(lang: str) -> str:
 <section class="story-stage stage-confirm" data-story-stage="confirm"><span class="stage-number">04</span><p class="stage-label">{labels[3]}</p><span class="phase-box stage-intake intake-yellow">{labels[12]}</span><span class="phase-box stage-output confirm-output">{labels[13]}</span><div class="response-scene"><span class="operator-screen">{labels[17]}</span><span class="mini-depot">{labels[18]}</span><span class="mini-line">{labels[19]}</span><span class="mini-amr"></span><span class="closed-state">{labels[20]}</span></div></section>
 <span aria-hidden="true" class="story-packet packet-main"></span>
 </div>"""
+
+
+def operating_live_map(lang: str) -> str:
+    labels = {
+        "ko": ["운영 인텔리전스 라이브 맵", "현장 신호", "운영 이벤트", "판단", "후속 행동", "이벤트 감지", "행동 배정", "응답 확인"],
+        "en": ["Operating Intelligence Live Map", "Motion", "Event", "Decision", "Action", "Event detected", "Action assigned", "Confirmed"],
+        "ar": ["خريطة الذكاء التشغيلي المباشرة", "الحركة", "الحدث", "القرار", "الإجراء", "تم اكتشاف الحدث", "تم إسناد الإجراء", "تم التأكيد"],
+    }[lang]
+    nodes = "".join(
+        f'<li class="live-map-node"><span>{i + 1:02}</span><strong>{e(label)}</strong></li>'
+        for i, label in enumerate(labels[1:5])
+    )
+    statuses = "".join(
+        f'<span class="live-status live-status-{i + 1}"><i aria-hidden="true"></i>{e(label)}</span>'
+        for i, label in enumerate(labels[5:])
+    )
+    return f"""<div aria-label="{e(labels[0])}" class="operating-live-map" role="img">
+<div class="live-map-head"><p class="kicker">{e(labels[0])}</p><span aria-hidden="true" class="live-indicator"></span></div>
+<ol class="live-map-track">{nodes}</ol><div class="live-map-statuses">{statuses}</div></div>"""
+
+
+def proof_strip(lang: str) -> str:
+    items = {
+        "ko": ["Brownfield 우선", "Human-in-the-loop", "공개 데모 + 작동 프로토타입", "Quality · Machining · Operations · Logistics"],
+        "en": ["Brownfield-first", "Human-in-the-loop", "Public demos + working prototypes", "Quality · Machining · Operations · Logistics"],
+        "ar": ["الأولوية للمصنع القائم", "الإنسان ضمن الحلقة", "عروض عامة + نماذج عاملة", "الجودة · التشغيل · العمليات · اللوجستيات"],
+    }[lang]
+    return '<section aria-label="Flowmatic proof points" class="proof-strip">' + "".join(f'<span>{e(item)}</span>' for item in items) + '</section>'
 
 
 def mini_visual(slug: str, lang: str) -> str:
@@ -1050,6 +1088,23 @@ def certified_core_section(lang: str) -> str:
     return f"""<section aria-labelledby="certified-core-title" class="certified-core section-grid" id="certified-core">
 <div class="cell span-8 reveal"><p class="eyebrow">Certified core boundary</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="certified-core-title">{lines(CERTIFIED_CORE["title"][lang])}</h2><p class="body-large">{e(CERTIFIED_CORE["body"][lang])}</p></div>
 <div class="cell span-4 reveal delay-1">{factory_asset(f"{FACTORY_OS_ASSET_PATH}/03_certified_core_boundary.svg", "Flowmatic certified core boundary")}</div>{cards}</section>"""
+
+
+def design_boundary_section(lang: str) -> str:
+    principle_items = "".join(
+        f'<article class="principle-item reveal delay-{i + 1}"><span>{e(num)}</span><div><h3>{lines(title)}</h3><p>{e(body)}</p></div></article>'
+        for i, (num, title, body) in enumerate(PRINCIPLES[lang])
+    )
+    keep_label = {"ko": "유지", "en": "Keep", "ar": "الإبقاء"}[lang]
+    connect_label = {"ko": "연결", "en": "Connect", "ar": "الربط"}[lang]
+    boundary_items = "".join(
+        f'<li><span>{e(keep_label)}</span><strong>{e(title)}</strong><p><em>{e(connect_label)}</em>{e(body[lang])}</p></li>'
+        for title, body in CERTIFIED_CORE["cards"]
+    )
+    h = HOME[lang]
+    return f"""<section aria-labelledby="strategy-title" class="design-boundary section-grid" id="approach">
+<div class="cell span-12 section-intro reveal"><p class="eyebrow">{e({"ko":"Design Principles / Integration Boundary","en":"Design Principles / Integration Boundary","ar":"مبادئ التصميم / حدود التكامل"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="strategy-title">{lines(h["strategy_title"])}</h2><p class="body-large">{e(h["strategy_body"])}</p></div>
+<div class="cell span-6 principles-panel">{principle_items}</div><div class="cell span-6 boundary-panel reveal"><p class="eyebrow">Certified core boundary</p><h3>{lines(CERTIFIED_CORE["title"][lang])}</h3><p>{e(CERTIFIED_CORE["body"][lang])}</p><ul class="boundary-list">{boundary_items}</ul></div></section>"""
 
 
 def intelligence_domains_section(lang: str) -> str:
@@ -1110,6 +1165,21 @@ def deployment_modes_section(lang: str) -> str:
     return f'<section aria-labelledby="deployment-title" class="deployment-modes section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Deployment modes</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="deployment-title">{lines(title)}</h2></div>{cards}</section>'
 
 
+def deployment_roadmap_section(lang: str) -> str:
+    modes = "".join(
+        f'<article class="deployment-path {"is-primary" if i == 0 else "is-future"} reveal delay-{i + 1}"><p class="eyebrow">{e(status[lang])}</p><h3>{e(name)}</h3><p>{e(body[lang])}</p></article>'
+        for i, (name, body, status) in enumerate(DEPLOYMENT_MODES)
+    )
+    rows = "".join(
+        f'<article class="roadmap-step reveal delay-{(i % 4) + 1}"><span>{e(phase)}</span><div><h3>{e(title)}</h3><p>{e(copy[lang])}</p></div></article>'
+        for i, (phase, title, copy) in enumerate(FACTORY_OS_ROADMAP)
+    )
+    title = {"ko":"Brownfield 우선.|Greenfield 확장.","en":"Start from the existing factory.|Extend toward future Event-model design.","ar":"ابدأ من المصنع القائم.|وامتد نحو تصميم نموذج أحداث المستقبل."}[lang]
+    return f"""<section aria-labelledby="deployment-title" class="deployment-roadmap section-grid" id="roadmap">
+<div class="cell span-12 section-intro reveal"><p class="eyebrow">Deployment / Roadmap</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="deployment-title">{lines(title)}</h2></div>
+<div class="cell span-5 deployment-paths">{modes}</div><div class="cell span-7 roadmap-timeline">{rows}</div></section>"""
+
+
 def component_context_section(lang: str, slug: str) -> str:
     parent, copy = COMPONENT_CONTEXT[slug]
     label = "Quality Intelligence" if parent == "quality" else FACTORY_OS_PAGES[parent]["label"]
@@ -1142,10 +1212,10 @@ def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
     return f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
 {meta_head(lang, slug, data["title"][lang], data["description"][lang], canonical_path)}
-<body class="intelligence-page" data-lang="{lang}" data-static-lang="true">{header(lang, slug)}<main id="main">
-<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div>{asset}</section>
-<section aria-label="Architecture details" class="intelligence-details section-grid">{sections}<div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">{e(guardrail)}</p><p class="body-large">{e(data["guardrail"][lang])}</p></div></section>
-<section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(contact)}</a><a class="fm-button" href="{page_path(lang, 'platform')}">Flowmatic Platform / Factory OS</a></div></section>
+<body class="intelligence-page" data-lang="{lang}" data-static-lang="true">{header(lang, slug)}{detail_local_nav(lang)}<main id="main">
+<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid" id="overview"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div>{asset}</section>
+<section aria-label="Architecture details" class="intelligence-details section-grid" id="workflow">{sections}<div class="cell red span-12 guardrail-panel reveal" id="evidence"><p class="eyebrow">{e(guardrail)}</p><p class="body-large">{e(data["guardrail"][lang])}</p></div></section>
+<section class="section-grid" id="pilot-scope"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(contact)}</a><a class="fm-button" href="{page_path(lang, 'platform')}">Flowmatic Platform / Factory OS</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
 
 
@@ -1311,7 +1381,7 @@ def contact_section(lang: str) -> str:
     }[lang]
     return f"""<section aria-labelledby="contact-title" class="cta contact-section section-grid" id="contact">
 <div class="cell span-5 contact-intro reveal"><p class="eyebrow">{e(LANGS[lang]["contact"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="contact-title">{lines(h["contact_title"])}</h2><p class="body-large">{e(h["contact_body"])}</p><div class="contact-email-panel"><a class="contact-email" data-contact-email href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><div class="contact-email-actions"><button class="fm-button" data-copy-email data-copy-success="{e(t["copied"])}" data-copy-failed="{e(t["copy_failed"])}" type="button">{e(t["copy"])}</button></div><p class="contact-copy-status" data-copy-status aria-live="polite"></p></div>{qr_contact_signature(qr_alt)}</div>
-<div class="cell yellow span-7 contact-form-cell reveal delay-1"><form action="{CONTACT_ENDPOINT}" data-contact-form data-required-message="{e(t["required"])}" data-sending-message="{e(t["sending"])}" data-success-message="{e(t["sent"])}" data-failed-message="{e(t["failed"])}" data-unavailable-message="{e(t["unavailable"])}" method="post" novalidate><input name="_subject" type="hidden" value="Flowmatic website inquiry"><input name="language" type="hidden" value="{e(lang)}"><div aria-hidden="true" class="contact-honeypot"><label for="contact-company-website">Website</label><input id="contact-company-website" name="_gotcha" tabindex="-1" type="text" autocomplete="off"></div><div class="contact-form-grid">{"".join(controls)}</div><button class="fm-button primary contact-submit" type="submit">{e(t["submit"])}</button><p class="contact-form-status" data-contact-form-status aria-live="polite"></p></form></div>
+<div class="cell span-7 contact-form-cell reveal delay-1"><form action="{CONTACT_ENDPOINT}" data-contact-form data-required-message="{e(t["required"])}" data-sending-message="{e(t["sending"])}" data-success-message="{e(t["sent"])}" data-failed-message="{e(t["failed"])}" data-unavailable-message="{e(t["unavailable"])}" method="post" novalidate><input name="_subject" type="hidden" value="Flowmatic website inquiry"><input name="language" type="hidden" value="{e(lang)}"><div aria-hidden="true" class="contact-honeypot"><label for="contact-company-website">Website</label><input id="contact-company-website" name="_gotcha" tabindex="-1" type="text" autocomplete="off"></div><div class="contact-form-grid">{"".join(controls)}</div><button class="fm-button primary contact-submit" type="submit">{e(t["submit"])}</button><p class="contact-form-status" data-contact-form-status aria-live="polite"></p></form></div>
 </section>"""
 
 
@@ -1319,10 +1389,7 @@ def home_page(lang: str, canonical_path: str) -> str:
     h = HOME[lang]
     logic_cards = "".join(f'<li><strong>{e(title)}</strong><span>{e(body)}</span></li>' for title, body in FLOW_STEPS[lang])
     problem = "\n".join(f'<article class="cell {"red" if i < 2 else "gray"} problem-card span-3 reveal delay-{i+1}"><span>{num}</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text>{lines(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PROBLEM_CARDS[lang]))
-    principles = "\n".join(f'<article class="cell {"yellow" if i == 1 else "blue" if i == 3 else "gray"} strategy-card span-3 reveal delay-{i+1}"><span>{num}</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text>{lines(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PRINCIPLES[lang]))
     pilot = "\n".join(f'<article class="cell pilot-step span-3 reveal delay-{i+1}"><span>{num}</span><h3>{e(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PILOT_STEPS[lang]))
-    workflow_nc = {"ko": "NC 프로그램 → 공구 경로 재구성 → 가공 전 검토", "en": "NC program → Toolpath reconstruction → Review point", "ar": "برنامج NC → إعادة بناء مسار الأداة → نقطة مراجعة"}[lang]
-    workflow_ct = {"ko": "고정 카메라 ROI → 시작·종료 이벤트 → 사이클 타임라인", "en": "Fixed camera ROI → Start/end event → Cycle timeline", "ar": "ROI لكاميرا ثابتة → حدث بداية/نهاية → خط زمني للدورة"}[lang]
     html = f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
 {meta_head(lang, "home", h["title"], h["description"], canonical_path)}
@@ -1330,28 +1397,20 @@ def home_page(lang: str, canonical_path: str) -> str:
 {header(lang, "home")}
 <main id="main">
 <section aria-labelledby="hero-title" class="hero section-grid" id="hero">
-<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#system">{e(h["primary"])}</a><a class="fm-button" href="#roadmap">{e(h["secondary"])}</a></div></div>
-<div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event →|Decision → Action","en":"Motion → Event →|Decision → Action","ar":"Motion → Event →|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
-<div class="cell yellow hero-note span-4 reveal delay-2"><strong>{e(FLOW_STEPS[lang][0][0])}</strong><span>{e(FLOW_STEPS[lang][0][1])}</span></div>
-<div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
-<div class="cell hero-scroll span-5 reveal delay-4"><span>{e(h["primary"])}</span><span aria-hidden="true" class="scroll-line"></span></div>
+<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="hero-subcopy">{e(h["brand_subcopy"])}</p><p class="body-large">{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="#system">{e(h["primary"])}</a></div></div>
+<div class="cell hero-layer live-map-shell span-5 reveal delay-1">{operating_live_map(lang)}</div>
 </section>
+{proof_strip(lang)}
 <section aria-labelledby="problem-title" class="problem section-grid">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"해결하는 운영 문제","en":"Operational gaps","ar":"فجوات التشغيل"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="problem-title">{lines(h["problem_title"])}</h2><p class="body-large">{e(h["problem_body"])}</p></div>{problem}</section>
-<section aria-labelledby="strategy-title" class="strategy section-grid" id="approach">
-<div class="cell span-8 reveal"><p class="eyebrow">{e({"ko":"현장 중심 설계","en":"Field-first design","ar":"تصميم يبدأ من الميدان"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="strategy-title">{lines(h["strategy_title"])}</h2><p class="body-large">{e(h["strategy_body"])}</p></div>
-<div class="cell blue span-4 reveal delay-1 strategy-core"><p class="kicker">Minimal intervention / Maximum clarity</p><h3>{e({"ko":"현장 제약 기반 설계","en":"Intelligence should fit the field.","ar":"يجب أن يناسب الذكاء أرض الواقع."}[lang])}</h3><p>{e(h["support"])}</p></div>{principles}</section>
-{certified_core_section(lang)}
+{design_boundary_section(lang)}
 <section aria-labelledby="flow-title" class="field-flow section-grid" id="flow">
 <div class="cell span-5 flow-copy reveal"><p class="eyebrow">{e({"ko":"Flowmatic 작동 방식","en":"How Flowmatic works","ar":"كيف يعمل Flowmatic"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="flow-title">{lines(h["flow_title"])}</h2><p class="body-large">{e(h["flow_body"])}</p><ol class="flow-explanation">{logic_cards}</ol></div>
 <div class="cell span-7 flow-visual-cell reveal delay-1">{field_story(lang)}</div>
 </section>
 {intelligence_domains_section(lang)}
 {platform_architecture_section(lang)}
-{component_hierarchy_section(lang)}
-{built_evidence_section(lang)}
-{deployment_modes_section(lang)}
-{roadmap_section(lang)}
+{deployment_roadmap_section(lang)}
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
 {contact_section(lang)}
@@ -1539,14 +1598,14 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
 {meta_head(lang, slug, title, description, canonical_path)}
 <body class="technology-page {product["class"]}" data-lang="{lang}" data-static-lang="true">
-{header(lang, slug)}
+{header(lang, slug)}{detail_local_nav(lang)}
 <main id="main">
-<section aria-labelledby="tech-title" class="detail-overview section-grid">
+<section aria-labelledby="tech-title" class="detail-overview section-grid" id="overview">
 <div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(LANGS[lang]["all_products"])}</a></div>
-<div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
+<div class="cell span-7 detail-animation reveal delay-1" id="workflow"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
 {component_context_section(lang, slug)}
-<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}{quality_v513_section(lang) if slug == "quality" else ""}
-<section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
+<section aria-labelledby="demo-title" class="detail-demo section-grid" id="evidence">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}{quality_v513_section(lang) if slug == "quality" else ""}
+<section aria-labelledby="spec-title" class="detail-specs section-grid" id="pilot-scope"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
 <section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#products">{e(LANGS[lang]["all_products"])}</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script>{extra_script}</body></html>"""
     return html
