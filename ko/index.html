@@ -52,7 +52,7 @@
   position: sticky;
   top: var(--header-height, 72px);
   height: calc(100svh - var(--header-height, 72px));
-  min-height: 620px;
+  min-height: 0;
   overflow: hidden;
   background: var(--white);
   isolation: isolate;
@@ -109,7 +109,13 @@
 .transform-stage[data-phase="4"] .state-copy span:nth-child(5) { opacity: 1; transform: none; }
 .transform-progress { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-.factory-board { position: absolute; inset: var(--header) 0 0; overflow: hidden; }
+.factory-board {
+  position: absolute;
+  inset: var(--header) 0 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-bottom: 4px solid var(--ink);
+}
 .stage-word {
   position: absolute;
   left: 24px;
@@ -290,7 +296,7 @@
   .preview-intro, .preview-outro { min-height: 34svh; padding: 24px 18px; }
   .preview-intro h1, .preview-outro h2 { font-size: 38px; }
   .transformation { height: 260vh; }
-  .transform-stage { min-height: 600px; }
+  .transform-stage { min-height: 0; }
   .transform-meta { padding: 0 12px; }
   .transform-progress { display: none; }
   .state-copy { font-size: 10px; }
@@ -302,6 +308,32 @@
   .event-core { width: 62vw; }
   .completion-loop { right: 12px; bottom: 12px; grid-template-columns: repeat(5, 1fr); width: calc(100% - 24px); }
   .completion-loop span { padding: 7px 3px; text-align: center; }
+}
+
+@media (max-width: 600px) and (max-height: 700px) {
+  .transformation { --header: 54px; }
+  .factory-node { min-height: 68px; padding: 6px 8px; }
+  .node-main { margin: 5px 0 4px; }
+  .node-main strong { font-size: 14px; }
+  .node-main small { margin-top: 3px; font-size: 7px; }
+  .node-head, .node-foot { font-size: 6.5px; }
+  .node-head { padding-bottom: 4px; }
+  .event-core { min-height: 46px; padding: 6px; font-size: 9px; }
+  .completion-loop span { padding-block: 5px; font-size: 7px; }
+}
+
+@media (max-height: 559px) and (orientation: landscape) {
+  .transformation { --header: 46px; }
+  .factory-node { width: min(26vw, 210px); min-height: 64px; padding: 5px 7px; }
+  .node-main { margin: 4px 0 3px; }
+  .node-main strong { font-size: 13px; }
+  .node-main small { margin-top: 2px; font-size: 6.5px; }
+  .node-head, .node-foot { font-size: 6px; }
+  .node-head { padding-bottom: 3px; }
+  .stage-word { display: none; }
+  .event-core { width: 28vw; min-height: 40px; padding: 5px; font-size: 8px; }
+  .completion-loop { bottom: 8px; }
+  .completion-loop span { padding: 4px 6px; font-size: 6.5px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -328,7 +360,7 @@
 <div class="cell red hero-note span-3 reveal delay-3"><strong>이벤트화</strong><span>원시 신호를 지연·위험·수요 Event로 변환합니다.</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>시스템 보기</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
-<section class="transformation" aria-labelledby="transformation-title">
+<section class="transformation" id="transformation" aria-labelledby="transformation-title">
   <div class="transform-stage" data-phase="0">
     <div class="transform-meta">
       <div class="transform-state">
@@ -521,7 +553,7 @@
       const progress = forceFinal ? 1 : clamp(-rect.top / distance);
       const phase = progress < .18 ? 0 : progress < .38 ? 1 : progress < .58 ? 2 : progress < .78 ? 3 : 4;
       const align = smooth(.14, .56, progress);
-      const mobile = innerWidth <= 600;
+      const compact = innerWidth <= 820 && innerHeight >= 560;
       const width = board.clientWidth;
       const height = board.clientHeight;
 
@@ -532,15 +564,45 @@
       stateIndex.textContent = String(phase).padStart(2, '0');
       progressLabel.textContent = `스크롤 · ${String(Math.round(progress * 100)).padStart(3, '0')}%`;
 
+      const pad = compact ? 10 : 14;
+      const loop = document.querySelector('.completion-loop');
+      const bottomReserve = phase >= 3 ? (loop?.offsetHeight || 0) + (compact ? 20 : 14) : pad;
+      const sizes = nodes.map(node => ({ width: node.offsetWidth, height: node.offsetHeight }));
+      let compactTargets = null;
+
+      if (compact) {
+        const topY = Math.max(pad, height * .07);
+        const rowTwoY = Math.max(topY + Math.max(sizes[0].height, sizes[1].height) + 10, height * .58);
+        let rowThreeY = Math.max(rowTwoY + Math.max(sizes[2].height, sizes[3].height) + 10, height * .74);
+        const maxRowThreeY = Math.max(pad, height - bottomReserve - sizes[4].height);
+        if (rowThreeY > maxRowThreeY) {
+          const shift = rowThreeY - maxRowThreeY;
+          rowThreeY -= shift;
+        }
+        compactTargets = [
+          { x: pad, y: topY },
+          { x: width - sizes[1].width - pad, y: topY },
+          { x: width - sizes[2].width - pad, y: rowTwoY },
+          { x: pad, y: rowTwoY },
+          { x: (width - sizes[4].width) / 2, y: rowThreeY }
+        ];
+      }
+
       nodes.forEach((node, index) => {
-        const x0 = Number(node.dataset[mobile ? 'mx0' : 'x0']);
-        const y0 = Number(node.dataset[mobile ? 'my0' : 'y0']);
-        const x1 = Number(node.dataset[mobile ? 'mx1' : 'x1']);
-        const y1 = Number(node.dataset[mobile ? 'my1' : 'y1']);
+        const x0 = Number(node.dataset[compact ? 'mx0' : 'x0']);
+        const y0 = Number(node.dataset[compact ? 'my0' : 'y0']);
+        const rawX1 = Number(node.dataset[compact ? 'mx1' : 'x1']) * width;
+        const rawY1 = Number(node.dataset[compact ? 'my1' : 'y1']) * height;
+        const targetX = compactTargets ? compactTargets[index].x : rawX1;
+        const targetY = compactTargets ? compactTargets[index].y : rawY1;
         const r0 = Number(node.dataset.r0);
         const noise = phase === 0 ? Math.sin(progress * 72 + index * 1.8) * 2.5 : 0;
-        node.style.setProperty('--x', `${lerp(x0, x1, align) * width + noise}px`);
-        node.style.setProperty('--y', `${lerp(y0, y1, align) * height}px`);
+        const desiredX = lerp(x0 * width, targetX, align) + noise;
+        const desiredY = lerp(y0 * height, targetY, align);
+        const fittedX = clamp(desiredX, pad, Math.max(pad, width - sizes[index].width - pad));
+        const fittedY = clamp(desiredY, pad, Math.max(pad, height - sizes[index].height - bottomReserve));
+        node.style.setProperty('--x', `${fittedX}px`);
+        node.style.setProperty('--y', `${fittedY}px`);
         node.style.setProperty('--r', `${lerp(r0, 0, align).toFixed(2)}deg`);
       });
       ticking = false;
