@@ -553,6 +553,8 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
     const eventCore = document.querySelector('.event-core');
     const stateIndex = document.querySelector('.state-index');
     const progressLabel = document.querySelector('.transform-progress');
+    const languageLinks = [...document.querySelectorAll('[data-lang-link]')];
+    const inboundFlow = Number.parseFloat(new URL(location.href).searchParams.get('flow'));
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let ticking = false;
     let resizing = false;
@@ -694,13 +696,13 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
       const coreLeft = snapX(coreRect.left - boardRect.left);
       const coreRight = snapX(coreRect.right - boardRect.left);
       const coreMidY = axisY;
-      const coreBottom = snapY(coreRect.bottom - boardRect.top);
+      const coreBottom = coreRect.bottom - boardRect.top - 1;
       const nodeX = index => snapX(placements[index].x + placements[index].width / 2);
       path(connections[0], nodeX(0), placements[0].y + placements[0].height, coreLeft, coreMidY, 'lb');
       path(connections[1], nodeX(1), placements[1].y + placements[1].height, coreRight, coreMidY, 'rb');
       path(connections[2], nodeX(3), placements[3].y, coreLeft, coreMidY, 'lt');
       path(connections[3], nodeX(2), placements[2].y, coreRight, coreMidY, 'rt');
-      path(connections[4], nodeX(4), coreBottom, nodeX(4), placements[4].y, 'v');
+      path(connections[4], nodeX(4), coreBottom, nodeX(4), placements[4].y + 1, 'v');
       ticking = false;
     }
 
@@ -742,12 +744,55 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
       }, 300);
     }
 
+    languageLinks.forEach(link => link.addEventListener('click', event => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const rect = section.getBoundingClientRect();
+      const active = rect.top <= 0 && rect.bottom >= innerHeight;
+      if (!active) return;
+      const distance = Math.max(1, section.offsetHeight - innerHeight);
+      const progress = clamp(-rect.top / distance);
+      const target = new URL(link.href, location.href);
+      target.searchParams.set('flow', progress.toFixed(4));
+      target.hash = 'transformation';
+      event.preventDefault();
+      location.assign(target.href);
+    }));
+
+    function restoreInboundProgress() {
+      if (!Number.isFinite(inboundFlow)) return false;
+      const targetProgress = clamp(inboundFlow);
+      const previousBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      const restore = () => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.max(1, section.offsetHeight - innerHeight);
+        scrollTo(0, scrollY + rect.top + targetProgress * distance);
+      };
+      requestAnimationFrame(() => {
+        restore();
+        requestAnimationFrame(() => {
+          restore();
+          requestAnimationFrame(() => {
+            restore();
+            document.documentElement.style.scrollBehavior = previousBehavior;
+            const clean = new URL(location.href);
+            clean.searchParams.delete('flow');
+            history.replaceState(null, '', clean.pathname + clean.search + clean.hash);
+            draw(false, targetProgress);
+          });
+        });
+      });
+      return true;
+    }
+
     if (reduced) {
       draw(true);
     } else {
       addEventListener('scroll', requestDraw, { passive: true });
       addEventListener('resize', preserveProgressOnResize, { passive: true });
-      requestDraw();
+      const restore = () => restoreInboundProgress() || requestDraw();
+      if (document.fonts?.ready) document.fonts.ready.then(restore);
+      else restore();
     }
   })();
 </script><script src="/script.js?v=5.19"></script></body></html>
