@@ -216,22 +216,23 @@
 .transform-stage[data-phase="1"] .scan-line { opacity: 1; }
 
 .connection {
+  --connection-r: 0deg;
   position: absolute;
   z-index: 3;
   height: 2px;
   background: var(--blue);
   opacity: 0;
-  transform: scaleX(0);
+  transform: rotate(var(--connection-r)) scaleX(0);
   transform-origin: left center;
   transition: opacity 160ms linear, transform 220ms ease-out, background 180ms linear;
 }
 .connection.c1 { left: 17%; top: 28%; width: 33%; }
-.connection.c2 { left: 50%; top: 28%; width: 31%; transform-origin: right center; }
+.connection.c2 { left: 50%; top: 28%; width: 31%; }
 .connection.c3 { left: 17%; top: 74%; width: 33%; }
-.connection.c4 { left: 50%; top: 74%; width: 31%; transform-origin: right center; }
+.connection.c4 { left: 50%; top: 74%; width: 31%; }
 .transform-stage[data-phase="2"] .connection,
 .transform-stage[data-phase="3"] .connection,
-.transform-stage[data-phase="4"] .connection { opacity: 1; transform: scaleX(1); }
+.transform-stage[data-phase="4"] .connection { opacity: 1; transform: rotate(var(--connection-r)) scaleX(1); }
 .transform-stage[data-phase="4"] .connection { background: var(--green); }
 
 .event-core {
@@ -287,8 +288,16 @@
 @media (max-width: 820px) {
   .preview-intro { grid-template-columns: 1fr; }
   .transformation { height: 280vh; }
-  .factory-node { width: min(35vw, 250px); }
+  .factory-node { width: min(29vw, 220px); }
   .stage-word { font-size: clamp(50px, 12vw, 96px); }
+}
+
+@media (min-width: 601px) and (max-width: 820px) and (max-height: 760px) {
+  .factory-node { min-height: 104px; padding: 9px 10px; }
+  .node-main { margin: 8px 0 7px; }
+  .node-main strong { font-size: 16px; }
+  .node-main small { margin-top: 5px; font-size: 8px; }
+  .node-head, .node-foot { font-size: 7.5px; }
 }
 
 @media (max-width: 600px) {
@@ -532,6 +541,7 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
     const stage = document.querySelector('.transform-stage');
     const board = document.querySelector('.factory-board');
     const nodes = [...document.querySelectorAll('.factory-node')];
+    const connections = [...document.querySelectorAll('.connection')];
     const stateIndex = document.querySelector('.state-index');
     const progressLabel = document.querySelector('.transform-progress');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -551,6 +561,7 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
       const phase = progress < .18 ? 0 : progress < .38 ? 1 : progress < .58 ? 2 : progress < .78 ? 3 : 4;
       const align = smooth(.14, .56, progress);
       const compact = innerWidth <= 820 && innerHeight >= 560;
+      const phone = innerWidth <= 600 && innerHeight >= 560;
       const width = board.clientWidth;
       const height = board.clientHeight;
 
@@ -567,15 +578,14 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
       const sizes = nodes.map(node => ({ width: node.offsetWidth, height: node.offsetHeight }));
       let compactTargets = null;
 
-      if (compact) {
+      if (phone) {
         const topY = Math.max(pad, height * .07);
-        const rowTwoY = Math.max(topY + Math.max(sizes[0].height, sizes[1].height) + 10, height * .58);
+        let rowTwoY = Math.max(topY + Math.max(sizes[0].height, sizes[1].height) + 10, height * .58);
         let rowThreeY = Math.max(rowTwoY + Math.max(sizes[2].height, sizes[3].height) + 10, height * .74);
         const maxRowThreeY = Math.max(pad, height - bottomReserve - sizes[4].height);
-        if (rowThreeY > maxRowThreeY) {
-          const shift = rowThreeY - maxRowThreeY;
-          rowThreeY -= shift;
-        }
+        rowThreeY = Math.min(rowThreeY, maxRowThreeY);
+        const minRowTwoY = Math.max(topY + Math.max(sizes[0].height, sizes[1].height) + 10, height * .54);
+        rowTwoY = Math.max(minRowTwoY, Math.min(rowTwoY, rowThreeY - Math.max(sizes[2].height, sizes[3].height) - 10));
         compactTargets = [
           { x: pad, y: topY },
           { x: width - sizes[1].width - pad, y: topY },
@@ -583,8 +593,22 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
           { x: pad, y: rowTwoY },
           { x: (width - sizes[4].width) / 2, y: rowThreeY }
         ];
+      } else if (compact) {
+        const topY = Math.max(pad, height * .08);
+        const coreHeight = document.querySelector('.event-core')?.offsetHeight || 58;
+        const bottomHeight = Math.max(sizes[2].height, sizes[3].height, sizes[4].height);
+        const desiredBottomY = Math.max(height * .62, height * .5 + coreHeight * .5 + 16);
+        const bottomY = Math.min(desiredBottomY, Math.max(pad, height - bottomReserve - bottomHeight));
+        compactTargets = [
+          { x: pad, y: topY },
+          { x: width - sizes[1].width - pad, y: topY },
+          { x: width - sizes[2].width - pad, y: bottomY },
+          { x: pad, y: bottomY },
+          { x: (width - sizes[4].width) / 2, y: bottomY }
+        ];
       }
 
+      const placements = [];
       nodes.forEach((node, index) => {
         const x0 = Number(node.dataset[compact ? 'mx0' : 'x0']);
         const y0 = Number(node.dataset[compact ? 'my0' : 'y0']);
@@ -601,7 +625,25 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
         node.style.setProperty('--x', `${fittedX}px`);
         node.style.setProperty('--y', `${fittedY}px`);
         node.style.setProperty('--r', `${lerp(r0, 0, align).toFixed(2)}deg`);
+        placements[index] = { x: fittedX, y: fittedY, width: sizes[index].width, height: sizes[index].height };
       });
+
+      const connect = (line, from, to) => {
+        if (!line) return;
+        const dx = to.x - from.x;
+        const dy = to.y - from.y;
+        line.style.left = `${from.x}px`;
+        line.style.top = `${from.y}px`;
+        line.style.width = `${Math.hypot(dx, dy)}px`;
+        line.style.setProperty('--connection-r', `${Math.atan2(dy, dx) * 180 / Math.PI}deg`);
+      };
+      const core = document.querySelector('.event-core');
+      const coreHalf = (core?.offsetWidth || 0) / 2;
+      const coreY = height / 2;
+      connect(connections[0], { x: placements[0].x + placements[0].width, y: placements[0].y + placements[0].height / 2 }, { x: width / 2 - coreHalf, y: coreY });
+      connect(connections[1], { x: width / 2 + coreHalf, y: coreY }, { x: placements[1].x, y: placements[1].y + placements[1].height / 2 });
+      connect(connections[2], { x: placements[3].x + placements[3].width, y: placements[3].y + placements[3].height / 2 }, { x: placements[4].x, y: placements[4].y + placements[4].height / 2 });
+      connect(connections[3], { x: placements[4].x + placements[4].width, y: placements[4].y + placements[4].height / 2 }, { x: placements[2].x, y: placements[2].y + placements[2].height / 2 });
       ticking = false;
     }
 
