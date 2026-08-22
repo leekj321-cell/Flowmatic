@@ -566,6 +566,7 @@
     const progressLabel = document.querySelector('.transform-progress');
     const languageLinks = [...document.querySelectorAll('[data-lang-link]')];
     const inboundFlow = Number.parseFloat(new URL(location.href).searchParams.get('flow'));
+    if (Number.isFinite(inboundFlow) && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let ticking = false;
     let resizing = false;
@@ -764,7 +765,7 @@
       const progress = clamp(-rect.top / distance);
       const target = new URL(link.href, location.href);
       target.searchParams.set('flow', progress.toFixed(4));
-      target.hash = 'transformation';
+      target.hash = '';
       event.preventDefault();
       location.assign(target.href);
     }));
@@ -779,20 +780,26 @@
         const distance = Math.max(1, section.offsetHeight - innerHeight);
         scrollTo(0, scrollY + rect.top + targetProgress * distance);
       };
-      requestAnimationFrame(() => {
+      const runRestore = () => requestAnimationFrame(() => {
         restore();
         requestAnimationFrame(() => {
           restore();
           requestAnimationFrame(() => {
             restore();
-            document.documentElement.style.scrollBehavior = previousBehavior;
-            const clean = new URL(location.href);
-            clean.searchParams.delete('flow');
-            history.replaceState(null, '', clean.pathname + clean.search + clean.hash);
-            draw(false, targetProgress);
+            setTimeout(() => {
+              restore();
+              document.documentElement.style.scrollBehavior = previousBehavior;
+              const clean = new URL(location.href);
+              clean.searchParams.delete('flow');
+              clean.hash = 'transformation';
+              history.replaceState(null, '', clean.pathname + clean.search + clean.hash);
+              draw(false, targetProgress);
+            }, 80);
           });
         });
       });
+      if (document.readyState === 'complete') runRestore();
+      else addEventListener('load', runRestore, { once: true });
       return true;
     }
 
