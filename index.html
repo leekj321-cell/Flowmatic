@@ -28,306 +28,285 @@
 <link rel="manifest" href="/site.webmanifest?v=20260822.3">
 <link rel="stylesheet" href="/style-v5.20.css?v=5.24">
 <style id="flowmatic-transformation-style">
-
-/* Integrated preview: fragmented factory signals become a shared operating language. */
 .transformation {
-  --white: var(--fm-white);
-  --ink: var(--fm-black);
-  --blue: var(--fm-blue);
-  --yellow: var(--fm-yellow);
-  --red: var(--fm-red);
-  --gray: var(--fm-gray);
-  --rule-major: var(--border);
-}
-/* Scroll transformation: fragmented factory → shared operating language */
-.transformation {
+  --ink: var(--fm-black, #111111);
+  --paper: #f7f4ed;
+  --white: var(--fm-white, #ffffff);
+  --blue: var(--fm-blue, #1565d8);
+  --yellow: var(--fm-yellow, #f4c20d);
+  --red: var(--fm-red, #e53935);
+  --gray: var(--fm-gray, #e9e9e3);
+  --green: #5b7553;
+  --line: var(--border, 3px);
+  --header: 64px;
   position: relative;
-  height: 520vh;
+  height: 300vh;
   background: var(--white);
-  border-bottom: var(--rule-major) solid var(--ink);
+  border-bottom: var(--line) solid var(--ink);
 }
+
 .transform-stage {
   --progress: 0;
   --grid-opacity: 0;
+  --scan-x: -10px;
   position: sticky;
-  top: var(--header-height);
-  height: calc(100svh - var(--header-height));
+  top: var(--header-height, 72px);
+  height: calc(100svh - var(--header-height, 72px));
   min-height: 620px;
   overflow: hidden;
-  color: var(--ink);
   background: var(--white);
   isolation: isolate;
 }
 .transform-stage::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: var(--header) 0 0;
   z-index: -2;
-  background-color: var(--white);
   background-image:
-    linear-gradient(to right, rgba(17,17,17,.14) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(17,17,17,.14) 1px, transparent 1px);
+    linear-gradient(to right, rgba(17,19,24,.13) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17,19,24,.13) 1px, transparent 1px);
   background-size: calc(100% / 12) 100%, 100% calc(100% / 8);
   opacity: var(--grid-opacity);
 }
 .transform-stage::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: var(--header) 0 0;
   z-index: -3;
   background: var(--blue);
   opacity: calc(var(--progress) * .035);
 }
+
 .transform-meta {
   position: absolute;
   inset: 0 0 auto;
-  z-index: 20;
+  z-index: 30;
   display: grid;
-  grid-template-columns: 1fr auto;
-  min-height: 68px;
-  padding: 0 28px;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
+  height: var(--header);
+  padding: 0 24px;
   background: var(--white);
-  border-bottom: var(--rule-major) solid var(--ink);
+  border-bottom: var(--line) solid var(--ink);
   font-size: 11px;
   font-weight: 850;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+  letter-spacing: .08em;
 }
-.transform-state {
-  display: inline-grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 12px;
-}
-.state-index {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  color: var(--white);
-  background: var(--ink);
-  border: 1px solid var(--ink);
-}
-.state-copy { position: relative; min-width: 230px; height: 20px; overflow: hidden; }
+.transform-state { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: center; gap: 12px; }
+.state-index { display: grid; place-items: center; width: 36px; height: 36px; color: var(--white); background: var(--ink); }
+.state-copy { position: relative; height: 22px; overflow: hidden; }
 .state-copy span {
   position: absolute;
-  inset: 0 auto auto 0;
+  inset: 2px auto auto 0;
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 180ms ease-out, transform 180ms ease-out;
+  transition: opacity 160ms ease-out, transform 160ms ease-out;
 }
 .transform-stage[data-phase="0"] .state-copy span:nth-child(1),
 .transform-stage[data-phase="1"] .state-copy span:nth-child(2),
 .transform-stage[data-phase="2"] .state-copy span:nth-child(3),
 .transform-stage[data-phase="3"] .state-copy span:nth-child(4),
 .transform-stage[data-phase="4"] .state-copy span:nth-child(5) { opacity: 1; transform: none; }
-.transform-progress { font-variant-numeric: tabular-nums; }
+.transform-progress { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-.factory-board {
-  position: absolute;
-  inset: 68px 0 0;
-  overflow: hidden;
-}
+.factory-board { position: absolute; inset: var(--header) 0 0; overflow: hidden; }
 .stage-word {
   position: absolute;
-  left: 28px;
+  left: 24px;
   bottom: 18px;
   z-index: 0;
   margin: 0;
-  max-width: 92%;
-  color: rgba(17,17,17,.08);
-  font-size: clamp(60px, 10vw, 144px);
-  line-height: .82;
-  letter-spacing: -.07em;
+  color: rgba(17,19,24,.075);
+  font-size: clamp(58px, 9vw, 132px);
   font-weight: 900;
-  text-transform: uppercase;
+  line-height: .84;
+  letter-spacing: -.075em;
   pointer-events: none;
 }
-.stage-word .before-word,
-.stage-word .after-word { transition: opacity 180ms linear; }
-.stage-word .after-word { display: none; color: rgba(21,101,216,.12); }
-.transform-stage[data-phase="4"] .stage-word .before-word { display: none; }
-.transform-stage[data-phase="4"] .stage-word .after-word { display: block; }
+.stage-word span { display: none; }
+.transform-stage[data-phase="0"] .word-0,
+.transform-stage[data-phase="1"] .word-1,
+.transform-stage[data-phase="2"] .word-2,
+.transform-stage[data-phase="3"] .word-3,
+.transform-stage[data-phase="4"] .word-4 { display: block; }
+.transform-stage[data-phase="4"] .stage-word { color: rgba(91,117,83,.14); }
 
 .factory-node {
-  --node-x: 0px;
-  --node-y: 0px;
-  --node-r: 0deg;
+  --x: 0px;
+  --y: 0px;
+  --r: 0deg;
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 5;
+  z-index: 8;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  width: min(26vw, 300px);
-  min-height: 132px;
-  padding: 14px 15px;
+  width: min(25vw, 288px);
+  min-height: 136px;
+  padding: 13px 14px;
+  color: var(--ink);
   background: var(--white);
   border: 3px solid var(--ink);
-  transform: translate3d(var(--node-x), var(--node-y), 0) rotate(var(--node-r));
+  transform: translate3d(var(--x), var(--y), 0) rotate(var(--r));
   transform-origin: center;
   will-change: transform;
-  transition: border-width 140ms linear, background 140ms linear, color 140ms linear;
+  transition: background 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out;
 }
 .factory-node[data-tone="red"] { color: var(--white); background: var(--red); }
 .factory-node[data-tone="yellow"] { background: var(--yellow); }
 .factory-node[data-tone="blue"] { color: var(--white); background: var(--blue); }
 .factory-node[data-tone="gray"] { background: var(--gray); }
-.node-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid currentColor;
-  font-size: 9px;
-  font-weight: 850;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+.transform-stage[data-phase="2"] .factory-node,
+.transform-stage[data-phase="3"] .factory-node { color: var(--ink); background: var(--white); border-width: 2px; }
+.transform-stage[data-phase="4"] .factory-node {
+  color: var(--ink);
+  background: #eef2ea;
+  border: 2px solid var(--green);
+  box-shadow: inset 8px 0 0 var(--green);
 }
-.node-title {
-  align-self: center;
-  margin: 14px 0 12px;
-  font-size: clamp(18px, 2vw, 27px);
-  line-height: 1;
-  letter-spacing: -.04em;
-  font-weight: 850;
-}
-.node-foot {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 10px;
-  font-weight: 720;
-}
-.node-raw, .node-ordered { transition: opacity 140ms linear; }
-.node-ordered { display: none; }
-.transform-stage[data-phase="2"] .node-raw,
-.transform-stage[data-phase="3"] .node-raw,
-.transform-stage[data-phase="4"] .node-raw { display: none; }
-.transform-stage[data-phase="2"] .node-ordered,
-.transform-stage[data-phase="3"] .node-ordered,
-.transform-stage[data-phase="4"] .node-ordered { display: inline; }
-.transform-stage[data-phase="3"] .factory-node,
-.transform-stage[data-phase="4"] .factory-node { border-width: 2px; }
+.node-head,
+.node-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 9px; font-weight: 850; }
+.node-head { padding-bottom: 7px; border-bottom: 1px solid currentColor; letter-spacing: .08em; }
+.node-foot { align-items: end; }
+.node-main { align-self: center; margin: 12px 0 10px; }
+.node-main strong { display: block; font-size: clamp(17px, 1.8vw, 25px); line-height: 1.05; letter-spacing: -.04em; }
+.node-main small { display: block; margin-top: 7px; font-size: 10px; font-weight: 750; }
+.node-state { display: none; }
+.transform-stage[data-phase="0"] .node-state.s0,
+.transform-stage[data-phase="1"] .node-state.s1,
+.transform-stage[data-phase="2"] .node-state.s2,
+.transform-stage[data-phase="3"] .node-state.s3,
+.transform-stage[data-phase="4"] .node-state.s4 { display: block; }
+.result-check { display: none; color: var(--green); }
+.transform-stage[data-phase="4"] .result-check { display: inline; }
 
 .noise-tag {
   position: absolute;
-  z-index: 8;
+  z-index: 12;
   padding: 5px 7px;
   color: var(--white);
   background: var(--ink);
   border: 1px solid var(--white);
   font-size: 9px;
   font-weight: 850;
-  letter-spacing: .08em;
-  transition: opacity 160ms linear, transform 160ms linear;
+  transition: opacity 150ms linear, transform 150ms linear;
 }
-.noise-tag.t1 { left: 46%; top: 19%; transform: rotate(5deg); }
-.noise-tag.t2 { left: 10%; top: 63%; transform: rotate(-4deg); background: var(--red); }
-.noise-tag.t3 { right: 7%; top: 49%; transform: rotate(3deg); background: var(--yellow); color: var(--ink); border-color: var(--ink); }
-.transform-stage[data-phase="2"] .noise-tag,
-.transform-stage[data-phase="3"] .noise-tag,
-.transform-stage[data-phase="4"] .noise-tag { opacity: 0; transform: none; }
+.noise-tag.n1 { left: 44%; top: 18%; transform: rotate(5deg); }
+.noise-tag.n2 { left: 10%; top: 66%; transform: rotate(-4deg); background: var(--red); }
+.noise-tag.n3 { right: 6%; top: 47%; transform: rotate(3deg); background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.transform-stage:not([data-phase="0"]) .noise-tag { opacity: 0; transform: none; }
 
 .scan-line {
   position: absolute;
   inset: 0 auto 0 0;
-  z-index: 15;
+  z-index: 18;
   width: 3px;
   background: var(--blue);
-  transform: translateX(var(--scan-x, -10px));
+  transform: translateX(var(--scan-x));
   opacity: 0;
-  box-shadow: 12px 0 0 rgba(21,101,216,.18);
+  box-shadow: 12px 0 0 rgba(23,102,215,.18);
   pointer-events: none;
 }
 .transform-stage[data-phase="1"] .scan-line { opacity: 1; }
 
-.event-core {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 4;
-  display: grid;
-  place-items: center;
-  width: min(34vw, 420px);
-  min-height: 54px;
-  color: var(--white);
-  background: var(--ink);
-  border: 2px solid var(--ink);
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: .11em;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translate(-50%, -50%) scaleX(.35);
-  transform-origin: center;
-  transition: opacity 160ms linear, transform 220ms cubic-bezier(.2,.8,.2,1);
-}
-.transform-stage[data-phase="2"] .event-core,
-.transform-stage[data-phase="3"] .event-core,
-.transform-stage[data-phase="4"] .event-core { opacity: 1; transform: translate(-50%, -50%) scaleX(1); }
-
 .connection {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   height: 2px;
   background: var(--blue);
   opacity: 0;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: opacity 160ms linear, transform 260ms cubic-bezier(.2,.8,.2,1);
+  transition: opacity 160ms linear, transform 220ms ease-out, background 180ms linear;
 }
 .connection.c1 { left: 17%; top: 28%; width: 33%; }
-.connection.c2 { left: 50%; top: 28%; width: 30%; transform-origin: right center; }
-.connection.c3 { left: 17%; top: 73%; width: 33%; }
-.connection.c4 { left: 50%; top: 73%; width: 30%; transform-origin: right center; }
+.connection.c2 { left: 50%; top: 28%; width: 31%; transform-origin: right center; }
+.connection.c3 { left: 17%; top: 74%; width: 33%; }
+.connection.c4 { left: 50%; top: 74%; width: 31%; transform-origin: right center; }
+.transform-stage[data-phase="2"] .connection,
 .transform-stage[data-phase="3"] .connection,
 .transform-stage[data-phase="4"] .connection { opacity: 1; transform: scaleX(1); }
+.transform-stage[data-phase="4"] .connection { background: var(--green); }
 
-.completion-label {
+.event-core {
   position: absolute;
-  right: 28px;
-  bottom: 24px;
-  z-index: 10;
+  left: 50%;
+  top: 50%;
+  z-index: 6;
   display: grid;
-  grid-template-columns: auto auto;
-  gap: 0;
+  place-items: center;
+  width: min(34vw, 420px);
+  min-height: 58px;
+  padding: 10px;
+  color: var(--white);
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  font-size: 11px;
+  font-weight: 850;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, -50%) scaleX(.35);
+  transition: opacity 160ms linear, transform 220ms ease-out, background 180ms linear;
+}
+.event-core span { display: none; }
+.transform-stage[data-phase="2"] .event-core,
+.transform-stage[data-phase="3"] .event-core,
+.transform-stage[data-phase="4"] .event-core { opacity: 1; transform: translate(-50%, -50%) scaleX(1); }
+.transform-stage[data-phase="2"] .event-core .core-2,
+.transform-stage[data-phase="3"] .event-core .core-3,
+.transform-stage[data-phase="4"] .event-core .core-4 { display: block; }
+.transform-stage[data-phase="4"] .event-core { background: var(--green); border-color: var(--green); }
+
+.completion-loop {
+  position: absolute;
+  right: 24px;
+  bottom: 22px;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  color: var(--ink);
+  background: var(--white);
   border: 2px solid var(--ink);
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 180ms linear, transform 180ms ease-out;
 }
-.completion-label span { padding: 9px 12px; font-size: 10px; font-weight: 850; letter-spacing: .08em; }
-.completion-label span:first-child { color: var(--white); background: var(--blue); border-right: 1px solid var(--ink); }
-.completion-label span:last-child { background: var(--yellow); }
-.transform-stage[data-phase="4"] .completion-label { opacity: 1; transform: none; }
+.completion-loop span { padding: 8px 10px; border-right: 1px solid var(--ink); font-size: 9px; font-weight: 850; }
+.completion-loop span:last-child { border-right: 0; }
+.transform-stage[data-phase="3"] .completion-loop,
+.transform-stage[data-phase="4"] .completion-loop { opacity: 1; transform: none; }
+.transform-stage[data-phase="3"] .completion-loop span:nth-child(-n+4) { background: var(--yellow); }
+.transform-stage[data-phase="4"] .completion-loop span { color: var(--white); background: var(--green); }
 
-
-@media (max-width: 960px) {
-  .transformation { height: 420vh; }
-  .factory-node { width: min(34vw, 270px); }
-  .stage-word { font-size: clamp(52px, 12vw, 100px); }
+@media (max-width: 820px) {
+  .preview-intro { grid-template-columns: 1fr; }
+  .transformation { height: 280vh; }
+  .factory-node { width: min(35vw, 250px); }
+  .stage-word { font-size: clamp(50px, 12vw, 96px); }
 }
 
 @media (max-width: 600px) {
-  .transformation { height: 340vh; }
-  .transform-stage { top: var(--header-height); min-height: 600px; }
-  .transform-meta { padding-inline: 14px; }
-  .state-copy { min-width: 150px; }
+  .transformation { --header: 58px; }
+  .preview-intro, .preview-outro { min-height: 34svh; padding: 24px 18px; }
+  .preview-intro h1, .preview-outro h2 { font-size: 38px; }
+  .transformation { height: 260vh; }
+  .transform-stage { min-height: 600px; }
+  .transform-meta { padding: 0 12px; }
   .transform-progress { display: none; }
-  .factory-node { width: 44vw; min-height: 112px; padding: 11px 12px; }
-  .node-title { font-size: 18px; margin-block: 10px; }
-  .node-foot { font-size: 8px; }
-  .stage-word { left: 14px; bottom: 14px; font-size: 54px; }
+  .state-copy { font-size: 10px; }
+  .factory-node { width: 44vw; min-height: 116px; padding: 10px; }
+  .node-main strong { font-size: 17px; }
+  .node-main small { font-size: 8px; }
+  .node-head, .node-foot { font-size: 7.5px; }
+  .stage-word { left: 12px; bottom: 66px; font-size: 48px; }
   .event-core { width: 62vw; }
-  .noise-tag.t1 { left: 40%; }
-  .completion-label { right: 14px; bottom: 14px; }
+  .completion-loop { right: 12px; bottom: 12px; grid-template-columns: repeat(5, 1fr); width: calc(100% - 24px); }
+  .completion-loop span { padding: 7px 3px; text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .transformation { height: auto; }
-  .transform-stage { position: relative; top: auto; height: 760px; }
+  .transform-stage { position: relative; height: 760px; }
 }
 
 </style></head>
@@ -349,68 +328,112 @@
 <div class="cell red hero-note span-3 reveal delay-3"><strong>이벤트화</strong><span>원시 신호를 지연·위험·수요 Event로 변환합니다.</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>시스템 보기</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
-<section class="transformation" id="transformation" aria-labelledby="transformation-title">
-        <div class="transform-stage" data-phase="0">
-          <div class="transform-meta">
-            <div class="transform-state">
-              <span class="state-index">00</span>
-              <span class="state-copy" id="transformation-title">
-                <span>흩어진 현장 정보</span>
-                <span>신호 포착</span>
-                <span>공통 식별자 부여</span>
-                <span>담당자와 행동 연결</span>
-                <span>하나의 운영 언어</span>
-              </span>
-            </div>
-            <span class="transform-progress">스크롤 · 000%</span>
-          </div>
-
-          <div class="factory-board">
-            <p class="stage-word" aria-hidden="true"><span class="before-word">흩어진<br>현장 정보</span><span class="after-word">통합 운영<br>언어</span></p>
-
-            <article class="factory-node" data-node="quality" data-tone="red" data-x0=".06" data-y0=".08" data-r0="-3" data-x1=".05" data-y1=".12" data-mx0=".03" data-my0=".06" data-mx1=".04" data-my1=".10">
-              <div class="node-head"><span>품질</span><span class="node-raw">미확인</span><span class="node-ordered">이벤트 · Q-014</span></div>
-              <strong class="node-title"><span class="node-raw">불량 기록 누락</span><span class="node-ordered">검사 불량</span></strong>
-              <div class="node-foot"><span class="node-raw">로트 ? / 담당자 ?</span><span class="node-ordered">로트 24A · 품질</span><span>미처리</span></div>
-            </article>
-
-            <article class="factory-node" data-node="cycle" data-tone="yellow" data-x0=".59" data-y0=".05" data-r0="4" data-x1=".69" data-y1=".12" data-mx0=".53" data-my0=".04" data-mx1=".52" data-my1=".10">
-              <div class="node-head"><span>사이클</span><span class="node-raw">지연?</span><span class="node-ordered">이벤트 · C-228</span></div>
-              <strong class="node-title"><span class="node-raw">정지 원인 미상</span><span class="node-ordered">사이클 지연</span></strong>
-              <div class="node-foot"><span class="node-raw">카메라 02 / 18:42</span><span class="node-ordered">라인 02 · 주기시간</span><span>+12분</span></div>
-            </article>
-
-            <article class="factory-node" data-node="material" data-tone="gray" data-x0=".72" data-y0=".35" data-r0="-2" data-x1=".69" data-y1=".60" data-mx0=".49" data-my0=".38" data-mx1=".52" data-my1=".62">
-              <div class="node-head"><span>자재</span><span class="node-raw">수동</span><span class="node-ordered">이벤트 · M-031</span></div>
-              <strong class="node-title"><span class="node-raw">자재 요청 대기</span><span class="node-ordered">자재 수요</span></strong>
-              <div class="node-foot"><span class="node-raw">전화 / 메모</span><span class="node-ordered">운반 · 배정 완료</span><span>도착 04분</span></div>
-            </article>
-
-            <article class="factory-node" data-node="nc" data-tone="blue" data-x0=".11" data-y0=".48" data-r0="3" data-x1=".05" data-y1=".60" data-mx0=".04" data-my0=".50" data-mx1=".04" data-my1=".62">
-              <div class="node-head"><span>가공 경로</span><span class="node-raw">위험!</span><span class="node-ordered">이벤트 · N-105</span></div>
-              <strong class="node-title"><span class="node-raw">급속 이동 검토</span><span class="node-ordered">경로 위험</span></strong>
-              <div class="node-foot"><span class="node-raw">파일 8 / 개정 ?</span><span class="node-ordered">검토 · 담당자 07</span><span>보류</span></div>
-            </article>
-
-            <article class="factory-node" data-node="cost" data-tone="white" data-x0=".39" data-y0=".65" data-r0="-5" data-x1=".37" data-y1=".72" data-mx0=".25" data-my0=".73" data-mx1=".28" data-my1=".78">
-              <div class="node-head"><span>운영</span><span class="node-raw">중복</span><span class="node-ordered">이벤트 · O-412</span></div>
-              <strong class="node-title"><span class="node-raw">공구비 중복 집계</span><span class="node-ordered">비용 이상</span></strong>
-              <div class="node-foot"><span class="node-raw">표 A / 표 C</span><span class="node-ordered">기간 08 · 검토</span><span>확인</span></div>
-            </article>
-
-            <span class="noise-tag t1">담당자 없음</span>
-            <span class="noise-tag t2">후속 조치 단절</span>
-            <span class="noise-tag t3">식별자 중복</span>
-            <span class="scan-line" aria-hidden="true"></span>
-            <span class="connection c1" aria-hidden="true"></span>
-            <span class="connection c2" aria-hidden="true"></span>
-            <span class="connection c3" aria-hidden="true"></span>
-            <span class="connection c4" aria-hidden="true"></span>
-            <div class="event-core">공통 제조 문맥 + 이벤트 코어</div>
-            <div class="completion-label"><span>FLOWMATIC</span><span>이벤트 → 행동 → 확인</span></div>
-          </div>
+<section class="transformation" aria-labelledby="transformation-title">
+  <div class="transform-stage" data-phase="0">
+    <div class="transform-meta">
+      <div class="transform-state">
+        <span class="state-index">00</span>
+        <div class="state-copy" id="transformation-title">
+          <span>흩어진 현장 신호 · 문제는 아직 보이지 않습니다</span>
+          <span>변화 포착 · 의미 있는 신호를 골라냅니다</span>
+          <span>문제 확정 · 원인과 영향을 검토 가능한 이벤트로 만듭니다</span>
+          <span>행동 연결 · 담당자와 다음 행동을 지정합니다</span>
+          <span>개선 확인 · 조치 결과를 확인하고 운영 기준에 반영합니다</span>
         </div>
-      </section>
+      </div>
+      <span class="transform-progress">스크롤 · 000%</span>
+    </div>
+
+    <div class="factory-board">
+      <p class="stage-word" aria-hidden="true">
+        <span class="word-0">보이지 않던<br>문제</span>
+        <span class="word-1">포착된<br>변화</span>
+        <span class="word-2">확정된<br>문제</span>
+        <span class="word-3">연결된<br>행동</span>
+        <span class="word-4">확인된<br>개선</span>
+      </p>
+
+      <article class="factory-node" data-tone="red" data-x0=".05" data-y0=".08" data-r0="-3" data-x1=".04" data-y1=".12" data-mx0=".02" data-my0=".06" data-mx1=".03" data-my1=".10">
+        <div class="node-head"><span>품질</span><span>Q-014</span></div>
+        <div class="node-main">
+          <div class="node-state s0"><strong>불량 기록 누락</strong><small>로트 ? · 담당자 ?</small></div>
+          <div class="node-state s1"><strong>검사 이상 신호</strong><small>로트 24A · 카메라 03</small></div>
+          <div class="node-state s2"><strong>검사 불량 확정</strong><small>영향 · 출하 검토</small></div>
+          <div class="node-state s3"><strong>품질 담당 배정</strong><small>다음 행동 · 재검</small></div>
+          <div class="node-state s4"><strong>재검 완료</strong><small>기록 보완 · 종료</small></div>
+        </div>
+        <div class="node-foot"><span class="result-check">● 확인 완료</span><span>품질 운영</span></div>
+      </article>
+
+      <article class="factory-node" data-tone="yellow" data-x0=".61" data-y0=".05" data-r0="4" data-x1=".72" data-y1=".12" data-mx0=".53" data-my0=".04" data-mx1=".53" data-my1=".10">
+        <div class="node-head"><span>사이클</span><span>C-228</span></div>
+        <div class="node-main">
+          <div class="node-state s0"><strong>정지 원인 미상</strong><small>카메라 02 · 18:42</small></div>
+          <div class="node-state s1"><strong>정지 패턴 포착</strong><small>라인 02 · 반복 3회</small></div>
+          <div class="node-state s2"><strong>사이클 지연 확정</strong><small>영향 · 생산 차질</small></div>
+          <div class="node-state s3"><strong>조건 조정 요청</strong><small>생산기술 담당 03</small></div>
+          <div class="node-state s4"><strong>재가동 확인</strong><small>지연 종료 · 정상</small></div>
+        </div>
+        <div class="node-foot"><span class="result-check">● 확인 완료</span><span>생산 운영</span></div>
+      </article>
+
+      <article class="factory-node" data-tone="gray" data-x0=".73" data-y0=".38" data-r0="-2" data-x1=".72" data-y1=".61" data-mx0=".50" data-my0=".38" data-mx1=".53" data-my1=".62">
+        <div class="node-head"><span>자재</span><span>M-031</span></div>
+        <div class="node-main">
+          <div class="node-state s0"><strong>자재 요청 대기</strong><small>전화 · 메모</small></div>
+          <div class="node-state s1"><strong>수요 신호 포착</strong><small>라인 02 · 잔량 경고</small></div>
+          <div class="node-state s2"><strong>자재 부족 확정</strong><small>영향 · 정지 위험</small></div>
+          <div class="node-state s3"><strong>물류 호출</strong><small>운반 담당 배정</small></div>
+          <div class="node-state s4"><strong>도착 확인</strong><small>부족 해소 · 투입</small></div>
+        </div>
+        <div class="node-foot"><span class="result-check">● 확인 완료</span><span>물류 운영</span></div>
+      </article>
+
+      <article class="factory-node" data-tone="blue" data-x0=".10" data-y0=".49" data-r0="3" data-x1=".04" data-y1=".61" data-mx0=".03" data-my0=".51" data-mx1=".03" data-my1=".62">
+        <div class="node-head"><span>가공 경로</span><span>N-105</span></div>
+        <div class="node-main">
+          <div class="node-state s0"><strong>급속 이동 검토</strong><small>파일 8 · 개정 ?</small></div>
+          <div class="node-state s1"><strong>위험 구간 포착</strong><small>공구 경로 · 간섭 후보</small></div>
+          <div class="node-state s2"><strong>경로 위험 확정</strong><small>영향 · 가공 보류</small></div>
+          <div class="node-state s3"><strong>수정 요청</strong><small>검토 담당자 07</small></div>
+          <div class="node-state s4"><strong>수정 승인</strong><small>가공 가능 · 해제</small></div>
+        </div>
+        <div class="node-foot"><span class="result-check">● 확인 완료</span><span>가공 운영</span></div>
+      </article>
+
+      <article class="factory-node" data-tone="white" data-x0=".39" data-y0=".68" data-r0="-5" data-x1=".37" data-y1=".74" data-mx0=".25" data-my0=".75" data-mx1=".28" data-my1=".78">
+        <div class="node-head"><span>운영 비용</span><span>O-412</span></div>
+        <div class="node-main">
+          <div class="node-state s0"><strong>공구비 중복 집계</strong><small>표 A · 표 C</small></div>
+          <div class="node-state s1"><strong>중복 패턴 포착</strong><small>동일 기간 · 동일 항목</small></div>
+          <div class="node-state s2"><strong>비용 이상 확정</strong><small>영향 · 월 집계</small></div>
+          <div class="node-state s3"><strong>중복 검토 요청</strong><small>원가 담당 배정</small></div>
+          <div class="node-state s4"><strong>집계 정상</strong><small>중복 제거 · 기준 반영</small></div>
+        </div>
+        <div class="node-foot"><span class="result-check">● 확인 완료</span><span>원가 운영</span></div>
+      </article>
+
+      <span class="noise-tag n1">담당자 없음</span>
+      <span class="noise-tag n2">후속 조치 단절</span>
+      <span class="noise-tag n3">식별자 중복</span>
+      <span class="scan-line" aria-hidden="true"></span>
+      <span class="connection c1" aria-hidden="true"></span>
+      <span class="connection c2" aria-hidden="true"></span>
+      <span class="connection c3" aria-hidden="true"></span>
+      <span class="connection c4" aria-hidden="true"></span>
+
+      <div class="event-core">
+        <span class="core-2">공통 제조 문맥 · 문제 확정</span>
+        <span class="core-3">담당자 · 다음 행동 · 완료 조건</span>
+        <span class="core-4">결과 확인 · 운영 기준 반영</span>
+      </div>
+
+      <div class="completion-loop" aria-label="Flowmatic 운영 폐루프">
+        <span>발견</span><span>판단</span><span>행동</span><span>확인</span><span>개선</span>
+      </div>
+    </div>
+  </div>
+</section>
 <section aria-labelledby="problem-title" class="problem section-grid">
 <div class="cell span-12 reveal"><p class="eyebrow">해결하는 운영 문제</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="problem-title"><span class="copy-lines"><span class="copy-line">운영 신호는 실시간.</span><span class="copy-line">판단은 사후.</span></span></h2><p class="body-large">지연·위험·자재 요구 등 핵심 이벤트가 분산되어 대응 시점을 놓칩니다.</p></div><article class="cell red problem-card span-3 reveal delay-1"><span>01</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text><span class="copy-lines"><span class="copy-line">사이클 손실</span><span class="copy-line">조기 식별</span></span></h3><p>대응 가능 시점에 지연 구간을 식별합니다.</p></article>
 <article class="cell red problem-card span-3 reveal delay-2"><span>02</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text><span class="copy-lines"><span class="copy-line">가공 전</span><span class="copy-line">경로 위험 검토</span></span></h3><p>NC 코드의 위험 이동을 가공 전에 시각화합니다.</p></article>
@@ -474,69 +497,68 @@
 <div class="footer-links"><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a><a href="/ko/#hero">홈</a></div>
 <small>© 2026 Flowmatic</small>
 </footer><script id="flowmatic-transformation-script">
-(() => {
-const transformation = document.querySelector('.transformation');
-const transformStage = document.querySelector('.transform-stage');
-const factoryBoard = document.querySelector('.factory-board');
-const factoryNodes = [...document.querySelectorAll('.factory-node')];
-const stateIndex = document.querySelector('.state-index');
-const progressLabel = document.querySelector('.transform-progress');
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let storyTicking = false;
+  (() => {
+    const section = document.querySelector('.transformation');
+    if (!section) return;
+    const stage = document.querySelector('.transform-stage');
+    const board = document.querySelector('.factory-board');
+    const nodes = [...document.querySelectorAll('.factory-node')];
+    const stateIndex = document.querySelector('.state-index');
+    const progressLabel = document.querySelector('.transform-progress');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let ticking = false;
 
-const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
-const lerp = (from, to, amount) => from + (to - from) * amount;
-const smoothstep = (start, end, value) => {
-  const amount = clamp((value - start) / (end - start));
-  return amount * amount * (3 - 2 * amount);
-};
+    const clamp = (v, min = 0, max = 1) => Math.min(Math.max(v, min), max);
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const smooth = (a, b, v) => {
+      const t = clamp((v - a) / (b - a));
+      return t * t * (3 - 2 * t);
+    };
 
-function drawTransformation(forceFinal = false) {
-  const rect = transformation.getBoundingClientRect();
-  const distance = Math.max(1, transformation.offsetHeight - innerHeight);
-  const progress = forceFinal ? 1 : clamp(-rect.top / distance);
-  const phase = progress < .16 ? 0 : progress < .34 ? 1 : progress < .58 ? 2 : progress < .82 ? 3 : 4;
-  const alignProgress = smoothstep(.20, .84, progress);
-  const mobile = innerWidth <= 600;
-  const width = factoryBoard.clientWidth;
-  const height = factoryBoard.clientHeight;
+    function draw(forceFinal = false) {
+      const rect = section.getBoundingClientRect();
+      const distance = Math.max(1, section.offsetHeight - innerHeight);
+      const progress = forceFinal ? 1 : clamp(-rect.top / distance);
+      const phase = progress < .18 ? 0 : progress < .38 ? 1 : progress < .58 ? 2 : progress < .78 ? 3 : 4;
+      const align = smooth(.14, .56, progress);
+      const mobile = innerWidth <= 600;
+      const width = board.clientWidth;
+      const height = board.clientHeight;
 
-  transformStage.dataset.phase = String(phase);
-  transformStage.style.setProperty('--progress', progress.toFixed(3));
-  transformStage.style.setProperty('--grid-opacity', String(smoothstep(.28, .76, progress) * .9));
-  transformStage.style.setProperty('--scan-x', `${width * smoothstep(.15, .35, progress)}px`);
-  stateIndex.textContent = String(phase).padStart(2, '0');
-  progressLabel.textContent = `스크롤 · ${String(Math.round(progress * 100)).padStart(3, '0')}%`;
+      stage.dataset.phase = String(phase);
+      stage.style.setProperty('--progress', progress.toFixed(3));
+      stage.style.setProperty('--grid-opacity', String(smooth(.18, .62, progress) * .9));
+      stage.style.setProperty('--scan-x', `${width * smooth(.16, .38, progress)}px`);
+      stateIndex.textContent = String(phase).padStart(2, '0');
+      progressLabel.textContent = `스크롤 · ${String(Math.round(progress * 100)).padStart(3, '0')}%`;
 
-  factoryNodes.forEach((node, index) => {
-    const x0 = Number(node.dataset[mobile ? 'mx0' : 'x0']);
-    const y0 = Number(node.dataset[mobile ? 'my0' : 'y0']);
-    const x1 = Number(node.dataset[mobile ? 'mx1' : 'x1']);
-    const y1 = Number(node.dataset[mobile ? 'my1' : 'y1']);
-    const r0 = Number(node.dataset.r0);
-    const scatter = phase === 0 ? Math.sin(progress * 70 + index * 1.9) * 3 : 0;
+      nodes.forEach((node, index) => {
+        const x0 = Number(node.dataset[mobile ? 'mx0' : 'x0']);
+        const y0 = Number(node.dataset[mobile ? 'my0' : 'y0']);
+        const x1 = Number(node.dataset[mobile ? 'mx1' : 'x1']);
+        const y1 = Number(node.dataset[mobile ? 'my1' : 'y1']);
+        const r0 = Number(node.dataset.r0);
+        const noise = phase === 0 ? Math.sin(progress * 72 + index * 1.8) * 2.5 : 0;
+        node.style.setProperty('--x', `${lerp(x0, x1, align) * width + noise}px`);
+        node.style.setProperty('--y', `${lerp(y0, y1, align) * height}px`);
+        node.style.setProperty('--r', `${lerp(r0, 0, align).toFixed(2)}deg`);
+      });
+      ticking = false;
+    }
 
-    node.style.setProperty('--node-x', `${lerp(x0, x1, alignProgress) * width + scatter}px`);
-    node.style.setProperty('--node-y', `${lerp(y0, y1, alignProgress) * height}px`);
-    node.style.setProperty('--node-r', `${lerp(r0, 0, alignProgress).toFixed(2)}deg`);
-  });
+    function requestDraw() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => draw(false));
+      }
+    }
 
-  storyTicking = false;
-}
-
-function requestStoryDraw() {
-  if (!storyTicking) {
-    storyTicking = true;
-    requestAnimationFrame(() => drawTransformation(false));
-  }
-}
-
-if (prefersReducedMotion) {
-  drawTransformation(true);
-} else {
-  addEventListener('scroll', requestStoryDraw, { passive: true });
-  addEventListener('resize', requestStoryDraw);
-  requestStoryDraw();
-}
-})();
+    if (reduced) {
+      draw(true);
+    } else {
+      addEventListener('scroll', requestDraw, { passive: true });
+      addEventListener('resize', requestDraw);
+      requestDraw();
+    }
+  })();
 </script><script src="/script.js?v=5.19"></script></body></html>
