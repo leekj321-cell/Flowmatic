@@ -123,7 +123,7 @@
   bottom: auto;
   z-index: 2;
   margin: 0;
-  color: rgba(17,19,24,.16);
+  color: rgba(17,19,24,.28);
   font-size: clamp(44px, 7vw, 104px);
   font-weight: 900;
   line-height: .9;
@@ -137,7 +137,7 @@
 .transform-stage[data-phase="2"] .word-2,
 .transform-stage[data-phase="3"] .word-3,
 .transform-stage[data-phase="4"] .word-4 { display: block; }
-.transform-stage[data-phase="4"] .stage-word { color: rgba(91,117,83,.24); }
+.transform-stage[data-phase="4"] .stage-word { color: rgba(91,117,83,.38); }
 
 .factory-node {
   --x: 0px;
@@ -250,9 +250,10 @@
   left: 50%;
   top: 50%;
   z-index: 6;
+  box-sizing: border-box;
   display: grid;
   place-items: center;
-  width: min(34vw, 420px);
+  width: 33.3333%;
   min-height: 58px;
   padding: 10px;
   color: var(--white);
@@ -324,7 +325,7 @@
   .node-main small { font-size: 8px; }
   .node-head, .node-foot { font-size: 7.5px; }
   .stage-word { left: 12px; top: 12px; bottom: auto; font-size: 32px; }
-  .event-core { width: 62vw; }
+  .event-core { width: 66.6667%; }
   .completion-loop { right: 12px; bottom: 12px; grid-template-columns: repeat(5, 1fr); width: calc(100% - 24px); }
   .completion-loop span { padding: 7px 3px; text-align: center; }
 }
@@ -569,6 +570,10 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
       const phone = innerWidth <= 600 && innerHeight >= 560;
       const width = board.clientWidth;
       const height = board.clientHeight;
+      const gridX = width / 12;
+      const gridY = height / 8;
+      const snapX = value => Math.round(value / gridX) * gridX;
+      const snapY = value => Math.round(value / gridY) * gridY;
 
       stage.dataset.phase = String(phase);
       stage.style.setProperty('--progress', progress.toFixed(3));
@@ -578,9 +583,10 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
       progressLabel.textContent = `SCROLL · ${String(Math.round(progress * 100)).padStart(3, '0')}%`;
 
       const pad = compact ? 10 : 14;
+      const gridPad = Math.min(pad, gridX / 4);
       const loop = document.querySelector('.completion-loop');
       const bottomReserve = phase >= 3 ? (loop?.offsetHeight || 0) + (compact ? 20 : 14) : pad;
-      const sizes = nodes.map(node => ({ width: node.offsetWidth, height: node.offsetHeight }));
+      const sizes = nodes.map(node => ({ width: parseFloat(getComputedStyle(node).width) || node.offsetWidth, height: node.offsetHeight }));
       const wordClear = Math.min(height * .24, (stageWord?.offsetTop || 0) + (stageWord?.offsetHeight || 0) + 14);
       let compactTargets = null;
 
@@ -620,14 +626,15 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
         const y0 = Number(node.dataset[compact ? 'my0' : 'y0']);
         const rawX1 = Number(node.dataset[compact ? 'mx1' : 'x1']) * width;
         const rawY1 = Number(node.dataset[compact ? 'my1' : 'y1']) * height;
-        const targetX = compactTargets ? compactTargets[index].x : rawX1;
+        const rawTargetX = compactTargets ? compactTargets[index].x : rawX1;
+        const targetX = clamp(snapX(rawTargetX + sizes[index].width / 2) - sizes[index].width / 2, gridPad, Math.max(gridPad, width - sizes[index].width - gridPad));
         let targetY = compactTargets ? compactTargets[index].y : rawY1;
         if (!compact && index < 2) targetY = Math.max(targetY, wordClear);
         const r0 = Number(node.dataset.r0);
         const noise = phase === 0 ? Math.sin(progress * 72 + index * 1.8) * 2.5 : 0;
         const desiredX = lerp(x0 * width, targetX, align) + noise;
         const desiredY = lerp(y0 * height, targetY, align);
-        const fittedX = clamp(desiredX, pad, Math.max(pad, width - sizes[index].width - pad));
+        const fittedX = clamp(desiredX, gridPad, Math.max(gridPad, width - sizes[index].width - gridPad));
         const fittedY = clamp(desiredY, pad, Math.max(pad, height - sizes[index].height - bottomReserve));
         node.style.setProperty('--x', `${fittedX}px`);
         node.style.setProperty('--y', `${fittedY}px`);
@@ -635,10 +642,6 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
         placements[index] = { x: fittedX, y: fittedY, width: sizes[index].width, height: sizes[index].height };
       });
 
-      const gridX = width / 12;
-      const gridY = height / 8;
-      const snapX = value => Math.round(value / gridX) * gridX;
-      const snapY = value => Math.round(value / gridY) * gridY;
       const path = (line, x1, y1, x2, y2, turn) => {
         if (!line) return;
         line.dataset.path = turn;
@@ -654,11 +657,11 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
       const coreMidY = snapY(coreRect.top - boardRect.top + coreRect.height / 2);
       const coreBottom = snapY(coreRect.bottom - boardRect.top);
       const nodeX = index => snapX(placements[index].x + placements[index].width / 2);
-      path(connections[0], nodeX(0), snapY(placements[0].y + placements[0].height), coreLeft, coreMidY, 'lb');
-      path(connections[1], nodeX(1), snapY(placements[1].y + placements[1].height), coreRight, coreMidY, 'rb');
-      path(connections[2], nodeX(3), snapY(placements[3].y), coreLeft, coreMidY, 'lt');
-      path(connections[3], nodeX(2), snapY(placements[2].y), coreRight, coreMidY, 'rt');
-      path(connections[4], nodeX(4), coreBottom, nodeX(4), snapY(placements[4].y), 'v');
+      path(connections[0], nodeX(0), placements[0].y + placements[0].height, coreLeft, coreMidY, 'lb');
+      path(connections[1], nodeX(1), placements[1].y + placements[1].height, coreRight, coreMidY, 'rb');
+      path(connections[2], nodeX(3), placements[3].y, coreLeft, coreMidY, 'lt');
+      path(connections[3], nodeX(2), placements[2].y, coreRight, coreMidY, 'rt');
+      path(connections[4], nodeX(4), coreBottom, nodeX(4), placements[4].y, 'v');
       ticking = false;
     }
 
