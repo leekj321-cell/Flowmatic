@@ -26,7 +26,310 @@
 <link rel="mask-icon" href="/assets/branding/flowmatic-logo-mark.svg?v=20260822.2" color="#111111">
 <link rel="manifest" href="/site.webmanifest?v=20260822.2">
 <link rel="stylesheet" href="/style-v5.20.css?v=5.24">
-</head>
+<style id="flowmatic-transformation-style">
+
+/* Integrated preview: fragmented factory signals become a shared operating language. */
+.transformation {
+  --white: var(--fm-white);
+  --ink: var(--fm-black);
+  --blue: var(--fm-blue);
+  --yellow: var(--fm-yellow);
+  --red: var(--fm-red);
+  --gray: var(--fm-gray);
+  --rule-major: var(--border);
+}
+/* Scroll transformation: fragmented factory → shared operating language */
+.transformation {
+  position: relative;
+  height: 520vh;
+  background: var(--white);
+  border-bottom: var(--rule-major) solid var(--ink);
+}
+.transform-stage {
+  --progress: 0;
+  --grid-opacity: 0;
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100svh - var(--header-height));
+  min-height: 620px;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--white);
+  isolation: isolate;
+}
+.transform-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-color: var(--white);
+  background-image:
+    linear-gradient(to right, rgba(17,17,17,.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17,17,17,.14) 1px, transparent 1px);
+  background-size: calc(100% / 12) 100%, 100% calc(100% / 8);
+  opacity: var(--grid-opacity);
+}
+.transform-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background: var(--blue);
+  opacity: calc(var(--progress) * .035);
+}
+.transform-meta {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  min-height: 68px;
+  padding: 0 28px;
+  align-items: center;
+  background: var(--white);
+  border-bottom: var(--rule-major) solid var(--ink);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.transform-state {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+.state-index {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--white);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+}
+.state-copy { position: relative; min-width: 230px; height: 20px; overflow: hidden; }
+.state-copy span {
+  position: absolute;
+  inset: 0 auto auto 0;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 180ms ease-out, transform 180ms ease-out;
+}
+.transform-stage[data-phase="0"] .state-copy span:nth-child(1),
+.transform-stage[data-phase="1"] .state-copy span:nth-child(2),
+.transform-stage[data-phase="2"] .state-copy span:nth-child(3),
+.transform-stage[data-phase="3"] .state-copy span:nth-child(4),
+.transform-stage[data-phase="4"] .state-copy span:nth-child(5) { opacity: 1; transform: none; }
+.transform-progress { font-variant-numeric: tabular-nums; }
+
+.factory-board {
+  position: absolute;
+  inset: 68px 0 0;
+  overflow: hidden;
+}
+.stage-word {
+  position: absolute;
+  left: 28px;
+  bottom: 18px;
+  z-index: 0;
+  margin: 0;
+  max-width: 92%;
+  color: rgba(17,17,17,.08);
+  font-size: clamp(60px, 10vw, 144px);
+  line-height: .82;
+  letter-spacing: -.07em;
+  font-weight: 900;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.stage-word .before-word,
+.stage-word .after-word { transition: opacity 180ms linear; }
+.stage-word .after-word { display: none; color: rgba(21,101,216,.12); }
+.transform-stage[data-phase="4"] .stage-word .before-word { display: none; }
+.transform-stage[data-phase="4"] .stage-word .after-word { display: block; }
+
+.factory-node {
+  --node-x: 0px;
+  --node-y: 0px;
+  --node-r: 0deg;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: min(26vw, 300px);
+  min-height: 132px;
+  padding: 14px 15px;
+  background: var(--white);
+  border: 3px solid var(--ink);
+  transform: translate3d(var(--node-x), var(--node-y), 0) rotate(var(--node-r));
+  transform-origin: center;
+  will-change: transform;
+  transition: border-width 140ms linear, background 140ms linear, color 140ms linear;
+}
+.factory-node[data-tone="red"] { color: var(--white); background: var(--red); }
+.factory-node[data-tone="yellow"] { background: var(--yellow); }
+.factory-node[data-tone="blue"] { color: var(--white); background: var(--blue); }
+.factory-node[data-tone="gray"] { background: var(--gray); }
+.node-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid currentColor;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.node-title {
+  align-self: center;
+  margin: 14px 0 12px;
+  font-size: clamp(18px, 2vw, 27px);
+  line-height: 1;
+  letter-spacing: -.04em;
+  font-weight: 850;
+}
+.node-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10px;
+  font-weight: 720;
+}
+.node-raw, .node-ordered { transition: opacity 140ms linear; }
+.node-ordered { display: none; }
+.transform-stage[data-phase="2"] .node-raw,
+.transform-stage[data-phase="3"] .node-raw,
+.transform-stage[data-phase="4"] .node-raw { display: none; }
+.transform-stage[data-phase="2"] .node-ordered,
+.transform-stage[data-phase="3"] .node-ordered,
+.transform-stage[data-phase="4"] .node-ordered { display: inline; }
+.transform-stage[data-phase="3"] .factory-node,
+.transform-stage[data-phase="4"] .factory-node { border-width: 2px; }
+
+.noise-tag {
+  position: absolute;
+  z-index: 8;
+  padding: 5px 7px;
+  color: var(--white);
+  background: var(--ink);
+  border: 1px solid var(--white);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  transition: opacity 160ms linear, transform 160ms linear;
+}
+.noise-tag.t1 { left: 46%; top: 19%; transform: rotate(5deg); }
+.noise-tag.t2 { left: 10%; top: 63%; transform: rotate(-4deg); background: var(--red); }
+.noise-tag.t3 { right: 7%; top: 49%; transform: rotate(3deg); background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.transform-stage[data-phase="2"] .noise-tag,
+.transform-stage[data-phase="3"] .noise-tag,
+.transform-stage[data-phase="4"] .noise-tag { opacity: 0; transform: none; }
+
+.scan-line {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 15;
+  width: 3px;
+  background: var(--blue);
+  transform: translateX(var(--scan-x, -10px));
+  opacity: 0;
+  box-shadow: 12px 0 0 rgba(21,101,216,.18);
+  pointer-events: none;
+}
+.transform-stage[data-phase="1"] .scan-line { opacity: 1; }
+
+.event-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: min(34vw, 420px);
+  min-height: 54px;
+  color: var(--white);
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translate(-50%, -50%) scaleX(.35);
+  transform-origin: center;
+  transition: opacity 160ms linear, transform 220ms cubic-bezier(.2,.8,.2,1);
+}
+.transform-stage[data-phase="2"] .event-core,
+.transform-stage[data-phase="3"] .event-core,
+.transform-stage[data-phase="4"] .event-core { opacity: 1; transform: translate(-50%, -50%) scaleX(1); }
+
+.connection {
+  position: absolute;
+  z-index: 2;
+  height: 2px;
+  background: var(--blue);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: opacity 160ms linear, transform 260ms cubic-bezier(.2,.8,.2,1);
+}
+.connection.c1 { left: 17%; top: 28%; width: 33%; }
+.connection.c2 { left: 50%; top: 28%; width: 30%; transform-origin: right center; }
+.connection.c3 { left: 17%; top: 73%; width: 33%; }
+.connection.c4 { left: 50%; top: 73%; width: 30%; transform-origin: right center; }
+.transform-stage[data-phase="3"] .connection,
+.transform-stage[data-phase="4"] .connection { opacity: 1; transform: scaleX(1); }
+
+.completion-label {
+  position: absolute;
+  right: 28px;
+  bottom: 24px;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0;
+  border: 2px solid var(--ink);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 180ms linear, transform 180ms ease-out;
+}
+.completion-label span { padding: 9px 12px; font-size: 10px; font-weight: 850; letter-spacing: .08em; }
+.completion-label span:first-child { color: var(--white); background: var(--blue); border-right: 1px solid var(--ink); }
+.completion-label span:last-child { background: var(--yellow); }
+.transform-stage[data-phase="4"] .completion-label { opacity: 1; transform: none; }
+
+
+@media (max-width: 960px) {
+  .transformation { height: 420vh; }
+  .factory-node { width: min(34vw, 270px); }
+  .stage-word { font-size: clamp(52px, 12vw, 100px); }
+}
+
+@media (max-width: 600px) {
+  .transformation { height: 340vh; }
+  .transform-stage { top: var(--header-height); min-height: 600px; }
+  .transform-meta { padding-inline: 14px; }
+  .state-copy { min-width: 150px; }
+  .transform-progress { display: none; }
+  .factory-node { width: 44vw; min-height: 112px; padding: 11px 12px; }
+  .node-title { font-size: 18px; margin-block: 10px; }
+  .node-foot { font-size: 8px; }
+  .stage-word { left: 14px; bottom: 14px; font-size: 54px; }
+  .event-core { width: 62vw; }
+  .noise-tag.t1 { left: 40%; }
+  .completion-label { right: 14px; bottom: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transformation { height: auto; }
+  .transform-stage { position: relative; top: auto; height: 760px; }
+}
+
+</style></head>
 <body data-lang="ar" data-static-lang="true">
 <a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
 <header class="site-header" data-header>
@@ -45,6 +348,68 @@
 <div class="cell red hero-note span-3 reveal delay-3"><strong>تحويل الإشارة إلى حدث</strong><span>تحويل الإشارات الخام إلى أحداث تشغيلية مثل التأخير والخطر والطلب.</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>استكشف النظام</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
+<section class="transformation" dir="ltr" id="transformation" aria-labelledby="transformation-title">
+        <div class="transform-stage" data-phase="0">
+          <div class="transform-meta">
+            <div class="transform-state">
+              <span class="state-index">00</span>
+              <span class="state-copy" id="transformation-title">
+                <span>Fragmented factory / <bdi dir="rtl">بيانات مصنع متفرقة</bdi></span>
+                <span>Observe / <bdi dir="rtl">التقاط الإشارات</bdi></span>
+                <span>Eventize / <bdi dir="rtl">إسناد معرّف موحّد</bdi></span>
+                <span>Act / <bdi dir="rtl">ربط المسؤول بالإجراء</bdi></span>
+                <span>Flowmatic / <bdi dir="rtl">لغة تشغيل موحّدة</bdi></span>
+              </span>
+            </div>
+            <span class="transform-progress">SCROLL · 000%</span>
+          </div>
+
+          <div class="factory-board">
+            <p class="stage-word" aria-hidden="true"><span class="before-word">Fragmented<br>Factory</span><span class="after-word">Shared Operating<br>Language</span></p>
+
+            <article class="factory-node" data-node="quality" data-tone="red" data-x0=".06" data-y0=".08" data-r0="-3" data-x1=".05" data-y1=".12" data-mx0=".03" data-my0=".06" data-mx1=".04" data-my1=".10">
+              <div class="node-head"><span>QUALITY</span><span class="node-raw">UNKNOWN</span><span class="node-ordered">EVENT · Q-014</span></div>
+              <strong class="node-title"><span class="node-raw" dir="rtl">سجل NG مفقود</span><span class="node-ordered">Inspection_NG</span></strong>
+              <div class="node-foot"><span class="node-raw">LOT ? / OWNER ?</span><span class="node-ordered">LOT 24A · QUALITY</span><span>OPEN</span></div>
+            </article>
+
+            <article class="factory-node" data-node="cycle" data-tone="yellow" data-x0=".59" data-y0=".05" data-r0="4" data-x1=".69" data-y1=".12" data-mx0=".53" data-my0=".04" data-mx1=".52" data-my1=".10">
+              <div class="node-head"><span>CYCLE</span><span class="node-raw">DELAY?</span><span class="node-ordered">EVENT · C-228</span></div>
+              <strong class="node-title"><span class="node-raw" dir="rtl">سبب التوقف مجهول</span><span class="node-ordered">Cycle_Delay</span></strong>
+              <div class="node-foot"><span class="node-raw">CAM 02 / 18:42</span><span class="node-ordered">LINE 02 · CT</span><span>+12m</span></div>
+            </article>
+
+            <article class="factory-node" data-node="material" data-tone="gray" data-x0=".72" data-y0=".35" data-r0="-2" data-x1=".69" data-y1=".60" data-mx0=".49" data-my0=".38" data-mx1=".52" data-my1=".62">
+              <div class="node-head"><span>MATERIAL</span><span class="node-raw">MANUAL</span><span class="node-ordered">EVENT · M-031</span></div>
+              <strong class="node-title"><span class="node-raw" dir="rtl">طلب المواد معلّق</span><span class="node-ordered">Material_Demand</span></strong>
+              <div class="node-foot"><span class="node-raw">CALL / MEMO</span><span class="node-ordered">FLEET · ASSIGNED</span><span>ETA 04m</span></div>
+            </article>
+
+            <article class="factory-node" data-node="nc" data-tone="blue" data-x0=".11" data-y0=".48" data-r0="3" data-x1=".05" data-y1=".60" data-mx0=".04" data-my0=".50" data-mx1=".04" data-my1=".62">
+              <div class="node-head"><span>NC PATH</span><span class="node-raw">RISK!</span><span class="node-ordered">EVENT · N-105</span></div>
+              <strong class="node-title"><span class="node-raw" dir="rtl">مراجعة الحركة السريعة</span><span class="node-ordered">Path_Risk</span></strong>
+              <div class="node-foot"><span class="node-raw">FILE 8 / REV ?</span><span class="node-ordered">REVIEW · OWNER 07</span><span>HOLD</span></div>
+            </article>
+
+            <article class="factory-node" data-node="cost" data-tone="white" data-x0=".39" data-y0=".65" data-r0="-5" data-x1=".37" data-y1=".72" data-mx0=".25" data-my0=".73" data-mx1=".28" data-my1=".78">
+              <div class="node-head"><span>OPERATIONS</span><span class="node-raw">DUPLICATE</span><span class="node-ordered">EVENT · O-412</span></div>
+              <strong class="node-title"><span class="node-raw" dir="rtl">تكلفة أدوات مكررة</span><span class="node-ordered">Cost_Anomaly</span></strong>
+              <div class="node-foot"><span class="node-raw">SHEET A / SHEET C</span><span class="node-ordered">PERIOD 08 · REVIEW</span><span>CHECK</span></div>
+            </article>
+
+            <span class="noise-tag t1">NO OWNER</span>
+            <span class="noise-tag t2">OPEN LOOP</span>
+            <span class="noise-tag t3">DUPLICATE ID</span>
+            <span class="scan-line" aria-hidden="true"></span>
+            <span class="connection c1" aria-hidden="true"></span>
+            <span class="connection c2" aria-hidden="true"></span>
+            <span class="connection c3" aria-hidden="true"></span>
+            <span class="connection c4" aria-hidden="true"></span>
+            <div class="event-core">Shared Manufacturing Context + Event Core</div>
+            <div class="completion-label"><span>FLOWMATIC</span><span>EVENT → ACTION → CONFIRM</span></div>
+          </div>
+        </div>
+      </section>
 <section aria-labelledby="problem-title" class="problem section-grid">
 <div class="cell span-12 reveal"><p class="eyebrow">فجوات التشغيل</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="problem-title"><span class="copy-lines"><span class="copy-line">الإنتاج يستمر بالحركة.</span><span class="copy-line">والقرارات تصل متأخرة.</span></span></h2><p class="body-large">الميدان لا يتوقف. وغالبًا ما تظهر الأحداث المهمة والإجراء التالي بعد فوات الوقت.</p></div><article class="cell red problem-card span-3 reveal delay-1"><span>01</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text><span class="copy-lines"><span class="copy-line">اكتشف فقد الدورة</span><span class="copy-line">مبكرًا.</span></span></h3><p>اكتشف التأخير بينما لا يزال هناك وقت للاستجابة.</p></article>
 <article class="cell red problem-card span-3 reveal delay-2"><span>02</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text><span class="copy-lines"><span class="copy-line">شاهد الخطر</span><span class="copy-line">قبل التشغيل.</span></span></h3><p>أخرج حركات الأداة الخطرة من الكود واجعلها مرئية.</p></article>
@@ -107,4 +472,70 @@
 <p>لا يحتاج المصنع إلى نظام إضافي، بل يحتاج إلى تدفق العمليات.</p>
 <div class="footer-links"><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a><a href="/ar/#hero">الرئيسية</a></div>
 <small>© 2026 Flowmatic</small>
-</footer><script src="/script.js?v=5.19"></script></body></html>
+</footer><script id="flowmatic-transformation-script">
+(() => {
+const transformation = document.querySelector('.transformation');
+const transformStage = document.querySelector('.transform-stage');
+const factoryBoard = document.querySelector('.factory-board');
+const factoryNodes = [...document.querySelectorAll('.factory-node')];
+const stateIndex = document.querySelector('.state-index');
+const progressLabel = document.querySelector('.transform-progress');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let storyTicking = false;
+
+const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
+const lerp = (from, to, amount) => from + (to - from) * amount;
+const smoothstep = (start, end, value) => {
+  const amount = clamp((value - start) / (end - start));
+  return amount * amount * (3 - 2 * amount);
+};
+
+function drawTransformation(forceFinal = false) {
+  const rect = transformation.getBoundingClientRect();
+  const distance = Math.max(1, transformation.offsetHeight - innerHeight);
+  const progress = forceFinal ? 1 : clamp(-rect.top / distance);
+  const phase = progress < .16 ? 0 : progress < .34 ? 1 : progress < .58 ? 2 : progress < .82 ? 3 : 4;
+  const alignProgress = smoothstep(.20, .84, progress);
+  const mobile = innerWidth <= 600;
+  const width = factoryBoard.clientWidth;
+  const height = factoryBoard.clientHeight;
+
+  transformStage.dataset.phase = String(phase);
+  transformStage.style.setProperty('--progress', progress.toFixed(3));
+  transformStage.style.setProperty('--grid-opacity', String(smoothstep(.28, .76, progress) * .9));
+  transformStage.style.setProperty('--scan-x', `${width * smoothstep(.15, .35, progress)}px`);
+  stateIndex.textContent = String(phase).padStart(2, '0');
+  progressLabel.textContent = `SCROLL · ${String(Math.round(progress * 100)).padStart(3, '0')}%`;
+
+  factoryNodes.forEach((node, index) => {
+    const x0 = Number(node.dataset[mobile ? 'mx0' : 'x0']);
+    const y0 = Number(node.dataset[mobile ? 'my0' : 'y0']);
+    const x1 = Number(node.dataset[mobile ? 'mx1' : 'x1']);
+    const y1 = Number(node.dataset[mobile ? 'my1' : 'y1']);
+    const r0 = Number(node.dataset.r0);
+    const scatter = phase === 0 ? Math.sin(progress * 70 + index * 1.9) * 3 : 0;
+
+    node.style.setProperty('--node-x', `${lerp(x0, x1, alignProgress) * width + scatter}px`);
+    node.style.setProperty('--node-y', `${lerp(y0, y1, alignProgress) * height}px`);
+    node.style.setProperty('--node-r', `${lerp(r0, 0, alignProgress).toFixed(2)}deg`);
+  });
+
+  storyTicking = false;
+}
+
+function requestStoryDraw() {
+  if (!storyTicking) {
+    storyTicking = true;
+    requestAnimationFrame(() => drawTransformation(false));
+  }
+}
+
+if (prefersReducedMotion) {
+  drawTransformation(true);
+} else {
+  addEventListener('scroll', requestStoryDraw, { passive: true });
+  addEventListener('resize', requestStoryDraw);
+  requestStoryDraw();
+}
+})();
+</script><script src="/script.js?v=5.19"></script></body></html>
