@@ -119,14 +119,16 @@
 .stage-word {
   position: absolute;
   left: 24px;
-  bottom: 18px;
-  z-index: 0;
+  top: 24px;
+  bottom: auto;
+  z-index: 2;
   margin: 0;
-  color: rgba(17,19,24,.075);
-  font-size: clamp(58px, 9vw, 132px);
+  color: rgba(17,19,24,.16);
+  font-size: clamp(44px, 7vw, 104px);
   font-weight: 900;
-  line-height: .84;
-  letter-spacing: -.075em;
+  line-height: .9;
+  letter-spacing: -.055em;
+  white-space: nowrap;
   pointer-events: none;
 }
 .stage-word span { display: none; }
@@ -135,7 +137,7 @@
 .transform-stage[data-phase="2"] .word-2,
 .transform-stage[data-phase="3"] .word-3,
 .transform-stage[data-phase="4"] .word-4 { display: block; }
-.transform-stage[data-phase="4"] .stage-word { color: rgba(91,117,83,.14); }
+.transform-stage[data-phase="4"] .stage-word { color: rgba(91,117,83,.24); }
 
 .factory-node {
   --x: 0px;
@@ -216,24 +218,32 @@
 .transform-stage[data-phase="1"] .scan-line { opacity: 1; }
 
 .connection {
-  --connection-r: 0deg;
   position: absolute;
   z-index: 3;
-  height: 2px;
-  background: var(--blue);
+  box-sizing: border-box;
+  color: rgba(21,101,216,.58);
+  border-style: solid;
+  border-width: 0;
+  border-color: currentColor !important;
+  background: transparent;
   opacity: 0;
-  transform: rotate(var(--connection-r)) scaleX(0);
-  transform-origin: left center;
-  transition: opacity 160ms linear, transform 220ms ease-out, background 180ms linear;
+  transform: none;
+  transition: opacity 160ms linear, color 180ms linear;
 }
+.connection[data-path="lb"] { border-left-width: 2px; border-bottom-width: 2px; }
+.connection[data-path="rb"] { border-right-width: 2px; border-bottom-width: 2px; }
+.connection[data-path="lt"] { border-left-width: 2px; border-top-width: 2px; }
+.connection[data-path="rt"] { border-right-width: 2px; border-top-width: 2px; }
+.connection[data-path="v"] { border-left-width: 2px; }
 .connection.c1 { left: 17%; top: 28%; width: 33%; }
 .connection.c2 { left: 50%; top: 28%; width: 31%; }
 .connection.c3 { left: 17%; top: 74%; width: 33%; }
 .connection.c4 { left: 50%; top: 74%; width: 31%; }
 .transform-stage[data-phase="2"] .connection,
 .transform-stage[data-phase="3"] .connection,
-.transform-stage[data-phase="4"] .connection { opacity: 1; transform: rotate(var(--connection-r)) scaleX(1); }
-.transform-stage[data-phase="4"] .connection { background: var(--green); }
+.transform-stage[data-phase="4"] .connection { opacity: 1; transform: none; }
+.transform-stage[data-phase="3"] .connection { color: rgba(164,124,0,.68) !important; }
+.transform-stage[data-phase="4"] .connection { color: rgba(91,117,83,.72) !important; }
 
 .event-core {
   position: absolute;
@@ -313,7 +323,7 @@
   .node-main strong { font-size: 17px; }
   .node-main small { font-size: 8px; }
   .node-head, .node-foot { font-size: 7.5px; }
-  .stage-word { left: 12px; bottom: 66px; font-size: 48px; }
+  .stage-word { left: 12px; top: 12px; bottom: auto; font-size: 32px; }
   .event-core { width: 62vw; }
   .completion-loop { right: 12px; bottom: 12px; grid-template-columns: repeat(5, 1fr); width: calc(100% - 24px); }
   .completion-loop span { padding: 7px 3px; text-align: center; }
@@ -394,11 +404,11 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
     </div>
     <div class="factory-board">
       <p class="stage-word" aria-hidden="true">
-        <span class="word-0">مشكلة<br>غير مرئية</span>
-        <span class="word-1">تغيّر<br>مرصود</span>
-        <span class="word-2">مشكلة<br>مؤكدة</span>
-        <span class="word-3">إجراء<br>مرتبط</span>
-        <span class="word-4">تحسين<br>متحقق</span>
+        <span class="word-0">مشكلة غير مرئية</span>
+        <span class="word-1">تغيّر مرصود</span>
+        <span class="word-2">مشكلة مؤكدة</span>
+        <span class="word-3">إجراء مرتبط</span>
+        <span class="word-4">تحسين متحقق</span>
       </p>
       <article class="factory-node" data-tone="red" data-x0=".05" data-y0=".08" data-r0="-3" data-x1=".04" data-y1=".12" data-mx0=".02" data-my0=".06" data-mx1=".03" data-my1=".10">
         <div class="node-head"><span>الجودة</span><span>Q-014</span></div>
@@ -461,6 +471,7 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
       <span class="scan-line" aria-hidden="true"></span>
       <span class="connection c1" aria-hidden="true"></span><span class="connection c2" aria-hidden="true"></span>
       <span class="connection c3" aria-hidden="true"></span><span class="connection c4" aria-hidden="true"></span>
+      <span class="connection c5" aria-hidden="true"></span>
       <div class="event-core">
         <span class="core-2">سياق تصنيع مشترك · تأكيد المشكلة</span>
         <span class="core-3">المسؤول · الإجراء التالي · شرط الإكمال</span>
@@ -542,6 +553,8 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
     const board = document.querySelector('.factory-board');
     const nodes = [...document.querySelectorAll('.factory-node')];
     const connections = [...document.querySelectorAll('.connection')];
+    const stageWord = document.querySelector('.stage-word');
+    const eventCore = document.querySelector('.event-core');
     const stateIndex = document.querySelector('.state-index');
     const progressLabel = document.querySelector('.transform-progress');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -576,10 +589,11 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
       const loop = document.querySelector('.completion-loop');
       const bottomReserve = phase >= 3 ? (loop?.offsetHeight || 0) + (compact ? 20 : 14) : pad;
       const sizes = nodes.map(node => ({ width: node.offsetWidth, height: node.offsetHeight }));
+      const wordClear = Math.min(height * .24, (stageWord?.offsetTop || 0) + (stageWord?.offsetHeight || 0) + 14);
       let compactTargets = null;
 
       if (phone) {
-        const topY = Math.max(pad, height * .07);
+        const topY = Math.max(pad, height * .07, wordClear);
         let rowTwoY = Math.max(topY + Math.max(sizes[0].height, sizes[1].height) + 10, height * .58);
         let rowThreeY = Math.max(rowTwoY + Math.max(sizes[2].height, sizes[3].height) + 10, height * .74);
         const maxRowThreeY = Math.max(pad, height - bottomReserve - sizes[4].height);
@@ -594,7 +608,7 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
           { x: (width - sizes[4].width) / 2, y: rowThreeY }
         ];
       } else if (compact) {
-        const topY = Math.max(pad, height * .08);
+        const topY = Math.max(pad, height * .08, wordClear);
         const coreHeight = document.querySelector('.event-core')?.offsetHeight || 58;
         const bottomHeight = Math.max(sizes[2].height, sizes[3].height, sizes[4].height);
         const desiredBottomY = Math.max(height * .62, height * .5 + coreHeight * .5 + 16);
@@ -615,7 +629,8 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
         const rawX1 = Number(node.dataset[compact ? 'mx1' : 'x1']) * width;
         const rawY1 = Number(node.dataset[compact ? 'my1' : 'y1']) * height;
         const targetX = compactTargets ? compactTargets[index].x : rawX1;
-        const targetY = compactTargets ? compactTargets[index].y : rawY1;
+        let targetY = compactTargets ? compactTargets[index].y : rawY1;
+        if (!compact && index < 2) targetY = Math.max(targetY, wordClear);
         const r0 = Number(node.dataset.r0);
         const noise = phase === 0 ? Math.sin(progress * 72 + index * 1.8) * 2.5 : 0;
         const desiredX = lerp(x0 * width, targetX, align) + noise;
@@ -628,22 +643,30 @@ html[dir="rtl"] .transformation .completion-loop { right: auto; left: 24px; dire
         placements[index] = { x: fittedX, y: fittedY, width: sizes[index].width, height: sizes[index].height };
       });
 
-      const connect = (line, from, to) => {
+      const gridX = width / 12;
+      const gridY = height / 8;
+      const snapX = value => Math.round(value / gridX) * gridX;
+      const snapY = value => Math.round(value / gridY) * gridY;
+      const path = (line, x1, y1, x2, y2, turn) => {
         if (!line) return;
-        const dx = to.x - from.x;
-        const dy = to.y - from.y;
-        line.style.left = `${from.x}px`;
-        line.style.top = `${from.y}px`;
-        line.style.width = `${Math.hypot(dx, dy)}px`;
-        line.style.setProperty('--connection-r', `${Math.atan2(dy, dx) * 180 / Math.PI}deg`);
+        line.dataset.path = turn;
+        line.style.left = `${Math.min(x1, x2)}px`;
+        line.style.top = `${Math.min(y1, y2)}px`;
+        line.style.width = `${Math.max(2, Math.abs(x2 - x1))}px`;
+        line.style.height = `${Math.max(2, Math.abs(y2 - y1))}px`;
       };
-      const core = document.querySelector('.event-core');
-      const coreHalf = (core?.offsetWidth || 0) / 2;
-      const coreY = height / 2;
-      connect(connections[0], { x: placements[0].x + placements[0].width, y: placements[0].y + placements[0].height / 2 }, { x: width / 2 - coreHalf, y: coreY });
-      connect(connections[1], { x: width / 2 + coreHalf, y: coreY }, { x: placements[1].x, y: placements[1].y + placements[1].height / 2 });
-      connect(connections[2], { x: placements[3].x + placements[3].width, y: placements[3].y + placements[3].height / 2 }, { x: placements[4].x, y: placements[4].y + placements[4].height / 2 });
-      connect(connections[3], { x: placements[4].x + placements[4].width, y: placements[4].y + placements[4].height / 2 }, { x: placements[2].x, y: placements[2].y + placements[2].height / 2 });
+      const boardRect = board.getBoundingClientRect();
+      const coreRect = eventCore.getBoundingClientRect();
+      const coreLeft = snapX(coreRect.left - boardRect.left);
+      const coreRight = snapX(coreRect.right - boardRect.left);
+      const coreMidY = snapY(coreRect.top - boardRect.top + coreRect.height / 2);
+      const coreBottom = snapY(coreRect.bottom - boardRect.top);
+      const nodeX = index => snapX(placements[index].x + placements[index].width / 2);
+      path(connections[0], nodeX(0), snapY(placements[0].y + placements[0].height), coreLeft, coreMidY, 'lb');
+      path(connections[1], nodeX(1), snapY(placements[1].y + placements[1].height), coreRight, coreMidY, 'rb');
+      path(connections[2], nodeX(3), snapY(placements[3].y), coreLeft, coreMidY, 'lt');
+      path(connections[3], nodeX(2), snapY(placements[2].y), coreRight, coreMidY, 'rt');
+      path(connections[4], nodeX(4), coreBottom, nodeX(4), snapY(placements[4].y), 'v');
       ticking = false;
     }
 
