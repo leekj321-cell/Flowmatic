@@ -43,11 +43,13 @@
   height: 300vh;
   background: var(--white);
   border-bottom: var(--line) solid var(--ink);
+  overflow-anchor: none;
 }
 
 .transform-stage {
   --progress: 0;
   --grid-opacity: 0;
+  --grid-offset-y: 0px;
   --scan-x: -10px;
   position: sticky;
   top: var(--header-height, 72px);
@@ -66,6 +68,7 @@
     linear-gradient(to right, rgba(17,19,24,.13) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(17,19,24,.13) 1px, transparent 1px);
   background-size: calc(100% / 12) 100%, 100% calc(100% / 8);
+  background-position: 0 0, 0 var(--grid-offset-y);
   opacity: var(--grid-opacity);
 }
 .transform-stage::after {
@@ -124,7 +127,7 @@
   z-index: 2;
   margin: 0;
   color: rgba(17,19,24,.28);
-  font-size: clamp(44px, 7vw, 104px);
+  font-size: clamp(40px, min(7vw, 11vh), 104px);
   font-weight: 900;
   line-height: .9;
   letter-spacing: -.055em;
@@ -350,7 +353,7 @@
   .node-main small { margin-top: 2px; font-size: 6.5px; }
   .node-head, .node-foot { font-size: 6px; }
   .node-head { padding-bottom: 3px; }
-  .stage-word { display: none; }
+  .stage-word { display: block; top: 8px; font-size: clamp(26px, 7vh, 38px); }
   .event-core { width: 28vw; min-height: 40px; padding: 5px; font-size: 8px; }
   .completion-loop { bottom: 8px; }
   .completion-loop span { padding: 4px 6px; font-size: 6.5px; }
@@ -552,6 +555,11 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
     const progressLabel = document.querySelector('.transform-progress');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let ticking = false;
+    let resizing = false;
+    let resizeSnapshot = null;
+    let resizeTimer = 0;
+    let lastProgress = 0;
+    let lastActive = false;
 
     const clamp = (v, min = 0, max = 1) => Math.min(Math.max(v, min), max);
     const lerp = (a, b, t) => a + (b - a) * t;
@@ -560,10 +568,10 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
       return t * t * (3 - 2 * t);
     };
 
-    function draw(forceFinal = false) {
+    function draw(forceFinal = false, lockedProgress = null) {
       const rect = section.getBoundingClientRect();
       const distance = Math.max(1, section.offsetHeight - innerHeight);
-      const progress = forceFinal ? 1 : clamp(-rect.top / distance);
+      const progress = lockedProgress === null ? (forceFinal ? 1 : clamp(-rect.top / distance)) : clamp(lockedProgress);
       const phase = progress < .18 ? 0 : progress < .38 ? 1 : progress < .58 ? 2 : progress < .78 ? 3 : 4;
       const align = smooth(.14, .56, progress);
       const compact = innerWidth <= 820 && innerHeight >= 560;
@@ -574,6 +582,9 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
       const gridY = height / 8;
       const snapX = value => Math.round(value / gridX) * gridX;
       const snapY = value => Math.round(value / gridY) * gridY;
+
+      lastProgress = progress;
+      lastActive = rect.top <= 0 && rect.bottom >= innerHeight;
 
       stage.dataset.phase = String(phase);
       stage.style.setProperty('--progress', progress.toFixed(3));
@@ -642,6 +653,34 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
         placements[index] = { x: fittedX, y: fittedY, width: sizes[index].width, height: sizes[index].height };
       });
 
+      const coreHeight = eventCore.offsetHeight;
+      const upperBottom = Math.max(placements[0].y + placements[0].height, placements[1].y + placements[1].height);
+      let lowerTop = Math.min(placements[2].y, placements[3].y);
+      const requiredGap = coreHeight + (compact ? 14 : 22);
+      const currentGap = lowerTop - upperBottom;
+      if (currentGap < requiredGap) {
+        const needed = requiredGap - currentGap;
+        const availableDown = Math.max(0, Math.min(...[2, 3, 4].map(index => height - bottomReserve - (placements[index].y + placements[index].height))));
+        const shiftDown = Math.min(needed, availableDown);
+        [2, 3, 4].forEach(index => {
+          placements[index].y += shiftDown;
+          nodes[index].style.setProperty('--y', `${placements[index].y}px`);
+        });
+        const remaining = needed - shiftDown;
+        const availableUp = Math.max(0, Math.min(placements[0].y - wordClear, placements[1].y - wordClear));
+        const shiftUp = Math.min(remaining, availableUp);
+        [0, 1].forEach(index => {
+          placements[index].y -= shiftUp;
+          nodes[index].style.setProperty('--y', `${placements[index].y}px`);
+        });
+        lowerTop = Math.min(placements[2].y, placements[3].y);
+      }
+
+      const axisY = (Math.max(placements[0].y + placements[0].height, placements[1].y + placements[1].height) + lowerTop) / 2;
+      eventCore.style.top = `${axisY}px`;
+      const gridOffsetY = phase >= 2 ? axisY - snapY(axisY) : 0;
+      stage.style.setProperty('--grid-offset-y', `${gridOffsetY}px`);
+
       const path = (line, x1, y1, x2, y2, turn) => {
         if (!line) return;
         line.dataset.path = turn;
@@ -654,7 +693,7 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
       const coreRect = eventCore.getBoundingClientRect();
       const coreLeft = snapX(coreRect.left - boardRect.left);
       const coreRight = snapX(coreRect.right - boardRect.left);
-      const coreMidY = snapY(coreRect.top - boardRect.top + coreRect.height / 2);
+      const coreMidY = axisY;
       const coreBottom = snapY(coreRect.bottom - boardRect.top);
       const nodeX = index => snapX(placements[index].x + placements[index].width / 2);
       path(connections[0], nodeX(0), placements[0].y + placements[0].height, coreLeft, coreMidY, 'lb');
@@ -666,17 +705,48 @@ Target KPI:</textarea></div><div class="contact-field contact-field-wide"><label
     }
 
     function requestDraw() {
+      if (resizing) return;
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(() => draw(false));
       }
     }
 
+    function preserveProgressOnResize() {
+      if (!resizeSnapshot) {
+        resizeSnapshot = { progress: lastProgress, active: lastActive, scrollBehavior: document.documentElement.style.scrollBehavior };
+        document.documentElement.style.scrollBehavior = 'auto';
+      }
+      resizing = true;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const snapshot = resizeSnapshot;
+        const restoreProgress = () => {
+          if (!snapshot?.active) return;
+          const rect = section.getBoundingClientRect();
+          const distance = Math.max(1, section.offsetHeight - innerHeight);
+          const currentProgress = clamp(-rect.top / distance);
+          scrollBy(0, (snapshot.progress - currentProgress) * distance);
+        };
+        restoreProgress();
+        requestAnimationFrame(() => {
+          restoreProgress();
+          requestAnimationFrame(() => {
+            restoreProgress();
+            document.documentElement.style.scrollBehavior = snapshot?.scrollBehavior || '';
+            resizeSnapshot = null;
+            resizing = false;
+            draw(false, snapshot?.active ? snapshot.progress : null);
+          });
+        });
+      }, 300);
+    }
+
     if (reduced) {
       draw(true);
     } else {
       addEventListener('scroll', requestDraw, { passive: true });
-      addEventListener('resize', requestDraw);
+      addEventListener('resize', preserveProgressOnResize, { passive: true });
       requestDraw();
     }
   })();
