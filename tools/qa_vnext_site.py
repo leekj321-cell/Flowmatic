@@ -92,14 +92,26 @@ def main() -> None:
 
     for lang in LANGS:
         home = (ROOT / lang / "index.html").read_text(encoding="utf-8")
-        required = ("class=\"transformation\"", "class=\"before-after", "class=\"what-changes", "Platform / Control Tower")
+        required = ("class=\"transformation\"", "class=\"before-after", "class=\"what-changes", "Platform / Control Tower", "data-evidence-sequence")
         for phrase in required:
             if phrase not in home:
                 errors.append(f"home content missing ({lang}): {phrase}")
+        if home.count("data-evidence-card") != 6:
+            errors.append(f"evidence card count ({lang}): expected 6")
         machining = (ROOT / lang / "machining-intelligence" / "index.html").read_text(encoding="utf-8")
         for phrase in ("Manufacturing Recipe", "INFERRED", "USER CONFIRMED", "Managed Metadata Comment Block", "Conflict review", "fail-closed"):
             if phrase not in machining:
                 errors.append(f"machining content missing ({lang}): {phrase}")
+
+    ko_home = (ROOT / "ko" / "index.html").read_text(encoding="utf-8")
+    for phrase in ("Machining · Recipe", "Machining · Safety Contract", "Machining · V.Next scope", "deterministic source test", "prototype integration"):
+        if phrase in ko_home:
+            errors.append(f"Korean evidence contains internal memo wording: {phrase}")
+
+    script = (ROOT / "script.js").read_text(encoding="utf-8")
+    stylesheet = (ROOT / "style-v5.20.css").read_text(encoding="utf-8")
+    if "initEvidenceSequence();" not in script or ".evidence-card.is-scroll-active" not in stylesheet:
+        errors.append("evidence scroll highlight wiring missing")
 
     if errors:
         print("STATUS: FAIL")

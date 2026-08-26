@@ -26,8 +26,8 @@ from factory_os_v2 import (
 BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
-CSS_HREF = "/style-v5.20.css?v=5.24"
-SCRIPT_SRC = "/script.js?v=5.19"
+CSS_HREF = "/style-v5.20.css?v=5.25"
+SCRIPT_SRC = "/script.js?v=5.20"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 BRAND_PATH = "/assets/branding"
 BRAND_VERSION = "20260803.2"
@@ -1245,12 +1245,13 @@ def component_hierarchy_section(lang: str) -> str:
 
 def built_evidence_section(lang: str) -> str:
     cards = "".join(
-        f'<article class="cell evidence-card span-3 reveal delay-{i + 1}"><p class="eyebrow">{e(status[lang])}</p><h3>{e(name)}</h3><p>{e(body[lang])}</p><a class="product-link" href="{page_path(lang, slug)}"><span>{e({"ko":"확인하기","en":"Inspect","ar":"فحص"}[lang])}</span><span aria-hidden="true">→</span></a></article>'
+        f'<article class="cell evidence-card span-3 reveal delay-{i + 1}" data-evidence-card><p class="eyebrow">{e(status[lang])}</p><h3>{e(name[lang])}</h3><p>{e(body[lang])}</p><a class="product-link" href="{page_path(lang, slug)}"><span>{e({"ko":"자세히 보기","en":"View details","ar":"عرض التفاصيل"}[lang])}</span><span aria-hidden="true">→</span></a></article>'
         for i, (name, status, body, slug) in enumerate(EVIDENCE)
     )
-    title = {"ko":"구현 증거와|후속 통합 범위.","en":"Separate built evidence|from the next integration.","ar":"نفصل الدليل المبني|عن التكامل التالي."}[lang]
-    body = {"ko":"공개 데모·작동 프로토타입·내부 검증 MVP를 상태별로 구분합니다.","en":"Public demos, working prototypes, and internally validated MVPs are labeled as they are.","ar":"تُعرض حالة العروض العامة والنماذج العاملة وMVP الخاضع للتحقق الداخلي كما هي."}[lang]
-    return f'<section aria-labelledby="evidence-title" class="built-evidence section-grid" id="demo-workflows"><div class="cell span-12 reveal"><p class="eyebrow">Built evidence</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="evidence-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>{cards}</section>'
+    title = {"ko":"현재 확인된 기능과|개발 중인 범위.","en":"What works now.|What remains in development.","ar":"ما يعمل الآن.|وما يزال قيد التطوير."}[lang]
+    body = {"ko":"현재 구현된 기능, 파일럿에서 검증할 기능, 향후 통합 범위를 구분해 안내합니다.","en":"Implemented capabilities, pilot validation scope, and later integration work are presented separately.","ar":"نعرض بصورة منفصلة القدرات المنفذة ونطاق التحقق التجريبي وأعمال التكامل اللاحقة."}[lang]
+    eyebrow = {"ko":"구현 및 검증 현황","en":"Implementation evidence","ar":"حالة التنفيذ والتحقق"}[lang]
+    return f'<section aria-labelledby="evidence-title" class="built-evidence section-grid" id="demo-workflows" data-evidence-sequence><div class="cell span-12 reveal"><p class="eyebrow">{e(eyebrow)}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="evidence-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>{cards}</section>'
 
 
 def deployment_modes_section(lang: str) -> str:

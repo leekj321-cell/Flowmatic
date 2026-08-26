@@ -242,6 +242,44 @@ function initProductCtas() {
   updateCtas();
 }
 
+function initEvidenceSequence() {
+  const section = document.querySelector('[data-evidence-sequence]');
+  if (!section) return;
+  const cards = Array.from(section.querySelectorAll('[data-evidence-card]'));
+  if (!cards.length) return;
+
+  let scheduled = false;
+  let activeIndex = -1;
+  const setActiveCard = (nextIndex) => {
+    if (nextIndex === activeIndex) return;
+    activeIndex = nextIndex;
+    cards.forEach((card, index) => card.classList.toggle('is-scroll-active', index === nextIndex));
+  };
+  const update = () => {
+    scheduled = false;
+    const rect = section.getBoundingClientRect();
+    const enterLine = window.innerHeight * 0.78;
+    const leaveLine = window.innerHeight * 0.28;
+    if (rect.top > enterLine || rect.bottom < leaveLine) {
+      setActiveCard(-1);
+      return;
+    }
+    const travel = Math.max(rect.height + enterLine - leaveLine, 1);
+    const progress = Math.min(Math.max((enterLine - rect.top) / travel, 0), 0.999999);
+    setActiveCard(Math.min(cards.length - 1, Math.floor(progress * cards.length)));
+  };
+  const requestUpdate = () => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(update);
+  };
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  window.addEventListener('flowmatic:layout-change', requestUpdate);
+  update();
+}
+
 function initNavigation() {
   if (navToggle) navToggle.addEventListener('click', toggleNav);
   if (nav) nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeNav));
@@ -584,6 +622,7 @@ initContactInterest();
 initContactForm();
 initReveal();
 initProductCtas();
+initEvidenceSequence();
 initDemoVideos();
 initCtExplainer();
 initAmrExplainer();

@@ -4711,10 +4711,18 @@ html[dir="rtl"] .contact-email {
   background: var(--fm-yellow);
 }
 
-.domain-card:nth-of-type(3),
-.evidence-card:nth-of-type(3) {
+.domain-card:nth-of-type(3) {
   background: var(--fm-blue);
   color: var(--fm-white);
+}
+
+.evidence-card {
+  transition: background-color 220ms ease-out, color 220ms ease-out;
+}
+
+.evidence-card.is-scroll-active {
+  background: var(--fm-yellow);
+  color: var(--fm-black);
 }
 
 .domain-card:nth-of-type(4),
