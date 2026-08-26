@@ -4686,7 +4686,7 @@ html[dir="rtl"] .contact-email {
 .component-group,
 .evidence-card,
 .deployment-mode,
-.quality-v513-card,
+.quality-current-card,
 .intelligence-section-card {
   display: flex;
   min-width: 0;
@@ -4699,7 +4699,7 @@ html[dir="rtl"] .contact-email {
 .component-group h3,
 .evidence-card h3,
 .deployment-mode h3,
-.quality-v513-card h3,
+.quality-current-card h3,
 .intelligence-section-card h2 {
   margin: 0;
   font-size: clamp(24px, 2.3vw, 38px);
@@ -4707,7 +4707,7 @@ html[dir="rtl"] .contact-email {
 }
 
 .domain-card:nth-of-type(2),
-.quality-v513-card:nth-of-type(2) {
+.quality-current-card:nth-of-type(2) {
   background: var(--fm-yellow);
 }
 
@@ -4859,7 +4859,7 @@ html[dir="rtl"] .contact-email {
   max-width: 420px;
 }
 
-.quality-v513 .factory-asset {
+.quality-current .factory-asset {
   min-height: 360px;
 }
 
@@ -4956,7 +4956,7 @@ body[data-lang="ar"] .intelligence-flow.vertical > span {
     border-bottom: 0;
   }
 
-  .quality-v513 .factory-asset,
+  .quality-current .factory-asset,
   .intelligence-hero .factory-asset {
     min-height: 280px;
   }
@@ -4968,10 +4968,84 @@ body[data-lang="ar"] .intelligence-flow.vertical > span {
   .component-group,
   .evidence-card,
   .deployment-mode,
-  .quality-v513-card,
+  .quality-current-card,
   .intelligence-section-card,
   .platform-layer,
   .platform-entities {
     padding: 18px;
   }
 }
+/* V.Next product hierarchy and operating-outcome sections */
+.before-after .outcome-before,
+.before-after .outcome-after,
+.outcome-table,
+.recipe-hierarchy,
+.assembly-flow,
+.airgap-flow {
+  border: 2px solid var(--ink, #111);
+  background: #fff;
+}
+.before-after article { padding: clamp(22px, 3vw, 40px); }
+.before-after article h3 { margin: 8px 0 24px; font-size: clamp(25px, 2.4vw, 38px); }
+.before-after article ul { display: grid; gap: 12px; margin: 0; padding-inline-start: 20px; }
+.before-after .outcome-after { background: #eef3ea; border-color: #5b7553; }
+.before-after-arrow { display: grid; place-items: center; font-size: clamp(42px, 6vw, 84px); font-weight: 800; }
+.context-flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: stretch; }
+.context-flow span { position: relative; padding: 18px 10px; border: 1px solid #5b7553; text-align: center; font-size: 13px; font-weight: 800; }
+.context-flow span:not(:last-child)::after { content: "→"; position: absolute; inset-inline-end: -13px; z-index: 2; color: #5b7553; }
+.outcome-table { grid-column: 1 / -1; }
+.outcome-row { display: grid; grid-template-columns: minmax(150px, .65fr) repeat(2, 1fr); }
+.outcome-row > * { min-width: 0; padding: 20px 22px; border-inline-end: 1px solid #c9ced3; border-block-end: 1px solid #c9ced3; }
+.outcome-row > *:last-child { border-inline-end: 0; }
+.outcome-row:last-child > * { border-block-end: 0; }
+.outcome-head { background: #111; color: #fff; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.outcome-row strong { color: #5b7553; }
+.recipe-hierarchy { display: grid; gap: 0; padding: clamp(20px, 3vw, 36px); background: #f6f7f9; }
+.recipe-node { position: relative; display: block; margin: 0 auto; width: min(100%, 520px); padding: 14px 18px; border: 1px solid #111; background: #fff; text-align: center; font-weight: 800; }
+.recipe-node:not(:last-child) { margin-bottom: 24px; }
+.recipe-node:not(:last-child)::after { content: "↓"; position: absolute; left: 50%; bottom: -24px; transform: translateX(-50%); color: #5b7553; }
+.setup-context { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.setup-context span { padding: 8px 10px; border: 1px solid #5b7553; background: #eef3ea; font-size: 13px; font-weight: 700; }
+.assembly-flow { display: grid; grid-template-columns: repeat(3, 1fr) .55fr 1.2fr .65fr; align-items: stretch; }
+.assembly-flow > * { display: grid; place-items: center; min-height: 112px; padding: 16px; border-inline-end: 1px solid #111; text-align: center; }
+.assembly-flow > *:last-child { border: 0; }
+.assembly-flow strong { background: #5b7553; color: #fff; }
+.assembly-flow b:last-child { background: #111; color: #fff; }
+.airgap-flow { padding: clamp(20px, 3vw, 36px); }
+.airgap-flow > div { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); margin-bottom: 12px; border: 1px solid #111; }
+.airgap-flow > div span,
+.airgap-flow > div strong { position: relative; padding: 14px; border-inline-end: 1px solid #111; font-size: 12px; }
+.airgap-flow > div span:not(:last-child)::after { content: "→"; position: absolute; inset-inline-end: -7px; background: #fff; }
+.airgap-flow > div strong { background: #111; color: #fff; }
+.airgap-flow p { margin: 18px 0 0; padding: 14px; background: #eef3ea; color: #5b7553; font-weight: 800; text-align: center; }
+.intelligence-details .intelligence-section-card { min-height: 0; }
+
+@media (max-width: 900px) {
+  .before-after-arrow { display: none; }
+  .before-after .outcome-before,
+  .before-after .outcome-after { grid-column: 1 / -1; }
+  .context-flow { grid-template-columns: 1fr; }
+  .context-flow span:not(:last-child)::after { content: "↓"; inset-inline-end: auto; left: 50%; bottom: -13px; top: auto; }
+  .outcome-row { grid-template-columns: 110px 1fr 1fr; }
+  .outcome-row > * { padding: 15px 12px; }
+  .assembly-flow { grid-template-columns: 1fr 1fr; }
+  .assembly-flow > * { border-block-end: 1px solid #111; }
+  .airgap-flow > div { grid-template-columns: 1fr; }
+  .airgap-flow > div span,
+  .airgap-flow > div strong { border-inline-end: 0; border-block-end: 1px solid #111; }
+  .airgap-flow > div span:not(:last-child)::after { content: "↓"; inset-inline-end: auto; left: 50%; bottom: -8px; }
+}
+
+@media (max-width: 560px) {
+  .outcome-row { grid-template-columns: 1fr; }
+  .outcome-row > * { border-inline-end: 0; }
+  .outcome-head { display: none; }
+  .outcome-row strong { background: #eef3ea; }
+  .outcome-row span:first-of-type::before { content: "BEFORE · "; font-size: 11px; font-weight: 800; }
+  .outcome-row span:last-child::before { content: "AFTER · "; font-size: 11px; font-weight: 800; }
+  .assembly-flow { grid-template-columns: 1fr; }
+  .assembly-flow > * { min-height: 86px; border-inline-end: 0; }
+}
+
+html[dir="rtl"] .context-flow span:not(:last-child)::after,
+html[dir="rtl"] .airgap-flow > div span:not(:last-child)::after { transform: scaleX(-1); }

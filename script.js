@@ -275,7 +275,15 @@ function initContactInterest() {
   const select = document.querySelector('[data-contact-product]');
   if (!label && !select) return;
   const params = new URLSearchParams(window.location.search);
-  const interest = params.get('interest') || 'all';
+  const legacyInterestMap = {
+    nc: 'machining-intelligence',
+    ct: 'machining-intelligence',
+    'work-standard': 'machining-intelligence',
+    tms: 'machining-intelligence',
+    amr: 'logistics-intelligence',
+  };
+  const requestedInterest = params.get('interest') || 'all';
+  const interest = legacyInterestMap[requestedInterest] || requestedInterest;
   const labels = {
     ko: {
       all: '전체 / 미정',

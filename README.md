@@ -22,7 +22,7 @@ The current working demo videos are:
 - `flowmatic_nc_demo.mp4`
 - `flowmatic_ct_demo.mp4`
 
-Flowmatic Quality shows working-prototype and integration status without claiming a public demo. Work Standard, TMS, and AMR pages intentionally show development-preview panels instead of empty video players.
+Quality Intelligence shows the working defect-to-loss-to-improvement workflow without inventing a current product screenshot. Machining Intelligence separates source-level validated Recipe and Safety Contract evidence from V.Next development and PoC scope. Work Standard, TMS, and AMR compatibility pages remain subordinate component routes.
 
 ## Contact
 

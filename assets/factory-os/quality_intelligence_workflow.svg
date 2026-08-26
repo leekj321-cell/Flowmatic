@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Quality Intelligence workflow</title>
+  <desc id="desc">Defect evidence becomes loss-ranked improvement work, effect verification, and recurrence monitoring.</desc>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif;fill:#111}.box{fill:#fff;stroke:#111;stroke-width:2}.result{fill:#eef3ea;stroke:#5b7553;stroke-width:3}.line{stroke:#5b7553;stroke-width:3;fill:none}.small{font-size:15px}.label{font-size:20px;font-weight:700}.status{font-size:13px;font-weight:700;fill:#5b7553}
+  </style>
+  <rect width="1200" height="720" fill="#f6f7f9"/>
+  <text x="60" y="72" font-size="30" font-weight="700">QUALITY INTELLIGENCE</text>
+  <text x="60" y="108" class="small">Defect → Loss → Priority → Work → Verify → Recurrence</text>
+  <g transform="translate(60 170)">
+    <rect class="box" width="160" height="105"/><text class="label" x="80" y="45" text-anchor="middle">DEFECT</text><text class="small" x="80" y="72" text-anchor="middle">evidence / input</text>
+    <path class="line" d="M160 52H205"/>
+    <rect class="box" x="205" width="160" height="105"/><text class="label" x="285" y="45" text-anchor="middle">LOSS</text><text class="small" x="285" y="72" text-anchor="middle">item / cause</text>
+    <path class="line" d="M365 52H410"/>
+    <rect class="box" x="410" width="160" height="105"/><text class="label" x="490" y="45" text-anchor="middle">PRIORITY</text><text class="small" x="490" y="72" text-anchor="middle">explainable rank</text>
+    <path class="line" d="M570 52H615"/>
+    <rect class="box" x="615" width="160" height="105"/><text class="label" x="695" y="45" text-anchor="middle">WORK</text><text class="small" x="695" y="72" text-anchor="middle">owner / next check</text>
+    <path class="line" d="M775 52H820"/>
+    <rect class="box" x="820" width="160" height="105"/><text class="label" x="900" y="45" text-anchor="middle">VERIFY</text><text class="small" x="900" y="72" text-anchor="middle">before / after</text>
+  </g>
+  <path class="line" d="M960 275V350H600"/>
+  <rect class="result" x="325" y="350" width="550" height="140"/>
+  <text x="600" y="404" text-anchor="middle" font-size="24" font-weight="700">RECURRENCE CONTROL</text>
+  <text x="600" y="438" text-anchor="middle" class="small">effect confirmed · monitor · recurrence detected</text>
+  <text x="600" y="468" text-anchor="middle" class="status">WORKING PROTOTYPE</text>
+  <path class="line" d="M325 420H145V223H60"/>
+  <text x="60" y="625" font-size="18" font-weight="700">Inspection remains the Evidence / Input Layer</text>
+  <text x="60" y="658" class="small">No current product UI screenshot is represented by this schematic.</text>
+</svg>

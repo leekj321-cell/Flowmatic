@@ -2,19 +2,23 @@ from __future__ import annotations
 
 from datetime import date
 from html import escape
+import json
 from pathlib import Path
+import re
 
 from factory_os_v2 import (
     ASSET_PATH as FACTORY_OS_ASSET_PATH,
     CERTIFIED_CORE,
+    BEFORE_AFTER,
     COMPONENT_CONTEXT,
     DEPLOYMENT_MODES,
     DOMAINS,
     EVIDENCE,
     HOME_OVERRIDES,
+    OUTCOMES,
     PAGES as FACTORY_OS_PAGES,
     PLATFORM,
-    QUALITY_V513,
+    QUALITY_CURRENT,
     ROADMAP as FACTORY_OS_ROADMAP,
 )
 
@@ -166,13 +170,16 @@ CONTACT_PRODUCT_OPTIONS = [
     ("machining-intelligence", "Machining Intelligence"),
     ("operations-intelligence", "Operations Intelligence"),
     ("logistics-intelligence", "Logistics Intelligence"),
-    ("platform", "Flowmatic Platform / Factory OS"),
-    ("ct", "Flowmatic CT"),
-    ("nc", "Flowmatic NC"),
-    ("work-standard", "Flowmatic Work Standard"),
-    ("tms", "Flowmatic TMS"),
-    ("amr", "Flowmatic Fleet + Material Flow"),
+    ("platform", "Platform / Control Tower"),
 ]
+
+LEGACY_INTEREST_MAP = {
+    "nc": "machining-intelligence",
+    "ct": "machining-intelligence",
+    "work-standard": "machining-intelligence",
+    "tms": "machining-intelligence",
+    "amr": "logistics-intelligence",
+}
 
 
 HOME = {
@@ -601,14 +608,14 @@ FINAL_VISION = {
 
 PRODUCTS = {
     "nc": {
-        "name": "Flowmatic NC",
+        "name": "G-code Intelligence",
         "class": "flowmatic-nc",
         "status": "demo",
         "video": "/flowmatic_nc_demo",
         "title": {
-            "ko": "Flowmatic NC | 가공 전 공구 경로 검토",
-            "en": "Flowmatic NC | Pre-cut Toolpath Review",
-            "ar": "Flowmatic NC | مراجعة مسار الأداة قبل التشغيل",
+            "ko": "G-code Intelligence | 가공 전 공구 경로 검토",
+            "en": "G-code Intelligence | Pre-cut Toolpath Review",
+            "ar": "G-code Intelligence | مراجعة مسار الأداة قبل التشغيل",
         },
         "description": {
             "ko": "NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.",
@@ -830,11 +837,62 @@ PRODUCTS["nc"]["status_badges"] = {
     "en": [("is-demo", "Public browser demo"), ("is-progress", "Desktop functional prototype")],
     "ar": [("is-demo", "عرض متصفح عام"), ("is-progress", "نموذج مكتبي وظيفي")],
 }
+PRODUCTS["nc"].update({
+    "name": "G-code Intelligence",
+    "display": {
+        "ko": "G-code Intelligence · 구 Flowmatic NC",
+        "en": "G-code Intelligence · formerly Flowmatic NC",
+        "ar": "G-code Intelligence · المعروف سابقًا باسم Flowmatic NC",
+    },
+    "title": {
+        "ko": "G-code Intelligence | Machining Intelligence 구성요소",
+        "en": "G-code Intelligence | A Machining Intelligence Component",
+        "ar": "G-code Intelligence | مكوّن ضمن Machining Intelligence",
+    },
+})
 PRODUCTS["quality"]["status_badges"] = {
-    "ko": [("is-demo", "v0.5.13 working prototype"), ("is-progress", "Inspection integration in progress")],
-    "en": [("is-demo", "v0.5.13 working prototype"), ("is-progress", "Inspection integration in progress")],
-    "ar": [("is-demo", "نموذج v0.5.13 عامل"), ("is-progress", "تكامل Inspection قيد التنفيذ")],
+    "ko": [("is-demo", "Working prototype"), ("is-progress", "Inspection = 증거 입력 계층")],
+    "en": [("is-demo", "Working prototype"), ("is-progress", "Inspection = evidence input layer")],
+    "ar": [("is-demo", "نموذج عامل"), ("is-progress", "Inspection = طبقة إدخال الأدلة")],
 }
+PRODUCTS["quality"].update({
+    "name": "Quality Intelligence",
+    "title": {
+        "ko": "Quality Intelligence | 불량에서 손실·개선업무·재발까지",
+        "en": "Quality Intelligence | From Defect to Loss, Work, and Recurrence",
+        "ar": "Quality Intelligence | من العيب إلى الخسارة والعمل والتكرار",
+    },
+    "description": {
+        "ko": "불량 데이터를 실제 손실과 개선업무로 연결하고 효과와 재발을 다시 확인합니다.",
+        "en": "Connect defect data to actual loss and improvement work, then verify effect and recurrence.",
+        "ar": "اربط بيانات العيوب بالخسارة الفعلية وعمل التحسين، ثم تحقق من الأثر والتكرار.",
+    },
+    "outcome": {
+        "ko": "불량 데이터에서|개선업무와 재발 확인까지",
+        "en": "From defect data|to improvement work and recurrence",
+        "ar": "من بيانات العيوب|إلى عمل التحسين والتكرار",
+    },
+    "card_desc": {
+        "ko": "불량을 손실순 개선업무로 바꾸고 효과와 재발을 확인합니다.",
+        "en": "Turn defects into loss-ranked improvement work and verify effect and recurrence.",
+        "ar": "حوّل العيوب إلى أعمال تحسين مرتبة حسب الخسارة وتحقق من الأثر والتكرار.",
+    },
+    "hero": {
+        "ko": "불량 데이터를|실제 손실과 개선업무로 연결합니다.",
+        "en": "Connect defect data|to actual loss and improvement work.",
+        "ar": "اربط بيانات العيوب|بالخسارة الفعلية وعمل التحسين.",
+    },
+    "hero_body": {
+        "ko": "품번·원인별 손실을 기준으로 우선순위를 정하고, 분석 결과에서 개선업무로 이동한 뒤 효과와 재발을 다시 확인합니다. Inspection은 증거를 제공하는 입력 계층입니다.",
+        "en": "Rank priority by actual loss for each item and cause, move from analysis into owned improvement work, then verify effect and recurrence. Inspection supplies evidence as the input layer.",
+        "ar": "رتّب الأولوية حسب الخسارة الفعلية لكل صنف وسبب، وانقل التحليل إلى عمل تحسين مسؤول، ثم تحقق من الأثر والتكرار. توفر Inspection الأدلة كطبقة إدخال.",
+    },
+    "steps": {
+        "ko": [("01", "불량과 손실 연결", "불량수량·원인·기준단가를 실제 손실 문맥으로 묶습니다."), ("02", "우선순위 결정", "품번·원인별 손실을 기준으로 개선 순서를 정합니다."), ("03", "개선업무 실행", "분석 결과를 담당자·상태·다음 확인이 있는 Worklist로 전환합니다."), ("04", "효과와 재발 확인", "조치 전후의 효과를 확인하고 재발 여부를 다시 추적합니다.")],
+        "en": [("01", "Connect defect and loss", "Link quantity, cause, and reference price to actual loss context."), ("02", "Set priority", "Rank improvement by loss for each item and cause."), ("03", "Execute improvement work", "Move analysis into a worklist with owner, status, and next check."), ("04", "Verify effect and recurrence", "Compare before and after, then continue recurrence monitoring.")],
+        "ar": [("01", "ربط العيب بالخسارة", "اربط الكمية والسبب والسعر المرجعي بسياق الخسارة الفعلية."), ("02", "تحديد الأولوية", "رتّب التحسين حسب خسارة كل صنف وسبب."), ("03", "تنفيذ عمل التحسين", "حوّل التحليل إلى قائمة عمل لها مسؤول وحالة وفحص تالٍ."), ("04", "التحقق من الأثر والتكرار", "قارن ما قبل الإجراء وما بعده ثم تابع التكرار.")],
+    },
+})
 PRODUCTS["work-standard"]["status_badges"] = {
     lang: [("is-preview", label)] for lang, label in {
         "ko": "Symbolic prototype", "en": "Symbolic prototype", "ar": "نموذج رمزي"
@@ -863,19 +921,19 @@ PRODUCTS["amr"]["status_badges"] = {
 
 QUALITY_STATUS = {
     "ko": [
-        ("Implemented", ["멀티카메라 촬영 및 증빙 생성", "LOT·촬영 일시가 포함된 증빙 이미지"]),
-        ("Integration in progress", ["수동 OK/NG verdict 화면", "Inspection 결과와 Quality Dashboard 수량 연동"]),
-        ("Architecture target", ["Inspection 애플리케이션당 최대 16대 카메라", "2대 이상 카메라의 빠른 순차 촬영", "AI 모듈 공통 verdict interface", "품목 그룹당 최대 10개 독립 Inspection 모듈과 통합 집계"]),
+        ("Working prototype", ["불량·손실·우선순위 구조", "개선 Worklist", "효과 확인과 재발 상태"]),
+        ("Evidence / input layer", ["Inspection 증빙", "품목·LOT·원인·기간 문맥"]),
+        ("Integration in progress", ["Inspection 결과 연동", "현장 데이터와 기준단가 provenance 확인"]),
     ],
     "en": [
-        ("Implemented", ["Multi-camera capture and evidence creation", "Evidence image with LOT and capture time"]),
-        ("Integration in progress", ["Manual OK/NG verdict view", "Inspection-result and Quality-Dashboard count integration"]),
-        ("Architecture target", ["Up to 16 cameras per Inspection application", "Fast sequential capture across two or more cameras", "Common verdict interface for AI modules", "Up to 10 independent Inspection modules per item group with consolidated counts"]),
+        ("Working prototype", ["Defect, loss, and priority structure", "Improvement worklist", "Effect verification and recurrence state"]),
+        ("Evidence / input layer", ["Inspection evidence", "Item, LOT, cause, and period context"]),
+        ("Integration in progress", ["Inspection-result integration", "Field data and reference-price provenance checks"]),
     ],
     "ar": [
-        ("Implemented", ["التقاط متعدد الكاميرات وإنشاء الأدلة", "صورة دليل تتضمن LOT ووقت الالتقاط"]),
-        ("Integration in progress", ["واجهة حكم OK/NG يدوي", "تكامل نتيجة Inspection وكميات Quality Dashboard"]),
-        ("Architecture target", ["حتى 16 كاميرا لكل تطبيق Inspection", "التقاط تسلسلي سريع عبر كاميرتين أو أكثر", "واجهة verdict مشتركة لوحدات AI", "حتى 10 وحدات Inspection مستقلة لكل مجموعة أصناف مع كميات مجمعة"]),
+        ("نموذج عامل", ["بنية العيب والخسارة والأولوية", "قائمة أعمال التحسين", "التحقق من الأثر وحالة التكرار"]),
+        ("طبقة الأدلة والإدخال", ["أدلة Inspection", "سياق الصنف وLOT والسبب والفترة"]),
+        ("التكامل قيد التنفيذ", ["تكامل نتائج Inspection", "فحص بيانات الميدان ومصدر السعر المرجعي"]),
     ],
 }
 
@@ -896,6 +954,24 @@ def page_path(lang: str, slug: str = "home", compat: bool = False) -> str:
     if compat and lang == "ko":
         return "/" if slug == "home" else f"/{slug}.html"
     return f"/{lang}/" if slug == "home" else f"/{lang}/{slug}/"
+
+
+def transformation_blocks(lang: str, canonical_path: str) -> tuple[str, str, str]:
+    """Carry the approved closed-loop story through generator-based rebuilds."""
+    source = Path("index.html") if canonical_path == "/" else Path(lang) / "index.html"
+    if not source.exists():
+        return "", "", ""
+    existing = source.read_text(encoding="utf-8")
+    patterns = (
+        r'<style id="flowmatic-transformation-style">.*?</style>',
+        r'<section class="transformation".*?</section>',
+        r'<script id="flowmatic-transformation-script">.*?</script>',
+    )
+    blocks = []
+    for pattern in patterns:
+        match = re.search(pattern, existing, flags=re.DOTALL)
+        blocks.append(match.group(0) if match else "")
+    return tuple(blocks)
 
 
 def abs_url(path: str) -> str:
@@ -926,6 +1002,13 @@ def hreflang_links(slug: str, canonical_path: str) -> str:
 
 
 def meta_head(lang: str, slug: str, title: str, description: str, canonical_path: str) -> str:
+    schema = json.dumps({
+        "@context": "https://schema.org",
+        "@graph": [
+            {"@type": "Organization", "name": "Flowmatic", "url": f"{BASE_URL}/", "email": CONTACT_EMAIL, "logo": f"{BASE_URL}{BRAND_PATH}/flowmatic-logo-mark.png", "image": OG_IMAGE},
+            {"@type": "WebPage", "name": title, "description": description, "url": abs_url(canonical_path), "inLanguage": lang},
+        ],
+    }, ensure_ascii=False)
     return f"""<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -940,7 +1023,7 @@ def meta_head(lang: str, slug: str, title: str, description: str, canonical_path
 <meta property="og:image" content="{OG_IMAGE}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{OG_IMAGE}">
-<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Organization","name":"Flowmatic","url":"{BASE_URL}/","email":"{CONTACT_EMAIL}","logo":"{BASE_URL}{BRAND_PATH}/flowmatic-logo-mark.png","image":"{OG_IMAGE}"}}</script>
+<script type="application/ld+json">{schema}</script>
 <link rel="icon" href="{BRAND_MARK}?v={BRAND_VERSION}" sizes="any" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico?v={BRAND_VERSION}" sizes="16x16 32x32 48x48" type="image/x-icon">
 <link rel="shortcut icon" href="/favicon.ico?v={BRAND_VERSION}" type="image/x-icon">
@@ -1042,6 +1125,75 @@ def factory_asset(src: str, alt: str) -> str:
     return f'<figure class="factory-asset"><picture><source srcset="{e(src)}" type="image/svg+xml"><img alt="{e(alt)}" decoding="async" height="720" loading="lazy" src="{e(png)}" width="1200"></picture></figure>'
 
 
+def before_after_section(lang: str) -> str:
+    data = BEFORE_AFTER[lang]
+    before_items = "".join(f"<li>{e(item)}</li>" for item in data["before_items"])
+    after_flow = "".join(f"<span>{e(item)}</span>" for item in BEFORE_AFTER["flow"])
+    labels = {
+        "ko": ("BEFORE", "AFTER", "사람의 반복 연결", "같은 운영 문맥"),
+        "en": ("BEFORE", "AFTER", "Repeated manual handoffs", "One operating context"),
+        "ar": ("قبل", "بعد", "تسليم يدوي متكرر", "سياق تشغيل واحد"),
+    }[lang]
+    return f"""<section aria-labelledby="before-after-title" class="before-after section-grid" id="before-after">
+<div class="cell span-12 reveal"><p class="eyebrow">What changes first</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="before-after-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<article class="cell span-5 outcome-before reveal"><p class="eyebrow">{e(labels[0])} · {e(labels[2])}</p><h3>{e(data["before"])}</h3><ul>{before_items}</ul></article>
+<div class="cell span-2 before-after-arrow reveal delay-1" aria-hidden="true">→</div>
+<article class="cell span-5 outcome-after reveal delay-2"><p class="eyebrow">{e(labels[1])} · {e(labels[3])}</p><h3>{e(data["after"])}</h3><div class="context-flow">{after_flow}</div></article>
+</section>"""
+
+
+def outcomes_section(lang: str) -> str:
+    data = OUTCOMES[lang]
+    head = "".join(f"<span>{e(item)}</span>" for item in data["labels"])
+    rows = "".join(
+        f'<div class="outcome-row"><strong>{e(domain)}</strong><span>{e(before)}</span><span>{e(after)}</span></div>'
+        for domain, before, after in data["rows"]
+    )
+    return f"""<section aria-labelledby="outcomes-title" class="what-changes section-grid" id="what-changes">
+<div class="cell span-7 reveal"><p class="eyebrow">Four Intelligence outcomes</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="outcomes-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<div class="cell span-12 outcome-table reveal delay-1" role="table"><div class="outcome-row outcome-head" role="row">{head}</div>{rows}</div>
+</section>"""
+
+
+def machining_vnext_diagrams(lang: str, data: dict) -> str:
+    hierarchy = "".join(f'<span class="recipe-node">{e(item)}</span>' for item in data["hierarchy"])
+    setup = "".join(f"<span>{e(item)}</span>" for item in data["setup_context"])
+    labels = {
+        "ko": {
+            "context_title": "여러 파일을 하나의 공정으로 묶는|제조 문맥의 중심축",
+            "context_body": "Machine Setup은 좌표계와 공구만이 아니라 치구·기준핀·세팅 기준까지 같은 공정의 문맥으로 묶습니다.",
+            "assembly_title": "Feature에서 단위공정으로.|검사 후 최종 NC로.",
+            "connected": "CONNECTED ENVIRONMENT", "air": "AIR-GAPPED ENVIRONMENT",
+            "sync_title": "네트워크가 없는 설비도|같은 기준으로",
+            "sync_body": "패키지의 revision·hash·manifest·출처를 확인하고, 분기된 수정은 조용히 덮어쓰지 않고 Conflict review로 보냅니다.",
+        },
+        "en": {
+            "context_title": "The manufacturing context|that makes separate files one process",
+            "context_body": "Machine Setup connects coordinates and tools with fixtures, reference pins, and setup references in the same process context.",
+            "assembly_title": "From feature to unit process.|From checked blocks to final NC.",
+            "connected": "CONNECTED ENVIRONMENT", "air": "AIR-GAPPED ENVIRONMENT",
+            "sync_title": "One operating baseline|without a connected factory",
+            "sync_body": "Verify revision, hash, manifest, and source. Divergent changes are never overwritten silently; they move to conflict review.",
+        },
+        "ar": {
+            "context_title": "سياق التصنيع|الذي يجعل الملفات المنفصلة عملية واحدة",
+            "context_body": "يربط Machine Setup الإحداثيات والأدوات مع المثبتات ودبابيس المرجع ومراجع الإعداد في سياق عملية واحدة.",
+            "assembly_title": "من الميزة إلى وحدة العملية.|ومن الكتل المفحوصة إلى NC النهائي.",
+            "connected": "بيئة متصلة", "air": "بيئة معزولة عن الشبكة",
+            "sync_title": "معيار تشغيل واحد|من دون مصنع متصل",
+            "sync_body": "تحقق من revision وhash وmanifest والمصدر. لا تُستبدل التغييرات المتفرعة بصمت، بل تنتقل إلى مراجعة التعارض.",
+        },
+    }[lang]
+    return f"""<section aria-labelledby="recipe-context-title" class="machining-context section-grid">
+<div class="cell span-5 reveal"><p class="eyebrow">Manufacturing Recipe context</p><h2 class="section-title semantic-copy" data-fit-min="32" data-fit-text id="recipe-context-title">{lines(labels["context_title"])}</h2><p class="body-large">{e(labels["context_body"])}</p><div class="setup-context">{setup}</div></div>
+<div class="cell span-7 recipe-hierarchy reveal delay-1">{hierarchy}</div>
+</section>
+<section aria-labelledby="assembly-title" class="machining-assembly section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Generate · Safety Contract · Assemble</p><h2 class="section-title semantic-copy" data-fit-min="32" data-fit-text id="assembly-title">{lines(labels["assembly_title"])}</h2></div>
+<div class="cell span-12 assembly-flow reveal delay-1"><span>HOLE GROUP<br>Drill → Tap</span><span>FACE A<br>Milling</span><span>BORE B<br>Rough → Finish</span><b>OP20</b><strong>BOUNDARY CHECK<br>PASS / BLOCK</strong><b>FINAL NC</b></div></section>
+<section aria-labelledby="airgap-title" class="airgap section-grid"><div class="cell span-6 reveal"><p class="eyebrow">Air-gapped / USB operation</p><h2 class="section-title semantic-copy" data-fit-min="32" data-fit-text id="airgap-title">{lines(labels["sync_title"])}</h2><p class="body-large">{e(labels["sync_body"])}</p></div>
+<div class="cell span-6 airgap-flow reveal delay-1"><div><strong>{e(labels["connected"])}</strong><span>Engineering / Reference</span><span>NAS / Shared Folder</span><span>Local Machining Intelligence</span></div><div><strong>{e(labels["air"])}</strong><span>Versioned Transfer Package</span><span>USB · Verify revision / hash</span><span>Isolated Local PC</span><span>CNC / Local Operation</span></div><p>Same → No update · Newer → Safe update · Divergent → Conflict review</p></div></section>"""
+
+
 def certified_core_section(lang: str) -> str:
     cards = "".join(
         f'<article class="cell certified-core-card span-3 reveal delay-{i + 1}"><h3>{e(title)}</h3><p>{e(body[lang])}</p></article>'
@@ -1078,10 +1230,10 @@ def platform_architecture_section(lang: str) -> str:
 
 def component_hierarchy_section(lang: str) -> str:
     groups = [
-        ("Quality Intelligence", [("Quality", "quality")]),
-        ("Machining Intelligence", [("NC", "nc"), ("CT", "ct"), ("Work Standard", "work-standard"), ("TMS Engineering Context", "tms")]),
-        ("Operations Intelligence", [("Operations MVP", "operations-intelligence")]),
-        ("Logistics Intelligence", [("Fleet + Material Flow", "logistics-intelligence"), ("AMR execution actor", "amr")]),
+        ("Quality Intelligence", [("Inspection · evidence/input", "quality"), ("Loss · Priority · Work · Verify · Recurrence", "quality")]),
+        ("Machining Intelligence", [("G-code Intelligence", "nc"), ("Measurement / Compensation", "machining-intelligence"), ("Work Standard", "work-standard"), ("Machine / Tool Context", "tms")]),
+        ("Operations Intelligence", [("Procurement · Consumables · Tool Economics", "operations-intelligence"), ("Labor · Operational Cost · Anomaly", "operations-intelligence")]),
+        ("Logistics Intelligence", [("Operator · Dispatch / Fleet", "logistics-intelligence"), ("Worker · Forklift · AMR actors", "amr"), ("Last-meter Confirmation", "logistics-intelligence")]),
     ]
     cards = "".join(
         f'<article class="cell component-group span-3 reveal delay-{i + 1}"><h3>{e(title)}</h3><ul>{"".join(f"<li><a href=\"{page_path(lang, slug)}\">{e(label)}</a></li>" for label, slug in items)}</ul></article>'
@@ -1116,15 +1268,15 @@ def component_context_section(lang: str, slug: str) -> str:
     return f'<section aria-label="Component context" class="component-context section-grid"><div class="cell yellow span-12 reveal"><p class="eyebrow">Component context</p><p class="body-large">{e(copy[lang])}</p><a class="product-link" href="{page_path(lang, parent)}"><span>{e(label)}</span><span aria-hidden="true">→</span></a></div></section>'
 
 
-def quality_v513_section(lang: str) -> str:
+def quality_current_section(lang: str) -> str:
     cards = "".join(
-        f'<article class="cell quality-v513-card span-3 reveal delay-{i + 1}"><h3>{e(title)}</h3><p>{e(body[lang])}</p></article>'
-        for i, (title, body) in enumerate(QUALITY_V513["cards"])
+        f'<article class="cell quality-current-card span-3 reveal delay-{i + 1}"><h3>{e(title)}</h3><p>{e(body[lang])}</p></article>'
+        for i, (title, body) in enumerate(QUALITY_CURRENT["cards"])
     )
-    flow = "".join(f"<span>{e(step)}</span>" for step in QUALITY_V513["flow"])
-    return f"""<section aria-labelledby="quality-v513-title" class="quality-v513 section-grid">
-<div class="cell span-7 reveal"><p class="eyebrow">Quality Intelligence v0.5.13</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="quality-v513-title">{lines(QUALITY_V513["title"][lang])}</h2><p class="body-large">{e(QUALITY_V513["body"][lang])}</p><div class="intelligence-flow">{flow}</div></div>
-<div class="cell span-5 reveal delay-1">{factory_asset(f"{FACTORY_OS_ASSET_PATH}/02_quality_intelligence_v513.svg", "Flowmatic Quality Intelligence v0.5.13 workflow")}</div>{cards}</section>"""
+    flow = "".join(f"<span>{e(step)}</span>" for step in QUALITY_CURRENT["flow"])
+    return f"""<section aria-labelledby="quality-current-title" class="quality-current section-grid">
+<div class="cell span-7 reveal"><p class="eyebrow">Quality Intelligence · Working prototype</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="quality-current-title">{lines(QUALITY_CURRENT["title"][lang])}</h2><p class="body-large">{e(QUALITY_CURRENT["body"][lang])}</p><div class="intelligence-flow">{flow}</div></div>
+<div class="cell span-5 reveal delay-1"><figure class="factory-asset"><img alt="Quality Intelligence workflow from defect to recurrence" decoding="async" height="720" loading="lazy" src="{FACTORY_OS_ASSET_PATH}/quality_intelligence_workflow.svg" width="1200"></figure></div>{cards}</section>"""
 
 
 def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
@@ -1139,11 +1291,13 @@ def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
     guardrail = {"ko":"공개 범위 경계","en":"Public scope boundary","ar":"حدود النطاق العام"}[lang]
     back = {"ko":"전체 지능축 보기","en":"View all intelligence domains","ar":"عرض جميع مجالات الذكاء"}[lang]
     contact = {"ko":"파일럿 상담","en":"Discuss a pilot","ar":"ناقش مشروعًا تجريبيًا"}[lang]
+    vnext_diagrams = machining_vnext_diagrams(lang, data) if slug == "machining-intelligence" else ""
     return f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
 {meta_head(lang, slug, data["title"][lang], data["description"][lang], canonical_path)}
 <body class="intelligence-page" data-lang="{lang}" data-static-lang="true">{header(lang, slug)}<main id="main">
 <section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div>{asset}</section>
+{vnext_diagrams}
 <section aria-label="Architecture details" class="intelligence-details section-grid">{sections}<div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">{e(guardrail)}</p><p class="body-large">{e(data["guardrail"][lang])}</p></div></section>
 <section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(contact)}</a><a class="fm-button" href="{page_path(lang, 'platform')}">Flowmatic Platform / Factory OS</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
@@ -1317,6 +1471,7 @@ def contact_section(lang: str) -> str:
 
 def home_page(lang: str, canonical_path: str) -> str:
     h = HOME[lang]
+    transformation_style, transformation_section, transformation_script = transformation_blocks(lang, canonical_path)
     logic_cards = "".join(f'<li><strong>{e(title)}</strong><span>{e(body)}</span></li>' for title, body in FLOW_STEPS[lang])
     problem = "\n".join(f'<article class="cell {"red" if i < 2 else "gray"} problem-card span-3 reveal delay-{i+1}"><span>{num}</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text>{lines(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PROBLEM_CARDS[lang]))
     principles = "\n".join(f'<article class="cell {"yellow" if i == 1 else "blue" if i == 3 else "gray"} strategy-card span-3 reveal delay-{i+1}"><span>{num}</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text>{lines(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PRINCIPLES[lang]))
@@ -1325,7 +1480,7 @@ def home_page(lang: str, canonical_path: str) -> str:
     workflow_ct = {"ko": "고정 카메라 ROI → 시작·종료 이벤트 → 사이클 타임라인", "en": "Fixed camera ROI → Start/end event → Cycle timeline", "ar": "ROI لكاميرا ثابتة → حدث بداية/نهاية → خط زمني للدورة"}[lang]
     html = f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
-{meta_head(lang, "home", h["title"], h["description"], canonical_path)}
+{meta_head(lang, "home", h["title"], h["description"], canonical_path).replace("</head>", transformation_style + "\n</head>")}
 <body data-lang="{lang}" data-static-lang="true">
 {header(lang, "home")}
 <main id="main">
@@ -1336,26 +1491,27 @@ def home_page(lang: str, canonical_path: str) -> str:
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>{e(h["primary"])}</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
-<section aria-labelledby="problem-title" class="problem section-grid">
-<div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"해결하는 운영 문제","en":"Operational gaps","ar":"فجوات التشغيل"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="problem-title">{lines(h["problem_title"])}</h2><p class="body-large">{e(h["problem_body"])}</p></div>{problem}</section>
+{transformation_section}
+{before_after_section(lang)}
+{intelligence_domains_section(lang)}
+{outcomes_section(lang)}
 <section aria-labelledby="strategy-title" class="strategy section-grid" id="approach">
 <div class="cell span-8 reveal"><p class="eyebrow">{e({"ko":"현장 중심 설계","en":"Field-first design","ar":"تصميم يبدأ من الميدان"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="strategy-title">{lines(h["strategy_title"])}</h2><p class="body-large">{e(h["strategy_body"])}</p></div>
 <div class="cell blue span-4 reveal delay-1 strategy-core"><p class="kicker">Minimal intervention / Maximum clarity</p><h3>{e({"ko":"현장 제약 기반 설계","en":"Intelligence should fit the field.","ar":"يجب أن يناسب الذكاء أرض الواقع."}[lang])}</h3><p>{e(h["support"])}</p></div>{principles}</section>
-{certified_core_section(lang)}
 <section aria-labelledby="flow-title" class="field-flow section-grid" id="flow">
 <div class="cell span-5 flow-copy reveal"><p class="eyebrow">{e({"ko":"Flowmatic 작동 방식","en":"How Flowmatic works","ar":"كيف يعمل Flowmatic"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="flow-title">{lines(h["flow_title"])}</h2><p class="body-large">{e(h["flow_body"])}</p><ol class="flow-explanation">{logic_cards}</ol></div>
 <div class="cell span-7 flow-visual-cell reveal delay-1">{field_story(lang)}</div>
 </section>
-{intelligence_domains_section(lang)}
+{built_evidence_section(lang)}
 {platform_architecture_section(lang)}
 {component_hierarchy_section(lang)}
-{built_evidence_section(lang)}
+{certified_core_section(lang)}
 {deployment_modes_section(lang)}
 {roadmap_section(lang)}
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
 {contact_section(lang)}
-</main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
+</main>{footer(lang)}{transformation_script}<script src="{SCRIPT_SRC}"></script></body></html>"""
     return html
 
 
@@ -1545,7 +1701,7 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
 <div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(LANGS[lang]["all_products"])}</a></div>
 <div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
 {component_context_section(lang, slug)}
-<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}{quality_v513_section(lang) if slug == "quality" else ""}
+<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}{quality_current_section(lang) if slug == "quality" else ""}
 <section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
 <section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#products">{e(LANGS[lang]["all_products"])}</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script>{extra_script}</body></html>"""
@@ -1575,15 +1731,17 @@ def notes() -> str:
 - 다국어 처리 방식: `/ko/`, `/en/`, `/ar/` 정적 HTML을 생성하며 각 HTML에는 해당 언어만 렌더링합니다. 기존 루트 URL과 `*.html` 제품 URL은 한국어 호환 페이지로 유지합니다.
 - 데모 영상 파일: `flowmatic_nc_demo.mp4`, `flowmatic_ct_demo.mp4`; 두 제품 페이지의 `<video>`는 `controls`, `playsinline`, `preload="metadata"`, `poster`를 사용합니다.
 - NC 공개 브라우저 데모: `/nc-demo-lite.js`, `/nc-demo-lite-worker.js`, `/demo-data/flowmatic-nc-sample.nc`; 업로드 없이 브라우저 내부에서 기본 G-code 이동시간만 계산합니다.
-- Flowmatic Quality: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; 작동 프로토타입, Inspection–Dashboard 연동 진행 상태, 구현/연동/목표 아키텍처를 구분해 표시합니다.
-- Factory Operating Intelligence: Quality / Machining / Operations / Logistics 네 지능축과 Shared Manufacturing Context → Event Core → 계획된 Control Tower 구조를 `/{{lang}}/platform/`에서 설명합니다.
+- Quality Intelligence: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; Defect → Loss → Priority → Work → Verify → Recurrence 구조를 기준으로 하며 Inspection은 Evidence / Input Layer로 표시합니다.
+- Machining Intelligence: Manufacturing Recipe, 기존 G-code 문맥 추론, safe assembly, 측정/보정, managed metadata, air-gapped USB 동기화를 V.Next 구조로 설명합니다. source-level 검증과 Active development / PoC 범위를 분리합니다.
+- Factory Operating Intelligence: Quality / Machining / Operations / Logistics 네 지능축과 Shared Manufacturing Context → Event Core → Manufacturing Control Shell → 계획된 Cross-domain Control Tower 구조를 `/{{lang}}/platform/`에서 설명합니다.
 - 신규 정식 URL: `/{{lang}}/machining-intelligence/`, `/{{lang}}/operations-intelligence/`, `/{{lang}}/logistics-intelligence/`, `/{{lang}}/platform/`; 기존 NC/CT/Quality/Work Standard/TMS/AMR URL은 하위 컴포넌트 페이지로 유지합니다.
 - Operations Intelligence: Functional MVP / internal validation 상태로 표시하며, Tracked Operational Cost를 완전 제조원가나 회계원가로 표현하지 않습니다.
 - 개발 프리뷰 제품: Work Standard, TMS, AMR은 빈 비디오 플레이어 없이 개발 상태 패널, 파일럿 입력, 확인 결과, 문의 CTA를 표시합니다.
 - 공식 브랜드 마크: 좌상단 파랑, 좌하단 빨강, 우측 노랑 2칸의 2×2 마크를 `/assets/branding/`에서 단일 관리합니다. 헤더·푸터·파비콘·앱 아이콘·OG 이미지가 같은 원본을 사용합니다.
 - 공식 QR 연락 시그니처: `{BASE_URL}/`로 연결하며 `{CONTACT_EMAIL}`을 함께 표시합니다. Contact 영역과 외부 자료에서 재사용할 SVG/PNG를 제공합니다.
 - 공식 문의 목적지: `{CONTACT_EMAIL}`. 문의 폼은 Formspree 엔드포인트를 통해 AJAX로 제출하며, 성공·실패 상태를 페이지 안에서 안내합니다.
-- 사용자 확인 필요: 개인정보처리방침 URL, 법인명/주소/전화번호, 아랍어 최종 감수, Quality의 실제 연동 상태, Work Standard/TMS/AMR의 출시 상태.
+- 문의 선택지는 네 Intelligence와 Platform / Control Tower만 노출하며 legacy component URL의 interest 값은 상위 Intelligence로 매핑합니다.
+- 사용자 확인 필요: 개인정보처리방침 URL, 법인명/주소/전화번호, 아랍어 원어민 최종 감수, 실제 CNC/CMM 및 machine adapter 현장 검증 상태.
 """
 
 
