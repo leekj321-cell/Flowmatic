@@ -12,7 +12,7 @@ HOME_OVERRIDES = {
         "title": "Flowmatic | Manufacturing Intelligence Platform",
         "description": "Flowmatic은 공통 Manufacturing Context를 전문 Engine이 읽고, Engine 조합을 현장 Module과 고객별 Solution Profile로 연결하는 제조 운영지능 플랫폼입니다.",
         "eyebrow": "Manufacturing Intelligence Platform",
-        "h1": "제조 현장의 문제를|Engine 조합으로 해결합니다.",
+        # Brand lock: the first-fold H1 is the fixed Flowmatic slogan defined in build_site.HOME.
         "body": "문제마다 새 프로그램을 만들지 않습니다. 같은 제조 Context를 전문 Engine이 읽고, 필요한 Engine을 조합해 업무 Module을 만들고, 검증 범위가 명확한 Solution Profile로 제공합니다.",
         "support": "기존 공장은 유지하고, 공통 Context 위에서 필요한 Engine과 Module만 조합합니다.",
         "primary": "구조 보기",
@@ -26,7 +26,7 @@ HOME_OVERRIDES = {
         "title": "Flowmatic | Manufacturing Intelligence Platform",
         "description": "Flowmatic lets domain engines read shared manufacturing context, compose into operational modules, and form customer-specific solution profiles.",
         "eyebrow": "Manufacturing Intelligence Platform",
-        "h1": "Solve manufacturing problems|through engine composition.",
+        # Brand lock: do not override the fixed first-fold Flowmatic slogan.
         "body": "We do not build a separate program for every problem. Domain engines read the same manufacturing context, combine into operational modules, and form solution profiles with explicit validation boundaries.",
         "support": "Keep the existing factory. Compose only the engines and modules the problem requires.",
         "primary": "Explore architecture",
@@ -40,7 +40,7 @@ HOME_OVERRIDES = {
         "title": "Flowmatic | منصة ذكاء التصنيع",
         "description": "تقرأ محركات Flowmatic المتخصصة سياق تصنيع مشتركاً، وتتجمع في وحدات تشغيل وملفات حلول خاصة بكل عميل.",
         "eyebrow": "Manufacturing Intelligence Platform",
-        "h1": "نحل مشاكل التصنيع|عبر تركيب المحركات.",
+        # Brand lock: do not override the fixed first-fold Flowmatic slogan.
         "body": "لا نبني برنامجاً منفصلاً لكل مشكلة. تقرأ المحركات المتخصصة سياق التصنيع نفسه، وتتجمع في وحدات تشغيل وملفات حلول ذات حدود تحقق واضحة.",
         "support": "حافظ على المصنع القائم، وركّب فقط المحركات والوحدات التي تحتاجها المشكلة.",
         "primary": "عرض البنية",

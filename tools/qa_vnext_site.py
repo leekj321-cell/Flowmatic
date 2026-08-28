@@ -34,6 +34,11 @@ V156_LEGACY = (
     "Event Core & Control Tower Architecture",
     "00_factory_os_four_axes",
 )
+BRAND_HERO_LINES = (
+    "Elegant Engineering.",
+    "Intelligent Operations.",
+    "Flowmatic.",
+)
 
 
 class Scan(HTMLParser):
@@ -48,6 +53,9 @@ class Scan(HTMLParser):
         self.source_nodes: list[tuple[str, str]] = []
         self.solution_nodes: list[str] = []
         self.statuses: Counter[str] = Counter()
+        self.hero_titles: list[list[str]] = []
+        self._hero_title_depth = 0
+        self._hero_title_parts: list[str] | None = None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = dict(attrs)
@@ -58,6 +66,11 @@ class Scan(HTMLParser):
             self.title = True
         if tag == "meta" and values.get("name") == "description" and values.get("content"):
             self.description = True
+        if tag == "h1" and values.get("id") == "hero-title":
+            self._hero_title_depth = 1
+            self._hero_title_parts = []
+        elif self._hero_title_depth:
+            self._hero_title_depth += 1
         classes = set((values.get("class") or "").split())
         if "module-card" in classes:
             self.module_cards += 1
@@ -72,6 +85,21 @@ class Scan(HTMLParser):
             value = values.get(key)
             if value:
                 self.links.append((key, value.split()[0]))
+
+    def handle_endtag(self, tag: str) -> None:
+        if not self._hero_title_depth:
+            return
+        self._hero_title_depth -= 1
+        if self._hero_title_depth == 0 and self._hero_title_parts is not None:
+            self.hero_titles.append(self._hero_title_parts)
+            self._hero_title_parts = None
+
+    def handle_data(self, data: str) -> None:
+        if self._hero_title_parts is None:
+            return
+        value = " ".join(data.split())
+        if value:
+            self._hero_title_parts.append(value)
 
 
 def generated_pages() -> list[Path]:
@@ -181,14 +209,24 @@ def main() -> None:
 
     for lang in LANGS:
         home = (ROOT / lang / "index.html").read_text(encoding="utf-8")
+        home_scan = Scan()
+        home_scan.feed(home)
         required = ('class="transformation"', "Platform / Engine-Module Composition")
         for phrase in required:
             if phrase not in home:
                 errors.append(f"home content missing ({lang}): {phrase}")
+        if home_scan.hero_titles != [list(BRAND_HERO_LINES)]:
+            errors.append(f"fixed brand slogan mismatch ({lang}): {home_scan.hero_titles}")
         machining = (ROOT / lang / "machining-intelligence" / "index.html").read_text(encoding="utf-8")
         for phrase in ("Manufacturing Recipe", "INFERRED", "USER CONFIRMED", "Managed Metadata Comment Block", "Conflict review", "fail-closed"):
             if phrase not in machining:
                 errors.append(f"machining content missing ({lang}): {phrase}")
+
+    root_home = (ROOT / "index.html").read_text(encoding="utf-8")
+    root_scan = Scan()
+    root_scan.feed(root_home)
+    if root_scan.hero_titles != [list(BRAND_HERO_LINES)]:
+        errors.append(f"fixed brand slogan mismatch (index.html): {root_scan.hero_titles}")
 
     ko_home = (ROOT / "ko" / "index.html").read_text(encoding="utf-8")
     for phrase in ("Machining · Recipe", "Machining · Safety Contract", "Machining · V.Next scope", "deterministic source test", "prototype integration"):
