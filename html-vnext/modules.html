@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flowmatic Modules</title>
+</head>
+<body data-page="modules" data-html-version="vnext">
+  <a href="#main">본문으로 건너뛰기</a>
+
+  <header data-site-header>
+    <a href="home.html" aria-label="Flowmatic 홈">Flowmatic</a>
+    <nav aria-label="주요 메뉴">
+      <a href="platform.html">Platform</a>
+      <a href="modules.html" aria-current="page">Modules</a>
+      <a href="home.html#intelligence">Intelligence</a>
+      <a href="home.html#pilot">파일럿 상담</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section aria-labelledby="modules-title" data-page-hero>
+      <p>Deployable manufacturing modules</p>
+      <h1 id="modules-title">현장의 한 문제에 필요한 Module만 배포합니다.</h1>
+      <p>NC 검토·측정/보정·품질 우선순위·설비 대응·자재 요청처럼 시간이 드는 업무부터 시작합니다.</p>
+      <p>
+        <a href="#module-catalog">Module 전체 보기</a>
+        <a href="platform.html#architecture">구성 원리 보기</a>
+      </p>
+    </section>
+
+    <section aria-labelledby="status-title">
+      <header>
+        <p>Build status</p>
+        <h2 id="status-title">현재 작동 범위와 다음 구성 범위를 구분합니다.</h2>
+      </header>
+      <dl>
+        <div>
+          <dt>Functional Build</dt>
+          <dd>핵심 입력과 출력 흐름이 구현되어 기능 단위로 확인할 수 있습니다.</dd>
+        </div>
+        <div>
+          <dt>Integration Prototype</dt>
+          <dd>핵심 기능이 작동하며 실제 현장 데이터와 시스템 연결을 검증하는 단계입니다.</dd>
+        </div>
+        <div>
+          <dt>Next Composition</dt>
+          <dd>기존 Engine과 Module을 바탕으로 다음 검증 범위를 구성하는 단계입니다.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section id="module-catalog" aria-labelledby="module-catalog-title" data-module-catalog>
+      <header>
+        <p>12 Modules</p>
+        <h2 id="module-catalog-title">Engine 조합, 배포 역할, 연결되는 Intelligence를 함께 봅니다.</h2>
+        <p>모든 Module은 10개 Manufacturing Context를 공통 기준으로 사용합니다.</p>
+      </header>
+
+      <div>
+        <article id="viewer" data-module-id="module-viewer" data-contexts="shared" data-engines="engine-nc-semantic engine-geometry engine-revision" data-axes="axis-machining" data-status="functional-build">
+          <header>
+            <h3>Viewer</h3>
+            <p>Functional Build</p>
+          </header>
+          <p>NC와 도면을 같은 기준에서 읽는 가공 해석 Module입니다.</p>
+          <p>G-code·형상·경로·Revision을 하나의 검토 기준으로 묶습니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>NC Semantic · Geometry · Revision</dd></div>
+            <div><dt>Intelligence</dt><dd>Machining</dd></div>
+          </dl>
+          <a href="/ko/nc/" aria-label="Viewer 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="generator" data-module-id="module-generator" data-contexts="shared" data-engines="engine-nc-semantic engine-geometry engine-revision" data-axes="axis-machining" data-status="functional-build">
+          <header>
+            <h3>Generator</h3>
+            <p>Functional Build</p>
+          </header>
+          <p>반복 가공을 구성하는 NC 생성 Module입니다.</p>
+          <p>Hole·Drill·Tap·가공블록을 조합하고 안전 경계 검사 후 NC를 생성합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>NC Semantic · Geometry · Revision</dd></div>
+            <div><dt>Intelligence</dt><dd>Machining</dd></div>
+          </dl>
+          <a href="/ko/machining-intelligence/" aria-label="Generator 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="work-standard" data-module-id="module-work-standard" data-contexts="shared" data-engines="engine-geometry engine-workflow engine-reference-data" data-axes="axis-machining" data-status="functional-build">
+          <header>
+            <h3>Work Standard</h3>
+            <p>Functional Build</p>
+          </header>
+          <p>작업순서와 셋업 기준을 표준화하는 Module입니다.</p>
+          <p>작업순서·셋업·현장 전달 기준을 같은 Revision으로 관리합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Geometry · Workflow · Reference Data</dd></div>
+            <div><dt>Intelligence</dt><dd>Machining</dd></div>
+          </dl>
+          <a href="/ko/work-standard/" aria-label="Work Standard 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="measurement-compensation" data-module-id="module-measurement-compensation" data-contexts="shared" data-engines="engine-measurement engine-geometry engine-quality-analysis" data-axes="axis-machining axis-quality" data-status="functional-build">
+          <header>
+            <h3>Measurement / Compensation</h3>
+            <p>Functional Build</p>
+          </header>
+          <p>측정값을 현장 보정 지시로 연결하는 Module입니다.</p>
+          <p>측정·좌표 해석·보정량·현장 지시를 하나의 이력으로 연결합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Measurement · Geometry · Quality Analysis</dd></div>
+            <div><dt>Intelligence</dt><dd>Machining · Quality</dd></div>
+          </dl>
+          <a href="/ko/machining-intelligence/" aria-label="Measurement / Compensation 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="tms" data-module-id="module-tms" data-contexts="shared" data-engines="engine-tool-life engine-nc-semantic engine-revision" data-axes="axis-machining axis-operations" data-status="functional-build">
+          <header>
+            <h3>TMS</h3>
+            <p>Functional Build</p>
+          </header>
+          <p>공구 사용이력과 잔여수명을 관리하는 Module입니다.</p>
+          <p>교환 판단에 필요한 사용시간·절삭거리·이력을 같은 기준으로 관리합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Tool Life · NC Semantic · Revision</dd></div>
+            <div><dt>Intelligence</dt><dd>Machining · Operations</dd></div>
+          </dl>
+          <a href="/ko/tms/" aria-label="TMS 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="preventive-maintenance" data-module-id="module-preventive-maintenance" data-contexts="shared" data-engines="engine-machine-state engine-measurement engine-tool-life" data-axes="axis-operations" data-status="functional-build">
+          <header>
+            <h3>Preventive Maintenance</h3>
+            <p>Functional Build</p>
+          </header>
+          <p>설비·가공 문맥의 이상 추세를 검토하는 Module입니다.</p>
+          <p>Machine State·측정·공구수명 데이터를 같은 시계열에서 비교합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Machine State · Measurement · Tool Life</dd></div>
+            <div><dt>Intelligence</dt><dd>Operations</dd></div>
+          </dl>
+          <a href="operations-intelligence.html" aria-label="Preventive Maintenance 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="quality-worklist" data-module-id="module-quality-worklist" data-contexts="shared" data-engines="engine-quality-analysis engine-cost-resource engine-workflow" data-axes="axis-quality" data-status="integration-prototype">
+          <header>
+            <h3>Quality Worklist</h3>
+            <p>Integration Prototype</p>
+          </header>
+          <p>불량을 손실과 조치 우선순위로 바꾸는 Module입니다.</p>
+          <p>TOP 원인·손실금액·담당·조치·재발을 한 흐름으로 관리합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Quality Analysis · Cost / Resource · Workflow</dd></div>
+            <div><dt>Intelligence</dt><dd>Quality</dd></div>
+          </dl>
+          <a href="/ko/quality/" aria-label="Quality Worklist 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="machine-monitor" data-module-id="module-machine-monitor" data-contexts="shared" data-engines="engine-machine-state engine-vision-ct engine-workflow" data-axes="axis-operations" data-status="integration-prototype">
+          <header>
+            <h3>Machine Monitor</h3>
+            <p>Integration Prototype</p>
+          </header>
+          <p>설비 상태와 Cycle을 운영 Event로 바꾸는 Module입니다.</p>
+          <p>가동·대기·정지·호출을 기록하고 손실시간과 대응 리드타임을 계산합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Machine State · Vision / CT · Workflow</dd></div>
+            <div><dt>Intelligence</dt><dd>Operations</dd></div>
+          </dl>
+          <a href="/ko/ct/" aria-label="Machine Monitor 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="root-cause" data-module-id="module-root-cause" data-contexts="shared" data-engines="engine-quality-analysis engine-machine-state engine-tool-life engine-revision" data-axes="axis-quality axis-operations" data-status="next-composition">
+          <header>
+            <h3>Root Cause</h3>
+            <p>Next Composition</p>
+          </header>
+          <p>품질 변화와 공정 변화를 함께 검토하는 구성입니다.</p>
+          <p>불량 시점과 Tool·Machine·INDEX·NC Revision 변화를 같은 Context에서 비교합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Quality Analysis · Machine State · Tool Life · Revision</dd></div>
+            <div><dt>Intelligence</dt><dd>Quality · Operations</dd></div>
+          </dl>
+          <a href="/ko/quality/" aria-label="Root Cause 연결 범위 보기">연결 범위 보기</a>
+        </article>
+
+        <article id="material-dispatch" data-module-id="module-material-dispatch" data-contexts="shared" data-engines="engine-material-flow engine-workflow engine-machine-state" data-axes="axis-logistics" data-status="integration-prototype">
+          <header>
+            <h3>Material Dispatch</h3>
+            <p>Integration Prototype</p>
+          </header>
+          <p>자재 요청부터 투입 완료까지 연결하는 Module입니다.</p>
+          <p>요청·우선순위·배차·보급·완료 확인을 하나의 이력으로 관리합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Material Flow · Workflow · Machine State</dd></div>
+            <div><dt>Intelligence</dt><dd>Logistics</dd></div>
+          </dl>
+          <a href="/ko/logistics-intelligence/" aria-label="Material Dispatch 현재 구현 보기">현재 구현 보기</a>
+        </article>
+
+        <article id="data-management" data-module-id="module-data-management" data-contexts="shared" data-engines="engine-revision engine-reference-data engine-workflow" data-axes="axis-machining axis-quality axis-operations axis-logistics" data-status="functional-build">
+          <header>
+            <h3>Data Management</h3>
+            <p>Functional Build</p>
+          </header>
+          <p>현장 기준 데이터의 변경과 배포 이력을 관리하는 Module입니다.</p>
+          <p>Revision·hash·manifest·출처를 확인하고 충돌한 변경은 검토 상태로 분리합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Revision · Reference Data · Workflow</dd></div>
+            <div><dt>Intelligence</dt><dd>Machining · Quality · Operations · Logistics</dd></div>
+          </dl>
+          <a href="platform.html" aria-label="Data Management 플랫폼 구조 보기">플랫폼 구조 보기</a>
+        </article>
+
+        <article id="control-tower" data-module-id="module-control-tower" data-contexts="shared" data-engines="engine-machine-state engine-quality-analysis engine-cost-resource engine-workflow" data-axes="axis-quality axis-operations axis-logistics" data-status="next-composition">
+          <header>
+            <h3>Control Tower</h3>
+            <p>Next Composition</p>
+          </header>
+          <p>선택된 Module의 운영 결과를 같은 기준에서 집계하는 Module입니다.</p>
+          <p>Factory·Group·Period 기준으로 상태·손실·담당·완료를 연결합니다.</p>
+          <dl>
+            <div><dt>Engine</dt><dd>Machine State · Quality Analysis · Cost / Resource · Workflow</dd></div>
+            <div><dt>Intelligence</dt><dd>Quality · Operations · Logistics</dd></div>
+          </dl>
+          <a href="operations-intelligence.html" aria-label="Control Tower 연결 범위 보기">연결 범위 보기</a>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="module-next-title">
+      <h2 id="module-next-title">한 Module의 입력·출력·KPI부터 검증합니다.</h2>
+      <p>
+        <a href="home.html#pilot">파일럿 범위 정하기</a>
+        <a href="home.html#intelligence">네 개의 Intelligence 보기</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="home.html">Flowmatic</a>
+    <p><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a></p>
+    <small>© 2026 Flowmatic</small>
+  </footer>
+</body>
+</html>

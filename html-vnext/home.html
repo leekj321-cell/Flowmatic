@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flowmatic | Manufacturing Intelligence Platform</title>
+</head>
+<body data-page="home" data-html-version="vnext">
+  <a href="#main">본문으로 건너뛰기</a>
+
+  <header data-site-header>
+    <a href="home.html" aria-label="Flowmatic 홈">Flowmatic</a>
+    <nav aria-label="주요 메뉴">
+      <a href="platform.html">Platform</a>
+      <a href="modules.html">Modules</a>
+      <a href="#intelligence">Intelligence</a>
+      <a href="#pilot">파일럿 상담</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="hero" aria-labelledby="hero-title" data-page-hero>
+      <p>Manufacturing Intelligence Platform</p>
+      <h1 id="hero-title">
+        <span>Elegant Engineering.</span>
+        <span>Intelligent Operations.</span>
+        <span>Flowmatic.</span>
+      </h1>
+      <p>Engineering Intelligence for the physical world.</p>
+      <p>기존 설비와 시스템 사이에서 사람이 반복하던 비교·기록·전달을 하나의 운영 흐름으로 연결합니다.</p>
+      <p>
+        <a href="#composition-journey">구성 방식 보기</a>
+        <a href="#current-stage">현재 구현 범위 보기</a>
+      </p>
+    </section>
+
+    <section id="composition-journey" aria-labelledby="composition-title" data-composition-journey>
+      <header>
+        <p>Flowmatic Composition</p>
+        <h2 id="composition-title">흩어진 현장의 기준과 기능을 Module로 묶고, 네 개의 Intelligence로 연결합니다.</h2>
+      </header>
+
+      <ol aria-label="구성 단계" data-composition-steps>
+        <li data-composition-step="field">
+          <strong>01 · 흩어진 현장</strong>
+          <span>설비·제품·공정·공구·품질·시간의 기준과 해석 기능이 서로 다른 화면과 문서에 놓여 있습니다.</span>
+        </li>
+        <li data-composition-step="context-engine">
+          <strong>02 · 공통 기준</strong>
+          <span>10개 Context를 같은 기준선에 놓고, 12개 Engine이 필요한 현장 의미를 읽습니다.</span>
+        </li>
+        <li data-composition-step="modules">
+          <strong>03 · 배포 단위</strong>
+          <span>필요한 Engine만 조합해 한 문제를 처리하는 12개 Module을 구성합니다.</span>
+        </li>
+        <li data-composition-step="intelligence">
+          <strong>04 · 운영 지능</strong>
+          <span>Module을 다시 연결해 Machining·Quality·Operations·Logistics Intelligence를 구성합니다.</span>
+        </li>
+      </ol>
+
+      <div aria-label="Flowmatic 구성 구조" data-composition-canvas>
+        <section aria-labelledby="context-layer-title" data-composition-layer="context">
+          <header>
+            <p>Shared manufacturing context</p>
+            <h3 id="context-layer-title">Context</h3>
+          </header>
+          <ul data-token-pool="context">
+            <li data-token-id="context-machine" data-token-kind="context">Machine</li>
+            <li data-token-id="context-product" data-token-kind="context">Product</li>
+            <li data-token-id="context-process" data-token-kind="context">Process</li>
+            <li data-token-id="context-tool" data-token-kind="context">Tool</li>
+            <li data-token-id="context-feature" data-token-kind="context">Feature</li>
+            <li data-token-id="context-quality" data-token-kind="context">Quality</li>
+            <li data-token-id="context-measurement" data-token-kind="context">Measurement</li>
+            <li data-token-id="context-material" data-token-kind="context">Material</li>
+            <li data-token-id="context-worker" data-token-kind="context">Worker</li>
+            <li data-token-id="context-time" data-token-kind="context">Time</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="engine-layer-title" data-composition-layer="engine">
+          <header>
+            <p>Specialized manufacturing engines</p>
+            <h3 id="engine-layer-title">Engine</h3>
+          </header>
+          <ul data-token-pool="engine">
+            <li data-token-id="engine-nc-semantic" data-token-kind="engine">NC Semantic</li>
+            <li data-token-id="engine-geometry" data-token-kind="engine">Geometry</li>
+            <li data-token-id="engine-machine-state" data-token-kind="engine">Machine State</li>
+            <li data-token-id="engine-quality-analysis" data-token-kind="engine">Quality Analysis</li>
+            <li data-token-id="engine-measurement" data-token-kind="engine">Measurement</li>
+            <li data-token-id="engine-tool-life" data-token-kind="engine">Tool Life</li>
+            <li data-token-id="engine-revision" data-token-kind="engine">Revision</li>
+            <li data-token-id="engine-reference-data" data-token-kind="engine">Reference Data</li>
+            <li data-token-id="engine-vision-ct" data-token-kind="engine">Vision / CT</li>
+            <li data-token-id="engine-workflow" data-token-kind="engine">Workflow</li>
+            <li data-token-id="engine-cost-resource" data-token-kind="engine">Cost / Resource</li>
+            <li data-token-id="engine-material-flow" data-token-kind="engine">Material Flow</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="module-layer-title" data-composition-layer="module">
+          <header>
+            <p>Deployable units</p>
+            <h3 id="module-layer-title">Module</h3>
+          </header>
+          <div data-module-pool>
+            <article data-module-id="module-viewer" data-contexts="shared" data-engines="engine-nc-semantic engine-geometry engine-revision" data-axes="axis-machining" data-status="functional-build">
+              <h4>Viewer</h4>
+            </article>
+            <article data-module-id="module-generator" data-contexts="shared" data-engines="engine-nc-semantic engine-geometry engine-revision" data-axes="axis-machining" data-status="functional-build">
+              <h4>Generator</h4>
+            </article>
+            <article data-module-id="module-work-standard" data-contexts="shared" data-engines="engine-geometry engine-workflow engine-reference-data" data-axes="axis-machining" data-status="functional-build">
+              <h4>Work Standard</h4>
+            </article>
+            <article data-module-id="module-measurement-compensation" data-contexts="shared" data-engines="engine-measurement engine-geometry engine-quality-analysis" data-axes="axis-machining axis-quality" data-status="functional-build">
+              <h4>Measurement / Compensation</h4>
+            </article>
+            <article data-module-id="module-tms" data-contexts="shared" data-engines="engine-tool-life engine-nc-semantic engine-revision" data-axes="axis-machining axis-operations" data-status="functional-build">
+              <h4>TMS</h4>
+            </article>
+            <article data-module-id="module-preventive-maintenance" data-contexts="shared" data-engines="engine-machine-state engine-measurement engine-tool-life" data-axes="axis-operations" data-status="functional-build">
+              <h4>Preventive Maintenance</h4>
+            </article>
+            <article data-module-id="module-quality-worklist" data-contexts="shared" data-engines="engine-quality-analysis engine-cost-resource engine-workflow" data-axes="axis-quality" data-status="integration-prototype">
+              <h4>Quality Worklist</h4>
+            </article>
+            <article data-module-id="module-machine-monitor" data-contexts="shared" data-engines="engine-machine-state engine-vision-ct engine-workflow" data-axes="axis-operations" data-status="integration-prototype">
+              <h4>Machine Monitor</h4>
+            </article>
+            <article data-module-id="module-root-cause" data-contexts="shared" data-engines="engine-quality-analysis engine-machine-state engine-tool-life engine-revision" data-axes="axis-quality axis-operations" data-status="next-composition">
+              <h4>Root Cause</h4>
+            </article>
+            <article data-module-id="module-material-dispatch" data-contexts="shared" data-engines="engine-material-flow engine-workflow engine-machine-state" data-axes="axis-logistics" data-status="integration-prototype">
+              <h4>Material Dispatch</h4>
+            </article>
+            <article data-module-id="module-data-management" data-contexts="shared" data-engines="engine-revision engine-reference-data engine-workflow" data-axes="axis-machining axis-quality axis-operations axis-logistics" data-status="functional-build">
+              <h4>Data Management</h4>
+            </article>
+            <article data-module-id="module-control-tower" data-contexts="shared" data-engines="engine-machine-state engine-quality-analysis engine-cost-resource engine-workflow" data-axes="axis-quality axis-operations axis-logistics" data-status="next-composition">
+              <h4>Control Tower</h4>
+            </article>
+          </div>
+          <p><a href="modules.html">12개 Module 전체 보기</a></p>
+        </section>
+
+        <section id="intelligence" aria-labelledby="axis-layer-title" data-composition-layer="intelligence">
+          <header>
+            <p>Solution profiles</p>
+            <h3 id="axis-layer-title">Intelligence</h3>
+          </header>
+          <div data-axis-pool>
+            <article data-axis-id="axis-machining" data-modules="module-viewer module-generator module-work-standard module-measurement-compensation module-tms module-data-management">
+              <h4>Machining Intelligence</h4>
+              <p>가공 해석 · NC 생성 · 측정/보정 · 공구관리</p>
+              <a href="/ko/machining-intelligence/" aria-label="Machining Intelligence 현재 구현 보기">현재 구현 보기</a>
+            </article>
+            <article data-axis-id="axis-quality" data-modules="module-measurement-compensation module-quality-worklist module-root-cause module-data-management module-control-tower">
+              <h4>Quality Intelligence</h4>
+              <p>측정 · 손실 · 우선순위 · 재발 · 원인추적</p>
+              <a href="/ko/quality/" aria-label="Quality Intelligence 현재 구현 보기">현재 구현 보기</a>
+            </article>
+            <article data-axis-id="axis-operations" data-modules="module-tms module-preventive-maintenance module-machine-monitor module-root-cause module-data-management module-control-tower">
+              <h4>Operations Intelligence</h4>
+              <p>설비상태 · Cycle · 손실 · 예방보전 · 운영판단</p>
+              <a href="operations-intelligence.html" aria-label="Operations Intelligence 현재 구현 보기">현재 구현 보기</a>
+            </article>
+            <article data-axis-id="axis-logistics" data-modules="module-material-dispatch module-data-management module-control-tower">
+              <h4>Logistics Intelligence</h4>
+              <p>자재요청 · 배차 · 공급 · 완료 확인</p>
+              <a href="/ko/logistics-intelligence/" aria-label="Logistics Intelligence 현재 구현 보기">현재 구현 보기</a>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="current-stage" aria-labelledby="current-stage-title">
+      <p>Current stage</p>
+      <h2 id="current-stage-title">기능 프로토타입을 구축했고, 외부 라인 검증이 다음 단계입니다.</h2>
+      <p>NC·Quality·Operations 핵심 흐름이 작동합니다. 다음 단계에서는 설치 가능성·자동 수집률·업무시간·원인 확인시간을 실제 라인에서 측정합니다.</p>
+      <div>
+        <article>
+          <p>Functional prototypes</p>
+          <h3>NC · Quality · Operations</h3>
+          <p>핵심 입력·판단·후속 행동 흐름이 작동합니다.</p>
+        </article>
+        <article>
+          <p>Public demos</p>
+          <h3>CT · NC</h3>
+          <p>입력부터 결과 확인까지 작동 흐름을 직접 확인할 수 있습니다.</p>
+          <p><a href="/ko/ct/">CT 데모</a> · <a href="/ko/nc/">NC 데모</a></p>
+        </article>
+        <article>
+          <p>External validation</p>
+          <h3>SEALINK PoC</h3>
+          <p>대상 공정 · 입력 데이터 · 검증 KPI 협의 중</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="pilot" aria-labelledby="pilot-title">
+      <header>
+        <p>Deployment and pilot</p>
+        <h2 id="pilot-title">한 라인에서 전후를 측정하고, 다음 공정의 확장 조건을 판단합니다.</h2>
+      </header>
+
+      <ol>
+        <li>
+          <h3>01 · 기준선 정의</h3>
+          <p>반복 업무 시간·원인 확인 시간·대응 리드타임 가운데 핵심 지표를 정합니다.</p>
+        </li>
+        <li>
+          <h3>02 · 입력 확인</h3>
+          <p>카메라·NC·검사·작업자 입력의 수집 가능성과 누락률을 확인합니다.</p>
+        </li>
+        <li>
+          <h3>03 · 8주 현장 운영</h3>
+          <p>담당·조치·완료 조건을 실제 업무에 연결하고 같은 지표를 측정합니다.</p>
+        </li>
+        <li>
+          <h3>04 · 통과 판단</h3>
+          <p>기준선 변화·사용성·설치 공수·후속 배포 조건을 함께 확인합니다.</p>
+        </li>
+      </ol>
+
+      <aside aria-labelledby="boundary-title">
+        <h3 id="boundary-title">기존 책임 경계는 유지합니다.</h3>
+        <p>비상정지·인터록·전문 CAM·정밀측정·ERP·MES·WMS는 기존 시스템이 담당합니다. Flowmatic은 관찰·문맥·우선순위·담당·증빙·완료 확인을 연결합니다.</p>
+      </aside>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <header>
+        <p>Contact</p>
+        <h2 id="contact-title">한 라인, 한 문제부터 시작합니다.</h2>
+        <p>반복 공수가 가장 큰 업무와 사용할 수 있는 입력 데이터를 기준으로 8주 검증 범위와 기준선을 정합니다.</p>
+        <p><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a></p>
+      </header>
+
+      <form action="https://formspree.io/f/xojgorkl" method="post" data-contact-form>
+        <input name="_subject" type="hidden" value="Flowmatic website inquiry">
+        <input name="language" type="hidden" value="ko">
+        <p>
+          <label for="contact-organization">회사 / 조직</label>
+          <input id="contact-organization" name="organization" type="text" autocomplete="organization" required>
+        </p>
+        <p>
+          <label for="contact-name">이름</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" required>
+        </p>
+        <p>
+          <label for="contact-product">관심 범위</label>
+          <select id="contact-product" name="product">
+            <option value="all">전체 / 미정</option>
+            <option value="quality">Quality Intelligence</option>
+            <option value="machining-intelligence">Machining Intelligence</option>
+            <option value="operations-intelligence">Operations Intelligence</option>
+            <option value="logistics-intelligence">Logistics Intelligence</option>
+            <option value="platform">Platform / Engine-Module Composition</option>
+          </select>
+        </p>
+        <p>
+          <label for="contact-brief">운영 문제 / 입력 신호 / 목표 KPI</label>
+          <textarea id="contact-brief" name="brief" rows="8" required></textarea>
+        </p>
+        <p>
+          <label for="contact-reply">회신 이메일 또는 휴대폰 번호(국가)</label>
+          <input id="contact-reply" name="reply" type="text" required>
+        </p>
+        <button type="submit">문의 보내기</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <a href="home.html">Flowmatic</a>
+    <p>기존 설비와 업무체계를 유지한 채 단절된 운영 정보를 연결합니다.</p>
+    <p><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a></p>
+    <small>© 2026 Flowmatic</small>
+  </footer>
+</body>
+</html>
