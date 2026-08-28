@@ -6436,6 +6436,12 @@ body[data-lang="ar"] .v156-platform-hero .hero-title {
   background: var(--motion-blue);
 }
 
+[data-composition-motion] [data-motion-module].is-active {
+  z-index: 7;
+  background: var(--motion-yellow);
+  box-shadow: 5px 5px 0 rgba(17, 17, 17, .18);
+}
+
 [data-composition-motion] [data-motion-module]:nth-child(3n + 2)::before {
   background: var(--motion-red);
 }

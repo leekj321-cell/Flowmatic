@@ -28,6 +28,7 @@ CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
 CSS_HREF = "/style-v5.20.css?v=5.27"
 SCRIPT_SRC = "/script.js?v=5.22"
+HOME_SCRIPT_SRC = "/script.js?v=5.23"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 WEB_V156_CONTENT_DIR = Path(__file__).resolve().parent / "content" / "web_v156"
 BRAND_PATH = "/assets/branding"
@@ -1908,7 +1909,7 @@ def home_page(lang: str, canonical_path: str) -> str:
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
 {contact_section(lang)}
-</main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
+</main>{footer(lang)}<script src="{HOME_SCRIPT_SRC}"></script></body></html>"""
     return html
 
 

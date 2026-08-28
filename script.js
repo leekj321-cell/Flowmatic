@@ -743,7 +743,7 @@ function initHomeCompositionMotion() {
         });
         if (engine && path) {
           path.setAttribute('data-edge-index', String(composeEdges.length));
-          composeEdges.push({ from: engine, to: module, path });
+          composeEdges.push({ from: engine, to: module, path, moduleIndex: moduleIndex.get(module) || 0 });
         }
       });
       splitIds(module.dataset.solutions).forEach((axisId) => {
@@ -1081,6 +1081,16 @@ function initHomeCompositionMotion() {
       const composeDraw = rangeProgress(progress, .38, .61);
       const composeFade = 1 - rangeProgress(progress, .70, .84);
       const composeOpacity = composeDraw * composeFade;
+      const activeComposeModule = Math.min(
+        modules.length - 1,
+        Math.floor(rangeProgress(progress, .38, .60) * modules.length)
+      );
+      modules.forEach((module, index) => {
+        module.classList.toggle(
+          'is-active',
+          stage === 'modules' && progress < .60 && index === activeComposeModule
+        );
+      });
       composeEdges.forEach((edge, index) => {
         const from = currentCenters.get(edge.from);
         const to = currentCenters.get(edge.to);
@@ -1088,7 +1098,10 @@ function initHomeCompositionMotion() {
         edge.path.setAttribute('d', pathBetween(from, to));
         const stagger = composeEdges.length > 1 ? (index / (composeEdges.length - 1)) * .075 : 0;
         const edgeDraw = rangeProgress(progress, .365 + stagger, .535 + stagger);
-        setPathProgress(edge, edgeDraw, edgeDraw * composeFade);
+        const emphasis = progress >= .60
+          ? .24
+          : (edge.moduleIndex === activeComposeModule ? .88 : .16);
+        setPathProgress(edge, edgeDraw, edgeDraw * composeFade * emphasis);
       });
 
       const axisDraw = rangeProgress(progress, .72, .92);
