@@ -14,7 +14,7 @@ HOME_OVERRIDES = {
         "eyebrow": "Manufacturing Intelligence Platform",
         # Brand lock: the first-fold H1 is the fixed Flowmatic slogan defined in build_site.HOME.
         "body": "기존 설비와 시스템 사이에서 사람이 반복하던 비교·기록·전달을 하나의 운영 흐름으로 연결합니다.",
-        "support": "한 라인의 한 문제에서 시작해, 측정된 결과로 다음 공정의 확장 여부를 판단합니다.",
+        "support": "한 라인에서 측정하고, 다음 공정의 확장 여부를 판단합니다.",
         "primary": "도입 방식 보기",
         "secondary": "구현 범위 보기",
         "strategy_title": "설비 교체 없이.|한 업무의 기준선을 먼저 바꿉니다.",
@@ -36,7 +36,7 @@ HOME_OVERRIDES = {
         "eyebrow": "Manufacturing Intelligence Platform",
         # Brand lock: do not override the fixed first-fold Flowmatic slogan.
         "body": "Connect the comparisons, records, and handoffs people repeat between existing equipment and systems into one operating flow.",
-        "support": "Start with one problem on one line, then use measured results to decide whether the next process should follow.",
+        "support": "Measure one line. Decide whether to expand to the next process.",
         "primary": "See deployment",
         "secondary": "See current scope",
         "strategy_title": "Keep the equipment.|Change one operating baseline first.",
@@ -58,7 +58,7 @@ HOME_OVERRIDES = {
         "eyebrow": "Manufacturing Intelligence Platform",
         # Brand lock: do not override the fixed first-fold Flowmatic slogan.
         "body": "نربط المقارنات والسجلات وعمليات التسليم المتكررة بين المعدات والأنظمة القائمة في تدفق تشغيلي واحد.",
-        "support": "نبدأ بمشكلة واحدة في خط واحد، ثم نستخدم النتائج المقاسة لتقرير الانتقال إلى العملية التالية.",
+        "support": "نقيس خطًا واحدًا، ثم نقرر التوسع إلى العملية التالية.",
         "primary": "عرض طريقة النشر",
         "secondary": "عرض النطاق الحالي",
         "strategy_title": "أبقِ المعدات.|وغيّر خط أساس تشغيليًا واحدًا أولًا.",
