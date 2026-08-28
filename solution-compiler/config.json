@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "compiler_endpoint": "",
+  "intake_endpoint": "https://formspree.io/f/xojgorkl",
+  "compiler_authority": "server",
+  "empty_endpoint_policy": "INTAKE_ONLY_NO_BUILD_CLAIM"
+}
