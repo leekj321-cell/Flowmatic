@@ -30,7 +30,7 @@ footer{padding:24px 30px;font-size:13px;display:flex;justify-content:space-betwe
 <section class="step"><div class="step-head"><div class="step-no">03</div><div class="step-title">Demo 전달 정보를 입력하세요.</div></div><div class="step-body"><div class="two"><div><label class="field" for="company">회사 / 조직</label><input id="company" class="input" autocomplete="organization"></div><div><label class="field" for="email">업무 이메일</label><input id="email" class="input" type="email" autocomplete="email"></div></div><div class="actions"><button id="analyze" class="btn">요구사항 분석</button><button id="reset" class="btn alt" type="button">초기화</button></div><div id="serverState" class="server-state">웹 사전판정과 서버 최종판정은 분리됩니다.</div></div></section>
 
 <section id="result" class="step result"><div class="step-head"><div class="step-no">04</div><div class="step-title">Flowmatic 사전판정</div></div><div class="step-body"><div class="route"><div id="existingRoute" class="route-side"><h3>1 / Existing Engine</h3><p>현재 공개 Catalog 기준으로 조합 가능한 후보입니다.</p></div><div id="gapRoute" class="route-side gap"><h3>2 / Engine Gap</h3><p>새 Engine 검토가 필요합니다. Canonical Pool과 분리합니다.</p></div></div><div id="summary" class="summary"></div><div id="moduleChips" class="chips"></div><div id="capabilityChips" class="chips"></div><div id="notice" class="notice"></div><div class="actions"><button id="submitRequest" class="btn">요청 전송</button></div></div></section>
-<footer><span>Flowmatic Solution Compiler / V0.1 Candidate</span><span>Canonical Engine Pool is fail-closed.</span></footer>
+<footer><span>Flowmatic Solution Compiler / V0.2</span><span>Canonical Engine Pool is fail-closed.</span></footer>
 </div>
 <script>
 let catalog=null;let config=null;let lastResult=null;
@@ -45,7 +45,7 @@ async function loadBootstrap(){
   catalog=cat;config=cfg;
   const root=$('problems');
   catalog.problems.forEach(p=>{const lab=document.createElement('label');lab.className='problem';const input=document.createElement('input');input.type='checkbox';input.value=p.id;const span=document.createElement('span');span.textContent=p.label;lab.append(input,span);root.appendChild(lab)});
-  $('serverState').textContent=config.compiler_endpoint?'Server Compiler Gateway: READY':'Server Compiler Gateway: INTAKE-ONLY / 자동 Build 미활성';
+  $('serverState').textContent=config.compiler_endpoint?'Server Compiler Gateway: READY / Existing + Gap Queue':'Server Compiler Gateway: INTAKE-ONLY / 자동 Build 미활성';
 }
 function renderRow(k,v){return `<div class="summary-row"><b>${esc(k)}</b><div>${v}</div></div>`}
 function analyze(){
@@ -63,8 +63,8 @@ function analyze(){
   $('summary').innerHTML=renderRow('웹 사전판정',verdict)+renderRow('회사',esc(company||'-'))+renderRow('목적',esc(purpose))+renderRow('기간',gap?'검토 후 결정':`${Number(catalog.demo_days)||30}일 Demo 후보`);
   $('moduleChips').innerHTML=modules.map(m=>`<span class="chip">MODULE · ${esc(catalog.modules[m]?.name||m)}</span>`).join('');
   $('capabilityChips').innerHTML=caps.map(c=>`<span class="chip">CAPABILITY · ${esc(c)}</span>`).join('');
-  $('notice').textContent=gap?'신규 요구는 Canonical Engine Pool에 자동 편입되지 않습니다. 이메일 Intake 후 candidate/sandbox에서 별도 개발·검증합니다.':'웹 판정은 후보입니다. 서버 Compiler가 Canonical Catalog를 다시 검사해 통과한 경우에만 30일 Demo Profile handoff를 생성합니다.';
-  $('submitRequest').textContent=gap?'신규 Engine 요구사항 전송':'30일 Demo 컴파일 요청';$('result').scrollIntoView({behavior:'smooth'});
+  $('notice').textContent=gap?'신규 요구는 Canonical Engine Pool에 자동 편입되지 않습니다. Gateway가 활성화되면 private Candidate Queue에도 기록하고 이메일 Intake를 함께 보냅니다.':'웹 판정은 후보입니다. 서버 Compiler가 Canonical Catalog를 다시 검사해 통과한 경우에만 30일 Demo Profile handoff를 생성합니다.';
+  $('submitRequest').textContent=gap?'신규 Engine 검토 요청':'30일 Demo 컴파일 요청';$('result').scrollIntoView({behavior:'smooth'});
 }
 function validContact(){
   const company=$('company').value.trim();const email=$('email').value.trim();
@@ -74,7 +74,7 @@ function validContact(){
 }
 function intakePayload(result,subject){return {
   subject,
-  source:'flowmatic-solution-compiler-v0.1',
+  source:'flowmatic-solution-compiler-v0.2',
   company:result.company,
   contact_email:result.email,
   selected_problem_keys:result.selected,
@@ -84,11 +84,27 @@ function intakePayload(result,subject){return {
   proposed_modules:result.modules,
   proposed_capabilities:result.caps
 }}
+function gatewayPayload(result){return {
+  company:result.company,
+  contact_email:result.email,
+  selected_problem_keys:result.selected,
+  free_text_problem:result.custom||'',
+  objective:result.purpose,
+  requested_capabilities:result.caps
+}}
 async function sendIntake(payload){
   const endpoint=config?.intake_endpoint;
   if(!endpoint)throw new Error('intake endpoint unavailable');
   const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
   if(!r.ok)throw new Error('intake failed');return r;
+}
+async function sendGateway(result){
+  const endpoint=config?.compiler_endpoint||'';
+  if(!endpoint)throw new Error('compiler endpoint unavailable');
+  const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(gatewayPayload(result))});
+  let body={};try{body=await r.json()}catch(_){body={}}
+  if(!r.ok)throw new Error(body.error||'compiler gateway failed');
+  return body;
 }
 async function submit(){
   if(!lastResult||!validContact())return;
@@ -96,31 +112,28 @@ async function submit(){
   const button=$('submitRequest');button.disabled=true;
   try{
     if(lastResult.route==='ENGINE_GAP_REVIEW'){
-      await sendIntake(intakePayload(lastResult,'[Flowmatic] Engine Gap Review'));
-      alert('신규 Engine 요구사항이 별도 검토 경로로 접수되었습니다. Canonical Engine Pool에는 자동 반영되지 않습니다.');return;
+      let queued=false;let emailed=false;let queueBody={};
+      if(config?.compiler_endpoint){
+        try{queueBody=await sendGateway(lastResult);queued=true}catch(_){queued=false}
+      }
+      try{await sendIntake(intakePayload(lastResult,'[Flowmatic] Engine Gap Review'));emailed=true}catch(_){emailed=false}
+      if(queued&&emailed){alert(`신규 Engine 요구를 Candidate 검토 큐와 이메일 양쪽에 접수했습니다.\nRequest ID: ${queueBody.request_id||'확인 중'}\n\nCanonical Engine Pool에는 자동 반영되지 않습니다.`);return}
+      if(queued){alert(`private Candidate 검토 큐에는 접수됐지만 이메일 Intake는 실패했습니다.\nRequest ID: ${queueBody.request_id||'확인 중'}\nCanonical Engine Pool에는 자동 반영되지 않습니다.`);return}
+      if(emailed){alert('이메일 Intake로 접수했습니다. Gateway가 아직 비활성 또는 일시 실패하여 private Candidate Queue 생성은 확인되지 않았습니다. Canonical Engine Pool에는 자동 반영되지 않습니다.');return}
+      throw new Error('gap intake failed');
     }
-    const endpoint=config?.compiler_endpoint||'';
-    if(!endpoint){
+
+    if(!config?.compiler_endpoint){
       await sendIntake(intakePayload(lastResult,'[Flowmatic] 30-Day Demo Request / Gateway Pending'));
       alert('자동 Compiler Gateway가 아직 활성화되지 않아 요청만 접수했습니다. Demo가 생성된 상태는 아닙니다.');return;
     }
-    const gatewayPayload={
-      company:lastResult.company,
-      contact_email:lastResult.email,
-      selected_problem_keys:lastResult.selected,
-      free_text_problem:lastResult.custom||'',
-      objective:lastResult.purpose,
-      requested_capabilities:lastResult.caps
-    };
-    const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(gatewayPayload)});
-    let body={};try{body=await r.json()}catch(_){body={}}
-    if(!r.ok)throw new Error(body.error||'compiler gateway failed');
-    const requestId=body.request_id||'확인 중';
-    const routeHint=body.route_hint||'SERVER_VERIFY';
-    alert(`서버 Compiler에 접수했습니다.\nRequest ID: ${requestId}\nRoute: ${routeHint}\n\n이 단계는 요청 접수이며, 서명된 Demo 전달 완료를 의미하지 않습니다.`);
+    const body=await sendGateway(lastResult);
+    alert(`서버 Compiler에 접수했습니다.\nRequest ID: ${body.request_id||'확인 중'}\nRoute: ${body.route_hint||'SERVER_VERIFY'}\n\n이 단계는 요청 접수이며, 서명된 Demo 전달 완료를 의미하지 않습니다.`);
   }catch(e){
-    try{await sendIntake(intakePayload(lastResult,'[Flowmatic] Compiler Gateway Fallback'))}catch(_){/* fall through */}
-    alert('자동 Compiler 경로를 완료하지 못했습니다. 문의 경로로 접수를 시도했습니다. Demo가 생성된 상태는 아닙니다.');
+    if(lastResult.route!=='ENGINE_GAP_REVIEW'){
+      try{await sendIntake(intakePayload(lastResult,'[Flowmatic] Compiler Gateway Fallback'))}catch(_){/* fall through */}
+    }
+    alert('요청 경로를 완료하지 못했습니다. contact@flowmatic-os.com 으로 문의해 주세요. Demo가 생성된 상태는 아닙니다.');
   }finally{button.disabled=false}
 }
 $('analyze').addEventListener('click',analyze);$('submitRequest').addEventListener('click',submit);$('reset').addEventListener('click',()=>location.reload());
