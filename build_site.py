@@ -26,9 +26,10 @@ from factory_os_v2 import (
 BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
-CSS_HREF = "/style-v5.20.css?v=5.25"
-SCRIPT_SRC = "/script.js?v=5.20"
+CSS_HREF = "/style-v5.20.css?v=5.26"
+SCRIPT_SRC = "/script.js?v=5.21"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
+WEB_V156_CONTENT_DIR = Path(__file__).resolve().parent / "content" / "web_v156"
 BRAND_PATH = "/assets/branding"
 BRAND_VERSION = "20260803.2"
 BRAND_MARK = f"{BRAND_PATH}/flowmatic-logo-mark.svg"
@@ -43,7 +44,7 @@ LANGS = {
         "dir": "ltr",
         "skip": "본문으로 건너뛰기",
         "open": "메뉴 열기",
-        "nav": {"approach": "설계 원칙", "flow": "작동 방식", "products": "Intelligence", "contact": "파일럿 상담"},
+        "nav": {"architecture": "Platform", "modules": "Modules", "solutions": "Solutions", "pilot": "파일럿 상담"},
         "home": "홈",
         "all_products": "전체 제품 보기",
         "product_demo": "제품 데모",
@@ -66,7 +67,7 @@ LANGS = {
         "dir": "ltr",
         "skip": "Skip to content",
         "open": "Open menu",
-        "nav": {"approach": "Approach", "flow": "How it works", "products": "Intelligence", "contact": "Discuss a pilot"},
+        "nav": {"architecture": "Platform", "modules": "Modules", "solutions": "Solutions", "pilot": "Discuss a pilot"},
         "home": "Home",
         "all_products": "All products",
         "product_demo": "Product demo",
@@ -89,7 +90,7 @@ LANGS = {
         "dir": "rtl",
         "skip": "تجاوز إلى المحتوى",
         "open": "فتح القائمة",
-        "nav": {"approach": "النهج", "flow": "طريقة العمل", "products": "الذكاء", "contact": "ناقش مشروعًا تجريبيًا"},
+        "nav": {"architecture": "المنصة", "modules": "الوحدات", "solutions": "الحلول", "pilot": "ناقش مشروعًا تجريبيًا"},
         "home": "الرئيسية",
         "all_products": "كل المنتجات",
         "product_demo": "عرض المنتج",
@@ -170,7 +171,7 @@ CONTACT_PRODUCT_OPTIONS = [
     ("machining-intelligence", "Machining Intelligence"),
     ("operations-intelligence", "Operations Intelligence"),
     ("logistics-intelligence", "Logistics Intelligence"),
-    ("platform", "Platform / Control Tower"),
+    ("platform", "Platform / Engine-Module Composition"),
 ]
 
 LEGACY_INTEREST_MAP = {
@@ -1039,10 +1040,10 @@ def header(lang: str, slug: str) -> str:
     home = page_path(lang)
     nav = t["nav"]
     anchors = [
-        ("approach", nav["approach"]),
-        ("flow", nav["flow"]),
-        ("products", nav["products"]),
-        ("contact", nav["contact"]),
+        ("architecture", nav["architecture"]),
+        ("modules", nav["modules"]),
+        ("solutions", nav["solutions"]),
+        ("pilot", nav["pilot"]),
     ]
     nav_html = "".join(f'<a href="{home}#{key}">{e(label)}</a>' for key, label in anchors)
     lang_html = "".join(
@@ -1153,6 +1154,77 @@ def outcomes_section(lang: str) -> str:
 <div class="cell span-7 reveal"><p class="eyebrow">Four Intelligence outcomes</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="outcomes-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
 <div class="cell span-12 outcome-table reveal delay-1" role="table"><div class="outcome-row outcome-head" role="row">{head}</div>{rows}</div>
 </section>"""
+
+
+V156_RUNTIME = {
+    "ko": {
+        "label": "Runtime infrastructure · 독립 제품 아님",
+        "title": "Event Bus · Audit · Adapter",
+        "body": "Event 전달, 실행 이력, 외부 시스템 연결은 모든 Module이 공유하는 경량 런타임 기반으로 유지합니다.",
+        "examples": "대표 Solution 조합",
+        "examples_body": "같은 Engine과 Module을 다시 조합해 고객 문제별 Solution Profile을 확장합니다.",
+    },
+    "en": {
+        "label": "Runtime infrastructure · not a standalone product",
+        "title": "Event Bus · Audit · Adapter",
+        "body": "Event delivery, execution history, and external-system adapters remain lightweight runtime infrastructure shared by every module.",
+        "examples": "Representative solution compositions",
+        "examples_body": "The same engines and modules can be recomposed into customer-specific solution profiles.",
+    },
+    "ar": {
+        "label": "بنية تشغيل مشتركة · وليست منتجاً مستقلاً",
+        "title": "Event Bus · Audit · Adapter",
+        "body": "يبقى نقل الأحداث وسجل التنفيذ وموصلات الأنظمة الخارجية بنية تشغيل خفيفة تشترك فيها جميع الوحدات.",
+        "examples": "نماذج لتركيبات الحلول",
+        "examples_body": "يمكن إعادة تركيب المحركات والوحدات نفسها في ملفات حلول خاصة بمشكلة كل عميل.",
+    },
+}
+
+V156_SOLUTION_EXAMPLES = (
+    "Machining Intelligence",
+    "Quality Intelligence",
+    "Production Optimization",
+    "Tool Optimization",
+    "Root Cause Intelligence",
+    "Compensation Solution",
+)
+
+
+def v156_platform_sections(lang: str) -> str:
+    """Render the approved V156 architecture from durable localized source fragments."""
+    source = WEB_V156_CONTENT_DIR / f"{lang}.html"
+    if not source.exists():
+        raise FileNotFoundError(f"Missing V156 web content: {source}")
+    content = source.read_text(encoding="utf-8").strip()
+    required = (
+        "01 · FIELD PROBLEM",
+        'id="architecture"',
+        'id="modules"',
+        'id="solutions"',
+        "153 / 153 PASS",
+        "<!-- V156_RUNTIME_NOTE -->",
+        "<!-- V156_SOLUTION_EXAMPLES -->",
+    )
+    missing = [marker for marker in required if marker not in content]
+    if missing:
+        raise ValueError(f"Incomplete V156 web content ({lang}): {', '.join(missing)}")
+
+    copy = V156_RUNTIME[lang]
+    runtime = (
+        f'<aside class="v156-runtime-note"><p class="section-kicker">{e(copy["label"])}</p>'
+        f'<h3>{e(copy["title"])}</h3><p>{e(copy["body"])}</p></aside>'
+    )
+    content = content.replace("<!-- V156_RUNTIME_NOTE -->", runtime, 1)
+
+    chips = "".join(f"<span>{e(item)}</span>" for item in V156_SOLUTION_EXAMPLES)
+    examples = (
+        '<section class="section v156-composition-examples" aria-label="Representative solution compositions">'
+        f'<div class="wrap"><div><p class="section-kicker">{e(copy["examples"])}</p>'
+        f'<p class="section-body">{e(copy["examples_body"])}</p></div>'
+        f'<div class="v156-example-chips">{chips}</div></div></section>'
+    )
+    content = content.replace("<!-- V156_SOLUTION_EXAMPLES -->", examples, 1)
+    return f'<div class="v156-platform">{content}</div>'
 
 
 def machining_vnext_diagrams(lang: str, data: dict) -> str:
@@ -1280,7 +1352,56 @@ def quality_current_section(lang: str) -> str:
 <div class="cell span-5 reveal delay-1"><figure class="factory-asset"><img alt="Quality Intelligence workflow from defect to recurrence" decoding="async" height="720" loading="lazy" src="{FACTORY_OS_ASSET_PATH}/quality_intelligence_workflow.svg" width="1200"></figure></div>{cards}</section>"""
 
 
+V156_PLATFORM_PAGE = {
+    "ko": {
+        "title": "Flowmatic | Manufacturing Intelligence Platform",
+        "description": "공통 Manufacturing Context를 전문 Engine이 읽고, Engine 조합을 현장 Module과 고객별 Solution Profile로 연결하는 Flowmatic 플랫폼 아키텍처입니다.",
+        "eyebrow": "Manufacturing Intelligence Platform",
+        "hero": "제조 현장의 문제를|Engine 조합으로 해결합니다.",
+        "body": "문제마다 새 프로그램을 만들지 않습니다. 같은 제조 Context를 전문 Engine이 읽고, 필요한 Engine을 조합해 업무 Module을 만들고, 검증 범위가 명확한 Solution Profile로 제공합니다.",
+    },
+    "en": {
+        "title": "Flowmatic | Manufacturing Intelligence Platform",
+        "description": "Flowmatic lets domain engines read shared manufacturing context, compose into operational modules, and form customer-specific solution profiles.",
+        "eyebrow": "Manufacturing Intelligence Platform",
+        "hero": "Solve manufacturing problems|through engine composition.",
+        "body": "We do not build a separate program for every problem. Domain engines read the same manufacturing context, combine into operational modules, and form solution profiles with explicit validation boundaries.",
+    },
+    "ar": {
+        "title": "Flowmatic | منصة ذكاء التصنيع",
+        "description": "تقرأ محركات Flowmatic المتخصصة سياق تصنيع مشتركاً، وتتجمع في وحدات تشغيل وملفات حلول خاصة بكل عميل.",
+        "eyebrow": "Manufacturing Intelligence Platform",
+        "hero": "نحل مشاكل التصنيع|عبر تركيب المحركات.",
+        "body": "لا نبني برنامجاً منفصلاً لكل مشكلة. تقرأ المحركات المتخصصة سياق التصنيع نفسه، وتتجمع في وحدات تشغيل وملفات حلول ذات حدود تحقق واضحة.",
+    },
+}
+
+
+def platform_v156_page(lang: str, canonical_path: str) -> str:
+    page = V156_PLATFORM_PAGE[lang]
+    labels = ("CONTEXT", "ENGINE", "MODULE", "SOLUTION")
+    blocks = "".join(f"<span>{label}</span>" for label in labels)
+    contact = {"ko": "파일럿 상담", "en": "Discuss a pilot", "ar": "ناقش مشروعًا تجريبيًا"}[lang]
+    return f"""<!doctype html>
+<html lang="{lang}" dir="{LANGS[lang]["dir"]}">
+{meta_head(lang, "platform", page["title"], page["description"], canonical_path)}
+<body class="intelligence-page platform-v156-page" data-lang="{lang}" data-static-lang="true">
+{header(lang, "platform")}
+<main id="main">
+<section aria-labelledby="platform-v156-title" class="v156-platform-hero section-grid">
+<div class="cell span-7 reveal"><p class="eyebrow">{e(page["eyebrow"])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="platform-v156-title">{lines(page["hero"])}</h1><p class="body-large">{e(page["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#architecture">{e({"ko":"구조 보기","en":"Explore architecture","ar":"عرض البنية"}[lang])}</a><a class="fm-button" href="{page_path(lang)}#pilot">{e(contact)}</a></div></div>
+<div class="cell span-5 v156-platform-hero-grid reveal delay-1" aria-label="Context to solution composition">{blocks}</div>
+</section>
+{v156_platform_sections(lang)}
+{certified_core_section(lang)}
+{deployment_modes_section(lang)}
+<section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}#pilot">{e(contact)}</a><a class="fm-button" href="{page_path(lang)}">{e(LANGS[lang]["home"])}</a></div></section>
+</main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
+
+
 def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
+    if slug == "platform":
+        return platform_v156_page(lang, canonical_path)
     data = FACTORY_OS_PAGES[slug]
     flow = "".join(f"<span>{e(step)}</span>" for step in data["flow"])
     sections = "".join(
@@ -1486,7 +1607,7 @@ def home_page(lang: str, canonical_path: str) -> str:
 {header(lang, "home")}
 <main id="main">
 <section aria-labelledby="hero-title" class="hero section-grid" id="hero">
-<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#system">{e(h["primary"])}</a><a class="fm-button" href="#roadmap">{e(h["secondary"])}</a></div></div>
+<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#architecture">{e(h["primary"])}</a><a class="fm-button" href="#modules">{e(h["secondary"])}</a></div></div>
 <div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event →|Decision → Action","en":"Motion → Event →|Decision → Action","ar":"Motion → Event →|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
 <div class="cell yellow hero-note span-4 reveal delay-2"><strong>{e(FLOW_STEPS[lang][0][0])}</strong><span>{e(FLOW_STEPS[lang][0][1])}</span></div>
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
@@ -1494,8 +1615,7 @@ def home_page(lang: str, canonical_path: str) -> str:
 </section>
 {transformation_section}
 {before_after_section(lang)}
-{intelligence_domains_section(lang)}
-{outcomes_section(lang)}
+{v156_platform_sections(lang)}
 <section aria-labelledby="strategy-title" class="strategy section-grid" id="approach">
 <div class="cell span-8 reveal"><p class="eyebrow">{e({"ko":"현장 중심 설계","en":"Field-first design","ar":"تصميم يبدأ من الميدان"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="strategy-title">{lines(h["strategy_title"])}</h2><p class="body-large">{e(h["strategy_body"])}</p></div>
 <div class="cell blue span-4 reveal delay-1 strategy-core"><p class="kicker">Minimal intervention / Maximum clarity</p><h3>{e({"ko":"현장 제약 기반 설계","en":"Intelligence should fit the field.","ar":"يجب أن يناسب الذكاء أرض الواقع."}[lang])}</h3><p>{e(h["support"])}</p></div>{principles}</section>
@@ -1503,12 +1623,8 @@ def home_page(lang: str, canonical_path: str) -> str:
 <div class="cell span-5 flow-copy reveal"><p class="eyebrow">{e({"ko":"Flowmatic 작동 방식","en":"How Flowmatic works","ar":"كيف يعمل Flowmatic"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="flow-title">{lines(h["flow_title"])}</h2><p class="body-large">{e(h["flow_body"])}</p><ol class="flow-explanation">{logic_cards}</ol></div>
 <div class="cell span-7 flow-visual-cell reveal delay-1">{field_story(lang)}</div>
 </section>
-{built_evidence_section(lang)}
-{platform_architecture_section(lang)}
-{component_hierarchy_section(lang)}
 {certified_core_section(lang)}
 {deployment_modes_section(lang)}
-{roadmap_section(lang)}
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
 {contact_section(lang)}
@@ -1711,7 +1827,8 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
 
 def write(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content.strip() + "\n", encoding="utf-8")
+    normalized = content.strip().replace("\r\n", "\n").replace("\r", "\n")
+    path.write_text(normalized + "\n", encoding="utf-8", newline="\r\n")
 
 
 def sitemap() -> str:
@@ -1734,14 +1851,14 @@ def notes() -> str:
 - NC 공개 브라우저 데모: `/nc-demo-lite.js`, `/nc-demo-lite-worker.js`, `/demo-data/flowmatic-nc-sample.nc`; 업로드 없이 브라우저 내부에서 기본 G-code 이동시간만 계산합니다.
 - Quality Intelligence: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; Defect → Loss → Priority → Work → Verify → Recurrence 구조를 기준으로 하며 Inspection은 Evidence / Input Layer로 표시합니다.
 - Machining Intelligence: Manufacturing Recipe, 기존 G-code 문맥 추론, safe assembly, 측정/보정, managed metadata, air-gapped USB 동기화를 V.Next 구조로 설명합니다. source-level 검증과 Active development / PoC 범위를 분리합니다.
-- Factory Operating Intelligence: Quality / Machining / Operations / Logistics 네 지능축과 Shared Manufacturing Context → Event Core → Manufacturing Control Shell → 계획된 Cross-domain Control Tower 구조를 `/{{lang}}/platform/`에서 설명합니다.
+- Manufacturing Intelligence Platform: Manufacturing Context → Engine Pool → Module Pool → Solution Profile 조합 구조를 `/{{lang}}/platform/`에서 설명합니다. Event Bus·Audit·Adapter는 독립 제품이 아닌 경량 공통 런타임으로 한정합니다.
 - 신규 정식 URL: `/{{lang}}/machining-intelligence/`, `/{{lang}}/operations-intelligence/`, `/{{lang}}/logistics-intelligence/`, `/{{lang}}/platform/`; 기존 NC/CT/Quality/Work Standard/TMS/AMR URL은 하위 컴포넌트 페이지로 유지합니다.
 - Operations Intelligence: Functional MVP / internal validation 상태로 표시하며, Tracked Operational Cost를 완전 제조원가나 회계원가로 표현하지 않습니다.
 - 개발 프리뷰 제품: Work Standard, TMS, AMR은 빈 비디오 플레이어 없이 개발 상태 패널, 파일럿 입력, 확인 결과, 문의 CTA를 표시합니다.
 - 공식 브랜드 마크: 좌상단 파랑, 좌하단 빨강, 우측 노랑 2칸의 2×2 마크를 `/assets/branding/`에서 단일 관리합니다. 헤더·푸터·파비콘·앱 아이콘·OG 이미지가 같은 원본을 사용합니다.
 - 공식 QR 연락 시그니처: `{BASE_URL}/`로 연결하며 `{CONTACT_EMAIL}`을 함께 표시합니다. Contact 영역과 외부 자료에서 재사용할 SVG/PNG를 제공합니다.
 - 공식 문의 목적지: `{CONTACT_EMAIL}`. 문의 폼은 Formspree 엔드포인트를 통해 AJAX로 제출하며, 성공·실패 상태를 페이지 안에서 안내합니다.
-- 문의 선택지는 네 Intelligence와 Platform / Control Tower만 노출하며 legacy component URL의 interest 값은 상위 Intelligence로 매핑합니다.
+- 문의 선택지는 네 Intelligence와 Platform / Engine-Module Composition만 노출하며 legacy component URL의 interest 값은 상위 Intelligence로 매핑합니다.
 - 사용자 확인 필요: 개인정보처리방침 URL, 법인명/주소/전화번호, 아랍어 원어민 최종 감수, 실제 CNC/CMM 및 machine adapter 현장 검증 상태.
 """
 

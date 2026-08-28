@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
+import re
 from urllib.parse import urlsplit
 
 
@@ -12,6 +14,26 @@ LANGS = {"ko": "ltr", "en": "ltr", "ar": "rtl"}
 PAGES = ("", "quality", "machining-intelligence", "operations-intelligence", "logistics-intelligence", "platform")
 COMPAT = ("nc.html", "ct.html", "quality.html", "work-standard.html", "tms.html", "amr.html")
 FORBIDDEN = ("v0.5.13", "QUALITY_V513", "Production Ready", "production certified", "Production Certified")
+V156_MARKERS = (
+    'id="field-problem"',
+    'id="architecture"',
+    'id="modules"',
+    'id="solutions"',
+    "Manufacturing Context",
+    "Engine Pool",
+    "Module Pool",
+    "Event Bus",
+    "Audit",
+    "153 / 153 PASS",
+    "GUI/OpenGL",
+    "Candidate",
+)
+V156_LEGACY = (
+    "Shared context → Event Core → Control Tower",
+    "Shared Manufacturing Context → Event Core",
+    "Event Core & Control Tower Architecture",
+    "00_factory_os_four_axes",
+)
 
 
 class Scan(HTMLParser):
@@ -22,6 +44,10 @@ class Scan(HTMLParser):
         self.direction = ""
         self.title = False
         self.description = False
+        self.module_cards = 0
+        self.source_nodes: list[tuple[str, str]] = []
+        self.solution_nodes: list[str] = []
+        self.statuses: Counter[str] = Counter()
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = dict(attrs)
@@ -32,6 +58,16 @@ class Scan(HTMLParser):
             self.title = True
         if tag == "meta" and values.get("name") == "description" and values.get("content"):
             self.description = True
+        classes = set((values.get("class") or "").split())
+        if "module-card" in classes:
+            self.module_cards += 1
+            status = values.get("data-status")
+            if status:
+                self.statuses[status] += 1
+        if "source-node" in classes:
+            self.source_nodes.append((values.get("data-source") or "", values.get("data-solutions") or ""))
+        if "solution-card" in classes:
+            self.solution_nodes.append(values.get("data-solution") or "")
         for key in ("href", "src", "srcset"):
             value = values.get(key)
             if value:
@@ -43,6 +79,14 @@ def generated_pages() -> list[Path]:
     for lang in LANGS:
         pages.extend(ROOT / lang / (page or "index.html") / ("index.html" if page else "") for page in PAGES)
     return [Path(str(page).rstrip("\\/")) for page in pages]
+
+
+def v156_pages() -> list[Path]:
+    return [
+        ROOT / "index.html",
+        *(ROOT / lang / "index.html" for lang in LANGS),
+        *(ROOT / lang / "platform" / "index.html" for lang in LANGS),
+    ]
 
 
 def local_target(value: str) -> Path | None:
@@ -90,14 +134,57 @@ def main() -> None:
         if phrase.lower() in (source_text + generated_text).lower():
             errors.append(f"outdated or prohibited phrase: {phrase}")
 
+    for page in v156_pages():
+        if not page.exists():
+            continue
+        label = page.relative_to(ROOT).as_posix()
+        text = page.read_text(encoding="utf-8")
+        scan = Scan()
+        scan.feed(text)
+
+        for marker in V156_MARKERS:
+            if marker not in text:
+                errors.append(f"V156 content missing ({label}): {marker}")
+        if "headless" not in text.lower():
+            errors.append(f"V156 headless evidence missing ({label})")
+        if scan.module_cards != 12:
+            errors.append(f"V156 module card count ({label}): expected 12, got {scan.module_cards}")
+        if len(scan.source_nodes) != 12:
+            errors.append(f"V156 source node count ({label}): expected 12, got {len(scan.source_nodes)}")
+        if len(scan.solution_nodes) != 4:
+            errors.append(f"V156 solution card count ({label}): expected 4, got {len(scan.solution_nodes)}")
+
+        expected_statuses = Counter({"v156": 7, "existing": 3, "target": 2})
+        if scan.statuses != expected_statuses:
+            errors.append(f"V156 status counts ({label}): expected 7/3/2, got {dict(scan.statuses)}")
+
+        source_ids = [source_id for source_id, _ in scan.source_nodes]
+        if not all(source_ids) or len(set(source_ids)) != len(source_ids):
+            errors.append(f"V156 source IDs missing or duplicated ({label})")
+        solution_ids = [solution_id for solution_id in scan.solution_nodes if solution_id]
+        if len(solution_ids) != 4 or len(set(solution_ids)) != 4:
+            errors.append(f"V156 solution IDs missing or duplicated ({label})")
+        valid_solutions = set(solution_ids)
+        for source_id, memberships in scan.source_nodes:
+            linked = set(memberships.split())
+            if not linked or not linked <= valid_solutions:
+                errors.append(f"V156 source mapping invalid ({label}): {source_id or '<missing>'}")
+
+        if "[('machining'" in text or "[(&#x27;machining&#x27;" in text:
+            errors.append(f"raw Python navigation tuple leaked ({label})")
+        for lang in LANGS:
+            if f"/{lang}/contact/" in text:
+                errors.append(f"obsolete contact route ({label}): /{lang}/contact/")
+        for phrase in V156_LEGACY:
+            if phrase.lower() in text.lower():
+                errors.append(f"legacy platform positioning ({label}): {phrase}")
+
     for lang in LANGS:
         home = (ROOT / lang / "index.html").read_text(encoding="utf-8")
-        required = ("class=\"transformation\"", "class=\"before-after", "class=\"what-changes", "Platform / Control Tower", "data-evidence-sequence")
+        required = ('class="transformation"', "Platform / Engine-Module Composition")
         for phrase in required:
             if phrase not in home:
                 errors.append(f"home content missing ({lang}): {phrase}")
-        if home.count("data-evidence-card") != 6:
-            errors.append(f"evidence card count ({lang}): expected 6")
         machining = (ROOT / lang / "machining-intelligence" / "index.html").read_text(encoding="utf-8")
         for phrase in ("Manufacturing Recipe", "INFERRED", "USER CONFIRMED", "Managed Metadata Comment Block", "Conflict review", "fail-closed"):
             if phrase not in machining:
@@ -112,6 +199,22 @@ def main() -> None:
     stylesheet = (ROOT / "style-v5.20.css").read_text(encoding="utf-8")
     if "initEvidenceSequence();" not in script or ".evidence-card.is-scroll-active" not in stylesheet:
         errors.append("evidence scroll highlight wiring missing")
+    js_markers = (
+        "function initV156Convergence()",
+        "initV156Convergence();",
+        ".v156-platform [data-convergence]",
+        "source.dataset.solutions",
+    )
+    for marker in js_markers:
+        if marker not in script:
+            errors.append(f"V156 convergence wiring missing: {marker}")
+
+    for selector in ("module-card", "solution-card", "convergence-field"):
+        scoped_rule = rf"\.v156-platform[^{{}}]*\.{re.escape(selector)}[^{{}}]*\{{"
+        if not re.search(scoped_rule, stylesheet):
+            errors.append(f"V156 scoped CSS missing: {selector}")
+    if "@media (max-width: 1100px)" not in stylesheet:
+        errors.append("V156 tablet/mobile breakpoint missing")
 
     if errors:
         print("STATUS: FAIL")

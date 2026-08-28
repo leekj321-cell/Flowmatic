@@ -3,46 +3,143 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Flowmatic Platform | Event Core &amp; Control Tower Architecture</title>
-<meta name="description" content="네 전문 지능을 Shared Manufacturing Context, Event Core, 계획된 Control Tower로 연결하는 Factory OS 아키텍처입니다.">
+<title>Flowmatic | Manufacturing Intelligence Platform</title>
+<meta name="description" content="공통 Manufacturing Context를 전문 Engine이 읽고, Engine 조합을 현장 Module과 고객별 Solution Profile로 연결하는 Flowmatic 플랫폼 아키텍처입니다.">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="canonical" href="https://flowmatic-os.com/ko/platform/">
 <link rel="alternate" hreflang="ko" href="https://flowmatic-os.com/ko/platform/">
 <link rel="alternate" hreflang="en" href="https://flowmatic-os.com/en/platform/">
 <link rel="alternate" hreflang="ar" href="https://flowmatic-os.com/ar/platform/">
 <link rel="alternate" hreflang="x-default" href="https://flowmatic-os.com/ko/platform/">
-<meta property="og:title" content="Flowmatic Platform | Event Core &amp; Control Tower Architecture">
-<meta property="og:description" content="네 전문 지능을 Shared Manufacturing Context, Event Core, 계획된 Control Tower로 연결하는 Factory OS 아키텍처입니다.">
+<meta property="og:title" content="Flowmatic | Manufacturing Intelligence Platform">
+<meta property="og:description" content="공통 Manufacturing Context를 전문 Engine이 읽고, Engine 조합을 현장 Module과 고객별 Solution Profile로 연결하는 Flowmatic 플랫폼 아키텍처입니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://flowmatic-os.com/ko/platform/">
 <meta property="og:image" content="https://flowmatic-os.com/assets/branding/flowmatic-og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://flowmatic-os.com/assets/branding/flowmatic-og.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "name": "Flowmatic", "url": "https://flowmatic-os.com/", "email": "contact@flowmatic-os.com", "logo": "https://flowmatic-os.com/assets/branding/flowmatic-logo-mark.png", "image": "https://flowmatic-os.com/assets/branding/flowmatic-og.png"}, {"@type": "WebPage", "name": "Flowmatic Platform | Event Core & Control Tower Architecture", "description": "네 전문 지능을 Shared Manufacturing Context, Event Core, 계획된 Control Tower로 연결하는 Factory OS 아키텍처입니다.", "url": "https://flowmatic-os.com/ko/platform/", "inLanguage": "ko"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "name": "Flowmatic", "url": "https://flowmatic-os.com/", "email": "contact@flowmatic-os.com", "logo": "https://flowmatic-os.com/assets/branding/flowmatic-logo-mark.png", "image": "https://flowmatic-os.com/assets/branding/flowmatic-og.png"}, {"@type": "WebPage", "name": "Flowmatic | Manufacturing Intelligence Platform", "description": "공통 Manufacturing Context를 전문 Engine이 읽고, Engine 조합을 현장 Module과 고객별 Solution Profile로 연결하는 Flowmatic 플랫폼 아키텍처입니다.", "url": "https://flowmatic-os.com/ko/platform/", "inLanguage": "ko"}]}</script>
 <link rel="icon" href="/assets/branding/flowmatic-logo-mark.svg?v=20260803.2" sizes="any" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico?v=20260803.2" sizes="16x16 32x32 48x48" type="image/x-icon">
 <link rel="shortcut icon" href="/favicon.ico?v=20260803.2" type="image/x-icon">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/branding/apple-touch-icon.png?v=20260803.2">
 <link rel="mask-icon" href="/assets/branding/flowmatic-logo-mark.svg?v=20260803.2" color="#111111">
 <link rel="manifest" href="/site.webmanifest?v=20260803.2">
-<link rel="stylesheet" href="/style-v5.20.css?v=5.25">
+<link rel="stylesheet" href="/style-v5.20.css?v=5.26">
 </head>
-<body class="intelligence-page" data-lang="ko" data-static-lang="true"><a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<body class="intelligence-page platform-v156-page" data-lang="ko" data-static-lang="true">
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
 <header class="site-header" data-header>
 <a aria-label="Flowmatic home" class="brand" href="/ko/#hero"><img alt="" aria-hidden="true" class="brand-mark" height="30" src="/assets/branding/flowmatic-logo-mark.svg" width="30"><span>Flowmatic</span></a>
 <div class="header-actions">
-<nav class="site-nav" data-nav id="site-nav"><a href="/ko/#approach">설계 원칙</a><a href="/ko/#flow">작동 방식</a><a href="/ko/#products">Intelligence</a><a href="/ko/#contact">파일럿 상담</a></nav>
+<nav class="site-nav" data-nav id="site-nav"><a href="/ko/#architecture">Platform</a><a href="/ko/#modules">Modules</a><a href="/ko/#solutions">Solutions</a><a href="/ko/#pilot">파일럿 상담</a></nav>
 <div aria-label="Language switcher" class="lang-switcher"><a class="lang-button is-active" data-lang-button="ko" data-lang-link="ko" hreflang="ko" lang="ko" href="/ko/platform/">KR</a><a class="lang-button" data-lang-button="en" data-lang-link="en" hreflang="en" lang="en" href="/en/platform/">EN</a><a class="lang-button" data-lang-button="ar" data-lang-link="ar" hreflang="ar" lang="ar" href="/ar/platform/">العربية</a></div>
 <button aria-controls="site-nav" aria-expanded="false" class="nav-toggle" data-nav-toggle type="button"><span class="sr-only">메뉴 열기</span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
 </div>
-</header><main id="main">
-<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">Architecture / integration roadmap</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title"><span class="copy-lines"><span class="copy-line">네 개의 전문 지능.</span><span class="copy-line">공통 공장 운영 체계.</span></span></h1><p class="body-large">품질·가공·운영·물류 판단을 Event Core에 통합하고 후속 행동을 조율하는 아키텍처입니다.</p><a class="detail-inline-back" href="/ko/#products">← 전체 지능축 보기</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">Flowmatic Platform / Factory OS</p><div class="intelligence-flow vertical"><span>Quality · Machining · Operations · Logistics</span><span>Shared Manufacturing Context</span><span>Event Core</span><span>Manufacturing Control Shell</span><span>Cross-domain Control Tower · Planned</span></div></div><div class="cell span-12 reveal"><figure class="factory-asset"><picture><source srcset="/assets/factory-os/00_factory_os_four_axes.svg" type="image/svg+xml"><img alt="Flowmatic Platform / Factory OS architecture" decoding="async" height="720" loading="lazy" src="/assets/factory-os/00_factory_os_four_axes.png" width="1200"></picture></figure></div></section>
-
-<section aria-label="Architecture details" class="intelligence-details section-grid"><article class="cell intelligence-section-card span-6 reveal delay-1"><p class="eyebrow">Integration foundation</p><h2>Shared Manufacturing Context</h2><p>Event보다 먼저 Factory·Line·Equipment·Product·LOT·Tool·Worker·Task·Material·Time의 ID와 mapping을 맞춥니다.</p><ul><li>Factory</li><li>Area</li><li>Line</li><li>Equipment</li><li>Product</li><li>LOT</li><li>Process Group</li><li>Operation</li><li>Feature</li><li>Recipe / Revision</li><li>Tool</li><li>Worker</li><li>Task</li><li>Material</li><li>Time</li></ul></article><article class="cell intelligence-section-card span-6 reveal delay-2"><p class="eyebrow">Next integration layer</p><h2>Event Core</h2><p>각 도메인의 Event·State·Context·Priority·Confidence·Linkage·History를 공통 언어로 정규화하는 다음 계층입니다.</p><ul><li>Not a completed unified event bus</li><li>Adapters and cross-domain links remain integration work</li></ul></article><article class="cell intelligence-section-card span-6 reveal delay-1"><p class="eyebrow">Prototype vs planned</p><h2>Control Shell vs Control Tower</h2><p>현재 Manufacturing Control Shell은 공통 문맥·launcher·aggregation prototype입니다. Cross-domain Control Tower는 손실·위험·우선순위·다음 행동을 종합할 계획된 감독 계층입니다.</p><ul><li>Shell — Prototype</li><li>Control Tower — Planned integrated supervision</li></ul></article><article class="cell intelligence-section-card span-6 reveal delay-2"><p class="eyebrow">Public-safe examples</p><h2>Synthetic Cross-domain Examples</h2><p>합성 데이터로 도메인 간 연계 방식을 제시합니다. 고객 데이터는 사용하지 않습니다.</p><ul><li>Quality P1 + tool-consumption spike + CT degradation → machining review</li><li>Material-shortage risk + production-loss forecast → logistics escalation</li><li>Repeated defect + unit-loss context → Quality worklist elevation</li></ul></article><article class="cell intelligence-section-card span-6 reveal delay-1"><p class="eyebrow">Current mode / future expansion</p><h2>Brownfield / Greenfield</h2><p>Brownfield Factory→Model은 현재 공장을 읽는 방식입니다. Greenfield Model→Factory는 안정화 전 Event model을 설계하는 미래 확장 아키텍처이며 구축완료 사례가 아닙니다.</p><ul><li>Brownfield — Field-first deployment</li><li>Greenfield — Deployment architecture / future expansion</li></ul></article><div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">공개 범위 경계</p><p class="body-large">Event Core와 Control Tower는 통합 로드맵 단계이며 현재 완료 범위가 아닙니다.</p></div></section>
-<section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="/ko/?interest=platform#contact">파일럿 상담</a><a class="fm-button" href="/ko/platform/">Flowmatic Platform / Factory OS</a></div></section>
+</header>
+<main id="main">
+<section aria-labelledby="platform-v156-title" class="v156-platform-hero section-grid">
+<div class="cell span-7 reveal"><p class="eyebrow">Manufacturing Intelligence Platform</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="platform-v156-title"><span class="copy-lines"><span class="copy-line">제조 현장의 문제를</span><span class="copy-line">Engine 조합으로 해결합니다.</span></span></h1><p class="body-large">문제마다 새 프로그램을 만들지 않습니다. 같은 제조 Context를 전문 Engine이 읽고, 필요한 Engine을 조합해 업무 Module을 만들고, 검증 범위가 명확한 Solution Profile로 제공합니다.</p><div class="hero-actions"><a class="fm-button primary" href="#architecture">구조 보기</a><a class="fm-button" href="/ko/#pilot">파일럿 상담</a></div></div>
+<div class="cell span-5 v156-platform-hero-grid reveal delay-1" aria-label="Context to solution composition"><span>CONTEXT</span><span>ENGINE</span><span>MODULE</span><span>SOLUTION</span></div>
+</section>
+<div class="v156-platform"><section class="section" id="field-problem"><div class="wrap"><div class="section-kicker">01 · FIELD PROBLEM</div><h2 class="section-title">제조 현장에는 이런 문제가 있습니다.</h2><p class="section-body">시스템과 데이터는 이미 있지만, 그 사이의 판단·전달·추적은 사람에게 남아 있습니다.</p><div class="problem-grid"><article class="problem"><div class="problem-tag">MACHINING</div><div><h3>가공 정보가 서로 떨어져 있습니다</h3><p>NC·도면·공구·측정·보정이 따로 움직여 수정과 확인에 시간이 듭니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">QUALITY</div><div><h3>품질 데이터가 보고서에서 멈춥니다</h3><p>불량과 측정값은 쌓이지만 손실·우선순위·재발·공정 원인까지 이어지지 않습니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">OPERATIONS</div><div><h3>설비 상태를 봐도 다음 판단은 사람 몫입니다</h3><p>가동·대기·정지·Cycle은 보여도 무엇부터 확인할지는 다시 사람이 판단합니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">LOGISTICS</div><div><h3>자재 흐름의 마지막 구간이 끊깁니다</h3><p>요청·배차·보급·완료 확인이 여러 사람과 도구 사이에 흩어집니다.</p></div><div class="problem-tag">FIELD GAP</div></article></div></div></section>
+<section class="section" id="architecture"><div class="wrap"><div class="section-kicker">02 · COMPOSITION</div><h2 class="section-title">같은 Context를 읽고, Engine을 조합해 Module을 만듭니다.</h2><p class="section-body">아래 3개 가로 레이어가 Flowmatic의 기본 구조입니다. Context는 공통 기준, Engine은 제조 의미를 해석하는 기술자산, Module은 현장에서 실제로 쓰는 업무 기능입니다.</p>
+<div class="layer-stack">
+<div class="layer-row layer-context"><div class="layer-label"><div><b>Manufacturing Context</b><span>공통 제조 데이터 맥락</span></div><p>모든 Engine이 같은 Machine · Product · Process · Tool · Feature · Time 기준을 공유합니다.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Machine</div><div class="rail-card">Product</div><div class="rail-card">Process</div><div class="rail-card">Tool</div><div class="rail-card">Feature</div><div class="rail-card">Quality</div><div class="rail-card">Measurement</div><div class="rail-card">Material</div><div class="rail-card">Worker</div><div class="rail-card">Time</div></div></div></div>
+<div class="layer-row layer-engine"><div class="layer-label"><div><b>Engine Pool</b><span>전문 제조 Engine</span></div><p>필요한 제조 의미만 선택해 조합합니다. 한 Engine은 여러 Module에서 재사용됩니다.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">NC Semantic</div><div class="rail-card">Geometry</div><div class="rail-card">Machine State</div><div class="rail-card">Quality Analysis</div><div class="rail-card">Measurement</div><div class="rail-card">Tool Life</div><div class="rail-card">Revision</div><div class="rail-card">Reference Data</div><div class="rail-card">Vision / CT</div><div class="rail-card">Workflow</div><div class="rail-card">Cost / Resource</div><div class="rail-card">Material Flow</div></div></div></div>
+<div class="layer-row layer-module"><div class="layer-label"><div><b>Module Pool</b><span>현장 업무 Module</span></div><p>Module은 Engine 조합의 결과입니다. 고객별로 필요한 Module만 선택해 배포할 수 있습니다.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Viewer</div><div class="rail-card">Generator</div><div class="rail-card">Work Standard</div><div class="rail-card">Measurement / Compensation</div><div class="rail-card">TMS</div><div class="rail-card">Preventive Maintenance</div><div class="rail-card">Quality Worklist</div><div class="rail-card">Machine Monitor</div><div class="rail-card">Root Cause</div><div class="rail-card">Material Dispatch</div><div class="rail-card">Data Management</div><div class="rail-card">Control Tower</div></div></div></div>
+</div></div></section>
+<aside class="v156-runtime-note"><p class="section-kicker">Runtime infrastructure · 독립 제품 아님</p><h3>Event Bus · Audit · Adapter</h3><p>Event 전달, 실행 이력, 외부 시스템 연결은 모든 Module이 공유하는 경량 런타임 기반으로 유지합니다.</p></aside>
+<section class="section" id="modules"><div class="wrap"><div class="section-kicker">03 · MODULES</div><h2 class="section-title">이 Engine 조합이 실제 Module이 됩니다.</h2><p class="section-body">각 Module은 어떤 Engine을 쓰는지, 무엇을 하는지, 현장에서 어떤 공수를 줄이는지까지 설명합니다.</p><div class="modules-grid"><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Viewer</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>NC Semantic</span><span>Geometry</span><span>Revision</span></div>
+      <p class="module-what">NC와 도면을 같은 기준에서 읽는 가공 해석 Module</p><p class="module-help">G-code·형상·경로·Revision을 함께 확인해 검토 시간을 줄입니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Generator</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>NC Semantic</span><span>Geometry</span><span>Revision</span></div>
+      <p class="module-what">반복 가공을 빠르게 구성하는 NC 생성 Module</p><p class="module-help">홀·Drill/Tap·가공블록을 조합하고 안전 검증 후 NC를 생성합니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Work Standard</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Geometry</span><span>Workflow</span><span>Reference Data</span></div>
+      <p class="module-what">작업순서와 셋업 기준을 표준화하는 Module</p><p class="module-help">작업자마다 다른 설명을 줄이고 현장 전달 기준을 고정합니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Measurement / Compensation</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Measurement</span><span>Geometry</span><span>Quality Analysis</span></div>
+      <p class="module-what">측정값을 현장 보정 지시로 연결하는 Module</p><p class="module-help">측정→좌표 해석→보정량 계산→현장 지시까지의 전달 시간을 줄입니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>TMS</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Tool Life</span><span>NC Semantic</span><span>Revision</span></div>
+      <p class="module-what">공구 사용이력과 잔여수명을 관리하는 Module</p><p class="module-help">사용시간·절삭거리·교환이력을 기준으로 과잉·누락 교환을 줄입니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Preventive Maintenance</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Measurement</span><span>Tool Life</span></div>
+      <p class="module-what">설비·가공 문맥의 이상 추세를 보는 Module</p><p class="module-help">문제가 터진 뒤가 아니라 상태 변화와 반복 이상구간을 먼저 확인합니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Quality Worklist</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Quality Analysis</span><span>Cost / Resource</span><span>Workflow</span></div>
+      <p class="module-what">불량을 손실과 조치 우선순위로 바꾸는 Module</p><p class="module-help">TOP 원인·손실금액·담당·조치·재발을 한 흐름으로 관리합니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Machine Monitor</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Vision / CT</span><span>Workflow</span></div>
+      <p class="module-what">설비 상태와 Cycle을 운영 Event로 바꾸는 Module</p><p class="module-help">가동·대기·정지·호출을 기록하고 손실시간과 대응 리드타임을 계산합니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="target">
+      <div class="module-head"><h3>Root Cause</h3><span class="status">COMPOSITION TARGET</span></div>
+      <div class="engine-chips"><span>Quality Analysis</span><span>Machine State</span><span>Tool Life</span><span>Revision</span></div>
+      <p class="module-what">품질 변화와 공정 변화의 연결고리를 찾는 Module</p><p class="module-help">불량 시점과 Tool·Machine·INDEX·NC Revision 변화를 같은 Context에서 비교합니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Material Dispatch</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Material Flow</span><span>Workflow</span><span>Machine State</span></div>
+      <p class="module-what">자재 요청부터 투입완료까지 연결하는 Module</p><p class="module-help">요청→우선순위→배차→보급→완료 확인의 단절을 줄입니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Data Management</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Revision</span><span>Reference Data</span><span>Workflow</span></div>
+      <p class="module-what">프로그램·기준·변경이력을 보존하는 Module</p><p class="module-help">분산된 기준정보와 Revision을 재사용 가능한 운영자산으로 축적합니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article><article class="module-card" data-status="target">
+      <div class="module-head"><h3>Control Tower</h3><span class="status">COMPOSITION TARGET</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Quality Analysis</span><span>Cost / Resource</span><span>Workflow</span></div>
+      <p class="module-what">여러 Module 결과를 하나의 판단 화면으로 조합하는 Module</p><p class="module-help">손실·위험·우선순위·다음 행동을 필요한 Capability 조합으로 보여줍니다.</p>
+      <div class="module-foot">구성 및 검증 범위 확인</div>
+    </article></div></div></section>
+<section class="section v156-composition-examples" aria-label="Representative solution compositions"><div class="wrap"><div><p class="section-kicker">대표 Solution 조합</p><p class="section-body">같은 Engine과 Module을 다시 조합해 고객 문제별 Solution Profile을 확장합니다.</p></div><div class="v156-example-chips"><span>Machining Intelligence</span><span>Quality Intelligence</span><span>Production Optimization</span><span>Tool Optimization</span><span>Root Cause Intelligence</span><span>Compensation Solution</span></div></div></section>
+<section class="section" id="solutions"><div class="wrap"><div class="section-kicker">04 · SOLUTION PROFILE</div><h2 class="section-title">Module은 필요한 Solution Profile로 조합됩니다.</h2><p class="section-body">Solution은 고정된 독립 제품이 아니라 Module 조합입니다. 현재 4개 대표 Profile을 제공하며, 같은 Engine과 Module로 고객 문제별 조합을 확장합니다.</p>
+<div class="convergence" data-convergence><div class="module-source-grid"><div class="source-node" data-source="viewer" data-solutions="machining">Viewer</div><div class="source-node" data-source="generator" data-solutions="machining">Generator</div><div class="source-node" data-source="workstandard" data-solutions="machining">Work Standard</div><div class="source-node" data-source="measurement" data-solutions="machining quality">Measurement / Compensation</div><div class="source-node" data-source="tms" data-solutions="machining operations">TMS</div><div class="source-node" data-source="pm" data-solutions="operations">Preventive Maintenance</div><div class="source-node" data-source="qualitywork" data-solutions="quality">Quality Worklist</div><div class="source-node" data-source="machinemonitor" data-solutions="operations">Machine Monitor</div><div class="source-node" data-source="rootcause" data-solutions="quality operations">Root Cause</div><div class="source-node" data-source="dispatch" data-solutions="logistics">Material Dispatch</div><div class="source-node" data-source="data" data-solutions="machining quality operations logistics">Data Management</div><div class="source-node" data-source="tower" data-solutions="quality operations logistics">Control Tower</div></div><div class="convergence-field" data-convergence-field><svg class="connection-svg" data-connection-svg preserveAspectRatio="none"></svg></div><div class="solution-row"><article class="solution-card machining" data-solution="machining">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Machining Intelligence</h3><p>가공 해석·NC 생성·측정/보정·공구관리</p>
+      <div class="solution-modules">Viewer · Generator · Work Standard · Measurement / Compensation · TMS · Data Management</div>
+      <div class="solution-actions"><a class="btn" href="/ko/machining-intelligence/">현재 구현 보기 →</a></div>
+    </article><article class="solution-card quality" data-solution="quality">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Quality Intelligence</h3><p>측정·손실·우선순위·재발·원인추적</p>
+      <div class="solution-modules">Measurement / Compensation · Quality Worklist · Root Cause · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/ko/quality/">현재 구현 보기 →</a></div>
+    </article><article class="solution-card operations" data-solution="operations">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Operations Intelligence</h3><p>설비상태·Cycle·손실·예방보전·운영판단</p>
+      <div class="solution-modules">Machine Monitor · TMS · Preventive Maintenance · Root Cause · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/ko/operations-intelligence/">현재 구현 보기 →</a></div>
+    </article><article class="solution-card logistics" data-solution="logistics">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Logistics Intelligence</h3><p>자재요청·배차·공급·완료 확인</p>
+      <div class="solution-modules">Material Dispatch · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/ko/logistics-intelligence/">현재 구현 보기 →</a></div>
+    </article></div></div>
+</div></section>
+<section class="section"><div class="wrap"><div class="section-kicker">05 · EVIDENCE</div><h2 class="section-title">그림만 바꾼 것이 아닙니다.</h2><p class="section-body">Machining Intelligence V156에서 Engine / Module / 고객별 배포 구조가 실제 패키지로 성립했습니다. 플랫폼 전역에는 같은 패턴을 순차 적용합니다.</p><div class="proof-grid"><article class="proof blue"><b>153 / 153 PASS</b><p>V156 논리구조·계약·배포·헤드리스 테스트</p></article><article class="proof yellow"><b>7 isolated modules</b><p>Viewer 포함 7개 Module의 legacy-free 분리 구조</p></article><article class="proof red"><b>Candidate</b><p>Windows GUI/OpenGL 실제 Release 검증은 별도 승인 전</p></article></div></div></section></div>
+<section aria-labelledby="certified-core-title" class="certified-core section-grid" id="certified-core">
+<div class="cell span-8 reveal"><p class="eyebrow">Certified core boundary</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="certified-core-title"><span class="copy-lines"><span class="copy-line">인증 핵심 유지.</span><span class="copy-line">수작업 간극 자동화.</span></span></h2><p class="body-large">기존 안전제어·전문 CAM·정밀측정·기준정보 시스템은 유지합니다. Flowmatic은 시스템 사이의 관찰·문맥·우선순위·업무·증빙·확인을 연결합니다.</p></div>
+<div class="cell span-4 reveal delay-1"><figure class="factory-asset"><picture><source srcset="/assets/factory-os/03_certified_core_boundary.svg" type="image/svg+xml"><img alt="Flowmatic certified core boundary" decoding="async" height="720" loading="lazy" src="/assets/factory-os/03_certified_core_boundary.png" width="1200"></picture></figure></div><article class="cell certified-core-card span-3 reveal delay-1"><h3>PLC / Safety</h3><p>비상정지·인터록·인증 안전제어는 기존 제어계층에서 유지합니다.</p></article><article class="cell certified-core-card span-3 reveal delay-2"><h3>CAM</h3><p>복잡한 Toolpath 생성은 전문 CAM에서 수행하며 Flowmatic은 현장 검토 workflow를 연결합니다.</p></article><article class="cell certified-core-card span-3 reveal delay-3"><h3>Precision Metrology</h3><p>µm급 판정은 전용 측정기가 담당하며 Vision은 screening과 triage를 지원합니다.</p></article><article class="cell certified-core-card span-3 reveal delay-4"><h3>ERP / MES / WMS</h3><p>System of Record는 유지하며 필요한 Adapter와 Event layer만 연결합니다.</p></article></section>
+<section aria-labelledby="deployment-title" class="deployment-modes section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Deployment modes</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="deployment-title"><span class="copy-lines"><span class="copy-line">Brownfield 우선.</span><span class="copy-line">Greenfield 확장.</span></span></h2></div><article class="cell deployment-mode span-6 reveal delay-1"><p class="eyebrow">Field-first deployment</p><h3>Brownfield — Factory → Model</h3><p>현장 움직임·문서·NC·작업방식에서 운영모델을 구성합니다.</p></article><article class="cell deployment-mode span-6 reveal delay-2"><p class="eyebrow">Deployment architecture / future expansion</p><h3>Greenfield — Model → Factory</h3><p>안정화 전부터 Process·Quality·Material·Work·Control Event model을 설계하는 미래 확장 아키텍처입니다.</p></article></section>
+<section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="/ko/#pilot">파일럿 상담</a><a class="fm-button" href="/ko/">홈</a></div></section>
 </main><footer class="site-footer">
 <a aria-label="Flowmatic home" class="footer-brand" href="/ko/#hero"><img alt="" aria-hidden="true" class="brand-mark" height="34" src="/assets/branding/flowmatic-logo-mark.svg" width="34"><strong>Flowmatic</strong></a>
-<p>기존 설비와 업무체계를 유지한 채 단절된 운영 정보를 연결합니다.</p>
+<p>기존 공장은 유지하고, 공통 Context 위에서 필요한 Engine과 Module만 조합합니다.</p>
 <div class="footer-links"><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a><a href="/ko/#hero">홈</a></div>
 <small>© 2026 Flowmatic</small>
-</footer><script src="/script.js?v=5.20"></script></body></html>
+</footer><script src="/script.js?v=5.21"></script></body></html>

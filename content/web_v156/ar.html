@@ -1,0 +1,90 @@
+<section class="section" id="field-problem"><div class="wrap"><div class="section-kicker">01 · FIELD PROBLEM</div><h2 class="section-title">المصنع لديه أنظمة بالفعل، لكن الفجوات ما زالت موجودة.</h2><p class="section-body">البيانات موجودة، لكن الحكم والتسليم والمتابعة بين الأنظمة ما زالت تعتمد على الأشخاص.</p><div class="problem-grid"><article class="problem"><div class="problem-tag">MACHINING</div><div><h3>معلومات التشغيل متفرقة</h3><p>تتحرك NC والرسومات والأدوات والقياس والتصحيح بشكل منفصل، ما يبطئ المراجعة والتغيير.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">QUALITY</div><div><h3>بيانات الجودة تتوقف عند التقرير</h3><p>تتراكم العيوب والقياسات من دون اتصال مباشر بالخسارة والأولوية والتكرار وسبب العملية.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">OPERATIONS</div><div><h3>حالة المعدة ما زالت تحتاج تفسيراً بشرياً</h3><p>قد نرى التشغيل والانتظار والتوقف والدورة، لكن تحديد ما يجب فحصه أولاً يبقى يدوياً.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">LOGISTICS</div><div><h3>المتر الأخير لتدفق المواد غير متصل</h3><p>الطلب والإرسال والتوريد والتأكيد موزعة بين أشخاص وأدوات مختلفة.</p></div><div class="problem-tag">FIELD GAP</div></article></div></div></section>
+<section class="section" id="architecture"><div class="wrap"><div class="section-kicker">02 · COMPOSITION</div><h2 class="section-title">سياق واحد مشترك، ومحركات تتجمع في وحدات.</h2><p class="section-body">هذه الطبقات الأفقية الثلاث هي نموذج Flowmatic الأساسي: سياق تصنيع مشترك، ومحركات متخصصة قابلة لإعادة الاستخدام، ووحدات تشغيل تُستخدم في الميدان.</p>
+<div class="layer-stack">
+<div class="layer-row layer-context"><div class="layer-label"><div><b>Manufacturing Context</b><span>سياق تصنيع مشترك</span></div><p>تشارك كل المحركات سياق المعدة والمنتج والعملية والأداة والميزة والزمن نفسه.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Machine</div><div class="rail-card">Product</div><div class="rail-card">Process</div><div class="rail-card">Tool</div><div class="rail-card">Feature</div><div class="rail-card">Quality</div><div class="rail-card">Measurement</div><div class="rail-card">Material</div><div class="rail-card">Worker</div><div class="rail-card">Time</div></div></div></div>
+<div class="layer-row layer-engine"><div class="layer-label"><div><b>Engine Pool</b><span>محركات تصنيع متخصصة</span></div><p>نختار فقط معنى التصنيع المطلوب، ويمكن إعادة استخدام المحرك نفسه في وحدات متعددة.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">NC Semantic</div><div class="rail-card">Geometry</div><div class="rail-card">Machine State</div><div class="rail-card">Quality Analysis</div><div class="rail-card">Measurement</div><div class="rail-card">Tool Life</div><div class="rail-card">Revision</div><div class="rail-card">Reference Data</div><div class="rail-card">Vision / CT</div><div class="rail-card">Workflow</div><div class="rail-card">Cost / Resource</div><div class="rail-card">Material Flow</div></div></div></div>
+<div class="layer-row layer-module"><div class="layer-label"><div><b>Module Pool</b><span>وحدات تشغيل ميدانية</span></div><p>الوحدة هي نتيجة تركيب المحركات ويمكن تغليفها بشكل مستقل حسب حاجة العميل.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Viewer</div><div class="rail-card">Generator</div><div class="rail-card">Work Standard</div><div class="rail-card">Measurement / Compensation</div><div class="rail-card">TMS</div><div class="rail-card">Preventive Maintenance</div><div class="rail-card">Quality Worklist</div><div class="rail-card">Machine Monitor</div><div class="rail-card">Root Cause</div><div class="rail-card">Material Dispatch</div><div class="rail-card">Data Management</div><div class="rail-card">Control Tower</div></div></div></div>
+</div></div></section>
+<!-- V156_RUNTIME_NOTE -->
+<section class="section" id="modules"><div class="wrap"><div class="section-kicker">03 · MODULES</div><h2 class="section-title">تركيب المحركات يتحول إلى وحدات تشغيل حقيقية.</h2><p class="section-body">كل وحدة توضح المحركات التي تستخدمها، وما الذي تفعله، وكيف تقلل العمل الميداني.</p><div class="modules-grid"><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Viewer</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>NC Semantic</span><span>Geometry</span><span>Revision</span></div>
+      <p class="module-what">مراجعة NC والرسومات ضمن سياق تشغيل واحد</p><p class="module-help">عرض G-code والهندسة والمسار والمراجعة معاً لتقليل زمن المراجعة.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Generator</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>NC Semantic</span><span>Geometry</span><span>Revision</span></div>
+      <p class="module-what">توليد أعمال التشغيل المتكررة بأمان</p><p class="module-help">تركيب الثقوب وDrill/Tap وكتل التشغيل ثم التحقق قبل إخراج NC.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Work Standard</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Geometry</span><span>Workflow</span><span>Reference Data</span></div>
+      <p class="module-what">توحيد الإعداد وتسلسل العمل</p><p class="module-help">تقليل اختلاف طريقة شرح وتنفيذ العمل بين المشغلين.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Measurement / Compensation</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Measurement</span><span>Geometry</span><span>Quality Analysis</span></div>
+      <p class="module-what">تحويل القياس إلى تعليمات تصحيح</p><p class="module-help">تقليل المسار من القياس إلى الإحداثيات وقيمة التصحيح والإجراء الميداني.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>TMS</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Tool Life</span><span>NC Semantic</span><span>Revision</span></div>
+      <p class="module-what">إدارة استخدام الأدوات والعمر المتبقي</p><p class="module-help">استخدام الزمن ومسافة القطع وسجل التغيير لتقليل الاستبدال المبكر أو المتأخر.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Preventive Maintenance</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Measurement</span><span>Tool Life</span></div>
+      <p class="module-what">متابعة الاتجاهات غير الطبيعية ضمن سياق التشغيل</p><p class="module-help">رؤية تغير الحالة والمقاطع غير الطبيعية المتكررة قبل وضوح العطل.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Quality Worklist</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Quality Analysis</span><span>Cost / Resource</span><span>Workflow</span></div>
+      <p class="module-what">تحويل العيوب إلى إجراءات مرتبة بالخسارة</p><p class="module-help">ربط الأسباب والخسارة والمسؤول والإجراء والتكرار.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Machine Monitor</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Vision / CT</span><span>Workflow</span></div>
+      <p class="module-what">تحويل حالة المعدة والدورة إلى أحداث تشغيل</p><p class="module-help">تسجيل التشغيل والانتظار والتوقف والنداء ثم حساب الخسارة وزمن الاستجابة.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="target">
+      <div class="module-head"><h3>Root Cause</h3><span class="status">COMPOSITION TARGET</span></div>
+      <div class="engine-chips"><span>Quality Analysis</span><span>Machine State</span><span>Tool Life</span><span>Revision</span></div>
+      <p class="module-what">مقارنة تغير الجودة بتغير العملية</p><p class="module-help">مقارنة توقيت العيب مع الأداة والمعدة وINDEX ومراجعة NC ضمن سياق واحد.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Material Dispatch</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Material Flow</span><span>Workflow</span><span>Machine State</span></div>
+      <p class="module-what">ربط طلب المواد حتى تأكيد الإكمال</p><p class="module-help">تقليل الفجوات بين الطلب والأولوية والإرسال والتوريد والإكمال.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Data Management</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Revision</span><span>Reference Data</span><span>Workflow</span></div>
+      <p class="module-what">حفظ البرامج والمراجع وتاريخ التغيير</p><p class="module-help">تحويل البيانات المرجعية والمراجعات المتفرقة إلى أصول تشغيل قابلة لإعادة الاستخدام.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article><article class="module-card" data-status="target">
+      <div class="module-head"><h3>Control Tower</h3><span class="status">COMPOSITION TARGET</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Quality Analysis</span><span>Cost / Resource</span><span>Workflow</span></div>
+      <p class="module-what">جمع نتائج وحدات متعددة في سطح قرار واحد</p><p class="module-help">عرض الخسارة والمخاطر والأولوية والإجراء التالي من القدرات المطلوبة للموقع.</p>
+      <div class="module-foot">راجع التركيب ونطاق التحقق</div>
+    </article></div></div></section>
+<!-- V156_SOLUTION_EXAMPLES -->
+<section class="section" id="solutions"><div class="wrap"><div class="section-kicker">04 · SOLUTION PROFILE</div><h2 class="section-title">تتجمع الوحدات في ملفات الحلول التي تحتاجها كل مشكلة.</h2><p class="section-body">الحل هو تركيب وحدات وليس منتجاً معزولاً. تتوفر حالياً أربعة ملفات ممثلة، ويمكن توسيع التركيب نفسه حسب مشكلة كل عميل.</p>
+<div class="convergence" data-convergence><div class="module-source-grid"><div class="source-node" data-source="viewer" data-solutions="machining">Viewer</div><div class="source-node" data-source="generator" data-solutions="machining">Generator</div><div class="source-node" data-source="workstandard" data-solutions="machining">Work Standard</div><div class="source-node" data-source="measurement" data-solutions="machining quality">Measurement / Compensation</div><div class="source-node" data-source="tms" data-solutions="machining operations">TMS</div><div class="source-node" data-source="pm" data-solutions="operations">Preventive Maintenance</div><div class="source-node" data-source="qualitywork" data-solutions="quality">Quality Worklist</div><div class="source-node" data-source="machinemonitor" data-solutions="operations">Machine Monitor</div><div class="source-node" data-source="rootcause" data-solutions="quality operations">Root Cause</div><div class="source-node" data-source="dispatch" data-solutions="logistics">Material Dispatch</div><div class="source-node" data-source="data" data-solutions="machining quality operations logistics">Data Management</div><div class="source-node" data-source="tower" data-solutions="quality operations logistics">Control Tower</div></div><div class="convergence-field" data-convergence-field><svg class="connection-svg" data-connection-svg preserveAspectRatio="none"></svg></div><div class="solution-row"><article class="solution-card machining" data-solution="machining">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Machining Intelligence</h3><p>مراجعة التشغيل وتوليد NC والقياس/التصحيح والأدوات</p>
+      <div class="solution-modules">Viewer · Generator · Work Standard · Measurement / Compensation · TMS · Data Management</div>
+      <div class="solution-actions"><a class="btn" href="/ar/machining-intelligence/">عرض التنفيذ الحالي →</a></div>
+    </article><article class="solution-card quality" data-solution="quality">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Quality Intelligence</h3><p>القياس والخسارة والأولوية والتكرار والسبب الجذري</p>
+      <div class="solution-modules">Measurement / Compensation · Quality Worklist · Root Cause · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/ar/quality/">عرض التنفيذ الحالي →</a></div>
+    </article><article class="solution-card operations" data-solution="operations">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Operations Intelligence</h3><p>حالة المعدة والدورة والخسارة والصيانة والحكم التشغيلي</p>
+      <div class="solution-modules">Machine Monitor · TMS · Preventive Maintenance · Root Cause · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/ar/operations-intelligence/">عرض التنفيذ الحالي →</a></div>
+    </article><article class="solution-card logistics" data-solution="logistics">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Logistics Intelligence</h3><p>طلب المواد والإرسال والتوريد والتأكيد</p>
+      <div class="solution-modules">Material Dispatch · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/ar/logistics-intelligence/">عرض التنفيذ الحالي →</a></div>
+    </article></div></div>
+</div></section>
+<section class="section"><div class="wrap"><div class="section-kicker">05 · EVIDENCE</div><h2 class="section-title">ليست مجرد رسمة جديدة.</h2><p class="section-body">يثبت Machining Intelligence V156 نمط المحرك/الوحدة/حزمة العميل في بنية توزيع فعلية. ويمكن الآن نشر النمط نفسه عبر المنصة.</p><div class="proof-grid"><article class="proof blue"><b>153 / 153 PASS</b><p>اختبارات V156 للبنية والعقود والتوزيع وHeadless</p></article><article class="proof yellow"><b>7 isolated modules</b><p>سبع وحدات مستقلة، بما فيها Viewer، ضمن حزمة خالية من legacy</p></article><article class="proof red"><b>Candidate</b><p>قبول إصدار Windows GUI/OpenGL ما زال بوابة منفصلة</p></article></div></div></section>

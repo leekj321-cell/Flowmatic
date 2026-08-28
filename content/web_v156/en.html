@@ -1,0 +1,90 @@
+<section class="section" id="field-problem"><div class="wrap"><div class="section-kicker">01 · FIELD PROBLEM</div><h2 class="section-title">Manufacturing sites already have systems. The gaps remain.</h2><p class="section-body">Data exists, but judgment, handoff, and follow-up between systems still depend on people.</p><div class="problem-grid"><article class="problem"><div class="problem-tag">MACHINING</div><div><h3>Machining information stays fragmented</h3><p>NC, drawings, tools, measurement and correction move separately, slowing review and change.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">QUALITY</div><div><h3>Quality data stops at reporting</h3><p>Defects and measurements accumulate without a direct path to loss, priority, recurrence and process cause.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">OPERATIONS</div><div><h3>Machine status still needs manual interpretation</h3><p>Run, wait, stop and cycle may be visible, but people still decide what to check first.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">LOGISTICS</div><div><h3>The last meter of material flow is disconnected</h3><p>Request, dispatch, delivery and confirmation are split across people and tools.</p></div><div class="problem-tag">FIELD GAP</div></article></div></div></section>
+<section class="section" id="architecture"><div class="wrap"><div class="section-kicker">02 · COMPOSITION</div><h2 class="section-title">One shared context. Engines compose into modules.</h2><p class="section-body">These three horizontal layers are the core Flowmatic model: shared manufacturing context, reusable domain engines, and operational modules used on the floor.</p>
+<div class="layer-stack">
+<div class="layer-row layer-context"><div class="layer-label"><div><b>Manufacturing Context</b><span>Shared manufacturing meaning</span></div><p>Every engine shares the same machine, product, process, tool, feature and time context.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Machine</div><div class="rail-card">Product</div><div class="rail-card">Process</div><div class="rail-card">Tool</div><div class="rail-card">Feature</div><div class="rail-card">Quality</div><div class="rail-card">Measurement</div><div class="rail-card">Material</div><div class="rail-card">Worker</div><div class="rail-card">Time</div></div></div></div>
+<div class="layer-row layer-engine"><div class="layer-label"><div><b>Engine Pool</b><span>Domain manufacturing engines</span></div><p>Select only the manufacturing meaning needed. One engine can be reused across many modules.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">NC Semantic</div><div class="rail-card">Geometry</div><div class="rail-card">Machine State</div><div class="rail-card">Quality Analysis</div><div class="rail-card">Measurement</div><div class="rail-card">Tool Life</div><div class="rail-card">Revision</div><div class="rail-card">Reference Data</div><div class="rail-card">Vision / CT</div><div class="rail-card">Workflow</div><div class="rail-card">Cost / Resource</div><div class="rail-card">Material Flow</div></div></div></div>
+<div class="layer-row layer-module"><div class="layer-label"><div><b>Module Pool</b><span>Operational modules</span></div><p>A module is the result of engine composition and can be packaged independently for each customer.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Viewer</div><div class="rail-card">Generator</div><div class="rail-card">Work Standard</div><div class="rail-card">Measurement / Compensation</div><div class="rail-card">TMS</div><div class="rail-card">Preventive Maintenance</div><div class="rail-card">Quality Worklist</div><div class="rail-card">Machine Monitor</div><div class="rail-card">Root Cause</div><div class="rail-card">Material Dispatch</div><div class="rail-card">Data Management</div><div class="rail-card">Control Tower</div></div></div></div>
+</div></div></section>
+<!-- V156_RUNTIME_NOTE -->
+<section class="section" id="modules"><div class="wrap"><div class="section-kicker">03 · MODULES</div><h2 class="section-title">Engine composition becomes real operational modules.</h2><p class="section-body">Each module shows the engines it uses, what it does, and what shop-floor work it reduces.</p><div class="modules-grid"><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Viewer</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>NC Semantic</span><span>Geometry</span><span>Revision</span></div>
+      <p class="module-what">Review NC and drawings in one machining context</p><p class="module-help">See G-code, geometry, path and revision together to reduce review time.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Generator</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>NC Semantic</span><span>Geometry</span><span>Revision</span></div>
+      <p class="module-what">Generate repeat machining work safely</p><p class="module-help">Compose holes, drill/tap and machining blocks, validate, then emit NC.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Work Standard</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Geometry</span><span>Workflow</span><span>Reference Data</span></div>
+      <p class="module-what">Standardize setup and work sequence</p><p class="module-help">Reduce operator-to-operator variation in how work is explained and executed.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Measurement / Compensation</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Measurement</span><span>Geometry</span><span>Quality Analysis</span></div>
+      <p class="module-what">Turn measurements into correction instructions</p><p class="module-help">Shorten the chain from measurement to coordinates, correction values and field action.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>TMS</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Tool Life</span><span>NC Semantic</span><span>Revision</span></div>
+      <p class="module-what">Manage tool usage and remaining life</p><p class="module-help">Use time, cutting distance and change history to reduce early and missed replacement.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Preventive Maintenance</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Measurement</span><span>Tool Life</span></div>
+      <p class="module-what">Track abnormal trends with machining context</p><p class="module-help">See state changes and repeated abnormal segments before a failure becomes obvious.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Quality Worklist</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Quality Analysis</span><span>Cost / Resource</span><span>Workflow</span></div>
+      <p class="module-what">Turn defects into loss-ranked actions</p><p class="module-help">Connect top causes, loss, owner, action and recurrence.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Machine Monitor</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Vision / CT</span><span>Workflow</span></div>
+      <p class="module-what">Convert machine state and cycle into operational events</p><p class="module-help">Capture run, wait, stop and calls, then calculate loss and response lead time.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="target">
+      <div class="module-head"><h3>Root Cause</h3><span class="status">COMPOSITION TARGET</span></div>
+      <div class="engine-chips"><span>Quality Analysis</span><span>Machine State</span><span>Tool Life</span><span>Revision</span></div>
+      <p class="module-what">Compare quality change with process change</p><p class="module-help">Compare defect timing against tool, machine, index and NC revision in one context.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="existing">
+      <div class="module-head"><h3>Material Dispatch</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="engine-chips"><span>Material Flow</span><span>Workflow</span><span>Machine State</span></div>
+      <p class="module-what">Connect material request through confirmation</p><p class="module-help">Reduce gaps across request, priority, dispatch, supply and completion.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Data Management</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="engine-chips"><span>Revision</span><span>Reference Data</span><span>Workflow</span></div>
+      <p class="module-what">Preserve programs, references and change history</p><p class="module-help">Turn distributed reference data and revisions into reusable operating assets.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article><article class="module-card" data-status="target">
+      <div class="module-head"><h3>Control Tower</h3><span class="status">COMPOSITION TARGET</span></div>
+      <div class="engine-chips"><span>Machine State</span><span>Quality Analysis</span><span>Cost / Resource</span><span>Workflow</span></div>
+      <p class="module-what">Compose multiple module outputs into one decision surface</p><p class="module-help">Show loss, risk, priority and next action from the capabilities needed for the site.</p>
+      <div class="module-foot">Review composition and validation scope</div>
+    </article></div></div></section>
+<!-- V156_SOLUTION_EXAMPLES -->
+<section class="section" id="solutions"><div class="wrap"><div class="section-kicker">04 · SOLUTION PROFILE</div><h2 class="section-title">Modules compose into the solution profiles each problem needs.</h2><p class="section-body">A solution is a module composition, not an isolated product. Four representative profiles are available now, while the same engines and modules support customer-specific compositions.</p>
+<div class="convergence" data-convergence><div class="module-source-grid"><div class="source-node" data-source="viewer" data-solutions="machining">Viewer</div><div class="source-node" data-source="generator" data-solutions="machining">Generator</div><div class="source-node" data-source="workstandard" data-solutions="machining">Work Standard</div><div class="source-node" data-source="measurement" data-solutions="machining quality">Measurement / Compensation</div><div class="source-node" data-source="tms" data-solutions="machining operations">TMS</div><div class="source-node" data-source="pm" data-solutions="operations">Preventive Maintenance</div><div class="source-node" data-source="qualitywork" data-solutions="quality">Quality Worklist</div><div class="source-node" data-source="machinemonitor" data-solutions="operations">Machine Monitor</div><div class="source-node" data-source="rootcause" data-solutions="quality operations">Root Cause</div><div class="source-node" data-source="dispatch" data-solutions="logistics">Material Dispatch</div><div class="source-node" data-source="data" data-solutions="machining quality operations logistics">Data Management</div><div class="source-node" data-source="tower" data-solutions="quality operations logistics">Control Tower</div></div><div class="convergence-field" data-convergence-field><svg class="connection-svg" data-connection-svg preserveAspectRatio="none"></svg></div><div class="solution-row"><article class="solution-card machining" data-solution="machining">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Machining Intelligence</h3><p>Machining review, NC generation, measurement/correction and tooling</p>
+      <div class="solution-modules">Viewer · Generator · Work Standard · Measurement / Compensation · TMS · Data Management</div>
+      <div class="solution-actions"><a class="btn" href="/en/machining-intelligence/">View implementation →</a></div>
+    </article><article class="solution-card quality" data-solution="quality">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Quality Intelligence</h3><p>Measurement, loss, priority, recurrence and root cause</p>
+      <div class="solution-modules">Measurement / Compensation · Quality Worklist · Root Cause · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/en/quality/">View implementation →</a></div>
+    </article><article class="solution-card operations" data-solution="operations">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Operations Intelligence</h3><p>Machine state, cycle, loss, maintenance and operating judgment</p>
+      <div class="solution-modules">Machine Monitor · TMS · Preventive Maintenance · Root Cause · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/en/operations-intelligence/">View implementation →</a></div>
+    </article><article class="solution-card logistics" data-solution="logistics">
+      <div class="problem-tag">SOLUTION PROFILE</div><h3>Logistics Intelligence</h3><p>Material request, dispatch, supply and confirmation</p>
+      <div class="solution-modules">Material Dispatch · Data Management · Control Tower</div>
+      <div class="solution-actions"><a class="btn" href="/en/logistics-intelligence/">View implementation →</a></div>
+    </article></div></div>
+</div></section>
+<section class="section"><div class="wrap"><div class="section-kicker">05 · EVIDENCE</div><h2 class="section-title">This is not just a new diagram.</h2><p class="section-body">Machining Intelligence V156 proves the engine/module/customer-package pattern in an actual distribution structure. The same pattern can now be rolled out across the platform.</p><div class="proof-grid"><article class="proof blue"><b>153 / 153 PASS</b><p>V156 architecture, contract, distribution and headless tests</p></article><article class="proof yellow"><b>7 isolated modules</b><p>Seven isolated modules, including Viewer, in the legacy-free suite</p></article><article class="proof red"><b>Candidate</b><p>Windows GUI/OpenGL release acceptance remains separately gated</p></article></div></div></section>

@@ -523,6 +523,81 @@ function initAmrExplainer() {
   requestAnimationFrame(tick);
 }
 
+function initV156Convergence() {
+  const convergenceBoxes = Array.from(document.querySelectorAll('.v156-platform [data-convergence]'));
+  if (!convergenceBoxes.length) return;
+
+  const svgNamespace = 'http://www.w3.org/2000/svg';
+  let animationFrame = 0;
+
+  const drawBox = (box) => {
+    const field = box.querySelector('[data-convergence-field]');
+    const svg = box.querySelector('[data-connection-svg]');
+    if (!field || !svg) return;
+
+    svg.replaceChildren();
+    const fieldRect = field.getBoundingClientRect();
+    const fieldStyle = window.getComputedStyle(field);
+    const fieldIsHidden = fieldStyle.display === 'none'
+      || fieldStyle.visibility === 'hidden'
+      || fieldRect.width < 1
+      || fieldRect.height < 1;
+    if (window.innerWidth <= 1100 || fieldIsHidden) {
+      svg.removeAttribute('viewBox');
+      return;
+    }
+
+    const width = fieldRect.width;
+    const height = fieldRect.height;
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    const targets = new Map();
+    box.querySelectorAll('[data-solution]').forEach((target) => {
+      if (target.dataset.solution) targets.set(target.dataset.solution, target);
+    });
+
+    const paths = document.createDocumentFragment();
+    box.querySelectorAll('.source-node[data-solutions]').forEach((source) => {
+      const solutionIds = (source.dataset.solutions || '').trim().split(/\s+/).filter(Boolean);
+      if (!solutionIds.length) return;
+
+      const sourceRect = source.getBoundingClientRect();
+      const sourceX = (sourceRect.left + (sourceRect.width / 2)) - fieldRect.left;
+      solutionIds.forEach((solutionId) => {
+        const target = targets.get(solutionId);
+        if (!target) return;
+
+        const targetRect = target.getBoundingClientRect();
+        const targetX = (targetRect.left + (targetRect.width / 2)) - fieldRect.left;
+        const bend = Math.max(70, height * 0.38);
+        const path = document.createElementNS(svgNamespace, 'path');
+        path.setAttribute('data-solution', solutionId);
+        path.setAttribute('d', `M ${sourceX} 0 C ${sourceX} ${bend}, ${targetX} ${height - bend}, ${targetX} ${height}`);
+        paths.appendChild(path);
+      });
+    });
+    svg.appendChild(paths);
+  };
+
+  const drawAll = () => {
+    animationFrame = 0;
+    convergenceBoxes.forEach(drawBox);
+  };
+  const requestDraw = () => {
+    if (animationFrame) return;
+    animationFrame = window.requestAnimationFrame(drawAll);
+  };
+
+  window.addEventListener('load', requestDraw);
+  window.addEventListener('resize', requestDraw);
+  window.addEventListener('flowmatic:layout-change', requestDraw);
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(requestDraw);
+    convergenceBoxes.forEach((box) => observer.observe(box));
+  }
+  requestDraw();
+}
+
 
 
 let fitTextTimer = 0;
@@ -626,5 +701,6 @@ initEvidenceSequence();
 initDemoVideos();
 initCtExplainer();
 initAmrExplainer();
+initV156Convergence();
 scheduleSemanticFit();
 if (document.fonts?.ready) document.fonts.ready.then(scheduleSemanticFit);
