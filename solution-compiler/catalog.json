@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "demo_days": 30,
+  "problems": [
+    {"id":"downtime","label":"비가동 / 손실","modules":["scada.loss_monitor@1"]},
+    {"id":"cycle","label":"CT / Cycle Time","modules":["scada.line_monitor@1","scada.trend_history@1"]},
+    {"id":"line-monitor","label":"라인 가동상태 / 다중라인 모니터링","modules":["scada.plant_monitor@1"]},
+    {"id":"material","label":"소재 / Buffer 잔량","modules":["scada.material_buffer@1"]},
+    {"id":"andon","label":"작업자 호출 / Andon","modules":["scada.andon_workflow@1"]},
+    {"id":"gcode","label":"G-code 생성 / 수정","modules":["flowmatic.generator.modular"]},
+    {"id":"nc-review","label":"NC / Toolpath 검토","modules":["flowmatic.viewer"]},
+    {"id":"measurement","label":"측정 / 좌표 / 보정","modules":["flowmatic.measurement.modular"]},
+    {"id":"work-standard","label":"작업표준","modules":["flowmatic.work_standard.modular"]},
+    {"id":"tool-life","label":"공구수명 / TMS","modules":["flowmatic.tms"]},
+    {"id":"maintenance","label":"예방보전 / 추세","modules":["flowmatic.preventive_maintenance"]},
+    {"id":"revision","label":"NC Revision / 데이터관리","modules":["flowmatic.data_management.modular"]}
+  ],
+  "modules": {
+    "flowmatic.viewer":{"name":"Viewer","capabilities":["document.nc@1","geometry.selection@1"]},
+    "flowmatic.generator.modular":{"name":"G-code Generator","capabilities":["document.nc@1","geometry.index_setup@1","gcode.generator@1"]},
+    "flowmatic.work_standard.modular":{"name":"Work Standard","capabilities":["reference.identity@1","work.standard@1"]},
+    "flowmatic.tms":{"name":"TMS","capabilities":["reference.identity@1","tool.life@1"]},
+    "flowmatic.preventive_maintenance":{"name":"Preventive Maintenance","capabilities":["reference.identity@1","maintenance.timeseries@1"]},
+    "flowmatic.measurement.modular":{"name":"Measurement / Compensation","capabilities":["measurement.compensation@1","geometry.selection@1"]},
+    "flowmatic.data_management.modular":{"name":"Data Management","capabilities":["reference.identity@1","data.management@1"]},
+    "scada.line_monitor@1":{"name":"Line Monitor","capabilities":["manufacturing.context@1","vision.robot_tracking@1","machine.state@1","cycle.robot_loop@1"]},
+    "scada.loss_monitor@1":{"name":"Loss / Downtime","capabilities":["manufacturing.context@1","machine.state@1","cycle.robot_loop@1","duration.state@1","loss.downtime@1","loss.reason@1"]},
+    "scada.material_buffer@1":{"name":"Material / Buffer","capabilities":["manufacturing.context@1","material.quantity@1"]},
+    "scada.trend_history@1":{"name":"Trend / History","capabilities":["manufacturing.context@1","timeseries.historian@1"]},
+    "scada.plant_monitor@1":{"name":"Plant Monitor","capabilities":["plant.aggregate@1","machine.state@1","cycle.robot_loop@1","duration.state@1","loss.downtime@1","runtime.health@1"]},
+    "scada.andon_workflow@1":{"name":"Operator / Andon","capabilities":["manufacturing.context@1","workflow.andon@1","loss.reason@1"]}
+  }
+}
