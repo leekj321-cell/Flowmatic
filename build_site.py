@@ -55,7 +55,7 @@ LANGS = {
         "contact": "문의",
         "related": "관련 제품",
         "status": "상태",
-        "current_scope": "현재 보여주는 범위",
+        "current_scope": "작동 범위",
         "pilot_input": "파일럿에서 검증할 입력",
         "pilot_result": "파일럿에서 확인할 결과",
         "video_unavailable": "브라우저에서 영상을 재생할 수 없습니다. 아래 설명으로 핵심 흐름을 확인하세요.",
@@ -78,7 +78,7 @@ LANGS = {
         "contact": "Contact",
         "related": "Related products",
         "status": "Status",
-        "current_scope": "Current scope shown",
+        "current_scope": "Working scope",
         "pilot_input": "Input to verify in pilot",
         "pilot_result": "Result to confirm in pilot",
         "video_unavailable": "This browser cannot play the video. Use the summary below to review the workflow.",
@@ -101,7 +101,7 @@ LANGS = {
         "contact": "تواصل",
         "related": "منتجات مرتبطة",
         "status": "الحالة",
-        "current_scope": "النطاق المعروض حاليًا",
+        "current_scope": "النطاق الوظيفي",
         "pilot_input": "المدخلات التي سيتم التحقق منها",
         "pilot_result": "النتيجة التي سيتم تأكيدها",
         "video_unavailable": "لا يستطيع هذا المتصفح تشغيل الفيديو. راجع الملخص أسفل المشغل.",
@@ -200,10 +200,10 @@ HOME = {
         "strategy_body": "기존 설비와 작업 방식은 유지합니다. 신호를 Event로 구조화하고 책임 있는 후속 행동과 KPI를 연결합니다. 자동화는 검증 결과에 따라 단계적으로 적용합니다.",
         "flow_title": "Observe → Eventize →|Act → Confirm",
         "flow_body": "신호 수집, Event 변환, 행동 연결, 결과 확인의 4단계 운영 구조입니다.",
-        "products_title": "제품별 구현 상태와|검증 범위.",
-        "products_body": "CT·NC는 공개 데모, Quality는 작동 프로토타입, Work Standard·TMS·Fleet는 개발 범위로 구분합니다.",
-        "workflow_title": "Demo workflows",
-        "workflow_body": "공개 데모와 검증 가능한 구현 범위만 표시합니다.",
+        "products_title": "작동 데모·기능 프로토타입·|다음 검증 범위.",
+        "products_body": "CT·NC 공개 데모, Quality 작동 프로토타입, Work Standard·TMS·Fleet 개발 범위.",
+        "workflow_title": "작동 흐름",
+        "workflow_body": "CT·NC 데모와 Quality 프로토타입에서 입력·판단·후속 행동을 확인할 수 있습니다.",
         "pilot_title": "기존 라인 유지.|단일 Event 파일럿.",
         "deploy_note": "파일럿 설계 항목: 배포 구조, 데이터 위치·보관 기간, 접근 권한, 기존 시스템 연동 범위.",
         "contact_title": "기존 라인 유지.|단일 Event 검증.",
@@ -227,10 +227,10 @@ HOME = {
         "strategy_body": "Start with the line as it is. Keep the equipment, workflow, and people already creating value. Make the event visible first, connect one next action, and automate only after the value is proven.",
         "flow_title": "Observe → Eventize →|Act → Confirm",
         "flow_body": "Flowmatic uses one operating logic: observe the signal, turn it into an event, connect a next action, and confirm the response.",
-        "products_title": "Product status and pilot scope|should be explicit.",
-        "products_body": "CT and NC include working demos. Quality shows its working prototype and integration status. Work Standard, TMS, and Fleet show their current development scope.",
-        "workflow_title": "Demo workflows",
-        "workflow_body": "Without verified customer metrics, the site shows only workflows that can be inspected through actual demos.",
+        "products_title": "Working demos, functional prototypes,|and the next validation scope.",
+        "products_body": "CT and NC working demos, a Quality functional prototype, and the current Work Standard, TMS, and Fleet development scope.",
+        "workflow_title": "Working flows",
+        "workflow_body": "CT and NC demos and the Quality prototype connect inputs, decisions, and next actions.",
         "pilot_title": "Validate one event|without replacing the line.",
         "deploy_note": "Deployment architecture, data location, retention, access control, and integration scope are confirmed during pilot design.",
         "contact_title": "Validate one event|without replacing the line.",
@@ -254,10 +254,10 @@ HOME = {
         "strategy_body": "ابدأ من الخط كما هو. حافظ على المعدات وسير العمل والأشخاص الذين يصنعون القيمة. اجعل الحدث مرئيًا أولًا، ثم اربطه بإجراء تالٍ واحد، ولا تؤتمت إلا بعد إثبات القيمة.",
         "flow_title": "الرصد → تحويل الإشارة إلى حدث →|ربط الإجراء → التأكيد",
         "flow_body": "يستخدم Flowmatic منطق تشغيل واحدًا: قراءة الإشارة، تحويلها إلى حدث، ربطها بإجراء تالٍ، ثم تأكيد الاستجابة.",
-        "products_title": "يجب أن تكون حالة المنتج|ونطاق التحقق واضحين.",
-        "products_body": "يتضمن CT وNC عروضًا عملية. وتعرض Quality النموذج الأولي العامل وحالة التكامل، بينما تعرض Work Standard وTMS وFleet نطاق التطوير الحالي.",
-        "workflow_title": "تدفقات العروض",
-        "workflow_body": "من دون مقاييس عملاء موثقة، يعرض الموقع فقط التدفقات التي يمكن فحصها من خلال العروض الفعلية.",
+        "products_title": "عروض عاملة ونماذج أولية وظيفية|ونطاق التحقق التالي.",
+        "products_body": "عروض عاملة لـ CT وNC، ونموذج أولي وظيفي لـ Quality، ونطاق التطوير الحالي لـ Work Standard وTMS وFleet.",
+        "workflow_title": "تدفقات عاملة",
+        "workflow_body": "تربط عروض CT وNC ونموذج Quality الأولي بين المدخلات والقرارات والإجراءات التالية.",
         "pilot_title": "تحقق من حدث واحد|من دون استبدال الخط.",
         "deploy_note": "يتم تأكيد بنية النشر وموقع البيانات وفترة الاحتفاظ وصلاحيات الوصول ونطاق التكامل أثناء تصميم المشروع التجريبي.",
         "contact_title": "تحقق من حدث واحد|من دون استبدال الخط.",
@@ -339,22 +339,22 @@ FLOW_STEPS = {
 
 PILOT_STEPS = {
     "ko": [
-        ("01", "Event 정의", "사이클 완료·경로 위험·작업 단계·공구 부족·자재 요구 중 하나를 선정합니다."),
-        ("02", "입력 검증", "카메라·NC 파일·작업자 입력·기준 데이터·인터페이스를 검증합니다."),
-        ("03", "행동 지정", "알림·검토·안내·호출 중 하나를 연결합니다."),
-        ("04", "KPI 평가", "합의된 KPI를 기준으로 확대 적용 여부를 결정합니다."),
+        ("01", "기준선 정의", "반복 업무 시간·원인 확인 시간·대응 리드타임 가운데 핵심 지표를 정합니다."),
+        ("02", "입력 확인", "카메라·NC·검사·작업자 입력의 수집 가능성과 누락률을 확인합니다."),
+        ("03", "8주 현장 운영", "담당·조치·완료 조건을 실제 업무에 연결하고 같은 지표를 측정합니다."),
+        ("04", "통과 판단", "기준선 변화·사용성·설치 공수·후속 배포 조건을 함께 확인합니다."),
     ],
     "en": [
-        ("01", "Choose one event", "Pick cycle complete, path risk, work step, tool shortage, or material demand."),
-        ("02", "Confirm the input", "Check camera, NC file, operator input, reference data, or interface."),
-        ("03", "Connect the action", "Connect one alert, review, guide, or call."),
-        ("04", "Verify the KPI", "Use the agreed KPI to decide whether to continue."),
+        ("01", "Set the baseline", "Select repetitive work time, cause-confirmation time, or response lead time as the primary measure."),
+        ("02", "Confirm the input", "Check collection feasibility and missing-data rate for camera, NC, inspection, or operator input."),
+        ("03", "Run for eight weeks", "Connect owner, action, and completion conditions to the live workflow and measure the same baseline."),
+        ("04", "Apply the gate", "Check baseline change, usability, installation effort, and the conditions for follow-on deployment together."),
     ],
     "ar": [
-        ("01", "اختيار حدث", "اختر اكتمال دورة أو خطر مسار أو خطوة عمل أو نقص أداة أو طلب مواد."),
-        ("02", "تأكيد الإدخال", "تحقق من الكاميرا أو ملف NC أو إدخال المشغّل أو البيانات المرجعية أو الواجهة."),
-        ("03", "ربط الإجراء", "اربط تنبيهًا أو مراجعة أو إرشادًا أو طلبًا واحدًا."),
-        ("04", "تأكيد KPI", "استخدم مؤشر KPI المتفق عليه لتقرير الاستمرار."),
+        ("01", "تحديد خط الأساس", "اختر وقت العمل المتكرر أو وقت تأكيد السبب أو زمن الاستجابة مقياسًا رئيسيًا."),
+        ("02", "تأكيد الإدخال", "تحقق من إمكانية الجمع ومعدل البيانات المفقودة للكاميرا أو NC أو الفحص أو إدخال المشغّل."),
+        ("03", "تشغيل لثمانية أسابيع", "اربط المسؤول والإجراء وشروط الإنجاز بسير العمل الفعلي وقِس خط الأساس نفسه."),
+        ("04", "تطبيق بوابة القرار", "تحقق من تغير خط الأساس وقابلية الاستخدام وجهد التثبيت وشروط الانتقال إلى النشر اللاحق معًا."),
     ],
 }
 
@@ -1158,35 +1158,33 @@ def outcomes_section(lang: str) -> str:
 
 V156_RUNTIME = {
     "ko": {
-        "label": "Runtime infrastructure · 독립 제품 아님",
+        "label": "SHARED RUNTIME",
         "title": "Event Bus · Audit · Adapter",
-        "body": "Event 전달, 실행 이력, 외부 시스템 연결은 모든 Module이 공유하는 경량 런타임 기반으로 유지합니다.",
-        "examples": "대표 Solution 조합",
-        "examples_body": "같은 Engine과 Module을 다시 조합해 고객 문제별 Solution Profile을 확장합니다.",
+        "body": "Event Bus는 Module 간 Event를 전달하고, Audit은 실행 이력을 남기며, Adapter는 ERP·MES·WMS·설비 인터페이스를 연결합니다.",
+        "examples": "REUSABLE COMPOSITION",
+        "examples_body": "PoC에서 설치성과 지표 변화를 확인한 뒤, 다음 공정과 사이트의 재사용 조건을 검증합니다.",
     },
     "en": {
-        "label": "Runtime infrastructure · not a standalone product",
+        "label": "SHARED RUNTIME",
         "title": "Event Bus · Audit · Adapter",
-        "body": "Event delivery, execution history, and external-system adapters remain lightweight runtime infrastructure shared by every module.",
-        "examples": "Representative solution compositions",
-        "examples_body": "The same engines and modules can be recomposed into customer-specific solution profiles.",
+        "body": "Event Bus carries events between modules, Audit records execution history, and adapters connect ERP, MES, WMS, and equipment interfaces.",
+        "examples": "REUSABLE COMPOSITION",
+        "examples_body": "After the PoC confirms installation and baseline change, validate reuse conditions on the next process and site.",
     },
     "ar": {
-        "label": "بنية تشغيل مشتركة · وليست منتجاً مستقلاً",
+        "label": "SHARED RUNTIME",
         "title": "Event Bus · Audit · Adapter",
-        "body": "يبقى نقل الأحداث وسجل التنفيذ وموصلات الأنظمة الخارجية بنية تشغيل خفيفة تشترك فيها جميع الوحدات.",
-        "examples": "نماذج لتركيبات الحلول",
-        "examples_body": "يمكن إعادة تركيب المحركات والوحدات نفسها في ملفات حلول خاصة بمشكلة كل عميل.",
+        "body": "ينقل Event Bus الأحداث بين الوحدات، ويسجل Audit تاريخ التنفيذ، وتربط Adapter واجهات ERP وMES وWMS والمعدات.",
+        "examples": "REUSABLE COMPOSITION",
+        "examples_body": "بعد أن تؤكد تجربة إثبات المفهوم التثبيت وتغير خط الأساس، تحقّق من شروط إعادة الاستخدام في العملية والموقع التاليين.",
     },
 }
 
 V156_SOLUTION_EXAMPLES = (
     "Machining Intelligence",
     "Quality Intelligence",
-    "Production Optimization",
-    "Tool Optimization",
-    "Root Cause Intelligence",
-    "Compensation Solution",
+    "Operations Intelligence",
+    "Logistics Intelligence",
 )
 
 
@@ -1197,11 +1195,14 @@ def v156_platform_sections(lang: str) -> str:
         raise FileNotFoundError(f"Missing V156 web content: {source}")
     content = source.read_text(encoding="utf-8").strip()
     required = (
-        "01 · FIELD PROBLEM",
+        "01 · FIELD GAP",
         'id="architecture"',
         'id="modules"',
         'id="solutions"',
-        "153 / 153 PASS",
+        "05 · CURRENT STAGE",
+        "FUNCTIONAL PROTOTYPES",
+        "KICXUP CHALLENGE",
+        "SEALINK PoC",
         "<!-- V156_RUNTIME_NOTE -->",
         "<!-- V156_SOLUTION_EXAMPLES -->",
     )
@@ -1218,7 +1219,7 @@ def v156_platform_sections(lang: str) -> str:
 
     chips = "".join(f"<span>{e(item)}</span>" for item in V156_SOLUTION_EXAMPLES)
     examples = (
-        '<section class="section v156-composition-examples" aria-label="Representative solution compositions">'
+        '<section class="section v156-composition-examples" aria-label="Reusable module composition">'
         f'<div class="wrap"><div><p class="section-kicker">{e(copy["examples"])}</p>'
         f'<p class="section-body">{e(copy["examples_body"])}</p></div>'
         f'<div class="v156-example-chips">{chips}</div></div></section>'
@@ -1331,7 +1332,7 @@ def deployment_modes_section(lang: str) -> str:
         f'<article class="cell deployment-mode span-6 reveal delay-{i + 1}"><p class="eyebrow">{e(status[lang])}</p><h3>{e(name)}</h3><p>{e(body[lang])}</p></article>'
         for i, (name, body, status) in enumerate(DEPLOYMENT_MODES)
     )
-    title = {"ko":"Brownfield 우선.|Greenfield 확장.","en":"Start from the existing factory.|Extend toward future Event-model design.","ar":"ابدأ من المصنع القائم.|وامتد نحو تصميم نموذج أحداث المستقبل."}[lang]
+    title = {"ko":"유료 PoC → Deployment →|Module · Line · Site","en":"Paid PoC → Deployment →|Module · Line · Site","ar":"مشروع إثبات مفهوم مدفوع → Deployment →|Module · Line · Site"}[lang]
     return f'<section aria-labelledby="deployment-title" class="deployment-modes section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Deployment modes</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="deployment-title">{lines(title)}</h2></div>{cards}</section>'
 
 
@@ -1358,21 +1359,21 @@ V156_PLATFORM_PAGE = {
         "description": "공통 Manufacturing Context를 전문 Engine이 읽고, Engine 조합을 현장 Module과 고객별 Solution Profile로 연결하는 Flowmatic 플랫폼 아키텍처입니다.",
         "eyebrow": "Manufacturing Intelligence Platform",
         "hero": "제조 현장의 문제를|Engine 조합으로 해결합니다.",
-        "body": "문제마다 새 프로그램을 만들지 않습니다. 같은 제조 Context를 전문 Engine이 읽고, 필요한 Engine을 조합해 업무 Module을 만들고, 검증 범위가 명확한 Solution Profile로 제공합니다.",
+        "body": "설비·제품·공정·공구·품질·시간을 공통 Context로 연결하고, 필요한 Engine과 Module만 현장 업무 단위로 배포합니다.",
     },
     "en": {
         "title": "Flowmatic | Manufacturing Intelligence Platform",
         "description": "Flowmatic lets domain engines read shared manufacturing context, compose into operational modules, and form customer-specific solution profiles.",
         "eyebrow": "Manufacturing Intelligence Platform",
         "hero": "Solve manufacturing problems|through engine composition.",
-        "body": "We do not build a separate program for every problem. Domain engines read the same manufacturing context, combine into operational modules, and form solution profiles with explicit validation boundaries.",
+        "body": "Connect machine, product, process, tool, quality, and time in shared context, then deploy only the engines and modules required by the field workflow.",
     },
     "ar": {
         "title": "Flowmatic | منصة ذكاء التصنيع",
         "description": "تقرأ محركات Flowmatic المتخصصة سياق تصنيع مشتركاً، وتتجمع في وحدات تشغيل وملفات حلول خاصة بكل عميل.",
         "eyebrow": "Manufacturing Intelligence Platform",
         "hero": "نحل مشاكل التصنيع|عبر تركيب المحركات.",
-        "body": "لا نبني برنامجاً منفصلاً لكل مشكلة. تقرأ المحركات المتخصصة سياق التصنيع نفسه، وتتجمع في وحدات تشغيل وملفات حلول ذات حدود تحقق واضحة.",
+        "body": "اربط المعدة والمنتج والعملية والأداة والجودة والزمن في Context مشترك، ثم انشر المحركات والوحدات التي يحتاجها سير العمل الميداني فقط.",
     },
 }
 
@@ -1410,7 +1411,7 @@ def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
     )
     asset_alt = f'{data["label"]} architecture'
     asset = f'<div class="cell span-12 reveal">{factory_asset(data["asset"], asset_alt)}</div>' if data.get("asset") else ""
-    guardrail = {"ko":"공개 범위 경계","en":"Public scope boundary","ar":"حدود النطاق العام"}[lang]
+    guardrail = {"ko":"적용 범위","en":"Deployment scope","ar":"نطاق التطبيق"}[lang]
     back = {"ko":"전체 지능축 보기","en":"View all intelligence domains","ar":"عرض جميع مجالات الذكاء"}[lang]
     contact = {"ko":"파일럿 상담","en":"Discuss a pilot","ar":"ناقش مشروعًا تجريبيًا"}[lang]
     vnext_diagrams = machining_vnext_diagrams(lang, data) if slug == "machining-intelligence" else ""
@@ -1418,7 +1419,7 @@ def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
 {meta_head(lang, slug, data["title"][lang], data["description"][lang], canonical_path)}
 <body class="intelligence-page" data-lang="{lang}" data-static-lang="true">{header(lang, slug)}<main id="main">
-<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div>{asset}</section>
+<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p><a class="detail-inline-back" href="{page_path(lang)}#solutions">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div>{asset}</section>
 {vnext_diagrams}
 <section aria-label="Architecture details" class="intelligence-details section-grid">{sections}<div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">{e(guardrail)}</p><p class="body-large">{e(data["guardrail"][lang])}</p></div></section>
 <section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(contact)}</a><a class="fm-button" href="{page_path(lang, 'platform')}">Flowmatic Platform / Factory OS</a></div></section>
@@ -1607,7 +1608,7 @@ def home_page(lang: str, canonical_path: str) -> str:
 {header(lang, "home")}
 <main id="main">
 <section aria-labelledby="hero-title" class="hero section-grid" id="hero">
-<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#architecture">{e(h["primary"])}</a><a class="fm-button" href="#modules">{e(h["secondary"])}</a></div></div>
+<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#pilot">{e(h["primary"])}</a><a class="fm-button" href="#modules">{e(h["secondary"])}</a></div></div>
 <div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event →|Decision → Action","en":"Motion → Event →|Decision → Action","ar":"Motion → Event →|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
 <div class="cell yellow hero-note span-4 reveal delay-2"><strong>{e(FLOW_STEPS[lang][0][0])}</strong><span>{e(FLOW_STEPS[lang][0][1])}</span></div>
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
@@ -1638,7 +1639,7 @@ def demo_panel(product: dict, slug: str, lang: str) -> str:
         summary = product["description"][lang]
         return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(title)}</h2><p class="body-large">{e(summary)}</p></div>
 <div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="{e(product["video"])}" data-video-title="{e(product["name"])} demo"><video aria-label="{e(product["name"])} demo" controls hidden playsinline preload="metadata" poster="{BRAND_PATH}/flowmatic-og.svg" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>{e(LANGS[lang]["video_unavailable"])}</strong></p></div></div><p class="video-summary">{e(summary)}</p></div>"""
-    scope = {"ko": "작동 개념과 현재 연동 범위", "en": "Operating concept and current integration scope", "ar": "مفهوم التشغيل ونطاق التكامل الحالي"}[lang]
+    scope = {"ko": "현재 개발 범위 · 현장 연동 전", "en": "Current development scope · field integration pending", "ar": "نطاق التطوير الحالي · التكامل الميداني قيد الانتظار"}[lang]
     eyebrow = product.get("status_badges", {}).get(lang, [("", LANGS[lang]["development_preview"])])[0][1]
     return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(eyebrow)}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>
 <div class="cell span-8 demo-cell reveal delay-1"><div class="development-panel">{status_badges(product, lang)}<h3>{e(product_name(product, lang))}</h3><ul><li><strong>{e(LANGS[lang]["current_scope"])}:</strong> {e(scope)}</li><li><strong>{e(LANGS[lang]["pilot_input"])}:</strong> {e(product["inputs"][lang][0])}</li><li><strong>{e(LANGS[lang]["pilot_result"])}:</strong> {e(product["outputs"][lang][0])}</li></ul><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a></div></div>"""
@@ -1649,8 +1650,8 @@ def quality_status_section(lang: str) -> str:
     classes = ["is-implemented", "is-progress", "is-target"]
     for i, (status, items) in enumerate(QUALITY_STATUS[lang]):
         cards.append(f'<article class="cell quality-status-card span-4 {classes[i]} reveal delay-{i+1}"><p class="eyebrow">{e(status)}</p>{ul(items)}</article>')
-    title = {"ko": "구현·연동·목표|범위 구분", "en": "Implementation status|is explicit.", "ar": "حالة التنفيذ|واضحة ومحددة."}[lang]
-    body = {"ko": "현재 구현, 연동 진행, 목표 아키텍처를 단계별로 구분합니다.", "en": "Working scope, integration work, and architecture targets are shown separately.", "ar": "يتم عرض النطاق العامل وأعمال التكامل وأهداف البنية بشكل منفصل."}[lang]
+    title = {"ko": "작동 프로토타입 · 연동 중 ·|다음 검증", "en": "Working prototype · integration ·|next validation", "ar": "نموذج أولي عامل · تكامل ·|التحقق التالي"}[lang]
+    body = {"ko": "Quality Worklist는 작동하며, Inspection 결과 연동과 현장 기준정보 검증이 다음 단계입니다.", "en": "Quality Worklist is working; Inspection-result integration and field reference-data validation are next.", "ar": "تعمل Quality Worklist، ويأتي بعدها تكامل نتائج Inspection والتحقق من البيانات المرجعية الميدانية."}[lang]
     return f'<section aria-labelledby="quality-status-title" class="quality-status section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Flowmatic Quality status</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="quality-status-title">{lines(title)}</h2><p class="body-large">{e(body)}</p></div>{"".join(cards)}</section>'
 
 
@@ -1815,12 +1816,12 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
 {header(lang, slug)}
 <main id="main">
 <section aria-labelledby="tech-title" class="detail-overview section-grid">
-<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(LANGS[lang]["all_products"])}</a></div>
+<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#solutions">← {e(LANGS[lang]["all_products"])}</a></div>
 <div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
 {component_context_section(lang, slug)}
 <section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}{quality_current_section(lang) if slug == "quality" else ""}
 <section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
-<section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#products">{e(LANGS[lang]["all_products"])}</a></div></section>
+<section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#solutions">{e(LANGS[lang]["all_products"])}</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script>{extra_script}</body></html>"""
     return html
 

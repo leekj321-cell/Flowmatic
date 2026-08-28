@@ -1,74 +1,74 @@
-<section class="section" id="field-problem"><div class="wrap"><div class="section-kicker">01 · FIELD PROBLEM</div><h2 class="section-title">제조 현장에는 이런 문제가 있습니다.</h2><p class="section-body">시스템과 데이터는 이미 있지만, 그 사이의 판단·전달·추적은 사람에게 남아 있습니다.</p><div class="problem-grid"><article class="problem"><div class="problem-tag">MACHINING</div><div><h3>가공 정보가 서로 떨어져 있습니다</h3><p>NC·도면·공구·측정·보정이 따로 움직여 수정과 확인에 시간이 듭니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">QUALITY</div><div><h3>품질 데이터가 보고서에서 멈춥니다</h3><p>불량과 측정값은 쌓이지만 손실·우선순위·재발·공정 원인까지 이어지지 않습니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">OPERATIONS</div><div><h3>설비 상태를 봐도 다음 판단은 사람 몫입니다</h3><p>가동·대기·정지·Cycle은 보여도 무엇부터 확인할지는 다시 사람이 판단합니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">LOGISTICS</div><div><h3>자재 흐름의 마지막 구간이 끊깁니다</h3><p>요청·배차·보급·완료 확인이 여러 사람과 도구 사이에 흩어집니다.</p></div><div class="problem-tag">FIELD GAP</div></article></div></div></section>
-<section class="section" id="architecture"><div class="wrap"><div class="section-kicker">02 · COMPOSITION</div><h2 class="section-title">같은 Context를 읽고, Engine을 조합해 Module을 만듭니다.</h2><p class="section-body">아래 3개 가로 레이어가 Flowmatic의 기본 구조입니다. Context는 공통 기준, Engine은 제조 의미를 해석하는 기술자산, Module은 현장에서 실제로 쓰는 업무 기능입니다.</p>
+<section class="section" id="field-problem"><div class="wrap"><div class="section-kicker">01 · FIELD GAP</div><h2 class="section-title">설비와 시스템은 있는데, 판단·전달·추적은 사람에게 남아 있습니다.</h2><p class="section-body">Excel·이메일·메신저 사이의 반복 입력, 확인 대기, 원인 추적이 생산·품질·물류 대응을 늦춥니다.</p><div class="problem-grid"><article class="problem"><div class="problem-tag">MACHINING</div><div><h3>가공 정보가 하나의 공정으로 이어지지 않습니다</h3><p>NC·도면·공구·측정·보정을 변경 때마다 대조하고 결과를 다시 전달합니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">QUALITY</div><div><h3>품질 데이터와 개선업무가 끊겨 있습니다</h3><p>불량과 측정값은 쌓이지만 손실·우선순위·담당·효과·재발이 한 흐름으로 남지 않습니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">OPERATIONS</div><div><h3>설비 상태와 대응 우선순위가 분리돼 있습니다</h3><p>가동·대기·정지·Cycle은 보여도 손실 기준과 다음 담당 업무는 따로 정리합니다.</p></div><div class="problem-tag">FIELD GAP</div></article><article class="problem"><div class="problem-tag">LOGISTICS</div><div><h3>자재 요청과 실제 투입 확인이 끊깁니다</h3><p>요청·우선순위·배차·도착·투입 완료가 여러 사람과 도구 사이에 흩어집니다.</p></div><div class="problem-tag">FIELD GAP</div></article></div></div></section>
+<section class="section" id="architecture"><div class="wrap"><div class="section-kicker">02 · COMPOSITION</div><h2 class="section-title">현장마다 바뀌는 것은 Context, 반복되는 것은 Engine과 Module입니다.</h2><p class="section-body">설비·제품·공정·공구·Feature·시간의 기준을 맞추고 필요한 Engine과 Module만 조합합니다. 한 라인에서 시작하고, 다음 공정의 재배포 가능성은 PoC 이후 검증합니다.</p>
 <div class="layer-stack">
 <div class="layer-row layer-context"><div class="layer-label"><div><b>Manufacturing Context</b><span>공통 제조 데이터 맥락</span></div><p>모든 Engine이 같은 Machine · Product · Process · Tool · Feature · Time 기준을 공유합니다.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Machine</div><div class="rail-card">Product</div><div class="rail-card">Process</div><div class="rail-card">Tool</div><div class="rail-card">Feature</div><div class="rail-card">Quality</div><div class="rail-card">Measurement</div><div class="rail-card">Material</div><div class="rail-card">Worker</div><div class="rail-card">Time</div></div></div></div>
 <div class="layer-row layer-engine"><div class="layer-label"><div><b>Engine Pool</b><span>전문 제조 Engine</span></div><p>필요한 제조 의미만 선택해 조합합니다. 한 Engine은 여러 Module에서 재사용됩니다.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">NC Semantic</div><div class="rail-card">Geometry</div><div class="rail-card">Machine State</div><div class="rail-card">Quality Analysis</div><div class="rail-card">Measurement</div><div class="rail-card">Tool Life</div><div class="rail-card">Revision</div><div class="rail-card">Reference Data</div><div class="rail-card">Vision / CT</div><div class="rail-card">Workflow</div><div class="rail-card">Cost / Resource</div><div class="rail-card">Material Flow</div></div></div></div>
-<div class="layer-row layer-module"><div class="layer-label"><div><b>Module Pool</b><span>현장 업무 Module</span></div><p>Module은 Engine 조합의 결과입니다. 고객별로 필요한 Module만 선택해 배포할 수 있습니다.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Viewer</div><div class="rail-card">Generator</div><div class="rail-card">Work Standard</div><div class="rail-card">Measurement / Compensation</div><div class="rail-card">TMS</div><div class="rail-card">Preventive Maintenance</div><div class="rail-card">Quality Worklist</div><div class="rail-card">Machine Monitor</div><div class="rail-card">Root Cause</div><div class="rail-card">Material Dispatch</div><div class="rail-card">Data Management</div><div class="rail-card">Control Tower</div></div></div></div>
+<div class="layer-row layer-module"><div class="layer-label"><div><b>Module Pool</b><span>현장 업무 Module</span></div><p>Module은 독립 배포 단위입니다. 필요한 업무 기능만 선택하고 현장별 Adapter와 Solution Profile로 연결합니다.</p></div><div class="rail-wrap"><div class="rail"><div class="rail-card">Viewer</div><div class="rail-card">Generator</div><div class="rail-card">Work Standard</div><div class="rail-card">Measurement / Compensation</div><div class="rail-card">TMS</div><div class="rail-card">Preventive Maintenance</div><div class="rail-card">Quality Worklist</div><div class="rail-card">Machine Monitor</div><div class="rail-card">Root Cause</div><div class="rail-card">Material Dispatch</div><div class="rail-card">Data Management</div><div class="rail-card">Control Tower</div></div></div></div>
 </div></div></section>
 <!-- V156_RUNTIME_NOTE -->
-<section class="section" id="modules"><div class="wrap"><div class="section-kicker">03 · MODULES</div><h2 class="section-title">이 Engine 조합이 실제 Module이 됩니다.</h2><p class="section-body">각 Module은 어떤 Engine을 쓰는지, 무엇을 하는지, 현장에서 어떤 공수를 줄이는지까지 설명합니다.</p><div class="modules-grid"><article class="module-card" data-status="v156">
-      <div class="module-head"><h3>Viewer</h3><span class="status">V156 HEADLESS PASS</span></div>
+<section class="section" id="modules"><div class="wrap"><div class="section-kicker">03 · MODULES</div><h2 class="section-title">현장의 한 문제에 필요한 Module만 배포합니다.</h2><p class="section-body">NC 검토·측정/보정·품질 우선순위·설비 대응·자재 요청처럼 시간이 드는 업무부터 시작합니다.</p><div class="modules-grid"><article class="module-card" data-status="v156">
+      <div class="module-head"><h3>Viewer</h3><span class="status">FUNCTIONAL BUILD</span></div>
       <div class="engine-chips"><span>NC Semantic</span><span>Geometry</span><span>Revision</span></div>
-      <p class="module-what">NC와 도면을 같은 기준에서 읽는 가공 해석 Module</p><p class="module-help">G-code·형상·경로·Revision을 함께 확인해 검토 시간을 줄입니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">NC와 도면을 같은 기준에서 읽는 가공 해석 Module</p><p class="module-help">G-code·형상·경로·Revision을 하나의 검토 기준으로 묶습니다.</p>
+      <div class="module-foot">다음 검증 · 현장 데이터와 작업자 사용성</div>
     </article><article class="module-card" data-status="v156">
-      <div class="module-head"><h3>Generator</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="module-head"><h3>Generator</h3><span class="status">FUNCTIONAL BUILD</span></div>
       <div class="engine-chips"><span>NC Semantic</span><span>Geometry</span><span>Revision</span></div>
-      <p class="module-what">반복 가공을 빠르게 구성하는 NC 생성 Module</p><p class="module-help">홀·Drill/Tap·가공블록을 조합하고 안전 검증 후 NC를 생성합니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">반복 가공을 구성하는 NC 생성 Module</p><p class="module-help">홀·Drill/Tap·가공블록을 조합하고 안전 경계 검사 후 NC를 생성합니다.</p>
+      <div class="module-foot">다음 검증 · 현장 데이터와 작업자 사용성</div>
     </article><article class="module-card" data-status="v156">
-      <div class="module-head"><h3>Work Standard</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="module-head"><h3>Work Standard</h3><span class="status">FUNCTIONAL BUILD</span></div>
       <div class="engine-chips"><span>Geometry</span><span>Workflow</span><span>Reference Data</span></div>
-      <p class="module-what">작업순서와 셋업 기준을 표준화하는 Module</p><p class="module-help">작업자마다 다른 설명을 줄이고 현장 전달 기준을 고정합니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">작업순서와 셋업 기준을 표준화하는 Module</p><p class="module-help">작업순서·셋업·현장 전달 기준을 같은 Revision으로 관리합니다.</p>
+      <div class="module-foot">다음 검증 · 현장 데이터와 작업자 사용성</div>
     </article><article class="module-card" data-status="v156">
-      <div class="module-head"><h3>Measurement / Compensation</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="module-head"><h3>Measurement / Compensation</h3><span class="status">FUNCTIONAL BUILD</span></div>
       <div class="engine-chips"><span>Measurement</span><span>Geometry</span><span>Quality Analysis</span></div>
-      <p class="module-what">측정값을 현장 보정 지시로 연결하는 Module</p><p class="module-help">측정→좌표 해석→보정량 계산→현장 지시까지의 전달 시간을 줄입니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">측정값을 현장 보정 지시로 연결하는 Module</p><p class="module-help">측정·좌표 해석·보정량·현장 지시를 하나의 이력으로 연결합니다.</p>
+      <div class="module-foot">다음 검증 · 현장 데이터와 작업자 사용성</div>
     </article><article class="module-card" data-status="v156">
-      <div class="module-head"><h3>TMS</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="module-head"><h3>TMS</h3><span class="status">FUNCTIONAL BUILD</span></div>
       <div class="engine-chips"><span>Tool Life</span><span>NC Semantic</span><span>Revision</span></div>
-      <p class="module-what">공구 사용이력과 잔여수명을 관리하는 Module</p><p class="module-help">사용시간·절삭거리·교환이력을 기준으로 과잉·누락 교환을 줄입니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">공구 사용이력과 잔여수명을 관리하는 Module</p><p class="module-help">교환 판단에 필요한 사용시간·절삭거리·이력을 같은 기준으로 관리합니다.</p>
+      <div class="module-foot">다음 검증 · 현장 데이터와 작업자 사용성</div>
     </article><article class="module-card" data-status="v156">
-      <div class="module-head"><h3>Preventive Maintenance</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="module-head"><h3>Preventive Maintenance</h3><span class="status">FUNCTIONAL BUILD</span></div>
       <div class="engine-chips"><span>Machine State</span><span>Measurement</span><span>Tool Life</span></div>
-      <p class="module-what">설비·가공 문맥의 이상 추세를 보는 Module</p><p class="module-help">문제가 터진 뒤가 아니라 상태 변화와 반복 이상구간을 먼저 확인합니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">설비·가공 문맥의 이상 추세를 검토하는 Module</p><p class="module-help">Machine State·측정·공구수명 데이터를 같은 시계열에서 비교합니다.</p>
+      <div class="module-foot">다음 검증 · 현장 데이터와 작업자 사용성</div>
     </article><article class="module-card" data-status="existing">
-      <div class="module-head"><h3>Quality Worklist</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="module-head"><h3>Quality Worklist</h3><span class="status">INTEGRATION PROTOTYPE</span></div>
       <div class="engine-chips"><span>Quality Analysis</span><span>Cost / Resource</span><span>Workflow</span></div>
       <p class="module-what">불량을 손실과 조치 우선순위로 바꾸는 Module</p><p class="module-help">TOP 원인·손실금액·담당·조치·재발을 한 흐름으로 관리합니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <div class="module-foot">다음 검증 · 외부 시스템 연동</div>
     </article><article class="module-card" data-status="existing">
-      <div class="module-head"><h3>Machine Monitor</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="module-head"><h3>Machine Monitor</h3><span class="status">INTEGRATION PROTOTYPE</span></div>
       <div class="engine-chips"><span>Machine State</span><span>Vision / CT</span><span>Workflow</span></div>
       <p class="module-what">설비 상태와 Cycle을 운영 Event로 바꾸는 Module</p><p class="module-help">가동·대기·정지·호출을 기록하고 손실시간과 대응 리드타임을 계산합니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <div class="module-foot">다음 검증 · 외부 시스템 연동</div>
     </article><article class="module-card" data-status="target">
-      <div class="module-head"><h3>Root Cause</h3><span class="status">COMPOSITION TARGET</span></div>
+      <div class="module-head"><h3>Root Cause</h3><span class="status">NEXT COMPOSITION</span></div>
       <div class="engine-chips"><span>Quality Analysis</span><span>Machine State</span><span>Tool Life</span><span>Revision</span></div>
-      <p class="module-what">품질 변화와 공정 변화의 연결고리를 찾는 Module</p><p class="module-help">불량 시점과 Tool·Machine·INDEX·NC Revision 변화를 같은 Context에서 비교합니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">품질 변화와 공정 변화를 함께 검토하는 구성 목표</p><p class="module-help">불량 시점과 Tool·Machine·INDEX·NC Revision 변화를 같은 Context에서 비교합니다.</p>
+      <div class="module-foot">고객 데이터와 업무 조건에 따라 구성</div>
     </article><article class="module-card" data-status="existing">
-      <div class="module-head"><h3>Material Dispatch</h3><span class="status">EXISTING / INTEGRATION</span></div>
+      <div class="module-head"><h3>Material Dispatch</h3><span class="status">INTEGRATION PROTOTYPE</span></div>
       <div class="engine-chips"><span>Material Flow</span><span>Workflow</span><span>Machine State</span></div>
-      <p class="module-what">자재 요청부터 투입완료까지 연결하는 Module</p><p class="module-help">요청→우선순위→배차→보급→완료 확인의 단절을 줄입니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">자재 요청부터 투입완료까지 연결하는 Module</p><p class="module-help">요청→우선순위→배차→보급→완료 확인을 하나의 이력으로 관리합니다.</p>
+      <div class="module-foot">다음 검증 · 외부 시스템 연동</div>
     </article><article class="module-card" data-status="v156">
-      <div class="module-head"><h3>Data Management</h3><span class="status">V156 HEADLESS PASS</span></div>
+      <div class="module-head"><h3>Data Management</h3><span class="status">FUNCTIONAL BUILD</span></div>
       <div class="engine-chips"><span>Revision</span><span>Reference Data</span><span>Workflow</span></div>
       <p class="module-what">프로그램·기준·변경이력을 보존하는 Module</p><p class="module-help">분산된 기준정보와 Revision을 재사용 가능한 운영자산으로 축적합니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <div class="module-foot">다음 검증 · 현장 데이터와 작업자 사용성</div>
     </article><article class="module-card" data-status="target">
-      <div class="module-head"><h3>Control Tower</h3><span class="status">COMPOSITION TARGET</span></div>
+      <div class="module-head"><h3>Control Tower</h3><span class="status">NEXT COMPOSITION</span></div>
       <div class="engine-chips"><span>Machine State</span><span>Quality Analysis</span><span>Cost / Resource</span><span>Workflow</span></div>
-      <p class="module-what">여러 Module 결과를 하나의 판단 화면으로 조합하는 Module</p><p class="module-help">손실·위험·우선순위·다음 행동을 필요한 Capability 조합으로 보여줍니다.</p>
-      <div class="module-foot">구성 및 검증 범위 확인</div>
+      <p class="module-what">여러 Module 결과를 하나의 판단 문맥으로 조합하는 구성 목표</p><p class="module-help">손실·위험·우선순위·다음 행동을 필요한 Capability로 연결합니다.</p>
+      <div class="module-foot">고객 데이터와 업무 조건에 따라 구성</div>
     </article></div></div></section>
 <!-- V156_SOLUTION_EXAMPLES -->
-<section class="section" id="solutions"><div class="wrap"><div class="section-kicker">04 · SOLUTION PROFILE</div><h2 class="section-title">Module은 필요한 Solution Profile로 조합됩니다.</h2><p class="section-body">Solution은 고정된 독립 제품이 아니라 Module 조합입니다. 현재 4개 대표 Profile을 제공하며, 같은 Engine과 Module로 고객 문제별 조합을 확장합니다.</p>
+<section class="section" id="solutions"><div class="wrap"><div class="section-kicker">04 · SOLUTION PROFILE</div><h2 class="section-title">한 업무에서 시작해, 다음 공정의 확장 조건을 검증합니다.</h2><p class="section-body">Machining·Quality·Operations·Logistics는 공통 Context와 Module을 공유합니다. 현장별 차이는 Module 구성과 Adapter 범위에 반영합니다.</p>
 <div class="convergence" data-convergence><div class="module-source-grid"><div class="source-node" data-source="viewer" data-solutions="machining">Viewer</div><div class="source-node" data-source="generator" data-solutions="machining">Generator</div><div class="source-node" data-source="workstandard" data-solutions="machining">Work Standard</div><div class="source-node" data-source="measurement" data-solutions="machining quality">Measurement / Compensation</div><div class="source-node" data-source="tms" data-solutions="machining operations">TMS</div><div class="source-node" data-source="pm" data-solutions="operations">Preventive Maintenance</div><div class="source-node" data-source="qualitywork" data-solutions="quality">Quality Worklist</div><div class="source-node" data-source="machinemonitor" data-solutions="operations">Machine Monitor</div><div class="source-node" data-source="rootcause" data-solutions="quality operations">Root Cause</div><div class="source-node" data-source="dispatch" data-solutions="logistics">Material Dispatch</div><div class="source-node" data-source="data" data-solutions="machining quality operations logistics">Data Management</div><div class="source-node" data-source="tower" data-solutions="quality operations logistics">Control Tower</div></div><div class="convergence-field" data-convergence-field><svg class="connection-svg" data-connection-svg preserveAspectRatio="none"></svg></div><div class="solution-row"><article class="solution-card machining" data-solution="machining">
       <div class="problem-tag">SOLUTION PROFILE</div><h3>Machining Intelligence</h3><p>가공 해석·NC 생성·측정/보정·공구관리</p>
       <div class="solution-modules">Viewer · Generator · Work Standard · Measurement / Compensation · TMS · Data Management</div>
@@ -87,4 +87,4 @@
       <div class="solution-actions"><a class="btn" href="/ko/logistics-intelligence/">현재 구현 보기 →</a></div>
     </article></div></div>
 </div></section>
-<section class="section"><div class="wrap"><div class="section-kicker">05 · EVIDENCE</div><h2 class="section-title">그림만 바꾼 것이 아닙니다.</h2><p class="section-body">Machining Intelligence V156에서 Engine / Module / 고객별 배포 구조가 실제 패키지로 성립했습니다. 플랫폼 전역에는 같은 패턴을 순차 적용합니다.</p><div class="proof-grid"><article class="proof blue"><b>153 / 153 PASS</b><p>V156 논리구조·계약·배포·헤드리스 테스트</p></article><article class="proof yellow"><b>7 isolated modules</b><p>Viewer 포함 7개 Module의 legacy-free 분리 구조</p></article><article class="proof red"><b>Candidate</b><p>Windows GUI/OpenGL 실제 Release 검증은 별도 승인 전</p></article></div></div></section>
+<section class="section" id="current-stage"><div class="wrap"><div class="section-kicker">05 · CURRENT STAGE</div><h2 class="section-title">기능 프로토타입을 구축했고, 외부 라인 검증이 다음 단계입니다.</h2><p class="section-body">NC·Quality·Operations 기능 프로토타입을 구축했습니다. 다음 단계에서는 설치 가능성·자동 수집률·업무시간·원인 확인시간을 외부 라인에서 측정합니다.</p><div class="proof-grid"><article class="proof blue"><b>FUNCTIONAL PROTOTYPES</b><p>NC · Quality · Operations 핵심 흐름 작동</p></article><article class="proof yellow"><b>KICXUP CHALLENGE</b><p>프로그램 선정 · 수료</p></article><article class="proof red"><b>SEALINK PoC</b><p>대상 공정 · 입력 데이터 · 검증 KPI 협의 중</p></article></div></div></section>

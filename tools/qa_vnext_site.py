@@ -11,7 +11,19 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 LANGS = {"ko": "ltr", "en": "ltr", "ar": "rtl"}
-PAGES = ("", "quality", "machining-intelligence", "operations-intelligence", "logistics-intelligence", "platform")
+PAGES = (
+    "",
+    "quality",
+    "machining-intelligence",
+    "operations-intelligence",
+    "logistics-intelligence",
+    "platform",
+    "nc",
+    "ct",
+    "work-standard",
+    "tms",
+    "amr",
+)
 COMPAT = ("nc.html", "ct.html", "quality.html", "work-standard.html", "tms.html", "amr.html")
 FORBIDDEN = ("v0.5.13", "QUALITY_V513", "Production Ready", "production certified", "Production Certified")
 V156_MARKERS = (
@@ -24,10 +36,29 @@ V156_MARKERS = (
     "Module Pool",
     "Event Bus",
     "Audit",
-    "153 / 153 PASS",
-    "GUI/OpenGL",
-    "Candidate",
+    "05 · CURRENT STAGE",
+    "FUNCTIONAL PROTOTYPES",
+    "KICXUP CHALLENGE",
+    "SEALINK PoC",
 )
+DECISION_COPY_FORBIDDEN = (
+    "그림만 바꾼",
+    "This is not just a new diagram",
+    "ليست مجرد رسمة جديدة",
+    "아래 3개 가로 레이어",
+    "These three horizontal layers",
+    "هذه الطبقات الأفقية الثلاث",
+    "각 Module은 어떤 Engine을 쓰는지",
+    "Each module shows the engines it uses",
+    "كل وحدة توضح المحركات التي تستخدمها",
+    "V156 HEADLESS PASS",
+    "EXISTING / INTEGRATION",
+    "COMPOSITION TARGET",
+    "153 / 153 PASS",
+    "legacy-free",
+    "Windows GUI/OpenGL",
+)
+GLOBAL_DIRECT_TERMS = ("투자", "투자자", "투자 결정", "investment", "investor", "استثمار", "مستثمر")
 V156_LEGACY = (
     "Shared context → Event Core → Control Tower",
     "Shared Manufacturing Context → Event Core",
@@ -45,6 +76,7 @@ class Scan(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.links: list[tuple[str, str]] = []
+        self.ids: list[str] = []
         self.lang = ""
         self.direction = ""
         self.title = False
@@ -72,6 +104,8 @@ class Scan(HTMLParser):
         elif self._hero_title_depth:
             self._hero_title_depth += 1
         classes = set((values.get("class") or "").split())
+        if values.get("id"):
+            self.ids.append(values["id"] or "")
         if "module-card" in classes:
             self.module_cards += 1
             status = values.get("data-status")
@@ -117,19 +151,28 @@ def v156_pages() -> list[Path]:
     ]
 
 
-def local_target(value: str) -> Path | None:
-    if value.startswith(("#", "mailto:", "tel:", "data:", "javascript:")):
-        return None
+def local_target(value: str, current_page: Path) -> tuple[Path | None, str]:
+    if value.startswith(("mailto:", "tel:", "data:", "javascript:")):
+        return None, ""
     parsed = urlsplit(value)
     if parsed.scheme or parsed.netloc:
-        return None
+        return None, ""
     path = parsed.path
     if not path:
-        return None
+        return current_page, parsed.fragment
     target = ROOT / path.lstrip("/")
     if path.endswith("/"):
         target /= "index.html"
-    return target
+    return target, parsed.fragment
+
+
+def has_fragment(target: Path, fragment: str) -> bool:
+    if not fragment:
+        return True
+    if not target.exists():
+        return False
+    text = target.read_text(encoding="utf-8", errors="ignore")
+    return f'id="{fragment}"' in text
 
 
 def main() -> None:
@@ -148,10 +191,21 @@ def main() -> None:
                 errors.append(f"language metadata: {page.relative_to(ROOT)}")
         if not scan.title or not scan.description:
             errors.append(f"metadata missing: {page.relative_to(ROOT)}")
+        duplicate_ids = [item for item, count in Counter(scan.ids).items() if count > 1]
+        if duplicate_ids:
+            errors.append(f"duplicate IDs: {page.relative_to(ROOT)} -> {', '.join(sorted(duplicate_ids))}")
+        for phrase in GLOBAL_DIRECT_TERMS:
+            if phrase.lower() in text.lower():
+                errors.append(f"direct decision-language term: {page.relative_to(ROOT)} -> {phrase}")
+        for phrase in DECISION_COPY_FORBIDDEN:
+            if phrase.lower() in text.lower():
+                errors.append(f"decision copy contains prohibited wording: {page.relative_to(ROOT)} -> {phrase}")
         for _, value in scan.links:
-            target = local_target(value)
+            target, fragment = local_target(value, page)
             if target is not None and not target.exists():
                 errors.append(f"broken asset/link: {page.relative_to(ROOT)} -> {value}")
+            elif target is not None and fragment and not has_fragment(target, fragment):
+                errors.append(f"broken fragment: {page.relative_to(ROOT)} -> {value}")
 
     source_text = "\n".join(
         path.read_text(encoding="utf-8", errors="ignore")
@@ -173,8 +227,6 @@ def main() -> None:
         for marker in V156_MARKERS:
             if marker not in text:
                 errors.append(f"V156 content missing ({label}): {marker}")
-        if "headless" not in text.lower():
-            errors.append(f"V156 headless evidence missing ({label})")
         if scan.module_cards != 12:
             errors.append(f"V156 module card count ({label}): expected 12, got {scan.module_cards}")
         if len(scan.source_nodes) != 12:

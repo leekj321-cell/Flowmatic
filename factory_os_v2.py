@@ -13,42 +13,66 @@ HOME_OVERRIDES = {
         "description": "Flowmatic은 공통 Manufacturing Context를 전문 Engine이 읽고, Engine 조합을 현장 Module과 고객별 Solution Profile로 연결하는 제조 운영지능 플랫폼입니다.",
         "eyebrow": "Manufacturing Intelligence Platform",
         # Brand lock: the first-fold H1 is the fixed Flowmatic slogan defined in build_site.HOME.
-        "body": "문제마다 새 프로그램을 만들지 않습니다. 같은 제조 Context를 전문 Engine이 읽고, 필요한 Engine을 조합해 업무 Module을 만들고, 검증 범위가 명확한 Solution Profile로 제공합니다.",
-        "support": "기존 공장은 유지하고, 공통 Context 위에서 필요한 Engine과 Module만 조합합니다.",
-        "primary": "구조 보기",
-        "secondary": "Module 보기",
+        "body": "기존 설비와 시스템 사이에서 사람이 반복하던 비교·기록·전달을 하나의 운영 흐름으로 연결합니다.",
+        "support": "한 라인의 한 문제에서 시작해, 측정된 결과로 다음 공정의 확장 여부를 판단합니다.",
+        "primary": "도입 방식 보기",
+        "secondary": "구현 범위 보기",
+        "strategy_title": "설비 교체 없이.|한 업무의 기준선을 먼저 바꿉니다.",
+        "strategy_body": "PLC·MES·ERP·CAM을 유지한 채 읽기 전용으로 시작합니다. 반복 업무 시간·원인 확인 시간·대응 리드타임을 측정한 뒤 다음 Module을 연결합니다.",
+        "flow_title": "읽고, 기록하고,|조치하고, 확인합니다.",
+        "flow_body": "카메라·NC·검사·작업자 입력을 Event로 기록하고, 담당·조치·완료까지 하나의 이력으로 닫습니다.",
+        "pilot_title": "8주 안에|한 업무의 전후를 측정합니다.",
+        "deploy_note": "보안·데이터 위치·보관 기간·접근 권한·연동 범위는 착수 전에 확정합니다.",
+        "contact_title": "한 라인,|한 문제부터 시작합니다.",
+        "contact_body": "반복 공수가 가장 큰 업무와 사용할 수 있는 입력 데이터를 기준으로 8주 검증 범위와 기준선을 정합니다.",
         "products_title": "Module 조합으로|Solution Profile을 확장합니다.",
         "products_body": "고정 제품군이 아니라 고객 문제에 필요한 Engine과 Module 조합으로 제공합니다.",
-        "workflow_title": "검증 범위를|Solution마다 명확히.",
-        "workflow_body": "구조·헤드리스·배포 검증과 GUI·현장 검증을 구분해 표시합니다.",
+        "workflow_title": "내부 기능 검증에서|외부 라인 측정으로.",
+        "workflow_body": "외부 라인에서 설치성·자동 수집률·업무시간·작업자 사용성을 측정합니다.",
     },
     "en": {
         "title": "Flowmatic | Manufacturing Intelligence Platform",
         "description": "Flowmatic lets domain engines read shared manufacturing context, compose into operational modules, and form customer-specific solution profiles.",
         "eyebrow": "Manufacturing Intelligence Platform",
         # Brand lock: do not override the fixed first-fold Flowmatic slogan.
-        "body": "We do not build a separate program for every problem. Domain engines read the same manufacturing context, combine into operational modules, and form solution profiles with explicit validation boundaries.",
-        "support": "Keep the existing factory. Compose only the engines and modules the problem requires.",
-        "primary": "Explore architecture",
-        "secondary": "Explore modules",
+        "body": "Connect the comparisons, records, and handoffs people repeat between existing equipment and systems into one operating flow.",
+        "support": "Start with one problem on one line, then use measured results to decide whether the next process should follow.",
+        "primary": "See deployment",
+        "secondary": "See current scope",
+        "strategy_title": "Keep the equipment.|Change one operating baseline first.",
+        "strategy_body": "Begin with read-only connections while PLC, MES, ERP, and CAM remain in place. Measure repetitive work, cause-confirmation time, and response lead time before connecting the next module.",
+        "flow_title": "Read, record,|act, and confirm.",
+        "flow_body": "Record camera, NC, inspection, and operator inputs as events, then close each event with an owner, action, and confirmed completion.",
+        "pilot_title": "Measure one workflow|before and after in eight weeks.",
+        "deploy_note": "Security, data location, retention, access rights, and integration scope are fixed before work begins.",
+        "contact_title": "Start with one line|and one problem.",
+        "contact_body": "Use the highest-effort repetitive workflow and its available inputs to define an eight-week baseline and validation scope.",
         "products_title": "Compose modules into|solution profiles.",
         "products_body": "Solutions are customer-specific engine and module compositions, not a fixed product stack.",
-        "workflow_title": "Keep every validation|boundary explicit.",
-        "workflow_body": "Architecture, headless, and distribution evidence stays separate from GUI and field acceptance.",
+        "workflow_title": "From functional build|to external-line measurement.",
+        "workflow_body": "Measure installation, automatic capture rate, work time, and operator usability on an external line.",
     },
     "ar": {
         "title": "Flowmatic | منصة ذكاء التصنيع",
         "description": "تقرأ محركات Flowmatic المتخصصة سياق تصنيع مشتركاً، وتتجمع في وحدات تشغيل وملفات حلول خاصة بكل عميل.",
         "eyebrow": "Manufacturing Intelligence Platform",
         # Brand lock: do not override the fixed first-fold Flowmatic slogan.
-        "body": "لا نبني برنامجاً منفصلاً لكل مشكلة. تقرأ المحركات المتخصصة سياق التصنيع نفسه، وتتجمع في وحدات تشغيل وملفات حلول ذات حدود تحقق واضحة.",
-        "support": "حافظ على المصنع القائم، وركّب فقط المحركات والوحدات التي تحتاجها المشكلة.",
-        "primary": "عرض البنية",
-        "secondary": "عرض الوحدات",
+        "body": "نربط المقارنات والسجلات وعمليات التسليم المتكررة بين المعدات والأنظمة القائمة في تدفق تشغيلي واحد.",
+        "support": "نبدأ بمشكلة واحدة في خط واحد، ثم نستخدم النتائج المقاسة لتقرير الانتقال إلى العملية التالية.",
+        "primary": "عرض طريقة النشر",
+        "secondary": "عرض النطاق الحالي",
+        "strategy_title": "أبقِ المعدات.|وغيّر خط أساس تشغيليًا واحدًا أولًا.",
+        "strategy_body": "نبدأ باتصالات للقراءة فقط مع بقاء PLC وMES وERP وCAM في مكانها. نقيس وقت العمل المتكرر ووقت تأكيد السبب وزمن الاستجابة قبل ربط الوحدة التالية.",
+        "flow_title": "اقرأ وسجّل|ونفّذ وأكّد.",
+        "flow_body": "نسجل مدخلات الكاميرا وNC والفحص والمشغّل كأحداث، ثم نغلق كل حدث بمسؤول وإجراء وتأكيد للإنجاز.",
+        "pilot_title": "قِس سير عمل واحدًا|قبل التطبيق وبعده خلال ثمانية أسابيع.",
+        "deploy_note": "يُحدَّد الأمن وموقع البيانات وفترة الاحتفاظ وصلاحيات الوصول ونطاق التكامل قبل بدء العمل.",
+        "contact_title": "ابدأ بخط واحد|ومشكلة واحدة.",
+        "contact_body": "نحدد خط الأساس ونطاق التحقق لثمانية أسابيع انطلاقًا من أكثر الأعمال المتكررة استهلاكًا للوقت والمدخلات المتاحة لها.",
         "products_title": "ركّب الوحدات في|ملفات حلول.",
         "products_body": "الحلول تركيبات خاصة بالعميل وليست طبقة منتجات ثابتة.",
-        "workflow_title": "اجعل حدود|التحقق واضحة.",
-        "workflow_body": "يبقى دليل البنية وHeadless والتوزيع منفصلاً عن قبول GUI والميدان.",
+        "workflow_title": "من البناء الوظيفي|إلى القياس في خط خارجي.",
+        "workflow_body": "قِس التثبيت ومعدل الجمع الآلي ووقت العمل وقابلية استخدام المشغّل في خط خارجي.",
     },
 }
 
@@ -110,9 +134,9 @@ CERTIFIED_CORE = {
         "نُبقي النواة المعتمدة.|ونؤتمت الفجوة اليدوية.",
     ),
     "body": l(
-        "기존 안전제어·전문 CAM·정밀측정·기준정보 시스템은 유지합니다. Flowmatic은 시스템 사이의 관찰·문맥·우선순위·업무·증빙·확인을 연결합니다.",
-        "Flowmatic does not force-replace safety control, specialist CAM, precision metrology, or systems of record. It connects observation, context, priority, workflow, evidence, and confirmation between them.",
-        "لا يستبدل Flowmatic قسرًا التحكم الآمن أو CAM المتخصص أو القياس الدقيق أو أنظمة السجل. بل يربط الرصد والسياق والأولوية وسير العمل والدليل والتأكيد بينها.",
+        "비상정지·인터록·전문 CAM·정밀측정·ERP·MES·WMS는 기존 책임 경계를 유지합니다. Flowmatic은 관찰·문맥·우선순위·담당·증빙·완료 확인을 연결합니다.",
+        "E-stop, interlocks, specialist CAM, precision metrology, ERP, MES, and WMS retain their existing responsibilities. Flowmatic connects observation, context, priority, ownership, evidence, and completion.",
+        "تحتفظ أنظمة الإيقاف الطارئ والتشابك وCAM المتخصص والقياس الدقيق وERP وMES وWMS بمسؤولياتها القائمة. ويربط Flowmatic الرصد والسياق والأولوية والمسؤول والدليل وتأكيد الإنجاز.",
     ),
     "cards": [
         ("PLC / Safety", l("비상정지·인터록·인증 안전제어는 기존 제어계층에서 유지합니다.", "Keep E-stop, interlocks, and certified safety control in the existing layer.", "تبقى أنظمة الإيقاف الطارئ والتشابك والتحكم الآمن المعتمد في طبقتها الحالية.")),
@@ -152,8 +176,8 @@ EVIDENCE = [
 ]
 
 DEPLOYMENT_MODES = [
-    ("Brownfield — Factory → Model", l("현장 움직임·문서·NC·작업방식에서 운영모델을 구성합니다.", "Read the existing factory's motion, documents, NC, and work methods to reconstruct an operating model.", "نقرأ حركة المصنع القائم ووثائقه وNC وأساليب العمل لإعادة بناء نموذج التشغيل."), l("Field-first deployment", "Field-first deployment", "نشر يبدأ من الميدان")),
-    ("Greenfield — Model → Factory", l("안정화 전부터 Process·Quality·Material·Work·Control Event model을 설계하는 미래 확장 아키텍처입니다.", "A future-expansion architecture that designs Process, Quality, Material, Work, and Control Event models before stabilization.", "بنية توسع مستقبلية تصمم نماذج أحداث العملية والجودة والمواد والعمل والتحكم قبل الاستقرار."), l("Deployment architecture / future expansion", "Deployment architecture / future expansion", "بنية نشر / توسع مستقبلي")),
+    ("01 · PAID PoC", l("한 라인·한 문제의 기준선을 정하고 8주 동안 설치 가능성·업무시간·원인 확인시간·대응 리드타임을 측정합니다.", "Set the baseline for one problem on one line, then measure installability, work time, cause-confirmation time, and response lead time for eight weeks.", "نحدد خط الأساس لمشكلة واحدة في خط واحد، ثم نقيس خلال ثمانية أسابيع قابلية التثبيت ووقت العمل ووقت تأكيد السبب وزمن الاستجابة."), l("Entry", "Entry", "البداية")),
+    ("02 · DEPLOYMENT & EXPANSION", l("PoC에서 확인한 연결과 업무 흐름을 설치 패키지로 전환하고, 다음 공정·라인·사이트에서 재사용 조건을 검증합니다.", "Turn the connections and workflow confirmed in the PoC into an installation package, then validate reuse conditions on the next process, line, and site.", "نحوّل الاتصالات وسير العمل المؤكدين في تجربة إثبات المفهوم إلى حزمة تثبيت، ثم نتحقق من شروط إعادة الاستخدام في العملية والخط والموقع التالي."), l("Module → Line → Site", "Module → Line → Site", "Module → Line → Site")),
 ]
 
 ROADMAP = [
@@ -178,7 +202,7 @@ PAGES = {
             ("Procurement Intelligence", l("Functional MVP", "Functional MVP", "MVP وظيفي"), l("메일·채팅에서 품명·규격·수량·UOM·문맥을 추출하고 confidence·reason과 함께 후보를 제시합니다. 담당자 확인 항목만 기존 요청양식으로 출력합니다.", "Extract item, specification, quantity, UOM, and context from free-text mail or chat; present candidates with confidence and reason; export confirmed items only to the existing request template.", "استخراج الصنف والمواصفة والكمية وUOM والسياق من البريد أو المحادثة، وعرض المرشحين مع الثقة والسبب، وتصدير العناصر المؤكدة فقط إلى القالب الحالي."), ["No silent 1EA default for missing quantity", "No auto-confirm on conflicting specifications", "No arbitrary conversion of unknown pack units", "Quantity / use-location split", "Confirmed-only template export"]),
             ("Resource Economics", l("Functional MVP", "Functional MVP", "MVP وظيفي"), l("Tool·Consumable·Labor event를 Tracked Operational Cost로 묶고 생산량과 가동시간으로 정규화합니다.", "Combine Tool, Consumable, and Labor events as Tracked Operational Cost and normalize them by production and running time.", "تجميع أحداث الأدوات والمواد المستهلكة والعمل في Tracked Operational Cost وتطبيعها حسب الإنتاج ووقت التشغيل."), ["Cost / Production EA", "Cost / Good EA", "Man-hour / 1,000 EA", "Consumption / 1,000 EA", "Consumption / running hour"]),
             ("Cost / Consumption Anomaly", l("MVP candidate detection", "MVP candidate detection", "اكتشاف مرشحين ضمن MVP"), l("Rolling Median + MAD와 EWMA로 이상 후보를 식별합니다. 예측정비 원인분석은 범위에 포함되지 않습니다.", "Use Rolling Median + MAD and EWMA to surface anomaly candidates. This is not completed predictive-maintenance root-cause reasoning.", "استخدام Rolling Median + MAD وEWMA لإظهار مؤشرات الشذوذ. وهذا ليس استدلالًا مكتملًا لسبب الصيانة التنبؤية."), ["Rolling Median + MAD", "EWMA", "Production-normalized candidates", "Human review remains required"]),
-            ("Operations Composition Surface", l("Prototype", "Prototype", "نموذج أولي"), l("Shared Factory·Group·Period context에서 필요한 운영 Module을 실행·집계하는 prototype입니다. Control Tower는 고정 상위 계층이 아니라 선택 가능한 조합 대상입니다.", "A prototype that launches and aggregates the required operations modules in shared Factory, Group, and Period context. Control Tower is an optional composition target, not a fixed top layer.", "نموذج أولي يشغّل ويجمع وحدات العمليات المطلوبة ضمن سياق Factory وGroup وPeriod مشترك. وControl Tower هدف تركيب اختياري وليس طبقة علوية ثابتة."), ["Real-time ERP/MES adapters pending", "Live inventory / budget / supplier / forecasting pending", "Maintenance correlation and full Quality adapter pending"]),
+            ("Operations Composition Surface", l("Prototype", "Prototype", "نموذج أولي"), l("Factory·Group·Period 공통 기준에서 필요한 운영 Module을 실행하고, Control Tower가 선택된 Module의 결과를 집계합니다.", "Launch the required operations modules in shared Factory, Group, and Period context; Control Tower aggregates the results of the selected modules.", "يشغّل وحدات العمليات المطلوبة ضمن سياق Factory وGroup وPeriod مشترك، ويجمع Control Tower نتائج الوحدات المختارة."), ["Real-time ERP/MES adapters pending", "Live inventory / budget / supplier / forecasting pending", "Maintenance correlation and full Quality adapter pending"]),
         ],
         "guardrail": l("Tracked Operational Cost는 현재 연동된 공구·소모품·공수 비용만 포함합니다. Material·Energy·Maintenance·Outsource를 포괄하는 제조원가·회계원가는 아닙니다.", "Tracked Operational Cost covers the currently connected tool, consumable, and labor cost events. It is not full manufacturing or accounting cost across Material, Energy, Maintenance, and Outsource.", "يغطي Tracked Operational Cost أحداث تكلفة الأدوات والمواد المستهلكة والعمل المتصلة حاليًا، وليس تكلفة تصنيع أو محاسبة كاملة تشمل المواد والطاقة والصيانة والتعهيد."),
     },
@@ -204,17 +228,17 @@ PAGES = {
         "title": l("Flowmatic | Manufacturing Intelligence Platform", "Flowmatic | Manufacturing Intelligence Platform", "Flowmatic | منصة ذكاء التصنيع"),
         "description": l("공통 Manufacturing Context를 전문 Engine이 읽고 Module과 고객별 Solution Profile로 조합하는 플랫폼입니다.", "A platform where domain engines read shared Manufacturing Context and compose into operational modules and customer-specific solution profiles.", "منصة تقرأ فيها المحركات المتخصصة سياق تصنيع مشتركاً وتتجمع في وحدات تشغيل وملفات حلول خاصة بالعميل."),
         "hero": l("같은 제조 Context.|필요한 Engine과 Module 조합.", "One manufacturing context.|The engines and modules each problem needs.", "سياق تصنيع واحد.|المحركات والوحدات التي تحتاجها كل مشكلة."),
-        "body": l("문제마다 독립 제품을 만들지 않고 Engine과 Module을 재사용해 필요한 Solution Profile을 구성합니다.", "Reuse engines and modules to compose the solution profile each problem needs instead of creating an isolated product every time.", "نعيد استخدام المحركات والوحدات لتركيب ملف الحل الذي تحتاجه كل مشكلة بدلاً من إنشاء منتج معزول في كل مرة."),
-        "status": l("V156 architecture / scoped validation", "V156 architecture / scoped validation", "بنية V156 / تحقق محدد النطاق"),
+        "body": l("공통 Engine과 Module을 현장 문제에 필요한 Solution Profile로 구성합니다.", "Compose shared engines and modules into the solution profile required by the field problem.", "نركّب المحركات والوحدات المشتركة في ملف الحل الذي تحتاجه المشكلة الميدانية."),
+        "status": l("기능 프로토타입 / 외부 검증 예정", "Functional prototypes / external validation next", "نماذج أولية وظيفية / التحقق الخارجي تاليًا"),
         "flow": ["Manufacturing Context", "Engine Pool", "Module Pool", "Solution Profile"],
         "asset": None,
         "sections": [
             ("Manufacturing Context", l("Shared meaning", "Shared meaning", "معنى مشترك"), l("모든 Engine이 설비·제품·공정·공구·Feature·시간의 같은 기준을 읽습니다.", "Every engine reads the same machine, product, process, tool, feature, and time meaning.", "تقرأ كل المحركات معنى المعدة والمنتج والعملية والأداة والميزة والزمن نفسه."), PLATFORM["entities"]),
             ("Engine Pool", l("Reusable capability", "Reusable capability", "قدرات قابلة لإعادة الاستخدام"), l("문제 해결에 필요한 전문 제조 Engine만 선택합니다.", "Select only the domain manufacturing engines required for the problem.", "اختيار محركات التصنيع المتخصصة التي تحتاجها المشكلة فقط."), ["NC Semantic", "Geometry", "Machine State", "Quality Analysis", "Measurement", "Tool Life", "Workflow"]),
             ("Module Pool", l("Operational composition", "Operational composition", "تركيب تشغيلي"), l("Engine 조합을 Viewer·Generator·TMS·Root Cause 같은 현장 업무 Module로 패키징합니다.", "Package engine compositions as operational modules such as Viewer, Generator, TMS, and Root Cause.", "تغليف تركيبات المحركات كوحدات تشغيل مثل Viewer وGenerator وTMS وRoot Cause."), ["12 representative modules", "Independent customer packaging"]),
-            ("Runtime + Solution Profiles", l("Shared infrastructure / customer composition", "Shared infrastructure / customer composition", "بنية مشتركة / تركيب خاص بالعميل"), l("Event Bus·Audit·Adapter는 경량 공통 런타임이며, Control Tower를 포함한 Module은 필요한 Solution Profile로 조합됩니다.", "Event Bus, Audit, and adapters are lightweight shared runtime; modules including Control Tower compose into the required solution profile.", "يُعد Event Bus وAudit والموصلات بنية تشغيل مشتركة خفيفة، وتتجمع الوحدات بما فيها Control Tower في ملف الحل المطلوب."), ["Runtime is not a standalone product", "Control Tower is a composition target"]),
+            ("Runtime + Solution Profiles", l("Shared infrastructure / customer composition", "Shared infrastructure / customer composition", "بنية مشتركة / تركيب خاص بالعميل"), l("Event Bus·Audit·Adapter는 경량 공통 런타임이며, Control Tower를 포함한 Module은 필요한 Solution Profile로 조합됩니다.", "Event Bus, Audit, and adapters are lightweight shared runtime; modules including Control Tower compose into the required solution profile.", "يُعد Event Bus وAudit والموصلات بنية تشغيل مشتركة خفيفة، وتتجمع الوحدات بما فيها Control Tower في ملف الحل المطلوب."), ["Shared Event and Audit runtime", "Control Tower composed when the workflow requires it"]),
         ],
-        "guardrail": l("153/153 PASS는 V156 아키텍처·계약·배포·헤드리스 테스트 범위입니다. Windows GUI/OpenGL 현장 Release는 Candidate입니다.", "153/153 PASS covers V156 architecture, contract, distribution, and headless tests. Windows GUI/OpenGL field release remains Candidate.", "تشمل نتيجة 153/153 PASS اختبارات بنية V156 والعقود والتوزيع وHeadless، بينما يبقى إصدار Windows GUI/OpenGL الميداني Candidate."),
+        "guardrail": l("현재 패키지는 기능 프로토타입 단계입니다. 외부 라인에서 설치성·GUI 사용성·현장 데이터 연동을 검증합니다.", "The current package is at functional-prototype stage. External-line work will validate installation, GUI usability, and live data integration.", "الحزمة الحالية في مرحلة النموذج الأولي الوظيفي. وسيُتحقق في خط خارجي من التثبيت وقابلية استخدام الواجهة وتكامل البيانات الفعلي."),
     },
 }
 
@@ -234,21 +258,21 @@ QUALITY_CURRENT = {
 BEFORE_AFTER = {
     "ko": {
         "title": "사람이 연결하던 공장.|운영 문맥이 연결하는 공장.",
-        "body": "새 시스템을 하나 더 얹는 이야기가 아닙니다. 사람이 반복해서 비교·정리·전달하던 간극을 같은 문맥으로 연결합니다.",
+        "body": "NC·도면·불량자료·구매요청·자재호출 사이의 비교·재입력·전달을 하나의 운영 문맥과 후속 행동으로 연결합니다.",
         "before": "사람이 시스템 사이를 연결한다",
         "before_items": ["NC와 도면을 사람이 비교", "불량자료를 사람이 다시 정리", "구매 요청을 사람이 품번으로 변환", "자재 요청을 전화·메신저로 전달", "결과를 다시 Excel에 기록"],
         "after": "운영 문맥이 시스템 사이를 연결한다",
     },
     "en": {
-        "title": "People bridge the systems today.|Operating context carries the handoff next.",
-        "body": "This is not another system layered on top. It connects the comparisons, re-entry, and handoffs people repeatedly perform between existing tools.",
+        "title": "People bridge the systems.|Operating context connects them.",
+        "body": "Connect comparisons, re-entry, and handoffs across NC, drawings, defect data, purchase requests, and material calls through shared operating context and next actions.",
         "before": "People connect the systems",
         "before_items": ["Compare NC with drawings by hand", "Reformat defect data", "Translate requests into item codes", "Relay material calls by phone or chat", "Record the result again in Excel"],
         "after": "Operating context connects the systems",
     },
     "ar": {
-        "title": "يربط الأشخاص الأنظمة اليوم.|وغدًا يحمل سياق التشغيل عملية التسليم.",
-        "body": "ليست طبقة نظام إضافية، بل ربط للمقارنات وإعادة الإدخال وعمليات التسليم التي ينفذها الأشخاص بين الأدوات القائمة.",
+        "title": "يربط الأشخاص الأنظمة.|ويربطها سياق التشغيل.",
+        "body": "اربط المقارنات وإعادة الإدخال وعمليات التسليم بين NC والرسومات وبيانات العيوب وطلبات الشراء وطلبات المواد عبر سياق تشغيلي وإجراءات تالية مشتركة.",
         "before": "الأشخاص يربطون الأنظمة",
         "before_items": ["مقارنة NC بالرسومات يدويًا", "إعادة تنظيم بيانات العيوب", "تحويل الطلب إلى رمز الصنف", "نقل طلب المواد بالهاتف أو المحادثة", "تسجيل النتيجة مرة أخرى في Excel"],
         "after": "سياق التشغيل يربط الأنظمة",
@@ -259,8 +283,8 @@ BEFORE_AFTER = {
 
 OUTCOMES = {
     "ko": {
-        "title": "기술 이름보다 먼저.|운영 결과를 보여줍니다.",
-        "body": "Flowmatic 적용 전후에 현장 담당자가 다루는 업무 단위가 어떻게 바뀌는지 비교합니다.",
+        "title": "불량 목록에서 개선업무로.|분산 파일에서 하나의 Recipe로.",
+        "body": "품질·가공·운영·물류의 반복 정리를 담당·조치·완료가 연결된 업무로 전환합니다.",
         "labels": ("영역", "이전", "이후"),
         "rows": [
             ("Quality", "불량 목록", "손실순 개선업무"),
@@ -270,8 +294,8 @@ OUTCOMES = {
         ],
     },
     "en": {
-        "title": "Lead with the operating result.|Then explain the architecture.",
-        "body": "See how the unit of work changes for the people running the factory.",
+        "title": "From defect lists to owned improvement work.|From distributed files to one Recipe.",
+        "body": "Turn repetitive cleanup across quality, machining, operations, and logistics into work with an owner, action, and confirmed completion.",
         "labels": ("Domain", "Before", "After"),
         "rows": [
             ("Quality", "Defect list", "Improvement work ranked by loss"),
@@ -281,8 +305,8 @@ OUTCOMES = {
         ],
     },
     "ar": {
-        "title": "ابدأ بنتيجة التشغيل.|ثم اشرح البنية.",
-        "body": "قارن كيف تتغير وحدة العمل لدى من يديرون المصنع.",
+        "title": "من قوائم العيوب إلى أعمال تحسين مسؤولة.|ومن ملفات متفرقة إلى Recipe واحدة.",
+        "body": "حوّل التنظيم المتكرر في الجودة والتشغيل والعمليات واللوجستيات إلى عمل له مسؤول وإجراء وتأكيد للإنجاز.",
         "labels": ("المجال", "قبل", "بعد"),
         "rows": [
             ("Quality", "قائمة عيوب", "أعمال تحسين مرتبة حسب الخسارة"),
@@ -307,9 +331,9 @@ MACHINING_VNEXT = {
         "ذكاء تصنيع لفهم NC القائم وبناء وصفات العملية وتوليد G-code مضبوط وربط القياس ومعايير العمل.",
     ),
     "hero": l(
-        "가공 데이터를 보는 프로그램이 아닙니다.|하나의 Manufacturing Recipe로 연결합니다.",
-        "More than a machining data viewer.|Connect the work as one Manufacturing Recipe.",
-        "أكثر من عارض لبيانات التشغيل.|اربط العمل في Manufacturing Recipe واحدة.",
+        "제품·공정·NC·측정·보정을|하나의 Manufacturing Recipe로 연결합니다.",
+        "Connect product, process, NC, measurement, and correction|in one Manufacturing Recipe.",
+        "اربط المنتج والعملية وNC والقياس والتصحيح|في Manufacturing Recipe واحدة.",
     ),
     "body": l(
         "제품·공정·Feature·NC·측정·보정을 하나의 Manufacturing Recipe로 연결합니다. 기존 G-code의 공정 문맥을 복원하고 새로운 NC에는 그 문맥을 다시 담습니다. 네트워크가 없는 현장에서도 같은 기준을 유지하도록 설계합니다.",
