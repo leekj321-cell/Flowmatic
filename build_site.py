@@ -26,8 +26,8 @@ from factory_os_v2 import (
 BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
-CSS_HREF = "/style-v5.20.css?v=5.26"
-SCRIPT_SRC = "/script.js?v=5.21"
+CSS_HREF = "/style-v5.20.css?v=5.27"
+SCRIPT_SRC = "/script.js?v=5.22"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 WEB_V156_CONTENT_DIR = Path(__file__).resolve().parent / "content" / "web_v156"
 BRAND_PATH = "/assets/branding"
@@ -1310,51 +1310,160 @@ def _decorate_home_rail(block: str, tokens: tuple, kind: str) -> str:
 
 
 def home_composition_section(lang: str) -> str:
-    """Render the concise Home journey from the durable platform source."""
-    content = _v156_source(lang)
-    architecture = _v156_section(content, "architecture")
-    solutions = _v156_section(content, "solutions")
-    current_stage = _v156_section(content, "current-stage")
-
-    context_start = architecture.index('<div class="layer-row layer-context">')
-    engine_start = architecture.index('<div class="layer-row layer-engine">')
-    module_start = architecture.index('<div class="layer-row layer-module">')
-    prefix = architecture[:context_start]
-    context_block = architecture[context_start:engine_start].replace(
-        '<div class="layer-row layer-context">',
-        '<div class="layer-row layer-context" data-composition-layer="context">',
-        1,
-    )
-    engine_block = architecture[engine_start:module_start].replace(
-        '<div class="layer-row layer-engine">',
-        '<div class="layer-row layer-engine" data-composition-layer="engine">',
-        1,
-    )
-    module_block = architecture[module_start:].replace(
-        '<div class="layer-row layer-module">',
-        '<div class="layer-row layer-module" data-composition-layer="module" id="modules">',
-        1,
-    )
-    context_block = _decorate_home_rail(context_block, HOME_CONTEXT_TOKENS, "context")
-    engine_block = _decorate_home_rail(engine_block, HOME_ENGINE_TOKENS, "engine")
-    module_block = _decorate_home_rail(module_block, HOME_MODULE_TOKENS, "module")
-    architecture = prefix + context_block + engine_block + module_block
-
+    """Render one continuous scatter → module → intelligence motion scene."""
+    current_stage = _v156_section(_v156_source(lang), "current-stage")
     copy = HOME_COMPOSITION_COPY[lang]
-    phase_cards = []
-    for step, (label, body) in zip(("field", "context-engine", "modules", "intelligence"), copy["steps"]):
+
+    motion_labels = {
+        "ko": {
+            "pause": "부유 멈춤", "resume": "부유 재생",
+            "context": "공통 제조 기준 · Context", "engine": "제조 기능 · Engine",
+            "module": "최소 배포 단위 · Module", "axis": "4 Intelligence",
+            "progress": "구성 진행률",
+            "summary": "Context 10개와 Engine 12개가 정렬되어 12개 Module을 이루고, 같은 Module이 네 Intelligence로 연결됩니다.",
+            "axes": {
+                "machining": ("Machining Intelligence", "가공 해석 · NC 생성 · 측정/보정 · 공구관리", "가공 지능 보기"),
+                "quality": ("Quality Intelligence", "측정 · 손실 · 우선순위 · 재발 · 원인추적", "품질 지능 보기"),
+                "operations": ("Operations Intelligence", "설비상태 · Cycle · 손실 · 예방보전 · 운영판단", "운영 지능 보기"),
+                "logistics": ("Logistics Intelligence", "자재요청 · 배차 · 공급 · 완료 확인", "물류 지능 보기"),
+            },
+        },
+        "en": {
+            "pause": "Pause drift", "resume": "Resume drift",
+            "context": "Shared manufacturing reference · Context", "engine": "Manufacturing capability · Engine",
+            "module": "Smallest deployable unit · Module", "axis": "4 Intelligence domains",
+            "progress": "Composition progress",
+            "summary": "Ten context entities and twelve engines align into twelve modules. The same modules then connect into four intelligence domains.",
+            "axes": {
+                "machining": ("Machining Intelligence", "Process interpretation · NC generation · compensation · tool control", "Explore Machining"),
+                "quality": ("Quality Intelligence", "Measurement · loss · priority · recurrence · root cause", "Explore Quality"),
+                "operations": ("Operations Intelligence", "Machine state · cycle · loss · maintenance · operating decisions", "Explore Operations"),
+                "logistics": ("Logistics Intelligence", "Material request · dispatch · supply · completion", "Explore Logistics"),
+            },
+        },
+        "ar": {
+            "pause": "إيقاف الحركة", "resume": "استئناف الحركة",
+            "context": "مرجع التصنيع المشترك · Context", "engine": "قدرات التصنيع · Engine",
+            "module": "أصغر وحدة قابلة للنشر · Module", "axis": "أربعة مجالات للذكاء",
+            "progress": "تقدم التكوين",
+            "summary": "تنتظم عشرة عناصر Context واثنا عشر Engine في اثنتي عشرة Module، ثم ترتبط الوحدات نفسها في أربعة مجالات للذكاء.",
+            "axes": {
+                "machining": ("Machining Intelligence", "تفسير التشغيل · إنشاء NC · التعويض · إدارة الأدوات", "استكشف ذكاء التشغيل"),
+                "quality": ("Quality Intelligence", "القياس · الخسارة · الأولوية · التكرار · السبب الجذري", "استكشف ذكاء الجودة"),
+                "operations": ("Operations Intelligence", "حالة الآلة · الدورة · الخسارة · الصيانة · القرار", "استكشف ذكاء العمليات"),
+                "logistics": ("Logistics Intelligence", "طلب المواد · الإرسال · الإمداد · تأكيد الإكمال", "استكشف ذكاء اللوجستيات"),
+            },
+        },
+    }[lang]
+
+    stage_items = []
+    for index, (state, (label, body)) in enumerate(zip(
+        ("field", "context-engine", "modules", "intelligence"), copy["steps"]
+    )):
         number, title = label.split(" · ", 1)
-        phase_cards.append(
-            f'<article class="problem" data-composition-step="{step}"><div class="problem-tag">{e(number)}</div>'
-            f'<div><h3>{e(title)}</h3><p>{e(body)}</p></div><div class="problem-tag">{e(step.upper())}</div></article>'
+        stage_items.append(
+            f'<li data-composition-stage="{state}" data-stage-index="{index}"'
+            f'{" aria-current=\"step\"" if index == 0 else ""}>'
+            f'<span>{e(number)}</span><strong>{e(title)}</strong><p>{e(body)}</p></li>'
         )
-    intro = (
-        '<section class="section home-composition-intro" data-composition-journey>'
-        f'<div class="wrap"><div class="section-kicker">{e(copy["kicker"])}</div>'
-        f'<h2 class="section-title">{lines(copy["title"])}</h2>'
-        f'<p class="section-body">{e(copy["body"])}</p>'
-        f'<div class="problem-grid home-composition-steps">{"".join(phase_cards)}</div></div></section>'
+
+    align_targets = []
+    motion_tokens = []
+    for kind, tokens in (("context", HOME_CONTEXT_TOKENS), ("engine", HOME_ENGINE_TOKENS)):
+        for label, token_id in tokens:
+            full_id = f"{kind}-{token_id}"
+            align_targets.append(
+                f'<span class="composition-motion__target" data-motion-align-target="{full_id}">{e(label)}</span>'
+            )
+            motion_tokens.append(
+                f'<span class="composition-motion__token composition-motion__token--{kind}" '
+                f'data-motion-token data-token-kind="{kind}" data-token-id="{full_id}">'
+                f'<span data-motion-drift>{e(label)}</span></span>'
+            )
+
+    assembly_targets = "".join(
+        f'<span class="composition-motion__module-target" data-motion-assembly-target="{module_id}">{e(label)}</span>'
+        for label, module_id, _engines, _solutions in HOME_MODULE_TOKENS
     )
+    axis_module_targets = "".join(
+        f'<span class="composition-motion__module-target" data-motion-axis-target="{module_id}">{e(label)}</span>'
+        for label, module_id, _engines, _solutions in HOME_MODULE_TOKENS
+    )
+    modules = "".join(
+        f'<span class="composition-motion__module" data-motion-module data-module-id="{module_id}" '
+        f'data-contexts="shared" data-engines="{e(engines)}" data-solutions="{e(solutions)}">'
+        f'<span>{e(label)}</span></span>'
+        for label, module_id, engines, solutions in HOME_MODULE_TOKENS
+    )
+
+    axis_slugs = {
+        "machining": "machining-intelligence", "quality": "quality",
+        "operations": "operations-intelligence", "logistics": "logistics-intelligence",
+    }
+    axis_targets = "".join(
+        f'<span data-motion-axis-card-target="{axis}"></span>' for axis in axis_slugs
+    )
+    axes = []
+    fallback_axes = []
+    for axis, slug in axis_slugs.items():
+        title, body, link_label = motion_labels["axes"][axis]
+        axes.append(
+            f'<a class="composition-motion__axis composition-motion__axis--{axis}" '
+            f'data-motion-axis data-axis="{axis}" href="{page_path(lang, slug)}">'
+            f'<span>Solution profile</span><strong>{e(title)}</strong><small>{e(body)}</small>'
+            f'<b>{e(link_label)} →</b></a>'
+        )
+        fallback_axes.append(
+            f'<a class="composition-motion__fallback-axis composition-motion__fallback-axis--{axis}" '
+            f'href="{page_path(lang, slug)}"><strong>{e(title)}</strong><span>{e(body)}</span></a>'
+        )
+
+    fallback_context = "".join(f"<span>{e(label)}</span>" for label, _token_id in HOME_CONTEXT_TOKENS)
+    fallback_engines = "".join(f"<span>{e(label)}</span>" for label, _token_id in HOME_ENGINE_TOKENS)
+    fallback_modules = "".join(f"<span>{e(label)}</span>" for label, _module_id, _engines, _solutions in HOME_MODULE_TOKENS)
+    fallback_steps = []
+    fallback_bodies = (
+        f'<div class="composition-motion__fallback-group"><b>{e(motion_labels["context"])}</b><div class="composition-motion__fallback-tokens">{fallback_context}</div></div>'
+        f'<div class="composition-motion__fallback-group"><b>{e(motion_labels["engine"])}</b><div class="composition-motion__fallback-tokens">{fallback_engines}</div></div>',
+        f'<div class="composition-motion__fallback-equation"><strong>10 Context</strong><span>+</span><strong>12 Engine</strong><span>→</span><strong>Shared composition</strong></div>',
+        f'<div class="composition-motion__fallback-modules">{fallback_modules}</div>',
+        f'<div class="composition-motion__fallback-axes">{"".join(fallback_axes)}</div>',
+    )
+    for (label, body), fallback_body in zip(copy["steps"], fallback_bodies):
+        number, title = label.split(" · ", 1)
+        fallback_steps.append(
+            f'<article class="composition-motion__fallback-step"><header><span>{e(number)}</span><h3>{e(title)}</h3></header>'
+            f'<p>{e(body)}</p>{fallback_body}</article>'
+        )
+
+    motion = f"""<section aria-labelledby="composition-motion-title" class="composition-motion" id="architecture" data-composition-journey data-composition-motion data-composition-state="field" data-composition-progress="0">
+<span class="composition-motion__anchor composition-motion__anchor--modules" id="modules" aria-hidden="true"></span>
+<span class="composition-motion__anchor composition-motion__anchor--solutions" id="solutions" aria-hidden="true"></span>
+<div class="composition-motion__sticky">
+<div class="composition-motion__head">
+<div><p class="section-kicker">{e(copy["kicker"])}</p><h2 class="section-title" id="composition-motion-title">{lines(copy["title"])}</h2></div>
+<div class="composition-motion__status"><p class="section-body">{e(copy["body"])}</p><div class="composition-motion__meter"><span>{e(motion_labels["progress"])}</span><b data-motion-progress>00%</b><i aria-hidden="true"><span data-motion-progress-bar></span></i></div><button type="button" data-motion-pause data-pause-label="{e(motion_labels["pause"])}" data-resume-label="{e(motion_labels["resume"])}" aria-pressed="false">{e(motion_labels["pause"])}</button></div>
+</div>
+<div class="composition-motion__canvas" data-motion-canvas>
+<svg class="composition-motion__links composition-motion__links--compose" data-compose-svg focusable="false"><g data-edge-layer="engine-module"></g></svg>
+<svg class="composition-motion__links composition-motion__links--axes" data-axis-svg focusable="false"><g data-edge-layer="module-axis"></g></svg>
+<div class="composition-motion__context-spine" data-context-spine></div>
+<span class="composition-motion__lane-label composition-motion__lane-label--context">{e(motion_labels["context"])}</span>
+<span class="composition-motion__lane-label composition-motion__lane-label--engine">{e(motion_labels["engine"])}</span>
+<span class="composition-motion__lane-label composition-motion__lane-label--module">{e(motion_labels["module"])}</span>
+<span class="composition-motion__lane-label composition-motion__lane-label--axis">{e(motion_labels["axis"])}</span>
+<div class="composition-motion__align-targets composition-motion__align-targets--context" aria-hidden="true">{"".join(align_targets[:len(HOME_CONTEXT_TOKENS)])}</div>
+<div class="composition-motion__align-targets composition-motion__align-targets--engine" aria-hidden="true">{"".join(align_targets[len(HOME_CONTEXT_TOKENS):])}</div>
+<div class="composition-motion__assembly-targets" aria-hidden="true">{assembly_targets}</div>
+<div class="composition-motion__axis-module-targets" aria-hidden="true">{axis_module_targets}</div>
+<div class="composition-motion__axis-card-targets" aria-hidden="true">{axis_targets}</div>
+<div class="composition-motion__input-layer">{"".join(motion_tokens)}</div>
+<div class="composition-motion__module-layer">{modules}</div>
+<div class="composition-motion__axis-layer">{"".join(axes)}</div>
+</div>
+<ol class="composition-motion__stages">{"".join(stage_items)}</ol>
+<div class="composition-motion__fallback" data-motion-fallback><p>{e(motion_labels["summary"])}</p>{"".join(fallback_steps)}</div>
+</div></section>"""
 
     demo_label, nc_label = copy["demo_links"].split("|")
     public_demo = (
@@ -1373,7 +1482,7 @@ def home_composition_section(lang: str) -> str:
     if replaced != 1:
         raise ValueError(f"Missing current-stage proof card ({lang})")
 
-    return f'<div class="v156-platform home-composition">{intro}{architecture}{solutions}{current_stage}</div>'
+    return f'<div class="v156-platform home-composition">{motion}{current_stage}</div>'
 
 
 def v156_platform_sections(lang: str) -> str:
