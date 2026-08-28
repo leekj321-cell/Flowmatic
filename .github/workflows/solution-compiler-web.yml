@@ -1,0 +1,27 @@
+name: Solution Compiler Web
+
+on:
+  push:
+    branches:
+      - feature/solution-compiler-v0.1
+    paths:
+      - 'solution-compiler/**'
+      - '.github/workflows/solution-compiler-web.yml'
+  pull_request:
+    paths:
+      - 'solution-compiler/**'
+      - '.github/workflows/solution-compiler-web.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Static contract gate
+        run: python solution-compiler/validate.py
