@@ -145,8 +145,6 @@ def generated_pages() -> list[Path]:
 
 def v156_pages() -> list[Path]:
     return [
-        ROOT / "index.html",
-        *(ROOT / lang / "index.html" for lang in LANGS),
         *(ROOT / lang / "platform" / "index.html" for lang in LANGS),
     ]
 
@@ -263,12 +261,53 @@ def main() -> None:
         home = (ROOT / lang / "index.html").read_text(encoding="utf-8")
         home_scan = Scan()
         home_scan.feed(home)
-        required = ('class="transformation"', "Platform / Engine-Module Composition")
+        required = (
+            'data-composition-journey',
+            'id="architecture"',
+            'id="modules"',
+            'id="solutions"',
+            'id="current-stage"',
+            "Platform / Engine-Module Composition",
+            "PUBLIC DEMOS",
+        )
         for phrase in required:
             if phrase not in home:
                 errors.append(f"home content missing ({lang}): {phrase}")
+        forbidden_home = ('class="transformation"', 'id="before-after"', 'id="approach"', 'data-field-story', "KICXUP CHALLENGE")
+        for phrase in forbidden_home:
+            if phrase in home:
+                errors.append(f"obsolete home content present ({lang}): {phrase}")
+        expected_counts = {
+            'data-token-kind="context"': 10,
+            'data-token-kind="engine"': 12,
+            'data-token-kind="module"': 12,
+            'class="source-node"': 12,
+            'class="solution-card': 4,
+            'data-composition-step=': 4,
+        }
+        for marker, expected in expected_counts.items():
+            actual = home.count(marker)
+            if actual != expected:
+                errors.append(f"home composition count ({lang}): {marker} expected {expected}, got {actual}")
+        source_ids = [source_id for source_id, _ in home_scan.source_nodes]
+        solution_ids = [solution_id for solution_id in home_scan.solution_nodes if solution_id]
+        if len(source_ids) != 12 or len(set(source_ids)) != 12:
+            errors.append(f"home module mapping IDs missing or duplicated ({lang})")
+        if len(solution_ids) != 4 or len(set(solution_ids)) != 4:
+            errors.append(f"home intelligence IDs missing or duplicated ({lang})")
+        valid_solutions = set(solution_ids)
+        for source_id, memberships in home_scan.source_nodes:
+            if not set(memberships.split()) <= valid_solutions:
+                errors.append(f"home module mapping invalid ({lang}): {source_id or '<missing>'}")
         if home_scan.hero_titles != [list(BRAND_HERO_LINES)]:
             errors.append(f"fixed brand slogan mismatch ({lang}): {home_scan.hero_titles}")
+
+        operations = (ROOT / lang / "operations-intelligence" / "index.html").read_text(encoding="utf-8")
+        if operations.count("data-field-story") != 1:
+            errors.append(f"Operations story count ({lang}): expected 1")
+        for stage in ("read", "event", "action", "confirm"):
+            if operations.count(f'data-story-stage="{stage}"') != 1:
+                errors.append(f"Operations story stage ({lang}): {stage}")
         machining = (ROOT / lang / "machining-intelligence" / "index.html").read_text(encoding="utf-8")
         for phrase in ("Manufacturing Recipe", "INFERRED", "USER CONFIRMED", "Managed Metadata Comment Block", "Conflict review", "fail-closed"):
             if phrase not in machining:
@@ -279,6 +318,12 @@ def main() -> None:
     root_scan.feed(root_home)
     if root_scan.hero_titles != [list(BRAND_HERO_LINES)]:
         errors.append(f"fixed brand slogan mismatch (index.html): {root_scan.hero_titles}")
+    for phrase in ('data-composition-journey', 'id="architecture"', 'id="modules"', 'id="solutions"', 'id="current-stage"', "PUBLIC DEMOS"):
+        if phrase not in root_home:
+            errors.append(f"root home content missing: {phrase}")
+    for phrase in ('class="transformation"', 'data-field-story', "KICXUP CHALLENGE"):
+        if phrase in root_home:
+            errors.append(f"obsolete root home content present: {phrase}")
 
     ko_home = (ROOT / "ko" / "index.html").read_text(encoding="utf-8")
     for phrase in ("Machining · Recipe", "Machining · Safety Contract", "Machining · V.Next scope", "deterministic source test", "prototype integration"):

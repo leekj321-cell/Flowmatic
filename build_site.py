@@ -957,24 +957,6 @@ def page_path(lang: str, slug: str = "home", compat: bool = False) -> str:
     return f"/{lang}/" if slug == "home" else f"/{lang}/{slug}/"
 
 
-def transformation_blocks(lang: str, canonical_path: str) -> tuple[str, str, str]:
-    """Carry the approved closed-loop story through generator-based rebuilds."""
-    source = Path("index.html") if canonical_path == "/" else Path(lang) / "index.html"
-    if not source.exists():
-        return "", "", ""
-    existing = source.read_text(encoding="utf-8")
-    patterns = (
-        r'<style id="flowmatic-transformation-style">.*?</style>',
-        r'<section class="transformation".*?</section>',
-        r'<script id="flowmatic-transformation-script">.*?</script>',
-    )
-    blocks = []
-    for pattern in patterns:
-        match = re.search(pattern, existing, flags=re.DOTALL)
-        blocks.append(match.group(0) if match else "")
-    return tuple(blocks)
-
-
 def abs_url(path: str) -> str:
     return f"{BASE_URL}{path}"
 
@@ -1087,6 +1069,23 @@ def field_story(lang: str) -> str:
 </div>"""
 
 
+def operations_story_section(lang: str) -> str:
+    h = HOME[lang]
+    logic_cards = "".join(
+        f'<li><strong>{e(title)}</strong><span>{e(body)}</span></li>'
+        for title, body in FLOW_STEPS[lang]
+    )
+    eyebrow = {
+        "ko": "Operations Intelligence 작동 방식",
+        "en": "How Operations Intelligence works",
+        "ar": "كيف يعمل ذكاء العمليات",
+    }[lang]
+    return f"""<section aria-labelledby="operations-flow-title" class="field-flow section-grid" id="operations-flow">
+<div class="cell span-5 flow-copy reveal"><p class="eyebrow">{e(eyebrow)}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="operations-flow-title">{lines(h["flow_title"])}</h2><p class="body-large">{e(h["flow_body"])}</p><ol class="flow-explanation">{logic_cards}</ol></div>
+<div class="cell span-7 flow-visual-cell reveal delay-1">{field_story(lang)}</div>
+</section>"""
+
+
 def mini_visual(slug: str, lang: str) -> str:
     if slug == "nc":
         return '<div aria-hidden="true" class="product-mini mini-nc"><svg viewBox="0 0 320 180"><path class="mini-path" d="M35 140 L35 45 L145 45 L145 92 L270 92 L270 145"></path><circle class="mini-tool" r="9"><animateMotion dur="4s" path="M35 140 L35 45 L145 45 L145 92 L270 92 L270 145" repeatCount="indefinite"></animateMotion></circle></svg></div>'
@@ -1187,13 +1186,199 @@ V156_SOLUTION_EXAMPLES = (
     "Logistics Intelligence",
 )
 
+HOME_COMPOSITION_COPY = {
+    "ko": {
+        "kicker": "01 · COMPOSITION JOURNEY",
+        "title": "흩어진 기준과 기능이 Module이 되고,|네 개의 Intelligence로 연결됩니다.",
+        "body": "10개 Context가 현장의 공통 기준을 만들고, 12개 Engine이 그 기준을 읽습니다. 필요한 Engine은 12개 Module로 조합되고, Module은 네 개 지능축을 구성합니다.",
+        "steps": (
+            ("01 · 흩어진 현장", "Machine·Product·Process 같은 기준과 NC Semantic·Geometry 같은 기능이 서로 다른 화면과 문서에 놓여 있습니다."),
+            ("02 · Context + Engine", "10개 Context를 같은 기준선에 놓고, 12개 Engine이 필요한 제조 의미를 읽습니다."),
+            ("03 · 12 Modules", "필요한 Engine을 조합해 한 문제를 처리하는 최소 배포 단위를 만듭니다."),
+            ("04 · 4 Intelligence", "Module을 다시 연결해 Machining·Quality·Operations·Logistics Intelligence를 구성합니다."),
+        ),
+        "public_demo": "CT · NC · 입력부터 결과까지 직접 확인",
+        "demo_links": "CT 데모 →|NC 데모 →",
+    },
+    "en": {
+        "kicker": "01 · COMPOSITION JOURNEY",
+        "title": "Scattered standards and capabilities become modules,|then connect into four intelligence domains.",
+        "body": "Ten context entities establish a shared field reference. Twelve engines read that context, compose into twelve modules, and connect into four intelligence domains.",
+        "steps": (
+            ("01 · SCATTERED FIELD", "Standards such as Machine, Product, and Process sit apart from capabilities such as NC Semantic and Geometry."),
+            ("02 · CONTEXT + ENGINE", "Ten context entities align on one reference while twelve engines read the manufacturing meaning they need."),
+            ("03 · 12 MODULES", "Selected engines compose into the smallest deployable units for one operating problem."),
+            ("04 · 4 INTELLIGENCE DOMAINS", "Modules reconnect as Machining, Quality, Operations, and Logistics Intelligence."),
+        ),
+        "public_demo": "CT · NC · inspect the working flow from input to result",
+        "demo_links": "CT demo →|NC demo →",
+    },
+    "ar": {
+        "kicker": "01 · COMPOSITION JOURNEY",
+        "title": "تتحول المعايير والقدرات المتفرقة إلى وحدات،|ثم ترتبط في أربعة مجالات للذكاء.",
+        "body": "تنشئ عشرة عناصر Context مرجعًا ميدانيًا مشتركًا. وتقرأ اثنا عشر Engine هذا السياق، وتتجمع في اثنتي عشرة Module، ثم ترتبط في أربعة مجالات للذكاء.",
+        "steps": (
+            ("01 · ميدان متفرق", "توجد معايير مثل Machine وProduct وProcess بعيدًا عن قدرات مثل NC Semantic وGeometry."),
+            ("02 · CONTEXT + ENGINE", "تنتظم عشرة عناصر Context على مرجع واحد، وتقرأ اثنا عشر Engine معنى التصنيع المطلوب."),
+            ("03 · 12 MODULES", "تتجمع المحركات المختارة في أصغر وحدات قابلة للنشر لمعالجة مشكلة تشغيلية واحدة."),
+            ("04 · 4 INTELLIGENCE DOMAINS", "تُربط الوحدات من جديد لتكوين ذكاء التشغيل والجودة والعمليات واللوجستيات."),
+        ),
+        "public_demo": "CT · NC · تحقق من التدفق العامل من الإدخال إلى النتيجة",
+        "demo_links": "عرض CT ←|عرض NC ←",
+    },
+}
 
-def v156_platform_sections(lang: str) -> str:
-    """Render the approved V156 architecture from durable localized source fragments."""
+HOME_CONTEXT_TOKENS = (
+    ("Machine", "machine"),
+    ("Product", "product"),
+    ("Process", "process"),
+    ("Tool", "tool"),
+    ("Feature", "feature"),
+    ("Quality", "quality"),
+    ("Measurement", "measurement"),
+    ("Material", "material"),
+    ("Worker", "worker"),
+    ("Time", "time"),
+)
+
+HOME_ENGINE_TOKENS = (
+    ("NC Semantic", "nc-semantic"),
+    ("Geometry", "geometry"),
+    ("Machine State", "machine-state"),
+    ("Quality Analysis", "quality-analysis"),
+    ("Measurement", "measurement"),
+    ("Tool Life", "tool-life"),
+    ("Revision", "revision"),
+    ("Reference Data", "reference-data"),
+    ("Vision / CT", "vision-ct"),
+    ("Workflow", "workflow"),
+    ("Cost / Resource", "cost-resource"),
+    ("Material Flow", "material-flow"),
+)
+
+HOME_MODULE_TOKENS = (
+    ("Viewer", "viewer", "nc-semantic geometry revision", "machining"),
+    ("Generator", "generator", "nc-semantic geometry revision", "machining"),
+    ("Work Standard", "workstandard", "geometry workflow reference-data", "machining"),
+    ("Measurement / Compensation", "measurement", "measurement geometry quality-analysis", "machining quality"),
+    ("TMS", "tms", "tool-life nc-semantic revision", "machining operations"),
+    ("Preventive Maintenance", "pm", "machine-state measurement tool-life", "operations"),
+    ("Quality Worklist", "qualitywork", "quality-analysis cost-resource workflow", "quality"),
+    ("Machine Monitor", "machinemonitor", "machine-state vision-ct workflow", "operations"),
+    ("Root Cause", "rootcause", "quality-analysis machine-state tool-life revision", "quality operations"),
+    ("Material Dispatch", "dispatch", "material-flow workflow machine-state", "logistics"),
+    ("Data Management", "data", "revision reference-data workflow", "machining quality operations logistics"),
+    ("Control Tower", "tower", "machine-state quality-analysis cost-resource workflow", "quality operations logistics"),
+)
+
+
+def _v156_source(lang: str) -> str:
     source = WEB_V156_CONTENT_DIR / f"{lang}.html"
     if not source.exists():
         raise FileNotFoundError(f"Missing V156 web content: {source}")
-    content = source.read_text(encoding="utf-8").strip()
+    return source.read_text(encoding="utf-8").strip()
+
+
+def _v156_section(content: str, section_id: str) -> str:
+    pattern = rf'<section\b(?=[^>]*\bid="{re.escape(section_id)}")[^>]*>.*?</section>'
+    match = re.search(pattern, content, flags=re.DOTALL)
+    if not match:
+        raise ValueError(f"Missing V156 section: {section_id}")
+    return match.group(0)
+
+
+def _decorate_home_rail(block: str, tokens: tuple, kind: str) -> str:
+    for token in tokens:
+        label, token_id, *metadata = token
+        needle = f'<div class="rail-card">{label}</div>'
+        if needle not in block:
+            raise ValueError(f"Missing {kind} token in home composition: {label}")
+        attributes = [f'data-token-kind="{kind}"']
+        if kind == "module":
+            engines, solutions = metadata
+            attributes.extend((
+                f'data-module-id="{token_id}"',
+                'data-contexts="shared"',
+                f'data-engines="{engines}"',
+                f'data-solutions="{solutions}"',
+            ))
+        else:
+            attributes.append(f'data-token-id="{kind}-{token_id}"')
+        replacement = f'<div class="rail-card" {" ".join(attributes)}>{label}</div>'
+        block = block.replace(needle, replacement, 1)
+    return block
+
+
+def home_composition_section(lang: str) -> str:
+    """Render the concise Home journey from the durable platform source."""
+    content = _v156_source(lang)
+    architecture = _v156_section(content, "architecture")
+    solutions = _v156_section(content, "solutions")
+    current_stage = _v156_section(content, "current-stage")
+
+    context_start = architecture.index('<div class="layer-row layer-context">')
+    engine_start = architecture.index('<div class="layer-row layer-engine">')
+    module_start = architecture.index('<div class="layer-row layer-module">')
+    prefix = architecture[:context_start]
+    context_block = architecture[context_start:engine_start].replace(
+        '<div class="layer-row layer-context">',
+        '<div class="layer-row layer-context" data-composition-layer="context">',
+        1,
+    )
+    engine_block = architecture[engine_start:module_start].replace(
+        '<div class="layer-row layer-engine">',
+        '<div class="layer-row layer-engine" data-composition-layer="engine">',
+        1,
+    )
+    module_block = architecture[module_start:].replace(
+        '<div class="layer-row layer-module">',
+        '<div class="layer-row layer-module" data-composition-layer="module" id="modules">',
+        1,
+    )
+    context_block = _decorate_home_rail(context_block, HOME_CONTEXT_TOKENS, "context")
+    engine_block = _decorate_home_rail(engine_block, HOME_ENGINE_TOKENS, "engine")
+    module_block = _decorate_home_rail(module_block, HOME_MODULE_TOKENS, "module")
+    architecture = prefix + context_block + engine_block + module_block
+
+    copy = HOME_COMPOSITION_COPY[lang]
+    phase_cards = []
+    for step, (label, body) in zip(("field", "context-engine", "modules", "intelligence"), copy["steps"]):
+        number, title = label.split(" · ", 1)
+        phase_cards.append(
+            f'<article class="problem" data-composition-step="{step}"><div class="problem-tag">{e(number)}</div>'
+            f'<div><h3>{e(title)}</h3><p>{e(body)}</p></div><div class="problem-tag">{e(step.upper())}</div></article>'
+        )
+    intro = (
+        '<section class="section home-composition-intro" data-composition-journey>'
+        f'<div class="wrap"><div class="section-kicker">{e(copy["kicker"])}</div>'
+        f'<h2 class="section-title">{lines(copy["title"])}</h2>'
+        f'<p class="section-body">{e(copy["body"])}</p>'
+        f'<div class="problem-grid home-composition-steps">{"".join(phase_cards)}</div></div></section>'
+    )
+
+    demo_label, nc_label = copy["demo_links"].split("|")
+    public_demo = (
+        '<article class="proof yellow"><b>PUBLIC DEMOS</b>'
+        f'<p>{e(copy["public_demo"])}</p>'
+        f'<p><a href="{page_path(lang, "ct")}">{e(demo_label)}</a> · '
+        f'<a href="{page_path(lang, "nc")}">{e(nc_label)}</a></p></article>'
+    )
+    current_stage, replaced = re.subn(
+        r'<article class="proof yellow">.*?</article>',
+        public_demo,
+        current_stage,
+        count=1,
+        flags=re.DOTALL,
+    )
+    if replaced != 1:
+        raise ValueError(f"Missing current-stage proof card ({lang})")
+
+    return f'<div class="v156-platform home-composition">{intro}{architecture}{solutions}{current_stage}</div>'
+
+
+def v156_platform_sections(lang: str) -> str:
+    """Render the approved V156 architecture from durable localized source fragments."""
+    content = _v156_source(lang)
     required = (
         "01 · FIELD GAP",
         'id="architecture"',
@@ -1415,12 +1600,13 @@ def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
     back = {"ko":"전체 지능축 보기","en":"View all intelligence domains","ar":"عرض جميع مجالات الذكاء"}[lang]
     contact = {"ko":"파일럿 상담","en":"Discuss a pilot","ar":"ناقش مشروعًا تجريبيًا"}[lang]
     vnext_diagrams = machining_vnext_diagrams(lang, data) if slug == "machining-intelligence" else ""
+    operations_story = operations_story_section(lang) if slug == "operations-intelligence" else ""
     return f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
 {meta_head(lang, slug, data["title"][lang], data["description"][lang], canonical_path)}
 <body class="intelligence-page" data-lang="{lang}" data-static-lang="true">{header(lang, slug)}<main id="main">
 <section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p><a class="detail-inline-back" href="{page_path(lang)}#solutions">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div>{asset}</section>
-{vnext_diagrams}
+{operations_story}{vnext_diagrams}
 <section aria-label="Architecture details" class="intelligence-details section-grid">{sections}<div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">{e(guardrail)}</p><p class="body-large">{e(data["guardrail"][lang])}</p></div></section>
 <section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(contact)}</a><a class="fm-button" href="{page_path(lang, 'platform')}">Flowmatic Platform / Factory OS</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
@@ -1594,42 +1780,26 @@ def contact_section(lang: str) -> str:
 
 def home_page(lang: str, canonical_path: str) -> str:
     h = HOME[lang]
-    transformation_style, transformation_section, transformation_script = transformation_blocks(lang, canonical_path)
-    logic_cards = "".join(f'<li><strong>{e(title)}</strong><span>{e(body)}</span></li>' for title, body in FLOW_STEPS[lang])
-    problem = "\n".join(f'<article class="cell {"red" if i < 2 else "gray"} problem-card span-3 reveal delay-{i+1}"><span>{num}</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text>{lines(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PROBLEM_CARDS[lang]))
-    principles = "\n".join(f'<article class="cell {"yellow" if i == 1 else "blue" if i == 3 else "gray"} strategy-card span-3 reveal delay-{i+1}"><span>{num}</span><h3 class="semantic-copy card-title-fit" data-fit-min="20" data-fit-text>{lines(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PRINCIPLES[lang]))
     pilot = "\n".join(f'<article class="cell pilot-step span-3 reveal delay-{i+1}"><span>{num}</span><h3>{e(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PILOT_STEPS[lang]))
-    workflow_nc = {"ko": "NC 프로그램 → 공구 경로 재구성 → 가공 전 검토", "en": "NC program → Toolpath reconstruction → Review point", "ar": "برنامج NC → إعادة بناء مسار الأداة → نقطة مراجعة"}[lang]
-    workflow_ct = {"ko": "고정 카메라 ROI → 시작·종료 이벤트 → 사이클 타임라인", "en": "Fixed camera ROI → Start/end event → Cycle timeline", "ar": "ROI لكاميرا ثابتة → حدث بداية/نهاية → خط زمني للدورة"}[lang]
     html = f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
-{meta_head(lang, "home", h["title"], h["description"], canonical_path).replace("</head>", transformation_style + "\n</head>")}
+{meta_head(lang, "home", h["title"], h["description"], canonical_path)}
 <body data-lang="{lang}" data-static-lang="true">
 {header(lang, "home")}
 <main id="main">
 <section aria-labelledby="hero-title" class="hero section-grid" id="hero">
-<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#pilot">{e(h["primary"])}</a><a class="fm-button" href="#modules">{e(h["secondary"])}</a></div></div>
+<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#architecture">{e(h["primary"])}</a><a class="fm-button" href="#current-stage">{e(h["secondary"])}</a></div></div>
 <div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event →|Decision → Action","en":"Motion → Event →|Decision → Action","ar":"Motion → Event →|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
 <div class="cell yellow hero-note span-4 reveal delay-2"><strong>{e(FLOW_STEPS[lang][0][0])}</strong><span>{e(FLOW_STEPS[lang][0][1])}</span></div>
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>{e(h["primary"])}</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
-{transformation_section}
-{before_after_section(lang)}
-{v156_platform_sections(lang)}
-<section aria-labelledby="strategy-title" class="strategy section-grid" id="approach">
-<div class="cell span-8 reveal"><p class="eyebrow">{e({"ko":"현장 중심 설계","en":"Field-first design","ar":"تصميم يبدأ من الميدان"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="strategy-title">{lines(h["strategy_title"])}</h2><p class="body-large">{e(h["strategy_body"])}</p></div>
-<div class="cell blue span-4 reveal delay-1 strategy-core"><p class="kicker">Minimal intervention / Maximum clarity</p><h3>{e({"ko":"현장 제약 기반 설계","en":"Intelligence should fit the field.","ar":"يجب أن يناسب الذكاء أرض الواقع."}[lang])}</h3><p>{e(h["support"])}</p></div>{principles}</section>
-<section aria-labelledby="flow-title" class="field-flow section-grid" id="flow">
-<div class="cell span-5 flow-copy reveal"><p class="eyebrow">{e({"ko":"Flowmatic 작동 방식","en":"How Flowmatic works","ar":"كيف يعمل Flowmatic"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="flow-title">{lines(h["flow_title"])}</h2><p class="body-large">{e(h["flow_body"])}</p><ol class="flow-explanation">{logic_cards}</ol></div>
-<div class="cell span-7 flow-visual-cell reveal delay-1">{field_story(lang)}</div>
-</section>
-{certified_core_section(lang)}
+{home_composition_section(lang)}
 {deployment_modes_section(lang)}
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
 {contact_section(lang)}
-</main>{footer(lang)}{transformation_script}<script src="{SCRIPT_SRC}"></script></body></html>"""
+</main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
     return html
 
 
