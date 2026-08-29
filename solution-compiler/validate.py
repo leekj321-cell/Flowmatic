@@ -77,7 +77,7 @@ for required_text in (
     "fetch('./config.json'",
     "await sendGateway(lastResult);queued=true",
     "await sendIntake(intakePayload(lastResult,'[Flowmatic] Engine Gap Review'))",
-    "Canonical Engine Pool에는 자동 반영",
+    "Canonical Engine Pool에는 자동 편입하지 않습니다",
 ):
     assert required_text in html, required_text
 
