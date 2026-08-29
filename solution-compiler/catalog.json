@@ -15,6 +15,28 @@
     {"id":"maintenance","label":"예방보전 / 추세","modules":["flowmatic.preventive_maintenance"]},
     {"id":"revision","label":"NC Revision / 데이터관리","modules":["flowmatic.data_management.modular"]}
   ],
+  "objective_rules": [
+    {"id":"downtime","terms":["비가동","다운타임","downtime","loss"],"modules":["scada.loss_monitor@1"]},
+    {"id":"cycle","terms":["사이클타임","사이클 타임","사이클","cycle time","cycle","ct"],"modules":["scada.line_monitor@1","scada.trend_history@1"]},
+    {"id":"line-monitor","terms":["다중라인","라인 상태","라인 가동","line monitor","plant monitor"],"modules":["scada.plant_monitor@1"]},
+    {"id":"material","terms":["소재 잔량","버퍼 잔량","buffer","material"],"modules":["scada.material_buffer@1"]},
+    {"id":"andon","terms":["안돈","andon","작업자 호출","담당자 호출"],"modules":["scada.andon_workflow@1"]},
+    {"id":"gcode","terms":["g코드","g-code","g code","gcode","nc 생성","nc 수정"],"modules":["flowmatic.generator.modular"]},
+    {"id":"nc-review","terms":["toolpath","툴패스","nc 검토","경로 검토"],"modules":["flowmatic.viewer"]},
+    {"id":"measurement","terms":["측정","좌표 보정","보정값","compensation","measurement"],"modules":["flowmatic.measurement.modular"]},
+    {"id":"work-standard","terms":["작업표준","작업 표준","work standard"],"modules":["flowmatic.work_standard.modular"]},
+    {"id":"tool-life","terms":["공구수명","공구 수명","tms","tool life"],"modules":["flowmatic.tms"]},
+    {"id":"maintenance","terms":["예방보전","예지보전","maintenance","보전 추세"],"modules":["flowmatic.preventive_maintenance"]},
+    {"id":"revision","terms":["리비전","revision","최신 버전","최신버전","버전 관리","버전관리"],"modules":["flowmatic.data_management.modular"]}
+  ],
+  "gap_rules": [
+    {
+      "id":"cycle-forecast",
+      "terms":["사이클타임 예측","사이클 타임 예측","ct 예측","cycle time forecast","cycle forecast","predict cycle time"],
+      "missing_capability":"cycle.forecast@1",
+      "label":"Cycle Time Forecast"
+    }
+  ],
   "modules": {
     "flowmatic.viewer":{"name":"Viewer","capabilities":["document.nc@1","geometry.selection@1"]},
     "flowmatic.generator.modular":{"name":"G-code Generator","capabilities":["document.nc@1","geometry.index_setup@1","gcode.generator@1"]},
