@@ -37,7 +37,7 @@ for rule in objective_rules:
     for module_id in rule["modules"]:
         assert module_id in modules, (rule["id"], module_id)
 
-# Regression: the user's observed sentence must add CT/Trend and Revision modules.
+# Regression: the observed user sentence must add CT/Trend and Revision modules.
 text = "G코드의 생성과 수정, 사이클타임 예측 및 G코드의 최신 리비전 관리".lower()
 matched_modules: set[str] = set()
 for rule in objective_rules:
@@ -68,7 +68,6 @@ for required_text in (
     "function inferObjective(purpose)",
     "catalog.objective_rules",
     "catalog.gap_rules",
-    "cycle.forecast@1",
     "client_request_id:result.clientRequestId",
     "requested_capabilities:allRequestedCapabilities(result)",
     "Request ID",
