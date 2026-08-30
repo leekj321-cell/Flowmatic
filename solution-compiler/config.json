@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_endpoint": "",
+  "compiler_endpoint": "https://flowmatic-solution-compiler-gateway.lovable.app/api/public/solution-compiler-gateway",
   "intake_endpoint": "https://formspree.io/f/xojgorkl",
   "compiler_authority": "server",
   "empty_endpoint_policy": "INTAKE_ONLY_NO_BUILD_CLAIM"
