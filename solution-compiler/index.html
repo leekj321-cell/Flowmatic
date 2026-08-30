@@ -4,180 +4,49 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Flowmatic Solution Compiler</title>
-<meta name="description" content="현장 문제와 목적 문장을 분석해 현재 Flowmatic Engine Pool에서 가능한 Solution을 조합하고, 부족한 Engine 요구는 별도 검토로 격리합니다.">
+<meta name="description" content="현장 문제와 원하는 결과를 분석해 현재 Flowmatic Engine Pool에서 가능한 Solution을 조합하고, 부족한 Engine 요구는 별도 검토로 격리합니다.">
 <style>
 :root{--black:#111;--blue:#1565d8;--yellow:#f4c20d;--red:#e53935;--paper:#fff;--muted:#f3f3ef;--line:3px}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:var(--paper);color:var(--black)}
 a{color:inherit}.shell{max-width:1280px;margin:0 auto;border-left:var(--line) solid var(--black);border-right:var(--line) solid var(--black)}
 header{display:grid;grid-template-columns:1fr auto;border-bottom:var(--line) solid var(--black);min-height:86px}.brand{display:flex;align-items:center;gap:14px;padding:18px 24px}.brand img{width:42px;height:42px}.brand b{font-size:20px}.nav{display:flex;align-items:center;border-left:var(--line) solid var(--black);padding:0 22px;font-weight:700}
-.hero{display:grid;grid-template-columns:1.45fr .55fr;border-bottom:var(--line) solid var(--black)}.hero-main{padding:54px 34px}.eyebrow{font-weight:800;text-transform:uppercase;letter-spacing:.08em}.hero h1{font-size:clamp(42px,7vw,92px);line-height:.92;margin:18px 0 22px;letter-spacing:-.06em}.hero p{max-width:780px;font-size:20px;line-height:1.55;margin:0}.hero-mark{display:grid;grid-template-rows:1fr 1fr 1fr;border-left:var(--line) solid var(--black)}.hero-mark div:nth-child(1){background:var(--blue)}.hero-mark div:nth-child(2){background:var(--yellow);border-top:var(--line) solid var(--black);border-bottom:var(--line) solid var(--black)}.hero-mark div:nth-child(3){background:var(--red)}
-.step{border-bottom:var(--line) solid var(--black)}.step-head{display:grid;grid-template-columns:150px 1fr;border-bottom:var(--line) solid var(--black)}.step-no{padding:20px;background:var(--black);color:white;font-size:28px;font-weight:900}.step-title{padding:20px 26px;font-size:28px;font-weight:900}.step-body{padding:28px}.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:var(--line) solid var(--black);border-left:var(--line) solid var(--black)}.problem{min-height:92px;border-right:var(--line) solid var(--black);border-bottom:var(--line) solid var(--black);padding:18px;display:flex;gap:12px;align-items:flex-start;font-weight:800;cursor:pointer}.problem input{width:22px;height:22px;accent-color:var(--black)}
-label.field{display:block;font-weight:900;margin:0 0 9px}.input,textarea{width:100%;border:var(--line) solid var(--black);border-radius:0;padding:14px 16px;font:inherit;background:white}textarea{min-height:110px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.hint{font-size:13px;line-height:1.5;margin-top:8px;color:#444}.btn{border:var(--line) solid var(--black);background:var(--black);color:white;padding:15px 20px;font-weight:900;font-size:16px;cursor:pointer}.btn.alt{background:white;color:var(--black)}.btn:disabled{opacity:.5;cursor:wait}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.hero{display:grid;grid-template-columns:1.45fr .55fr;border-bottom:var(--line) solid var(--black)}.hero-main{padding:54px 34px}.eyebrow{font-weight:800;text-transform:uppercase;letter-spacing:.08em}.hero h1{font-size:clamp(42px,7vw,92px);line-height:.92;margin:18px 0 22px;letter-spacing:-.06em}.hero p{max-width:820px;font-size:20px;line-height:1.55;margin:0}.hero-mark{display:grid;grid-template-rows:1fr 1fr 1fr;border-left:var(--line) solid var(--black)}.hero-mark div:nth-child(1){background:var(--blue)}.hero-mark div:nth-child(2){background:var(--yellow);border-top:var(--line) solid var(--black);border-bottom:var(--line) solid var(--black)}.hero-mark div:nth-child(3){background:var(--red)}
+.step{border-bottom:var(--line) solid var(--black)}.step-head{display:grid;grid-template-columns:150px 1fr;border-bottom:var(--line) solid var(--black)}.step-no{padding:20px;background:var(--black);color:white;font-size:28px;font-weight:900}.step-title{padding:20px 26px;font-size:28px;font-weight:900}.step-body{padding:28px}.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:var(--line) solid var(--black);border-left:var(--line) solid var(--black)}.problem{min-height:92px;border-right:var(--line) solid var(--black);border-bottom:var(--line) solid var(--black);padding:18px;display:flex;gap:12px;align-items:flex-start;font-weight:800;cursor:pointer}.problem input{width:22px;height:22px;accent-color:var(--black)}
+label.field{display:block;font-weight:900;margin:0 0 9px}.input,textarea{width:100%;border:var(--line) solid var(--black);border-radius:0;padding:14px 16px;font:inherit;background:white}textarea{min-height:150px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.hint{font-size:13px;line-height:1.55;margin-top:8px;color:#444}.btn{border:var(--line) solid var(--black);background:var(--black);color:white;padding:15px 20px;font-weight:900;font-size:16px;cursor:pointer}.btn.alt{background:white;color:var(--black)}.btn:disabled{opacity:.5;cursor:wait}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
 .result{display:none}.result.show{display:block}.route{display:grid;grid-template-columns:1fr 1fr;border:var(--line) solid var(--black)}.route-side{padding:26px}.route-side+ .route-side{border-left:var(--line) solid var(--black)}.route-side.active{background:var(--yellow)}.route-side.gap.active{background:var(--red);color:white}.route h3{font-size:28px;margin:0 0 10px}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.chip{border:2px solid currentColor;padding:7px 10px;font-weight:800;font-size:13px}.chip.gap{color:#a40000;background:#fff0ed}.summary{margin-top:22px;border:var(--line) solid var(--black)}.summary-row{display:grid;grid-template-columns:210px 1fr;border-bottom:2px solid var(--black)}.summary-row:last-child{border-bottom:0}.summary-row b,.summary-row div{padding:12px 14px}.summary-row b{border-right:2px solid var(--black);background:var(--muted)}.status{font-weight:900}.ok{color:#075b2b}.danger{color:#a40000}.notice,.receipt{margin-top:18px;padding:15px;border:2px solid var(--black);line-height:1.55}.notice{background:var(--muted)}.receipt{display:none;background:#fff7bf}.receipt.show{display:block}.receipt b{display:block;margin-bottom:5px}.server-state{margin-top:10px;font-size:13px;font-weight:800}
-footer{padding:24px 30px;font-size:13px;display:flex;justify-content:space-between;gap:20px}.hidden{display:none!important}
+footer{padding:24px 30px;font-size:13px;display:flex;justify-content:space-between;gap:20px}
 @media(max-width:820px){.shell{border-left:0;border-right:0}.hero{grid-template-columns:1fr}.hero-mark{display:none}.problem-grid{grid-template-columns:1fr}.two,.route{grid-template-columns:1fr}.route-side+ .route-side{border-left:0;border-top:var(--line) solid var(--black)}.step-head{grid-template-columns:90px 1fr}.summary-row{grid-template-columns:1fr}.summary-row b{border-right:0;border-bottom:2px solid var(--black)}}
 </style>
 </head>
 <body>
 <div class="shell">
 <header><a class="brand" href="/ko/"><img src="/assets/branding/flowmatic-logo-mark.svg" alt="Flowmatic"><b>FLOWMATIC / SOLUTION COMPILER</b></a><a class="nav" href="/ko/">BACK TO PLATFORM</a></header>
-<section class="hero"><div class="hero-main"><div class="eyebrow">Problem → Capability → Solution → 30-Day Demo EXE</div><h1>문제를 고르면,<br>Solution을 조합합니다.</h1><p>선택한 문제와 목적 문장을 함께 분석합니다. 현재 검증된 Engine으로 가능한 부분은 Module로 조합하고, 없는 Capability는 Canonical Pool을 오염시키지 않고 별도 Candidate 검토 경로로 분리합니다.</p></div><div class="hero-mark"><div></div><div></div><div></div></div></section>
-
-<section class="step"><div class="step-head"><div class="step-no">01</div><div class="step-title">현장에서 겪는 문제를 선택하세요.</div></div><div class="step-body"><div id="problems" class="problem-grid"></div><div style="margin-top:22px"><label class="field" for="customProblem">목록에 없는 문제</label><input id="customProblem" class="input" placeholder="예: 절삭유 거품 상태를 카메라로 판정하고 싶다"><div class="hint">직접 입력한 신규 문제는 자동으로 Canonical Engine으로 만들지 않습니다. 서버가 검증하기 전에는 Engine Gap 후보로 취급합니다.</div></div></div></section>
-
-<section class="step"><div class="step-head"><div class="step-no">02</div><div class="step-title">원하는 결과를 1~2문장으로 적어주세요.</div></div><div class="step-body"><label class="field" for="purpose">목적 / 완료 조건</label><textarea id="purpose" placeholder="예: G-code를 생성·수정하고 사이클타임을 예측하며 최신 NC 리비전을 관리하고 싶다."></textarea><div class="hint">이 문장도 Module 조합에 반영합니다. 예: ‘사이클타임’은 CT/Trend를 추가하고, ‘사이클타임 예측’처럼 아직 없는 Capability는 별도 Gap으로 표시합니다.</div></div></section>
-
+<section class="hero"><div class="hero-main"><div class="eyebrow">Problem → Capability → Solution → 30-Day Demo EXE</div><h1>문제를 고르면,<br>Solution을 조합합니다.</h1><p>아는 문제는 빠르게 체크하고, 원하는 결과는 한 문장으로 적으세요. 체크하지 않은 요구까지 함께 분석해 현재 Engine으로 가능한 부분과 신규 개발이 필요한 부분을 자동으로 나눕니다.</p></div><div class="hero-mark"><div></div><div></div><div></div></div></section>
+<section class="step"><div class="step-head"><div class="step-no">01</div><div class="step-title">해당되는 문제를 빠르게 골라주세요. <small style="font-size:.55em;font-weight:700">선택</small></div></div><div class="step-body"><div id="problems" class="problem-grid"></div><div class="hint">정확히 맞는 항목이 없어도 괜찮습니다. 다음 칸에 원하는 결과를 적으면 추가 요구까지 함께 분석합니다.</div></div></section>
+<section class="step"><div class="step-head"><div class="step-no">02</div><div class="step-title">원하는 결과와 추가 요구를 한 번에 적어주세요.</div></div><div class="step-body"><label class="field" for="intent">목적 / 완료 조건 / 추가 요구사항</label><textarea id="intent" placeholder="예: G-code를 생성·수정하고 사이클타임을 예측하며 최신 NC 리비전을 관리하고 싶다. 절삭유 거품 상태도 카메라로 판정해 이상 시 알려주면 좋겠다."></textarea><div class="hint">체크박스에 없던 요구도 이 문장에서 분리합니다. 기존 Engine으로 가능한 부분은 Demo 조합에 남기고, 없는 부분만 Candidate Engine 검토로 보냅니다.</div></div></section>
 <section class="step"><div class="step-head"><div class="step-no">03</div><div class="step-title">Demo 전달 정보를 입력하세요.</div></div><div class="step-body"><div class="two"><div><label class="field" for="company">회사 / 조직</label><input id="company" class="input" autocomplete="organization"></div><div><label class="field" for="email">업무 이메일</label><input id="email" class="input" type="email" autocomplete="email"></div></div><div class="actions"><button id="analyze" class="btn">요구사항 분석</button><button id="reset" class="btn alt" type="button">초기화</button></div><div id="serverState" class="server-state">웹 사전판정과 서버 최종판정은 분리됩니다.</div></div></section>
-
-<section id="result" class="step result"><div class="step-head"><div class="step-no">04</div><div class="step-title">Flowmatic 사전판정</div></div><div class="step-body"><div class="route"><div id="existingRoute" class="route-side"><h3>1 / Existing Engine</h3><p>현재 공개 Catalog 기준으로 조합 가능한 부분입니다.</p></div><div id="gapRoute" class="route-side gap"><h3>2 / Engine Gap</h3><p>추가 Engine 검토가 필요한 부분입니다. Canonical Pool과 분리합니다.</p></div></div><div id="summary" class="summary"></div><div id="moduleChips" class="chips"></div><div id="capabilityChips" class="chips"></div><div id="gapChips" class="chips"></div><div id="notice" class="notice"></div><div id="receipt" class="receipt"></div><div class="actions"><button id="submitRequest" class="btn">요청 전송</button></div></div></section>
-<footer><span>Flowmatic Solution Compiler / V0.3</span><span>Canonical Engine Pool is fail-closed.</span></footer>
+<section id="result" class="step result"><div class="step-head"><div class="step-no">04</div><div class="step-title">Flowmatic 분석 결과</div></div><div class="step-body"><div class="route"><div id="existingRoute" class="route-side"><h3>1 / Existing Engine</h3><p>현재 Engine Pool로 바로 조합 가능한 부분입니다.</p></div><div id="gapRoute" class="route-side gap"><h3>2 / Engine Gap</h3><p>추가 개발 또는 사람 검토가 필요한 부분입니다.</p></div></div><div id="summary" class="summary"></div><div id="moduleChips" class="chips"></div><div id="capabilityChips" class="chips"></div><div id="gapChips" class="chips"></div><div id="notice" class="notice"></div><div id="receipt" class="receipt"></div><div class="actions"><button id="submitRequest" class="btn">요청 전송</button></div></div></section>
+<footer><span>Flowmatic Solution Compiler / V0.4</span><span>Canonical Engine Pool is fail-closed.</span></footer>
 </div>
 <script>
 let catalog=null;let config=null;let lastResult=null;
-const $=id=>document.getElementById(id);
-const uniq=a=>[...new Set(a)];
-const esc=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-function makeClientRequestId(){
-  const stamp=new Date().toISOString().replace(/[-:.]/g,'').replace('T','T').replace('Z','Z');
-  const random=(globalThis.crypto?.randomUUID?.()||Math.random().toString(36).slice(2)).replace(/-/g,'').slice(0,8).toUpperCase();
-  return `FMRQ-${stamp}-${random}`;
-}
+const $=id=>document.getElementById(id);const uniq=a=>[...new Set(a)];const esc=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+function makeClientRequestId(){const stamp=new Date().toISOString().replace(/[-:.]/g,'');const random=(globalThis.crypto?.randomUUID?.()||Math.random().toString(36).slice(2)).replace(/-/g,'').slice(0,8).toUpperCase();return `FMRQ-${stamp}-${random}`}
 function textHas(text,term){return String(text||'').toLocaleLowerCase().includes(String(term||'').toLocaleLowerCase())}
-function inferObjective(purpose){
-  const modules=[];const matches=[];const gaps=[];
-  for(const rule of catalog.objective_rules||[]){
-    const hit=(rule.terms||[]).find(term=>textHas(purpose,term));
-    if(hit){modules.push(...(rule.modules||[]));matches.push({rule:rule.id,term:hit})}
-  }
-  for(const rule of catalog.gap_rules||[]){
-    const hit=(rule.terms||[]).find(term=>textHas(purpose,term));
-    if(hit){gaps.push({id:rule.id,term:hit,missing_capability:rule.missing_capability,label:rule.label||rule.id})}
-  }
-  return {modules:uniq(modules),matches,gaps};
-}
-async function loadBootstrap(){
-  const [cat,cfg]=await Promise.all([
-    fetch('./catalog.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('catalog');return r.json()}),
-    fetch('./config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('config');return r.json()})
-  ]);
-  catalog=cat;config=cfg;
-  const root=$('problems');
-  catalog.problems.forEach(p=>{const lab=document.createElement('label');lab.className='problem';const input=document.createElement('input');input.type='checkbox';input.value=p.id;const span=document.createElement('span');span.textContent=p.label;lab.append(input,span);root.appendChild(lab)});
-  $('serverState').textContent=config.compiler_endpoint?'Server Compiler Gateway: READY / Existing + Gap Queue':'Server Compiler Gateway: INTAKE-ONLY / 자동 Build 미활성';
-}
-function renderRow(k,v){return `<div class="summary-row"><b>${esc(k)}</b><div>${v}</div></div>`}
-function showReceipt(title,id,message){
-  const box=$('receipt');
-  box.innerHTML=`<b>${esc(title)}</b><div>Request ID · ${esc(id)}</div><div>${esc(message)}</div>`;
-  box.classList.add('show');
-}
-function analyze(){
-  if(!catalog||!config){alert('Compiler 설정을 불러오는 중입니다.');return}
-  const selected=[...document.querySelectorAll('#problems input:checked')].map(x=>x.value);
-  const custom=$('customProblem').value.trim();const purpose=$('purpose').value.trim();const company=$('company').value.trim();const email=$('email').value.trim();
-  if(!selected.length&&!custom){alert('문제를 하나 이상 선택하거나 직접 입력해 주세요.');return}
-  if(!purpose){alert('목적을 1~2문장으로 입력해 주세요.');return}
-  const selectedModules=catalog.problems.filter(p=>selected.includes(p.id)).flatMap(p=>p.modules);
-  const semantic=inferObjective(purpose);
-  const modules=uniq([...selectedModules,...semantic.modules]);
-  const caps=uniq(modules.flatMap(m=>catalog.modules[m]?.capabilities||[]));
-  const gap=Boolean(custom)||semantic.gaps.length>0||!modules.length;
-  const clientRequestId=makeClientRequestId();
-  lastResult={route:gap?'ENGINE_GAP_REVIEW':'AUTO_DEMO_BUILD',selected,custom,purpose,company,email,modules,caps,gaps:semantic.gaps,semanticMatches:semantic.matches,demoDays:catalog.demo_days,clientRequestId};
-  $('receipt').classList.remove('show');
-  $('result').classList.add('show');$('existingRoute').classList.toggle('active',!gap);$('gapRoute').classList.toggle('active',gap);
-  const verdict=gap?'<span class="status danger">ENGINE GAP / REVIEW</span>':'<span class="status ok">EXISTING ENGINE / SERVER VERIFY</span>';
-  $('summary').innerHTML=renderRow('웹 사전판정',verdict)+renderRow('Request ID',esc(clientRequestId))+renderRow('회사',esc(company||'-'))+renderRow('목적',esc(purpose))+renderRow('기간',gap?'Gap 검토 후 Demo 범위 확정':`${Number(catalog.demo_days)||30}일 standalone EXE 후보`);
-  $('moduleChips').innerHTML=modules.map(m=>`<span class="chip">MODULE · ${esc(catalog.modules[m]?.name||m)}</span>`).join('');
-  $('capabilityChips').innerHTML=caps.map(c=>`<span class="chip">CAPABILITY · ${esc(c)}</span>`).join('');
-  $('gapChips').innerHTML=semantic.gaps.map(g=>`<span class="chip gap">MISSING · ${esc(g.missing_capability)} · ${esc(g.label)}</span>`).join('');
-  if(gap){
-    const reasons=[];if(custom)reasons.push('목록에 없는 직접입력 요구');if(semantic.gaps.length)reasons.push(semantic.gaps.map(g=>g.label).join(', '));if(!modules.length)reasons.push('기존 Module 매칭 없음');
-    $('notice').textContent=`기존 Engine으로 가능한 부분은 위 Module로 조합합니다. 부족한 부분(${reasons.join(' / ')})만 Candidate Engine 검토로 격리합니다. Canonical Engine Pool에는 자동 편입하지 않습니다.`;
-  }else{
-    $('notice').textContent='선택 키워드뿐 아니라 목적 문장의 의미 키워드도 반영했습니다. 서버 Compiler가 Canonical Catalog를 다시 검사해 통과한 경우에만 30일 standalone EXE Build handoff로 넘깁니다.';
-  }
-  $('submitRequest').textContent=gap?'요구사항 검토 요청':'30일 Demo EXE 컴파일 요청';$('result').scrollIntoView({behavior:'smooth'});
-}
-function validContact(){
-  const company=$('company').value.trim();const email=$('email').value.trim();
-  if(!company){alert('회사 / 조직을 입력해 주세요.');return false}
-  if(!email||!$('email').checkValidity()){alert('유효한 업무 이메일을 입력해 주세요.');return false}
-  return true;
-}
-function allRequestedCapabilities(result){return uniq([...result.caps,...(result.gaps||[]).map(g=>g.missing_capability).filter(Boolean)])}
-function intakePayload(result,subject){return {
-  subject,
-  source:'flowmatic-solution-compiler-v0.3',
-  client_request_id:result.clientRequestId,
-  company:result.company,
-  contact_email:result.email,
-  selected_problem_keys:result.selected,
-  free_text_problem:result.custom,
-  objective:result.purpose,
-  precheck_route:result.route,
-  semantic_matches:result.semanticMatches,
-  engine_gaps:result.gaps,
-  proposed_modules:result.modules,
-  requested_capabilities:allRequestedCapabilities(result)
-}}
-function gatewayPayload(result){return {
-  client_request_id:result.clientRequestId,
-  company:result.company,
-  contact_email:result.email,
-  selected_problem_keys:result.selected,
-  free_text_problem:result.custom||'',
-  objective:result.purpose,
-  requested_capabilities:allRequestedCapabilities(result)
-}}
-async function sendIntake(payload){
-  const endpoint=config?.intake_endpoint;
-  if(!endpoint)throw new Error('intake endpoint unavailable');
-  const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
-  if(!r.ok)throw new Error('intake failed');return r;
-}
-async function sendGateway(result){
-  const endpoint=config?.compiler_endpoint||'';
-  if(!endpoint)throw new Error('compiler endpoint unavailable');
-  const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(gatewayPayload(result))});
-  let body={};try{body=await r.json()}catch(_){body={}}
-  if(!r.ok)throw new Error(body.error||'compiler gateway failed');
-  return body;
-}
-async function submit(){
-  if(!lastResult||!validContact())return;
-  lastResult.company=$('company').value.trim();lastResult.email=$('email').value.trim();
-  const button=$('submitRequest');button.disabled=true;
-  try{
-    if(lastResult.route==='ENGINE_GAP_REVIEW'){
-      let queued=false;let emailed=false;let queueBody={};
-      if(config?.compiler_endpoint){
-        try{queueBody=await sendGateway(lastResult);queued=true}catch(_){queued=false}
-      }
-      try{await sendIntake(intakePayload(lastResult,'[Flowmatic] Engine Gap Review'));emailed=true}catch(_){emailed=false}
-      if(queued&&emailed){const id=queueBody.request_id||lastResult.clientRequestId;showReceipt('SERVER QUEUED + INTAKE ACCEPTED',id,'Candidate 검토 큐와 Intake transport가 요청을 수락했습니다. Canonical Engine Pool은 변경되지 않았습니다.');alert(`요구사항을 서버 검토 큐와 Intake 양쪽에 접수했습니다.\nRequest ID: ${id}`);return}
-      if(queued){const id=queueBody.request_id||lastResult.clientRequestId;showReceipt('SERVER QUEUED',id,'private Candidate 검토 큐에 접수됐습니다. 이메일 Intake transport는 실패했습니다.');alert(`private Candidate 검토 큐에 접수했습니다.\nRequest ID: ${id}`);return}
-      if(emailed){showReceipt('INTAKE TRANSPORT ACCEPTED',lastResult.clientRequestId,'Form intake가 요청을 수락했습니다. Gateway가 비활성이라 private 서버 큐 접수는 아직 확인되지 않았습니다.');alert(`요청 전송이 수락되었습니다.\nClient Request ID: ${lastResult.clientRequestId}\n\nGateway가 비활성이라 서버 큐 접수/메일함 전달은 아직 확인되지 않았습니다.`);return}
-      throw new Error('gap intake failed');
-    }
-
-    if(!config?.compiler_endpoint){
-      await sendIntake(intakePayload(lastResult,'[Flowmatic] 30-Day Demo EXE Request / Gateway Pending'));
-      showReceipt('INTAKE TRANSPORT ACCEPTED',lastResult.clientRequestId,'Form intake가 요청을 수락했습니다. 자동 Compiler Gateway가 비활성이라 Demo EXE가 생성된 상태는 아닙니다.');
-      alert(`요청 전송이 수락되었습니다.\nClient Request ID: ${lastResult.clientRequestId}\n\n자동 Compiler Gateway가 아직 활성화되지 않아 Demo EXE가 생성된 상태는 아닙니다.`);return;
-    }
-    const body=await sendGateway(lastResult);const id=body.request_id||lastResult.clientRequestId;
-    showReceipt('SERVER COMPILER ACCEPTED',id,`서버가 요청을 수락했습니다. Route: ${body.route_hint||'SERVER_VERIFY'}. 이 상태는 Demo EXE 전달 완료를 의미하지 않습니다.`);
-    alert(`서버 Compiler에 접수했습니다.\nRequest ID: ${id}\nRoute: ${body.route_hint||'SERVER_VERIFY'}\n\n이 단계는 요청 접수이며 Demo EXE 전달 완료를 의미하지 않습니다.`);
-  }catch(e){
-    if(lastResult.route!=='ENGINE_GAP_REVIEW'){
-      try{await sendIntake(intakePayload(lastResult,'[Flowmatic] Compiler Gateway Fallback'));showReceipt('FALLBACK INTAKE ACCEPTED',lastResult.clientRequestId,'Gateway 처리 실패 후 Intake transport가 요청을 수락했습니다. Demo EXE가 생성된 상태는 아닙니다.');return}catch(_){/* fall through */}
-    }
-    alert(`요청 경로를 완료하지 못했습니다.\nClient Request ID: ${lastResult.clientRequestId}\ncontact@flowmatic-os.com 으로 문의해 주세요. Demo EXE가 생성된 상태는 아닙니다.`);
-  }finally{button.disabled=false}
-}
-$('analyze').addEventListener('click',analyze);$('submitRequest').addEventListener('click',submit);$('reset').addEventListener('click',()=>location.reload());
-loadBootstrap().catch(()=>{alert('Capability Catalog 또는 Compiler 설정을 불러오지 못했습니다.');$('serverState').textContent='Compiler bootstrap: ERROR'});
+function allKnownTerms(){return [...(catalog.objective_rules||[]).flatMap(r=>r.terms||[]),...(catalog.gap_rules||[]).flatMap(r=>r.terms||[])]}
+function inferIntent(intent){const modules=[];const matches=[];const gaps=[];for(const rule of catalog.objective_rules||[]){const hit=(rule.terms||[]).find(term=>textHas(intent,term));if(hit){modules.push(...(rule.modules||[]));matches.push({rule:rule.id,term:hit})}}for(const rule of catalog.gap_rules||[]){const hit=(rule.terms||[]).find(term=>textHas(intent,term));if(hit){gaps.push({id:rule.id,term:hit,missing_capability:rule.missing_capability,label:rule.label||rule.id})}}return {modules:uniq(modules),matches,gaps}}
+function extractUnclassified(intent){const terms=allKnownTerms();const clauses=String(intent||'').split(/[\n,;]+|(?:\s+그리고\s+)|(?:\s+및\s+)|(?:\s+하면서\s+)|(?:\s+하며\s+)|(?:\s+하고\s+)/g).map(x=>x.trim()).filter(Boolean);return clauses.filter(clause=>{const cleaned=clause.replace(/(하고 싶다|하고싶다|원한다|원함|필요하다|필요함|할 수 있게|할수있게|되면 좋겠다|되면좋겠다|해주세요|해줘|싶다)[.!? ]*$/g,'').trim();if(cleaned.length<6)return false;return !terms.some(term=>textHas(cleaned,term))})}
+async function loadBootstrap(){const [cat,cfg]=await Promise.all([fetch('./catalog.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('catalog');return r.json()}),fetch('./config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('config');return r.json()})]);catalog=cat;config=cfg;const root=$('problems');catalog.problems.forEach(p=>{const lab=document.createElement('label');lab.className='problem';const input=document.createElement('input');input.type='checkbox';input.value=p.id;const span=document.createElement('span');span.textContent=p.label;lab.append(input,span);root.appendChild(lab)});$('serverState').textContent=config.compiler_endpoint?'Server Compiler Gateway: READY / Existing + Gap Queue':'Server Compiler Gateway: INTAKE-ONLY / 자동 Build 미활성'}
+function renderRow(k,v){return `<div class="summary-row"><b>${esc(k)}</b><div>${v}</div></div>`}function showReceipt(title,id,message){const box=$('receipt');box.innerHTML=`<b>${esc(title)}</b><div>Request ID · ${esc(id)}</div><div>${esc(message)}</div>`;box.classList.add('show')}
+function analyze(){if(!catalog||!config){alert('Compiler 설정을 불러오는 중입니다.');return}const selected=[...document.querySelectorAll('#problems input:checked')].map(x=>x.value);const intent=$('intent').value.trim();const company=$('company').value.trim();const email=$('email').value.trim();if(!intent){alert('원하는 결과 또는 완료 조건을 입력해 주세요.');return}const selectedModules=catalog.problems.filter(p=>selected.includes(p.id)).flatMap(p=>p.modules);const semantic=inferIntent(intent);const unclassified=extractUnclassified(intent);const modules=uniq([...selectedModules,...semantic.modules]);const caps=uniq(modules.flatMap(m=>catalog.modules[m]?.capabilities||[]));const gap=semantic.gaps.length>0||unclassified.length>0||!modules.length;const clientRequestId=makeClientRequestId();lastResult={route:gap?'ENGINE_GAP_REVIEW':'AUTO_DEMO_BUILD',selected,intent,purpose:intent,company,email,modules,caps,gaps:semantic.gaps,semanticMatches:semantic.matches,unclassified,demoDays:catalog.demo_days,clientRequestId};$('receipt').classList.remove('show');$('result').classList.add('show');$('existingRoute').classList.toggle('active',!gap);$('gapRoute').classList.toggle('active',gap);const verdict=gap?'<span class="status danger">PARTIAL MATCH / GAP REVIEW</span>':'<span class="status ok">EXISTING ENGINE / SERVER VERIFY</span>';$('summary').innerHTML=renderRow('웹 사전판정',verdict)+renderRow('Request ID',esc(clientRequestId))+renderRow('회사',esc(company||'-'))+renderRow('요구사항',esc(intent))+renderRow('기간',gap?'기존 기능 Demo + Gap 별도 검토':`${Number(catalog.demo_days)||30}일 standalone EXE 후보`);$('moduleChips').innerHTML=modules.map(m=>`<span class="chip">MODULE · ${esc(catalog.modules[m]?.name||m)}</span>`).join('');$('capabilityChips').innerHTML=caps.map(c=>`<span class="chip">CAPABILITY · ${esc(c)}</span>`).join('');const gapItems=[...semantic.gaps.map(g=>`MISSING · ${g.missing_capability} · ${g.label}`),...unclassified.map(x=>`REVIEW · ${x}`)];$('gapChips').innerHTML=gapItems.map(x=>`<span class="chip gap">${esc(x)}</span>`).join('');$('notice').textContent=gap?'기존 Engine으로 가능한 부분은 유지합니다. 신규 또는 해석되지 않은 요구만 별도 Candidate 검토로 보냅니다. Canonical Engine Pool에는 자동 편입하지 않습니다.':'체크박스와 주관식 문장을 함께 반영했습니다. 서버 Compiler가 Canonical Catalog를 다시 검사한 뒤 30일 standalone EXE Build handoff 여부를 확정합니다.';$('submitRequest').textContent=gap?'기존 Demo + 추가요구 검토 요청':'30일 Demo EXE 컴파일 요청';$('result').scrollIntoView({behavior:'smooth'})}
+function validContact(){const company=$('company').value.trim();const email=$('email').value.trim();if(!company){alert('회사 / 조직을 입력해 주세요.');return false}if(!email||!$('email').checkValidity()){alert('유효한 업무 이메일을 입력해 주세요.');return false}return true}
+function allRequestedCapabilities(result){const routingCaps=(result.unclassified||[]).length?['requirement.unclassified@1']:[];return uniq([...(result.caps||[]),...(result.gaps||[]).map(g=>g.missing_capability).filter(Boolean),...routingCaps])}function unclassifiedText(result){return (result.unclassified||[]).join(' / ')}
+function intakePayload(result,subject){return {subject,source:'flowmatic-solution-compiler-v0.4',client_request_id:result.clientRequestId,company:result.company,contact_email:result.email,selected_problem_keys:result.selected,free_text_problem:unclassifiedText(result),objective:result.intent,precheck_route:result.route,proposed_modules:result.modules,proposed_capabilities:result.caps,unclassified_requirements:result.unclassified||[]}}
+function gatewayPayload(result){return {company:result.company,contact_email:result.email,selected_problem_keys:result.selected,free_text_problem:unclassifiedText(result),objective:result.intent,requested_capabilities:allRequestedCapabilities(result)}}
+async function sendIntake(payload){const endpoint=config?.intake_endpoint;if(!endpoint)throw new Error('intake endpoint unavailable');const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});if(!r.ok)throw new Error('intake failed');return r}
+async function sendGateway(result){const endpoint=config?.compiler_endpoint||'';if(!endpoint)throw new Error('compiler endpoint unavailable');const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(gatewayPayload(result))});let body={};try{body=await r.json()}catch(_){body={}}if(!r.ok)throw new Error(body.error||'compiler gateway failed');return body}
+async function submit(){if(!lastResult||!validContact())return;lastResult.company=$('company').value.trim();lastResult.email=$('email').value.trim();const button=$('submitRequest');button.disabled=true;try{if(config?.compiler_endpoint){const body=await sendGateway(lastResult);showReceipt('SERVER COMPILER ACCEPTED',body.request_id||lastResult.clientRequestId,`Route · ${body.route_hint||'SERVER_VERIFY'} / 요청이 private Compiler queue에 접수되었습니다. Demo EXE 전달 완료를 의미하지 않습니다.`);alert(`서버 Compiler에 접수했습니다.\nRequest ID: ${body.request_id||lastResult.clientRequestId}\nRoute: ${body.route_hint||'SERVER_VERIFY'}\n\n이 단계는 요청 접수이며 Demo EXE 전달 완료를 의미하지 않습니다.`);if(lastResult.route==='ENGINE_GAP_REVIEW'){try{await sendIntake(intakePayload(lastResult,'[Flowmatic] Engine Gap Review'))}catch(_){}}return}await sendIntake(intakePayload(lastResult,'[Flowmatic] Solution Request / Gateway Pending'));showReceipt('INTAKE TRANSPORT ACCEPTED',lastResult.clientRequestId,'Form intake가 요청을 수락했습니다. 메일함 전달과 Demo EXE 생성은 아직 확인되지 않았습니다.');alert(`요청 전송 경로가 접수했습니다.\nRequest ID: ${lastResult.clientRequestId}\n\nDemo EXE가 생성된 상태는 아닙니다.`)}catch(e){try{await sendIntake(intakePayload(lastResult,'[Flowmatic] Compiler Gateway Fallback'));showReceipt('INTAKE FALLBACK ACCEPTED',lastResult.clientRequestId,'Gateway 실패 후 intake fallback이 요청을 수락했습니다. 서버 Queue와 Demo 생성은 확인되지 않았습니다.');alert(`Gateway 대신 Intake fallback으로 접수했습니다.\nRequest ID: ${lastResult.clientRequestId}\nDemo EXE가 생성된 상태는 아닙니다.`);return}catch(_){}alert('요청 경로를 완료하지 못했습니다. contact@flowmatic-os.com 으로 문의해 주세요. Demo가 생성된 상태는 아닙니다.')}finally{button.disabled=false}}
+$('analyze').addEventListener('click',analyze);$('submitRequest').addEventListener('click',submit);$('reset').addEventListener('click',()=>location.reload());loadBootstrap().catch(()=>{alert('Capability Catalog 또는 Compiler 설정을 불러오지 못했습니다.');$('serverState').textContent='Compiler bootstrap: ERROR'});
 </script>
 </body>
 </html>
