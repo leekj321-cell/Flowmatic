@@ -852,8 +852,10 @@ function initHomeCompositionMotion() {
       updatePauseButton();
 
       const canvasRect = canvas.getBoundingClientRect();
-      const width = Math.max(canvas.clientWidth, canvasRect.width, 320);
-      const height = Math.max(canvas.clientHeight, canvasRect.height, compactLayout ? 720 : 620);
+      const measuredWidth = Math.max(canvas.clientWidth, canvasRect.width);
+      const measuredHeight = Math.max(canvas.clientHeight, canvasRect.height);
+      const width = measuredWidth > 1 ? measuredWidth : 320;
+      const height = measuredHeight > 1 ? measuredHeight : (compactLayout ? 720 : 620);
       const padding = compactLayout ? 14 : 28;
       const usableWidth = Math.max(1, width - (padding * 2));
       const usableHeight = Math.max(1, height - (padding * 2));

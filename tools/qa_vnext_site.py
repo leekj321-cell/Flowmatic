@@ -674,6 +674,7 @@ def main() -> None:
             "dataset.composeEdgeCount",
             "dataset.axisEdgeCount",
             "axisEntryPoints.get(edge.to)",
+            "measuredHeight > 1 ? measuredHeight",
             "data-edge-index",
             "[data-motion-pause]",
         )
