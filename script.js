@@ -1105,9 +1105,17 @@ function initHomeCompositionMotion() {
       });
 
       const axisDraw = rangeProgress(progress, .72, .92);
+      const canvasRect = canvas.getBoundingClientRect();
+      const axisEntryPoints = new Map(axes.map((axis) => {
+        const rect = axis.getBoundingClientRect();
+        return [axis, {
+          x: (rect.left - canvasRect.left) + (rect.width / 2),
+          y: (rect.top - canvasRect.top) + Math.min(2, rect.height / 2),
+        }];
+      }));
       axisEdges.forEach((edge, index) => {
         const from = currentCenters.get(edge.from);
-        const to = currentCenters.get(edge.to);
+        const to = axisEntryPoints.get(edge.to) || currentCenters.get(edge.to);
         if (!from || !to) return;
         edge.path.setAttribute('d', pathBetween(from, to));
         const stagger = axisEdges.length > 1 ? (index / (axisEdges.length - 1)) * .07 : 0;

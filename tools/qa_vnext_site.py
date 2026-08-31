@@ -673,6 +673,7 @@ def main() -> None:
             "dataset.motionAxisCardTarget",
             "dataset.composeEdgeCount",
             "dataset.axisEdgeCount",
+            "axisEntryPoints.get(edge.to)",
             "data-edge-index",
             "[data-motion-pause]",
         )
