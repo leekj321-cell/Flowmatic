@@ -68,8 +68,11 @@
     },
     "non_cover": {
       "anchor": "bottom_right",
-      "target_width_percent": 8.5,
-      "allowed_width_percent": [7.0, 10.0],
+      "target_width_percent": 12.5,
+      "allowed_width_percent": [12.5, 15.0],
+      "minimum_width_px_digital": 220,
+      "minimum_width_mm_print": 42,
+      "width_resolution_rule": "Use the greatest applicable minimum",
       "right_margin_percent": 3.0,
       "bottom_margin_percent": 3.0
     }
@@ -86,4 +89,3 @@
     "Korean official raster and global Revision 1.1 are the only approved corporate CI families."
   ]
 }
-

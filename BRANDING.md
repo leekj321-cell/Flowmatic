@@ -32,7 +32,7 @@ The files directly under `assets/branding/` that depict a flat 2×2 square are l
 This placement contract applies to presentations, investor decks, proposals, company profiles, reports, and their PDF exports.
 
 - Cover / page 1: place one large corporate CI at the upper-left. Target width is 24% of the page or slide; permitted range is 22–30%. Use 4% top and left margins.
-- Every page after page 1: place one small corporate CI at the lower-right. Target width is 8.5%; permitted range is 7–10%. Use 3% right and bottom margins.
+- Every page after page 1: place one small corporate CI at the lower-right. Target width is 12.5%; use the greater of 12.5%, 220 px digital, or 42 mm print. A 12.5–15% range is permitted when the page format requires optical adjustment. Use 3% right and bottom margins.
 - Keep the asset, size, and anchor consistent across all non-cover pages.
 - If content collides with the CI, move or reflow the content. Do not move, crop, distort, or hide the CI.
 - A Mondrian-style composition may support the layout, but it never replaces or recolors the corporate CI.
@@ -69,4 +69,3 @@ python3 tools/validate_brand_contract.py
 ```
 
 The repository workflow runs the same fail-closed check. Changing a canonical asset requires an explicit CI revision, an updated guide, new checksums, and documented approval.
-
