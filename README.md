@@ -10,6 +10,7 @@ Static Flowmatic website for GitHub Pages and `flowmatic-os.com`.
 - `build_site.py`: static page generator for the multilingual HTML output.
 - `style-v5.20.css`: current stylesheet.
 - `script.js`: navigation, reveal, product CTA, text fitting, demo-video loader, and AJAX inquiry submission.
+- Home composition journey: horizontal desktop assembly and a reversible mobile scroll scene from radial field scatter to four connected Intelligence axes.
 - `/assets/branding/canonical/`: locked Korean and global corporate CI masters for all new materials.
 - `/assets/branding/`: existing website compatibility assets, icons, social previews, and QR signature.
 - `BRANDING.md`: binding corporate CI and document-placement contract.
@@ -36,7 +37,7 @@ The site displays `contact@flowmatic-os.com`. The contact form submits to a Form
 
 All new Flowmatic presentations, PDFs, proposals, reports, applications, company profiles, business cards, and generated visuals must use the locked assets in `/assets/branding/canonical/` and follow `BRANDING.md`.
 
-The flat 2×2 square files directly under `/assets/branding/` remain only as existing website compatibility assets. They are not the corporate CI and must not be used in new materials. Website visual migration is intentionally separate from this brand-source lock so that this commit does not alter the deployed site.
+The QR contact signature uses the locked global CI master. Any remaining flat 2×2 files directly under `/assets/branding/` are legacy compatibility assets, are not the corporate CI, and must not be used in new materials.
 
 Validate the canonical asset hashes with:
 
@@ -54,3 +55,8 @@ python3 build_site.py
 
 The site is pure static HTML/CSS/JS and does not require a package install.
 
+To refresh only the QR contact signature from the locked CI without touching other compatibility assets, run:
+
+```bash
+python3 tools/generate_brand_assets.py --qr-only
+```

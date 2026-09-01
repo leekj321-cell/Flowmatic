@@ -6740,8 +6740,8 @@ body[data-lang="ar"] [data-composition-motion] .composition-motion__stages {
   }
 }
 
-/* Compact and reduced-motion layouts replace the moving canvas with the static four-step summary. */
-@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+/* Reduced-motion layouts replace the moving canvas with the static four-step summary. */
+@media (prefers-reduced-motion: reduce) {
   .v156-platform.home-composition {
     overflow: clip;
   }
@@ -7214,6 +7214,267 @@ body[data-lang="ar"] [data-composition-motion] .composition-motion__stages {
 
   [data-composition-motion] [data-motion-axis] {
     min-height: 104px;
+  }
+}
+
+/* Mobile keeps the same reversible composition story in a vertical, scroll-driven scene. */
+@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .v156-platform.home-composition {
+    overflow: visible;
+  }
+
+  [data-composition-motion] {
+    min-height: 380svh;
+    overflow: visible;
+  }
+
+  [data-composition-motion] .composition-motion__anchor {
+    display: block;
+  }
+
+  [data-composition-motion] .composition-motion__sticky {
+    position: sticky;
+    top: var(--header-height, 72px);
+    width: min(calc(100% - 20px), 680px);
+    height: calc(100svh - var(--header-height, 72px));
+    min-height: 520px;
+    padding-block: 8px;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  [data-composition-motion] .composition-motion__head {
+    display: block;
+    margin: 0;
+  }
+
+  [data-composition-motion] .composition-motion__head .section-kicker {
+    margin-bottom: 4px;
+    font-size: 9px;
+  }
+
+  [data-composition-motion] .composition-motion__head .section-title {
+    max-width: 22ch;
+    margin: 0;
+    font-size: clamp(23px, 6.3vw, 34px);
+    line-height: .98;
+  }
+
+  [data-composition-motion] .composition-motion__status {
+    display: block;
+    margin: 7px 0 0;
+  }
+
+  [data-composition-motion] .composition-motion__status .section-body,
+  [data-composition-motion] [data-motion-pause] {
+    display: none;
+  }
+
+  [data-composition-motion] .composition-motion__meter {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+    font-size: 9px;
+  }
+
+  [data-composition-motion] .composition-motion__meter i {
+    height: 6px;
+  }
+
+  [data-composition-motion] .composition-motion__canvas {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    height: auto;
+    display: block;
+    padding: 0;
+    overflow: hidden;
+    contain: layout paint;
+    background-size: 42px 42px;
+  }
+
+  [data-composition-motion] .composition-motion__input-layer,
+  [data-composition-motion] .composition-motion__module-layer,
+  [data-composition-motion] .composition-motion__axis-layer,
+  [data-composition-motion] .composition-motion__links {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  [data-composition-motion] .composition-motion__links {
+    overflow: visible;
+  }
+
+  [data-composition-motion] .composition-motion__align-targets,
+  [data-composition-motion] .composition-motion__assembly-targets,
+  [data-composition-motion] .composition-motion__axis-module-targets,
+  [data-composition-motion] .composition-motion__axis-card-targets {
+    inset-inline: 4%;
+    display: grid;
+    visibility: hidden;
+  }
+
+  [data-composition-motion] .composition-motion__align-targets--context,
+  [data-composition-motion] .composition-motion__align-targets--engine {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px 5px;
+  }
+
+  [data-composition-motion] .composition-motion__align-targets--context {
+    top: 4%;
+  }
+
+  [data-composition-motion] .composition-motion__align-targets--engine {
+    top: 50%;
+  }
+
+  [data-composition-motion] .composition-motion__assembly-targets,
+  [data-composition-motion] .composition-motion__axis-module-targets,
+  [data-composition-motion] .composition-motion__axis-card-targets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 7px;
+  }
+
+  [data-composition-motion] .composition-motion__assembly-targets {
+    top: 8%;
+    row-gap: 5px;
+  }
+
+  [data-composition-motion] .composition-motion__axis-module-targets {
+    top: 2%;
+    row-gap: 3px;
+  }
+
+  [data-composition-motion] .composition-motion__axis-card-targets {
+    top: auto;
+    bottom: 2%;
+    row-gap: 7px;
+  }
+
+  [data-composition-motion] .composition-motion__target {
+    min-height: 30px;
+  }
+
+  [data-composition-motion] .composition-motion__assembly-targets .composition-motion__module-target {
+    min-height: 42px;
+  }
+
+  [data-composition-motion] .composition-motion__axis-module-targets .composition-motion__module-target {
+    min-height: 34px;
+  }
+
+  [data-composition-motion] [data-motion-axis-card-target] {
+    min-height: 70px;
+  }
+
+  [data-composition-motion] .composition-motion__lane-label,
+  [data-composition-motion] .composition-motion__context-spine {
+    display: none;
+  }
+
+  [data-composition-motion] [data-motion-token] {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: max-content;
+    max-width: 112px;
+    min-height: 27px;
+    padding: 5px 7px;
+    justify-self: auto;
+    font-size: 8.5px;
+    line-height: 1;
+    white-space: nowrap;
+    box-shadow: 3px 3px 0 rgba(17, 17, 17, .10);
+    opacity: 1;
+    transition: none;
+  }
+
+  [data-composition-motion] [data-motion-token] > [data-motion-drift] {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  [data-composition-motion] [data-motion-module] {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: clamp(112px, 41vw, 162px);
+    min-width: 0;
+    min-height: 34px;
+    padding: 6px 6px 6px 14px;
+    font-size: 8.5px;
+    line-height: 1.05;
+    transition: none;
+  }
+
+  [data-composition-motion] [data-motion-module]::before {
+    width: 5px;
+  }
+
+  [data-composition-motion] [data-motion-axis] {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: clamp(130px, 42vw, 178px);
+    min-width: 0;
+    min-height: 70px;
+    gap: 3px;
+    padding: 8px;
+    transition: none;
+  }
+
+  [data-composition-motion] [data-motion-axis] > span {
+    font-size: 6.5px;
+  }
+
+  [data-composition-motion] [data-motion-axis] > strong {
+    font-size: clamp(11px, 3.1vw, 15px);
+    line-height: .98;
+  }
+
+  [data-composition-motion] [data-motion-axis] > small {
+    display: none;
+  }
+
+  [data-composition-motion] [data-motion-axis] > b {
+    margin-top: 1px;
+    font-size: 7px;
+  }
+
+  [data-composition-motion] .composition-motion__stages {
+    min-height: 48px;
+    display: block;
+  }
+
+  [data-composition-motion] .composition-motion__stages > li {
+    min-height: 44px;
+    display: none !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 2px 8px;
+    padding: 7px 9px;
+    border: 0;
+  }
+
+  [data-composition-motion] .composition-motion__stages > li[aria-current="step"] {
+    display: grid !important;
+  }
+
+  [data-composition-motion] .composition-motion__stages > li > strong {
+    font-size: 11px;
+  }
+
+  [data-composition-motion] .composition-motion__stages > li > p {
+    display: block;
+    font-size: 8.5px;
+    line-height: 1.15;
+    opacity: 1;
+  }
+
+  [data-composition-motion] [data-motion-fallback] {
+    display: none;
   }
 }
 
