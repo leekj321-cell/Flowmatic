@@ -27,15 +27,16 @@ BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
 CSS_HREF = "/style-v5.20.css?v=5.27"
+HOME_CSS_HREF = "/style-v5.20.css?v=5.28"
 SCRIPT_SRC = "/script.js?v=5.22"
-HOME_SCRIPT_SRC = "/script.js?v=5.25"
+HOME_SCRIPT_SRC = "/script.js?v=5.26"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
 WEB_V156_CONTENT_DIR = Path(__file__).resolve().parent / "content" / "web_v156"
 BRAND_PATH = "/assets/branding"
 BRAND_VERSION = "20260803.2"
 BRAND_MARK = f"{BRAND_PATH}/flowmatic-logo-mark.svg"
 OG_IMAGE = f"{BASE_URL}{BRAND_PATH}/flowmatic-og.png"
-QR_SIGNATURE = f"{BRAND_PATH}/flowmatic-qr-contact-signature.svg"
+QR_SIGNATURE = f"{BRAND_PATH}/flowmatic-qr-contact-signature.svg?v=20260902.1"
 
 
 LANGS = {
@@ -985,7 +986,15 @@ def hreflang_links(slug: str, canonical_path: str) -> str:
     return "\n".join(links)
 
 
-def meta_head(lang: str, slug: str, title: str, description: str, canonical_path: str) -> str:
+def meta_head(
+    lang: str,
+    slug: str,
+    title: str,
+    description: str,
+    canonical_path: str,
+    *,
+    stylesheet_href: str = CSS_HREF,
+) -> str:
     schema = json.dumps({
         "@context": "https://schema.org",
         "@graph": [
@@ -1014,7 +1023,7 @@ def meta_head(lang: str, slug: str, title: str, description: str, canonical_path
 <link rel="apple-touch-icon" sizes="180x180" href="{BRAND_PATH}/apple-touch-icon.png?v={BRAND_VERSION}">
 <link rel="mask-icon" href="{BRAND_MARK}?v={BRAND_VERSION}" color="#111111">
 <link rel="manifest" href="/site.webmanifest?v={BRAND_VERSION}">
-<link rel="stylesheet" href="{CSS_HREF}">
+<link rel="stylesheet" href="{stylesheet_href}">
 </head>"""
 
 
@@ -1893,7 +1902,7 @@ def home_page(lang: str, canonical_path: str) -> str:
     pilot = "\n".join(f'<article class="cell pilot-step span-3 reveal delay-{i+1}"><span>{num}</span><h3>{e(title)}</h3><p>{e(body)}</p></article>' for i, (num, title, body) in enumerate(PILOT_STEPS[lang]))
     html = f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
-{meta_head(lang, "home", h["title"], h["description"], canonical_path)}
+{meta_head(lang, "home", h["title"], h["description"], canonical_path, stylesheet_href=HOME_CSS_HREF)}
 <body data-lang="{lang}" data-static-lang="true">
 {header(lang, "home")}
 <main id="main">
@@ -2133,11 +2142,12 @@ def notes() -> str:
 - Quality Intelligence: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; Defect → Loss → Priority → Work → Verify → Recurrence 구조를 기준으로 하며 Inspection은 Evidence / Input Layer로 표시합니다.
 - Machining Intelligence: Manufacturing Recipe, 기존 G-code 문맥 추론, safe assembly, 측정/보정, managed metadata, air-gapped USB 동기화를 V.Next 구조로 설명합니다. source-level 검증과 Active development / PoC 범위를 분리합니다.
 - Manufacturing Intelligence Platform: Manufacturing Context → Engine Pool → Module Pool → Solution Profile 조합 구조를 `/{{lang}}/platform/`에서 설명합니다. Event Bus·Audit·Adapter는 독립 제품이 아닌 경량 공통 런타임으로 한정합니다.
+- 홈 Composition Journey: 데스크톱의 가로형 조립 장면을 유지하고, 모바일은 동심원 분산 → 중앙 정렬 → 12 Module → 4 Intelligence 배선 순서의 가역 스크롤 장면을 사용합니다. `prefers-reduced-motion` 환경만 정적 4단계 요약을 표시합니다.
 - 신규 정식 URL: `/{{lang}}/machining-intelligence/`, `/{{lang}}/operations-intelligence/`, `/{{lang}}/logistics-intelligence/`, `/{{lang}}/platform/`; 기존 NC/CT/Quality/Work Standard/TMS/AMR URL은 하위 컴포넌트 페이지로 유지합니다.
 - Operations Intelligence: Functional MVP / internal validation 상태로 표시하며, Tracked Operational Cost를 완전 제조원가나 회계원가로 표현하지 않습니다.
 - 개발 프리뷰 제품: Work Standard, TMS, AMR은 빈 비디오 플레이어 없이 개발 상태 패널, 파일럿 입력, 확인 결과, 문의 CTA를 표시합니다.
-- 공식 브랜드 마크: 좌상단 파랑, 좌하단 빨강, 우측 노랑 2칸의 2×2 마크를 `/assets/branding/`에서 단일 관리합니다. 헤더·푸터·파비콘·앱 아이콘·OG 이미지가 같은 원본을 사용합니다.
-- 공식 QR 연락 시그니처: `{BASE_URL}/`로 연결하며 `{CONTACT_EMAIL}`을 함께 표시합니다. Contact 영역과 외부 자료에서 재사용할 SVG/PNG를 제공합니다.
+- 공식 CI: 승인 원본은 `/assets/branding/canonical/`에서 잠그며 `BRANDING.md`와 `brand-policy.json`을 따릅니다.
+- 공식 QR 연락 시그니처: 승인된 글로벌 CI 원본을 변형 없이 사용하고 `{BASE_URL}/` 및 `{CONTACT_EMAIL}`을 함께 표시합니다. Contact 영역과 외부 자료에서 재사용할 SVG/PNG를 제공합니다.
 - 공식 문의 목적지: `{CONTACT_EMAIL}`. 문의 폼은 Formspree 엔드포인트를 통해 AJAX로 제출하며, 성공·실패 상태를 페이지 안에서 안내합니다.
 - 문의 선택지는 네 Intelligence와 Platform / Engine-Module Composition만 노출하며 legacy component URL의 interest 값은 상위 Intelligence로 매핑합니다.
 - 사용자 확인 필요: 개인정보처리방침 URL, 법인명/주소/전화번호, 아랍어 원어민 최종 감수, 실제 CNC/CMM 및 machine adapter 현장 검증 상태.

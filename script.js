@@ -862,63 +862,107 @@ function initHomeCompositionMotion() {
       const contextTokens = tokens.filter((token) => (token.dataset.tokenKind || token.dataset.kind) === 'context');
       const engineTokens = tokens.filter((token) => (token.dataset.tokenKind || token.dataset.kind) === 'engine');
 
-      const fallbackContext = gridCenters(contextTokens, {
+      const scatter = new Map();
+      const fallbackContext = gridCenters(contextTokens, compactLayout ? {
+        x: padding,
+        y: padding + (usableHeight * .04),
+        width: usableWidth,
+        height: usableHeight * .40,
+      } : {
         x: padding,
         y: padding + (usableHeight * .04),
         width: usableWidth,
         height: usableHeight * .18,
-      }, compactLayout ? 5 : 10);
-      const fallbackEngine = gridCenters(engineTokens, {
+      }, compactLayout ? 3 : 10);
+      const fallbackEngine = gridCenters(engineTokens, compactLayout ? {
+        x: padding,
+        y: padding + (usableHeight * .50),
+        width: usableWidth,
+        height: usableHeight * .44,
+      } : {
         x: padding,
         y: padding + (usableHeight * .27),
         width: usableWidth,
         height: usableHeight * .23,
-      }, compactLayout ? 4 : 12);
-      const fallbackAssembly = gridCenters(modules, {
+      }, compactLayout ? 3 : 12);
+      const fallbackAssembly = gridCenters(modules, compactLayout ? {
+        x: padding,
+        y: padding + (usableHeight * .08),
+        width: usableWidth,
+        height: usableHeight * .72,
+      } : {
         x: padding,
         y: padding + (usableHeight * .58),
         width: usableWidth,
         height: usableHeight * .30,
-      }, compactLayout ? 3 : 6);
-      const fallbackAxisModules = gridCenters(modules, {
+      }, compactLayout ? 2 : 6);
+      const fallbackAxisModules = gridCenters(modules, compactLayout ? {
+        x: padding,
+        y: padding + (usableHeight * .02),
+        width: usableWidth,
+        height: usableHeight * .52,
+      } : {
         x: padding,
         y: padding + (usableHeight * .08),
         width: usableWidth,
         height: usableHeight * .38,
-      }, compactLayout ? 3 : 6);
-      const fallbackAxes = gridCenters(axes, {
+      }, compactLayout ? 2 : 6);
+      const fallbackAxes = gridCenters(axes, compactLayout ? {
+        x: padding,
+        y: padding + (usableHeight * .66),
+        width: usableWidth,
+        height: usableHeight * .30,
+      } : {
         x: padding,
         y: padding + (usableHeight * .72),
         width: usableWidth,
         height: usableHeight * .22,
       }, compactLayout ? 2 : 4);
 
-      const scatterColumns = compactLayout ? 4 : (width >= 1100 ? 6 : 5);
-      const scatterCells = [];
-      const scatterRows = Math.ceil(tokens.length / scatterColumns);
-      const scatterCellWidth = usableWidth / scatterColumns;
-      const scatterCellHeight = (usableHeight * .86) / scatterRows;
-      for (let index = 0; index < tokens.length; index += 1) {
-        scatterCells.push({
-          x: padding + (((index % scatterColumns) + .5) * scatterCellWidth),
-          y: padding + ((Math.floor(index / scatterColumns) + .5) * scatterCellHeight),
+      if (compactLayout) {
+        const centerX = padding + (usableWidth / 2);
+        const centerY = padding + (usableHeight * .49);
+        const placeRing = (items, radiusX, radiusY, angleOffset = 0) => {
+          items.forEach((token, index) => {
+            const id = token.dataset.tokenId || token.textContent;
+            const angle = (-Math.PI / 2) + angleOffset + ((Math.PI * 2 * index) / items.length);
+            scatter.set(token, {
+              x: centerX + (Math.cos(angle) * usableWidth * radiusX),
+              y: centerY + (Math.sin(angle) * usableHeight * radiusY),
+              rotation: mix(-5, 5, deterministicUnit(id, 'scatter-rotation')),
+            });
+          });
+        };
+        placeRing(contextTokens, .39, .40);
+        placeRing(engineTokens.slice(0, 6), .27, .27, Math.PI / 6);
+        placeRing(engineTokens.slice(6), .14, .14, 0);
+      } else {
+        const scatterColumns = width >= 1100 ? 6 : 5;
+        const scatterCells = [];
+        const scatterRows = Math.ceil(tokens.length / scatterColumns);
+        const scatterCellWidth = usableWidth / scatterColumns;
+        const scatterCellHeight = (usableHeight * .86) / scatterRows;
+        for (let index = 0; index < tokens.length; index += 1) {
+          scatterCells.push({
+            x: padding + (((index % scatterColumns) + .5) * scatterCellWidth),
+            y: padding + ((Math.floor(index / scatterColumns) + .5) * scatterCellHeight),
+          });
+        }
+        const scatterOrder = [...tokens].sort((first, second) => {
+          const firstId = first.dataset.tokenId || first.textContent;
+          const secondId = second.dataset.tokenId || second.textContent;
+          return hashString(firstId) - hashString(secondId);
+        });
+        scatterOrder.forEach((token, index) => {
+          const id = token.dataset.tokenId || token.textContent;
+          const cell = scatterCells[index];
+          scatter.set(token, {
+            x: cell.x + ((deterministicUnit(id, 'scatter-x') - .5) * scatterCellWidth * .38),
+            y: cell.y + ((deterministicUnit(id, 'scatter-y') - .5) * scatterCellHeight * .38),
+            rotation: mix(-8, 8, deterministicUnit(id, 'scatter-rotation')),
+          });
         });
       }
-      const scatterOrder = [...tokens].sort((first, second) => {
-        const firstId = first.dataset.tokenId || first.textContent;
-        const secondId = second.dataset.tokenId || second.textContent;
-        return hashString(firstId) - hashString(secondId);
-      });
-      const scatter = new Map();
-      scatterOrder.forEach((token, index) => {
-        const id = token.dataset.tokenId || token.textContent;
-        const cell = scatterCells[index];
-        scatter.set(token, {
-          x: cell.x + ((deterministicUnit(id, 'scatter-x') - .5) * scatterCellWidth * .38),
-          y: cell.y + ((deterministicUnit(id, 'scatter-y') - .5) * scatterCellHeight * .38),
-          rotation: mix(-8, 8, deterministicUnit(id, 'scatter-rotation')),
-        });
-      });
 
       const frames = new Map();
       tokens.forEach((token) => {
@@ -928,7 +972,7 @@ function initHomeCompositionMotion() {
         const aligned = targetCenter(alignmentTargets.get(tokenId), canvasRect) || fallback;
         const scattered = scatter.get(token) || aligned;
         frames.set(token, [
-          { ...scattered, scale: 1, opacity: 1 },
+          { ...scattered, scale: compactLayout ? .74 : 1, opacity: 1 },
           { ...aligned, rotation: 0, scale: 1, opacity: 1 },
           { ...aligned, rotation: 0, scale: .92, opacity: .24 },
           { ...aligned, rotation: 0, scale: .84, opacity: 0 },
@@ -977,7 +1021,7 @@ function initHomeCompositionMotion() {
     };
 
     const rootProgress = () => {
-      if (prefersReducedMotion || compactLayout) return 1;
+      if (prefersReducedMotion) return 1;
       const rect = root.getBoundingClientRect();
       const viewportHeight = Math.max(window.innerHeight, 1);
       const scrollTravel = rect.height - viewportHeight;

@@ -1,15 +1,23 @@
 from __future__ import annotations
 
+import argparse
 import os
 from pathlib import Path
+import re
 
-import qrcode
 from PIL import Image, ImageDraw, ImageFont
-from qrcode.constants import ERROR_CORRECT_H
+
+try:
+    import qrcode
+    from qrcode.constants import ERROR_CORRECT_H
+except ModuleNotFoundError:  # QR CI refresh can reuse the checked-in matrix without this optional package.
+    qrcode = None
+    ERROR_CORRECT_H = None
 
 
 ROOT = Path(__file__).resolve().parents[1]
 BRAND = ROOT / "assets" / "branding"
+CANONICAL = BRAND / "canonical"
 
 BLUE = "#1565D8"
 RED = "#E53935"
@@ -80,6 +88,8 @@ def horizontal_png() -> Image.Image:
 
 
 def qr_matrix() -> list[list[bool]]:
+    if qrcode is None or ERROR_CORRECT_H is None:
+        raise RuntimeError("Install qrcode to rebuild the QR matrix from its URL.")
     qr = qrcode.QRCode(version=None, error_correction=ERROR_CORRECT_H, box_size=1, border=4)
     qr.add_data(URL)
     qr.make(fit=True)
@@ -95,8 +105,11 @@ def qr_signature_png() -> Image.Image:
     draw.rectangle((990, 18, width - 18, 150), fill=YELLOW, outline=INK, width=12)
     draw.rectangle((18, 1250, 230, height - 18), fill=RED, outline=INK, width=12)
     draw.rectangle((930, 1250, width - 18, height - 18), fill=YELLOW, outline=INK, width=12)
-    image.paste(draw_mark(116), (86, 174), draw_mark(116))
-    draw.text((230, 188), "Flowmatic", fill=INK, font=font(82, bold=True))
+    with Image.open(CANONICAL / "flowmatic-ci-global-horizontal.png") as source:
+        logo = source.convert("RGBA")
+    logo.thumbnail((620, 163), Image.Resampling.LANCZOS)
+    logo_left = (width - logo.width) // 2
+    image.paste(logo, (logo_left, 162), logo)
 
     matrix = qr_matrix()
     modules = len(matrix)
@@ -139,8 +152,7 @@ def qr_signature_svg() -> str:
   <rect x="990" y="18" width="192" height="132" fill="{YELLOW}" stroke="{INK}" stroke-width="12"/>
   <rect x="18" y="1250" width="212" height="132" fill="{RED}" stroke="{INK}" stroke-width="12"/>
   <rect x="930" y="1250" width="252" height="132" fill="{YELLOW}" stroke="{INK}" stroke-width="12"/>
-  <g transform="translate(86 174) scale(.453125)">{svg_mark().split('<svg', 1)[1].split('>', 1)[1].rsplit('</svg>', 1)[0]}</g>
-  <text x="230" y="260" fill="{INK}" font-family="Arial, Helvetica, sans-serif" font-size="82" font-weight="700">Flowmatic</text>
+  <image x="290" y="160" width="620" height="163" href="/assets/branding/canonical/flowmatic-ci-global-horizontal.svg" preserveAspectRatio="xMidYMid meet"/>
   <rect x="{left}" y="{top}" width="{qr_size}" height="{qr_size}" fill="{WHITE}"/>
   <path d="{''.join(path)}" fill="{INK}"/>
   <text x="600" y="1075" text-anchor="middle" fill="{INK}" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700">{DISPLAY_URL}</text>
@@ -182,8 +194,50 @@ def og_png() -> Image.Image:
     return image
 
 
-def main() -> None:
+def write_qr_assets() -> None:
+    (BRAND / "flowmatic-qr-contact-signature.svg").write_text(qr_signature_svg(), encoding="utf-8")
+    qr_signature_png().save(BRAND / "flowmatic-qr-contact-signature.png", optimize=True)
+
+
+def refresh_qr_ci_only() -> None:
+    """Replace the legacy QR-card logo while preserving its checked-in QR matrix."""
+    svg_path = BRAND / "flowmatic-qr-contact-signature.svg"
+    svg = svg_path.read_text(encoding="utf-8")
+    canonical_image = (
+        '  <image x="290" y="160" width="620" height="163" '
+        'href="/assets/branding/canonical/flowmatic-ci-global-horizontal.svg" '
+        'preserveAspectRatio="xMidYMid meet"/>'
+    )
+    legacy_lockup = re.compile(
+        r'  <g transform="translate\(86 174\) scale\(\.453125\)">.*?</g>\s*'
+        r'<text x="230" y="260"[^>]*>Flowmatic</text>',
+        flags=re.DOTALL,
+    )
+    if canonical_image not in svg:
+        svg, replacements = legacy_lockup.subn(canonical_image, svg, count=1)
+        if replacements != 1:
+            raise RuntimeError("Could not locate the legacy QR-card CI in the SVG.")
+        svg_path.write_text(svg, encoding="utf-8")
+
+    png_path = BRAND / "flowmatic-qr-contact-signature.png"
+    with Image.open(png_path) as source:
+        image = source.convert("RGBA")
+    ImageDraw.Draw(image).rectangle((48, 156, 952, 328), fill=WHITE)
+    with Image.open(CANONICAL / "flowmatic-ci-global-horizontal.png") as source:
+        logo = source.convert("RGBA")
+    logo.thumbnail((620, 163), Image.Resampling.LANCZOS)
+    image.alpha_composite(logo, ((image.width - logo.width) // 2, 162))
+    image.convert("RGB").save(png_path, optimize=True)
+
+
+def main(*, qr_only: bool = False) -> None:
     BRAND.mkdir(parents=True, exist_ok=True)
+    if qr_only:
+        if qrcode is None:
+            refresh_qr_ci_only()
+        else:
+            write_qr_assets()
+        return
     (BRAND / "flowmatic-logo-mark.svg").write_text(svg_mark(), encoding="utf-8")
     draw_mark(1024).save(BRAND / "flowmatic-logo-mark.png", optimize=True)
     (BRAND / "flowmatic-logo-horizontal.svg").write_text(horizontal_svg(), encoding="utf-8")
@@ -200,8 +254,7 @@ def main() -> None:
         icon = Image.new("RGBA", (size, size), WHITE)
         icon.alpha_composite(draw_mark(size))
         icon.convert("RGB").save(BRAND / filename, optimize=True)
-    (BRAND / "flowmatic-qr-contact-signature.svg").write_text(qr_signature_svg(), encoding="utf-8")
-    qr_signature_png().save(BRAND / "flowmatic-qr-contact-signature.png", optimize=True)
+    write_qr_assets()
     (BRAND / "flowmatic-og.svg").write_text(og_svg(), encoding="utf-8")
     og_png().save(BRAND / "flowmatic-og.png", optimize=True)
     (ROOT / "favicon.svg").write_text(svg_mark(64), encoding="utf-8")
@@ -209,4 +262,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Generate Flowmatic website compatibility assets.")
+    parser.add_argument(
+        "--qr-only",
+        action="store_true",
+        help="Refresh only the QR contact signature from the locked canonical CI.",
+    )
+    main(qr_only=parser.parse_args().qr_only)

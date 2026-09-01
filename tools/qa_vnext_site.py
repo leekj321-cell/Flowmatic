@@ -693,7 +693,10 @@ def main() -> None:
             if not re.search(pattern, motion_function):
                 errors.append(f"home composition generated path contract missing: {label}")
         if not re.search(r"innerWidth\s*<=\s*900", motion_function):
-            errors.append("home composition JavaScript compact fallback breakpoint missing: 900px")
+            errors.append("home composition JavaScript compact motion breakpoint missing: 900px")
+        for marker in ("Math.cos(angle)", "Math.sin(angle)", "placeRing(contextTokens", "placeRing(engineTokens"):
+            if marker not in motion_function:
+                errors.append(f"home composition mobile radial layout missing: {marker}")
     if script.count("initHomeCompositionMotion();") != 1:
         errors.append("home composition motion initializer call count: expected 1")
 
@@ -718,21 +721,21 @@ def main() -> None:
     ):
         errors.append("home composition word-sized floating token CSS missing")
 
-    mobile_blocks = css_at_rule_blocks(
+    mobile_motion_blocks = css_at_rule_blocks(
         stylesheet,
-        r"@media\s*\([^)]*max-width\s*:\s*(?:900|8\d\d|7\d\d|6\d\d|5\d\d|4\d\d|3\d\d)px[^)]*\)",
+        r"@media[^{}]*max-width\s*:\s*900px[^{}]*prefers-reduced-motion\s*:\s*no-preference[^{}]*",
     )
-    mobile_fallback = any(
+    mobile_motion = any(
         "[data-composition-motion]" in block
-        and "[data-motion-fallback]" in block
-        and "position: static" in block
-        and re.search(r"display\s*:\s*(?:grid|block|flex)", block)
-        for block in mobile_blocks
+        and ".composition-motion__canvas" in block
+        and "position: sticky" in block
+        and "min-height: 380svh" in block
+        and re.search(r"\.composition-motion__canvas\s*\{[^{}]*display\s*:\s*block", block)
+        and re.search(r"\.composition-motion__links\s*\{[^{}]*display\s*:\s*block", block)
+        for block in mobile_motion_blocks
     )
-    if not mobile_fallback:
-        errors.append("home composition mobile static fallback CSS missing")
-    elif any(re.search(r"\.composition-motion__canvas\s*\{[^{}]*display\s*:\s*grid", block) for block in mobile_blocks):
-        errors.append("home composition mobile fallback duplicates the live motion canvas")
+    if not mobile_motion:
+        errors.append("home composition mobile scroll-motion CSS missing")
 
     reduced_blocks = css_at_rule_blocks(
         stylesheet,
