@@ -96,6 +96,36 @@ def qr_matrix() -> list[list[bool]]:
     return qr.get_matrix()
 
 
+def canonical_global_ci_inline_svg() -> str:
+    """Embed the locked vector CI so the QR SVG also works when loaded as an image."""
+    source = (CANONICAL / "flowmatic-ci-global-horizontal.svg").read_text(encoding="utf-8")
+    match = re.search(r"<svg\b[^>]*>(?P<body>.*)</svg>\s*$", source, flags=re.DOTALL)
+    if not match:
+        raise RuntimeError("Could not read the canonical global CI SVG body.")
+
+    body = re.sub(
+        r"\s*<(?:title|desc)\b[^>]*>.*?</(?:title|desc)>",
+        "",
+        match.group("body"),
+        flags=re.DOTALL,
+    )
+    for source_id, embedded_id in (
+        ("amber", "qr-ci-amber"),
+        ("blue", "qr-ci-blue"),
+        ("red", "qr-ci-red"),
+    ):
+        body = body.replace(f'id="{source_id}"', f'id="{embedded_id}"')
+        body = body.replace(f"url(#{source_id})", f"url(#{embedded_id})")
+
+    indented = "\n".join(f"    {line}" for line in body.strip().splitlines())
+    return (
+        '  <svg x="290" y="160" width="620" height="163" viewBox="0 0 1600 420" '
+        'preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">\n'
+        f"{indented}\n"
+        "  </svg>"
+    )
+
+
 def qr_signature_png() -> Image.Image:
     width, height = 1200, 1400
     image = Image.new("RGB", (width, height), WHITE)
@@ -143,6 +173,7 @@ def qr_signature_svg() -> str:
                 x = left + col * box
                 y = top + row * box
                 path.append(f"M{x} {y}h{box}v{box}h-{box}z")
+    canonical_ci = canonical_global_ci_inline_svg()
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1400" viewBox="0 0 1200 1400" role="img" aria-labelledby="title desc">
   <title id="title">Flowmatic QR contact signature</title>
   <desc id="desc">Scan to open https://flowmatic-os.com/. Contact email: contact@flowmatic-os.com.</desc>
@@ -152,7 +183,7 @@ def qr_signature_svg() -> str:
   <rect x="990" y="18" width="192" height="132" fill="{YELLOW}" stroke="{INK}" stroke-width="12"/>
   <rect x="18" y="1250" width="212" height="132" fill="{RED}" stroke="{INK}" stroke-width="12"/>
   <rect x="930" y="1250" width="252" height="132" fill="{YELLOW}" stroke="{INK}" stroke-width="12"/>
-  <image x="290" y="160" width="620" height="163" href="/assets/branding/canonical/flowmatic-ci-global-horizontal.svg" preserveAspectRatio="xMidYMid meet"/>
+{canonical_ci}
   <rect x="{left}" y="{top}" width="{qr_size}" height="{qr_size}" fill="{WHITE}"/>
   <path d="{''.join(path)}" fill="{INK}"/>
   <text x="600" y="1075" text-anchor="middle" fill="{INK}" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700">{DISPLAY_URL}</text>
@@ -203,21 +234,27 @@ def refresh_qr_ci_only() -> None:
     """Replace the legacy QR-card logo while preserving its checked-in QR matrix."""
     svg_path = BRAND / "flowmatic-qr-contact-signature.svg"
     svg = svg_path.read_text(encoding="utf-8")
-    canonical_image = (
-        '  <image x="290" y="160" width="620" height="163" '
-        'href="/assets/branding/canonical/flowmatic-ci-global-horizontal.svg" '
-        'preserveAspectRatio="xMidYMid meet"/>'
+    canonical_inline = canonical_global_ci_inline_svg()
+    inline_lockup = re.compile(
+        r'  <svg x="290" y="160" width="620" height="163".*?  </svg>',
+        flags=re.DOTALL,
+    )
+    external_lockup = re.compile(
+        r'  <image x="290" y="160" width="620" height="163"[^>]*/>',
+        flags=re.DOTALL,
     )
     legacy_lockup = re.compile(
         r'  <g transform="translate\(86 174\) scale\(\.453125\)">.*?</g>\s*'
         r'<text x="230" y="260"[^>]*>Flowmatic</text>',
         flags=re.DOTALL,
     )
-    if canonical_image not in svg:
-        svg, replacements = legacy_lockup.subn(canonical_image, svg, count=1)
-        if replacements != 1:
-            raise RuntimeError("Could not locate the legacy QR-card CI in the SVG.")
-        svg_path.write_text(svg, encoding="utf-8")
+    for pattern in (inline_lockup, external_lockup, legacy_lockup):
+        svg, replacements = pattern.subn(lambda _: canonical_inline, svg, count=1)
+        if replacements == 1:
+            break
+    else:
+        raise RuntimeError("Could not locate the QR-card CI in the SVG.")
+    svg_path.write_text(svg, encoding="utf-8")
 
     png_path = BRAND / "flowmatic-qr-contact-signature.png"
     with Image.open(png_path) as source:
