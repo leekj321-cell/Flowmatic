@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "policy_id": "FLOWMATIC-CI-CANONICAL-2026-09-01",
+  "status": "APPROVED_LOCKED",
+  "effective_date": "2026-09-01",
+  "enforcement": "FAIL_CLOSED",
+  "canonical_root": "assets/branding/canonical",
+  "assets": {
+    "ko_horizontal": {
+      "path": "assets/branding/canonical/flowmatic-ci-ko-horizontal.png",
+      "sha256": "2e6f059b0f5ee923a294bf6bf62026fedfc4e23ba5f0fc8759d295e0c6ab191d",
+      "usage": "Korean-language material on light or white holding field"
+    },
+    "global_horizontal_svg": {
+      "path": "assets/branding/canonical/flowmatic-ci-global-horizontal.svg",
+      "sha256": "4f43b99d6cf39ee7885a53a4bb15aa01d012f4b2baf9698d8c763897d89838d1",
+      "usage": "Preferred English/global master on light backgrounds"
+    },
+    "global_horizontal_png": {
+      "path": "assets/branding/canonical/flowmatic-ci-global-horizontal.png",
+      "sha256": "980ee0d372ba1713d114ae9c3ac227b40ca43e9a3ccdefaf48d424c8f496e362",
+      "usage": "Raster fallback for English/global material on light backgrounds"
+    },
+    "global_reverse_svg": {
+      "path": "assets/branding/canonical/flowmatic-ci-global-reverse.svg",
+      "sha256": "8b0bb931d41272130a226f42c8542763993ff7f4e6d90c4d69e2114257f24a3f",
+      "usage": "Preferred English/global master on dark backgrounds"
+    },
+    "global_reverse_png": {
+      "path": "assets/branding/canonical/flowmatic-ci-global-reverse.png",
+      "sha256": "5c5ff1cd352a159e4dcd521f39fc87b4abe574022f0bd24e3e197d9fda075423",
+      "usage": "Raster fallback for English/global material on dark backgrounds"
+    },
+    "global_guide_svg": {
+      "path": "assets/branding/canonical/flowmatic-ci-global-guide.svg",
+      "sha256": "ee7fa5e55f6dc54c2638cd4f7f67d7cb5b9eb859902178ddf6ed6d610b6dfc3e",
+      "usage": "Specification and visual QA"
+    },
+    "global_guide_pdf": {
+      "path": "assets/branding/canonical/flowmatic-ci-global-guide.pdf",
+      "sha256": "8931b759b73551e5b4fc90e618af9de5c2f3a5222e750d199f5a3913a26d7ce3",
+      "usage": "Portable specification and visual QA"
+    },
+    "global_preview": {
+      "path": "assets/branding/canonical/flowmatic-ci-global-preview.png",
+      "sha256": "c123177a6507a8ac9ef7f127eeae46184d3c0e244089d06f82dbf09e819e7231",
+      "usage": "Human review only; not a logo source"
+    },
+    "global_source_notes": {
+      "path": "assets/branding/canonical/SOURCE_NOTES.txt",
+      "sha256": "7fd0eef4b2ff4552f24b70a51976a7a21e55c2e9dfa31674063dd98b3c2321a1",
+      "usage": "Revision provenance"
+    }
+  },
+  "locale_rule": {
+    "ko": "ko_horizontal",
+    "en": "global_horizontal_svg",
+    "global": "global_horizontal_svg",
+    "dark_global": "global_reverse_svg"
+  },
+  "presentation_placement": {
+    "cover": {
+      "anchor": "top_left",
+      "target_width_percent": 24.0,
+      "allowed_width_percent": [22.0, 30.0],
+      "top_margin_percent": 4.0,
+      "left_margin_percent": 4.0
+    },
+    "non_cover": {
+      "anchor": "bottom_right",
+      "target_width_percent": 8.5,
+      "allowed_width_percent": [7.0, 10.0],
+      "right_margin_percent": 3.0,
+      "bottom_margin_percent": 3.0
+    }
+  },
+  "legacy_forbidden_for_new_material": [
+    "assets/branding/flowmatic-logo-mark.svg",
+    "assets/branding/flowmatic-logo-mark.png",
+    "assets/branding/flowmatic-logo-horizontal.svg",
+    "assets/branding/flowmatic-logo-horizontal.png"
+  ],
+  "revision_notes": [
+    "Global CI Revision 1.1 preserves symbol width and reduces symbol vertical scale by 10.3%.",
+    "Symbol optical center is aligned to the complete FLOWMATIC plus descriptor block.",
+    "Korean official raster and global Revision 1.1 are the only approved corporate CI families."
+  ]
+}
+

@@ -1,0 +1,36 @@
+FLOWMATIC GLOBAL CI - MISK EDITION
+REVISION 1.1 - OPTICAL ALIGNMENT CORRECTION
+
+PRIMARY LOCKUP
+Symbol + FLOWMATIC + MANUFACTURING INTELLIGENCE OS
+
+TAGLINE
+Intelligence that makes manufacturing flow.
+
+SUPPORTING ARCHITECTURE LINE
+MACHINING · QUALITY · OPERATIONS · AUTONOMOUS FLOW
+
+CORE COLORS
+Charcoal  #101820
+Cyan      #00A8D2
+Amber     #FFB000
+Blue      #1264D8
+Red       #F0442B
+
+USE RULES
+1. Use the charcoal wordmark on white or light backgrounds.
+2. Use the white reverse wordmark on dark backgrounds.
+3. Keep the tagline separate from the logo.
+4. Do not add Korean or Arabic wording inside the global master lockup.
+5. Minimum full-lockup width: 220 px digital / 42 mm print.
+6. Minimum symbol size: 32 px digital.
+7. Use the four intelligence axes as a supporting visual system, not as part of the logo.
+
+NOTE
+The symbol geometry has been redrawn from the supplied Korean CI raster reference.
+Before mass production, compare it against the original vector master if available.
+
+REVISION 1.1
+- Reduced the symbol's vertical scale by 10.3% while preserving its horizontal footprint.
+- Aligned the symbol's optical vertical center to the complete FLOWMATIC + descriptor block.
+- Applied the same correction to primary, reverse, responsive, and business-card lockups.

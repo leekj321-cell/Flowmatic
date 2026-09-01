@@ -10,10 +10,14 @@ Static Flowmatic website for GitHub Pages and `flowmatic-os.com`.
 - `build_site.py`: static page generator for the multilingual HTML output.
 - `style-v5.20.css`: current stylesheet.
 - `script.js`: navigation, reveal, product CTA, text fitting, demo-video loader, and AJAX inquiry submission.
-- `/assets/branding/`: official logo, app-icon, social-preview, and QR contact-signature assets.
-- `BRANDING.md`: official color, logo-layout, and QR usage rules.
+- `/assets/branding/canonical/`: locked Korean and global corporate CI masters for all new materials.
+- `/assets/branding/`: existing website compatibility assets, icons, social previews, and QR signature.
+- `BRANDING.md`: binding corporate CI and document-placement contract.
+- `brand-policy.json`: machine-readable asset paths, hashes, locale rules, and placement rules.
+- `AGENTS.md`: fail-closed instructions for future automated material creation.
 - `ROLLBACK.md`: pre-branding recovery tag and backup archive reference.
-- `tools/generate_brand_assets.py`: deterministic source for SVG, PNG, ICO, OG, and QR assets.
+- `tools/validate_brand_contract.py`: deterministic integrity check for the locked corporate CI.
+- `tools/generate_brand_assets.py`: existing website compatibility asset generator.
 
 ## Demo Videos
 
@@ -30,7 +34,15 @@ The site displays `contact@flowmatic-os.com`. The contact form submits to a Form
 
 ## Branding
 
-All pages use one 2×2 Flowmatic mark: blue top-left, red bottom-left, and yellow in both right cells. Header, footer, favicon, manifest icons, structured data, and social previews reference the same `/assets/branding/` source set. The Contact section includes the official scan-tested QR signature for `https://flowmatic-os.com/`.
+All new Flowmatic presentations, PDFs, proposals, reports, applications, company profiles, business cards, and generated visuals must use the locked assets in `/assets/branding/canonical/` and follow `BRANDING.md`.
+
+The flat 2×2 square files directly under `/assets/branding/` remain only as existing website compatibility assets. They are not the corporate CI and must not be used in new materials. Website visual migration is intentionally separate from this brand-source lock so that this commit does not alter the deployed site.
+
+Validate the canonical asset hashes with:
+
+```bash
+python3 tools/validate_brand_contract.py
+```
 
 ## Build
 
@@ -41,3 +53,4 @@ python3 build_site.py
 ```
 
 The site is pure static HTML/CSS/JS and does not require a package install.
+
