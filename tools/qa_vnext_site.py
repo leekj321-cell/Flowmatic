@@ -632,6 +632,25 @@ def main() -> None:
 
     script = (ROOT / "script.js").read_text(encoding="utf-8")
     stylesheet = (ROOT / "style-v5.20.css").read_text(encoding="utf-8")
+    qr_signature = (ROOT / "assets" / "branding" / "flowmatic-qr-contact-signature.svg").read_text(
+        encoding="utf-8"
+    )
+    if 'href="/assets/branding/canonical/' in qr_signature:
+        errors.append("QR signature must not depend on an external nested CI asset")
+    for marker in (
+        'id="qr-ci-amber"',
+        'id="qr-ci-blue"',
+        'id="qr-ci-red"',
+        'aria-label="Flowmatic global wordmark"',
+        "MANUFACTURING INTELLIGENCE OS",
+    ):
+        if marker not in qr_signature:
+            errors.append(f"QR signature embedded global CI missing: {marker}")
+    home_paths = ("index.html", *(f"{lang}/index.html" for lang in LANGS))
+    for home_path in home_paths:
+        home = (ROOT / home_path).read_text(encoding="utf-8")
+        if "flowmatic-qr-contact-signature.svg?v=20260902.2" not in home:
+            errors.append(f"QR signature cache version missing ({home_path})")
     if "initEvidenceSequence();" not in script or ".evidence-card.is-scroll-active" not in stylesheet:
         errors.append("evidence scroll highlight wiring missing")
     js_markers = (

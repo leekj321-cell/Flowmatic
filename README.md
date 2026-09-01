@@ -37,7 +37,7 @@ The site displays `contact@flowmatic-os.com`. The contact form submits to a Form
 
 All new Flowmatic presentations, PDFs, proposals, reports, applications, company profiles, business cards, and generated visuals must use the locked assets in `/assets/branding/canonical/` and follow `BRANDING.md`.
 
-The QR contact signature uses the locked global CI master. Any remaining flat 2×2 files directly under `/assets/branding/` are legacy compatibility assets, are not the corporate CI, and must not be used in new materials.
+The QR contact signature embeds the locked global CI master inside its standalone SVG so browsers render the complete lockup when the card is loaded as an image. Any remaining flat 2×2 files directly under `/assets/branding/` are legacy compatibility assets, are not the corporate CI, and must not be used in new materials.
 
 Validate the canonical asset hashes with:
 

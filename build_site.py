@@ -36,7 +36,7 @@ BRAND_PATH = "/assets/branding"
 BRAND_VERSION = "20260803.2"
 BRAND_MARK = f"{BRAND_PATH}/flowmatic-logo-mark.svg"
 OG_IMAGE = f"{BASE_URL}{BRAND_PATH}/flowmatic-og.png"
-QR_SIGNATURE = f"{BRAND_PATH}/flowmatic-qr-contact-signature.svg?v=20260902.1"
+QR_SIGNATURE = f"{BRAND_PATH}/flowmatic-qr-contact-signature.svg?v=20260902.2"
 
 
 LANGS = {
