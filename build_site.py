@@ -35,7 +35,17 @@ WEB_V156_CONTENT_DIR = Path(__file__).resolve().parent / "content" / "web_v156"
 BRAND_PATH = "/assets/branding"
 BRAND_VERSION = "20260803.2"
 BRAND_MARK = f"{BRAND_PATH}/flowmatic-logo-mark.svg"
-OG_IMAGE = f"{BASE_URL}{BRAND_PATH}/flowmatic-og.png"
+CANONICAL_GLOBAL_LOGO = f"{BASE_URL}{BRAND_PATH}/canonical/flowmatic-ci-global-horizontal.png"
+OG_IMAGE_PATHS = {
+    "ko": f"{BRAND_PATH}/flowmatic-og-ko-r1.png",
+    "en": f"{BRAND_PATH}/flowmatic-og-global-r1.png",
+    "ar": f"{BRAND_PATH}/flowmatic-og-global-r1.png",
+}
+OG_IMAGE_ALT = {
+    "ko": "플로우매틱 공식 제조 운영지능 소프트웨어 미리보기",
+    "en": "Flowmatic manufacturing operating-intelligence software preview",
+    "ar": "معاينة برنامج Flowmatic للذكاء التشغيلي في التصنيع",
+}
 QR_SIGNATURE = f"{BRAND_PATH}/flowmatic-qr-contact-signature.svg?v=20260902.2"
 
 
@@ -995,10 +1005,12 @@ def meta_head(
     *,
     stylesheet_href: str = CSS_HREF,
 ) -> str:
+    og_image = f"{BASE_URL}{OG_IMAGE_PATHS[lang]}"
+    og_alt = OG_IMAGE_ALT[lang]
     schema = json.dumps({
         "@context": "https://schema.org",
         "@graph": [
-            {"@type": "Organization", "name": "Flowmatic", "url": f"{BASE_URL}/", "email": CONTACT_EMAIL, "logo": f"{BASE_URL}{BRAND_PATH}/flowmatic-logo-mark.png", "image": OG_IMAGE},
+            {"@type": "Organization", "name": "Flowmatic", "url": f"{BASE_URL}/", "email": CONTACT_EMAIL, "logo": CANONICAL_GLOBAL_LOGO, "image": og_image},
             {"@type": "WebPage", "name": title, "description": description, "url": abs_url(canonical_path), "inLanguage": lang},
         ],
     }, ensure_ascii=False)
@@ -1013,9 +1025,17 @@ def meta_head(
 <meta property="og:description" content="{e(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{abs_url(canonical_path)}">
-<meta property="og:image" content="{OG_IMAGE}">
+<meta property="og:image" content="{og_image}">
+<meta property="og:image:secure_url" content="{og_image}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{e(og_alt)}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{OG_IMAGE}">
+<meta name="twitter:title" content="{e(title)}">
+<meta name="twitter:description" content="{e(description)}">
+<meta name="twitter:image" content="{og_image}">
+<meta name="twitter:image:alt" content="{e(og_alt)}">
 <script type="application/ld+json">{schema}</script>
 <link rel="icon" href="{BRAND_MARK}?v={BRAND_VERSION}" sizes="any" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico?v={BRAND_VERSION}" sizes="16x16 32x32 48x48" type="image/x-icon">
@@ -1986,7 +2006,7 @@ def demo_panel(product: dict, slug: str, lang: str) -> str:
         title = {"ko": f"{product['name']} 실제 데모", "en": f"{product['name']} working demo", "ar": f"عرض {product['name']} العملي"}[lang]
         summary = product["description"][lang]
         return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(title)}</h2><p class="body-large">{e(summary)}</p></div>
-<div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="{e(product["video"])}" data-video-title="{e(product["name"])} demo"><video aria-label="{e(product["name"])} demo" controls hidden playsinline preload="metadata" poster="{BRAND_PATH}/flowmatic-og.svg" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>{e(LANGS[lang]["video_unavailable"])}</strong></p></div></div><p class="video-summary">{e(summary)}</p></div>"""
+<div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="{e(product["video"])}" data-video-title="{e(product["name"])} demo"><video aria-label="{e(product["name"])} demo" controls hidden playsinline preload="metadata" poster="{OG_IMAGE_PATHS[lang]}" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>{e(LANGS[lang]["video_unavailable"])}</strong></p></div></div><p class="video-summary">{e(summary)}</p></div>"""
     scope = {"ko": "현재 개발 범위 · 현장 연동 전", "en": "Current development scope · field integration pending", "ar": "نطاق التطوير الحالي · التكامل الميداني قيد الانتظار"}[lang]
     eyebrow = product.get("status_badges", {}).get(lang, [("", LANGS[lang]["development_preview"])])[0][1]
     return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(eyebrow)}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>

@@ -81,6 +81,11 @@ BRAND_HERO_LINES = (
     "Intelligent Operations.",
     "Flowmatic.",
 )
+SOCIAL_PREVIEW_PATHS = {
+    "ko": "/assets/branding/flowmatic-og-ko-r1.png",
+    "en": "/assets/branding/flowmatic-og-global-r1.png",
+    "ar": "/assets/branding/flowmatic-og-global-r1.png",
+}
 
 HOME_CONTEXTS = {
     "context-machine": "Machine",
@@ -565,6 +570,22 @@ def main() -> None:
                 errors.append(f"language metadata: {page.relative_to(ROOT)}")
         if not scan.title or not scan.description:
             errors.append(f"metadata missing: {page.relative_to(ROOT)}")
+        page_language = language if language in LANGS else "ko"
+        social_path = SOCIAL_PREVIEW_PATHS[page_language]
+        social_url = f"https://flowmatic-os.com{social_path}"
+        social_markers = (
+            f'<meta property="og:image" content="{social_url}">',
+            f'<meta property="og:image:secure_url" content="{social_url}">',
+            '<meta property="og:image:type" content="image/png">',
+            '<meta property="og:image:width" content="1200">',
+            '<meta property="og:image:height" content="630">',
+            f'<meta name="twitter:image" content="{social_url}">',
+        )
+        for marker in social_markers:
+            if marker not in text:
+                errors.append(f"social preview metadata missing: {page.relative_to(ROOT)} -> {marker}")
+        if "https://flowmatic-os.com/assets/branding/flowmatic-og.png" in text:
+            errors.append(f"stale social preview metadata: {page.relative_to(ROOT)}")
         duplicate_ids = [item for item, count in Counter(scan.ids).items() if count > 1]
         if duplicate_ids:
             errors.append(f"duplicate IDs: {page.relative_to(ROOT)} -> {', '.join(sorted(duplicate_ids))}")
@@ -589,6 +610,27 @@ def main() -> None:
     for phrase in FORBIDDEN:
         if phrase.lower() in (source_text + generated_text).lower():
             errors.append(f"outdated or prohibited phrase: {phrase}")
+
+    for social_path in set(SOCIAL_PREVIEW_PATHS.values()):
+        asset = ROOT / social_path.lstrip("/")
+        if not asset.exists():
+            errors.append(f"social preview asset missing: {social_path}")
+            continue
+        payload = asset.read_bytes()
+        if payload[:8] != b"\x89PNG\r\n\x1a\n":
+            errors.append(f"social preview asset is not PNG: {social_path}")
+            continue
+        dimensions = (int.from_bytes(payload[16:20], "big"), int.from_bytes(payload[20:24], "big"))
+        if dimensions != (1200, 630):
+            errors.append(f"social preview dimensions invalid: {social_path} -> {dimensions}")
+
+    brand_generator = (ROOT / "tools" / "generate_brand_assets.py").read_text(encoding="utf-8")
+    social_block = brand_generator.partition("def og_svg()")[2].partition("def write_qr_assets()")[0]
+    if "svg_mark(" in social_block or "draw_mark(" in social_block:
+        errors.append("social preview generator uses the forbidden legacy 2x2 mark")
+    for required in ("flowmatic-ci-ko-horizontal.png", "flowmatic-ci-global-horizontal.png"):
+        if required not in social_block:
+            errors.append(f"social preview generator missing canonical CI source: {required}")
 
     for page in v156_pages():
         if not page.exists():

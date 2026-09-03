@@ -28,11 +28,19 @@ URL = "https://flowmatic-os.com/"
 DISPLAY_URL = "flowmatic-os.com"
 EMAIL = "contact@flowmatic-os.com"
 
+CI_CHARCOAL = "#101820"
+CI_CYAN = "#00A8D2"
+CI_AMBER = "#FFB000"
+CI_BLUE = "#1264D8"
+CI_RED = "#F0442B"
+
 
 def font(size: int, *, bold: bool = False) -> ImageFont.FreeTypeFont:
     candidates = [
         Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts" / ("arialbd.ttf" if bold else "arial.ttf"),
         Path(r"C:\Windows\Fonts") / ("segoeuib.ttf" if bold else "segoeui.ttf"),
+        Path("/usr/share/fonts/truetype/dejavu") / ("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"),
+        Path("/usr/share/fonts/truetype/liberation2") / ("LiberationSans-Bold.ttf" if bold else "LiberationSans-Regular.ttf"),
     ]
     for candidate in candidates:
         if candidate.exists():
@@ -96,7 +104,14 @@ def qr_matrix() -> list[list[bool]]:
     return qr.get_matrix()
 
 
-def canonical_global_ci_inline_svg() -> str:
+def canonical_global_ci_inline_svg(
+    *,
+    x: int = 290,
+    y: int = 160,
+    width: int = 620,
+    height: int = 163,
+    id_prefix: str = "qr-ci",
+) -> str:
     """Embed the locked vector CI so the QR SVG also works when loaded as an image."""
     source = (CANONICAL / "flowmatic-ci-global-horizontal.svg").read_text(encoding="utf-8")
     match = re.search(r"<svg\b[^>]*>(?P<body>.*)</svg>\s*$", source, flags=re.DOTALL)
@@ -109,17 +124,14 @@ def canonical_global_ci_inline_svg() -> str:
         match.group("body"),
         flags=re.DOTALL,
     )
-    for source_id, embedded_id in (
-        ("amber", "qr-ci-amber"),
-        ("blue", "qr-ci-blue"),
-        ("red", "qr-ci-red"),
-    ):
+    for source_id in ("amber", "blue", "red"):
+        embedded_id = f"{id_prefix}-{source_id}"
         body = body.replace(f'id="{source_id}"', f'id="{embedded_id}"')
         body = body.replace(f"url(#{source_id})", f"url(#{embedded_id})")
 
     indented = "\n".join(f"    {line}" for line in body.strip().splitlines())
     return (
-        '  <svg x="290" y="160" width="620" height="163" viewBox="0 0 1600 420" '
+        f'  <svg x="{x}" y="{y}" width="{width}" height="{height}" viewBox="0 0 1600 420" '
         'preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">\n'
         f"{indented}\n"
         "  </svg>"
@@ -193,36 +205,63 @@ def qr_signature_svg() -> str:
 
 
 def og_svg() -> str:
+    canonical_ci = canonical_global_ci_inline_svg(
+        x=62,
+        y=52,
+        width=700,
+        height=184,
+        id_prefix="og-ci",
+    )
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">Flowmatic | Manufacturing Intelligence</title>
-  <desc id="desc">Flowmatic official social preview.</desc>
+  <title id="title">Flowmatic | From field signal to verified completion</title>
+  <desc id="desc">Flowmatic official global social preview using the approved corporate identity.</desc>
   <rect width="1200" height="630" fill="{WHITE}"/>
-  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="{INK}" stroke-width="12"/>
-  <rect x="846" y="32" width="322" height="150" fill="{BLUE}" stroke="{INK}" stroke-width="12"/>
-  <rect x="1000" y="182" width="168" height="220" fill="{YELLOW}" stroke="{INK}" stroke-width="12"/>
-  <rect x="846" y="402" width="322" height="196" fill="{RED}" stroke="{INK}" stroke-width="12"/>
-  <g transform="translate(72 72) scale(.625)">{svg_mark().split('<svg', 1)[1].split('>', 1)[1].rsplit('</svg>', 1)[0]}</g>
-  <text x="270" y="205" fill="{INK}" font-family="Arial, Helvetica, sans-serif" font-size="104" font-weight="700" letter-spacing="-4">Flowmatic</text>
-  <text x="76" y="360" fill="{INK}" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700">Manufacturing Intelligence</text>
-  <text x="78" y="452" fill="{INK}" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700">Motion → Event → Decision → Action</text>
-  <text x="78" y="540" fill="{INK}" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">flowmatic-os.com</text>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="{CI_CHARCOAL}" stroke-width="12"/>
+  <rect x="890" y="32" width="278" height="164" fill="{CI_BLUE}" stroke="{CI_CHARCOAL}" stroke-width="12"/>
+  <rect x="890" y="196" width="278" height="196" fill="{CI_AMBER}" stroke="{CI_CHARCOAL}" stroke-width="12"/>
+  <rect x="890" y="392" width="278" height="206" fill="{CI_RED}" stroke="{CI_CHARCOAL}" stroke-width="12"/>
+{canonical_ci}
+  <rect x="72" y="252" width="104" height="9" fill="{CI_CYAN}"/>
+  <text x="72" y="337" fill="{CI_CHARCOAL}" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700">FROM FIELD SIGNAL</text>
+  <text x="72" y="410" fill="{CI_CHARCOAL}" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700">TO VERIFIED COMPLETION</text>
+  <text x="74" y="492" fill="{CI_CHARCOAL}" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="1">SIGNAL → CONTEXT → DECISION → ACTION → CONFIRMATION</text>
+  <text x="74" y="554" fill="{CI_CHARCOAL}" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700">flowmatic-os.com</text>
 </svg>
 '''
 
 
-def og_png() -> Image.Image:
+def _paste_canonical_ci(image: Image.Image, locale: str) -> None:
+    source_name = "flowmatic-ci-ko-horizontal.png" if locale == "ko" else "flowmatic-ci-global-horizontal.png"
+    with Image.open(CANONICAL / source_name) as source:
+        logo = source.convert("RGBA")
+    logo.thumbnail((760, 170), Image.Resampling.LANCZOS)
+    image.paste(logo, (64, 52 + (170 - logo.height) // 2), logo)
+
+
+def og_png(locale: str = "global") -> Image.Image:
     image = Image.new("RGB", (1200, 630), WHITE)
     draw = ImageDraw.Draw(image)
-    draw.rectangle((32, 32, 1168, 598), outline=INK, width=12)
-    draw.rectangle((846, 32, 1168, 182), fill=BLUE, outline=INK, width=12)
-    draw.rectangle((1000, 182, 1168, 402), fill=YELLOW, outline=INK, width=12)
-    draw.rectangle((846, 402, 1168, 598), fill=RED, outline=INK, width=12)
-    image.paste(draw_mark(160).convert("RGB"), (72, 72))
-    draw.text((270, 86), "Flowmatic", fill=INK, font=font(104, bold=True))
-    draw.text((76, 290), "Manufacturing Intelligence", fill=INK, font=font(66, bold=True))
-    draw.text((78, 406), "Motion → Event → Decision → Action", fill=INK, font=font(40, bold=True))
-    draw.text((78, 514), DISPLAY_URL, fill=INK, font=font(32, bold=True))
+    draw.rectangle((32, 32, 1168, 598), outline=CI_CHARCOAL, width=12)
+    draw.rectangle((890, 32, 1168, 196), fill=CI_BLUE, outline=CI_CHARCOAL, width=12)
+    draw.rectangle((890, 196, 1168, 392), fill=CI_AMBER, outline=CI_CHARCOAL, width=12)
+    draw.rectangle((890, 392, 1168, 598), fill=CI_RED, outline=CI_CHARCOAL, width=12)
+    _paste_canonical_ci(image, locale)
+    draw.rectangle((72, 252, 176, 261), fill=CI_CYAN)
+    draw.text((72, 280), "FROM FIELD SIGNAL", fill=CI_CHARCOAL, font=font(54, bold=True))
+    draw.text((72, 353), "TO VERIFIED COMPLETION", fill=CI_CHARCOAL, font=font(54, bold=True))
+    draw.text((74, 466), "SIGNAL → CONTEXT → DECISION → ACTION → CONFIRMATION", fill=CI_CHARCOAL, font=font(22, bold=True))
+    draw.text((74, 520), DISPLAY_URL, fill=CI_CHARCOAL, font=font(27, bold=True))
     return image
+
+
+def write_social_preview_assets() -> None:
+    global_card = og_png("global")
+    ko_card = og_png("ko")
+    global_card.save(BRAND / "flowmatic-og-global-r1.png", optimize=True)
+    ko_card.save(BRAND / "flowmatic-og-ko-r1.png", optimize=True)
+    global_card.save(BRAND / "flowmatic-og.png", optimize=True)
+    (BRAND / "flowmatic-og.svg").write_text(og_svg(), encoding="utf-8")
+    (ROOT / "og-flowmatic.svg").write_text(og_svg(), encoding="utf-8")
 
 
 def write_qr_assets() -> None:
@@ -267,8 +306,11 @@ def refresh_qr_ci_only() -> None:
     image.convert("RGB").save(png_path, optimize=True)
 
 
-def main(*, qr_only: bool = False) -> None:
+def main(*, qr_only: bool = False, og_only: bool = False) -> None:
     BRAND.mkdir(parents=True, exist_ok=True)
+    if og_only:
+        write_social_preview_assets()
+        return
     if qr_only:
         if qrcode is None:
             refresh_qr_ci_only()
@@ -292,10 +334,8 @@ def main(*, qr_only: bool = False) -> None:
         icon.alpha_composite(draw_mark(size))
         icon.convert("RGB").save(BRAND / filename, optimize=True)
     write_qr_assets()
-    (BRAND / "flowmatic-og.svg").write_text(og_svg(), encoding="utf-8")
-    og_png().save(BRAND / "flowmatic-og.png", optimize=True)
+    write_social_preview_assets()
     (ROOT / "favicon.svg").write_text(svg_mark(64), encoding="utf-8")
-    (ROOT / "og-flowmatic.svg").write_text(og_svg(), encoding="utf-8")
 
 
 if __name__ == "__main__":
@@ -305,4 +345,10 @@ if __name__ == "__main__":
         action="store_true",
         help="Refresh only the QR contact signature from the locked canonical CI.",
     )
-    main(qr_only=parser.parse_args().qr_only)
+    parser.add_argument(
+        "--og-only",
+        action="store_true",
+        help="Refresh only the social-preview assets from the locked canonical CI.",
+    )
+    args = parser.parse_args()
+    main(qr_only=args.qr_only, og_only=args.og_only)
