@@ -25,7 +25,18 @@ PAGES = (
     "amr",
 )
 COMPAT = ("nc.html", "ct.html", "quality.html", "work-standard.html", "tms.html", "amr.html")
-FORBIDDEN = ("v0.5.13", "QUALITY_V513", "Production Ready", "production certified", "Production Certified")
+FORBIDDEN = (
+    "v0.5.13",
+    "QUALITY_V513",
+    "Production Ready",
+    "production certified",
+    "Production Certified",
+    "KICXUP CHALLENGE",
+    "SEALINK PoC",
+    "구성 진행률",
+    "Composition progress",
+    "تقدم التكوين",
+)
 V156_MARKERS = (
     'id="field-problem"',
     'id="architecture"',
@@ -38,8 +49,8 @@ V156_MARKERS = (
     "Audit",
     "05 · CURRENT STAGE",
     "FUNCTIONAL PROTOTYPES",
-    "KICXUP CHALLENGE",
-    "SEALINK PoC",
+    "PUBLIC DEMOS",
+    "EXTERNAL VALIDATION",
 )
 DECISION_COPY_FORBIDDEN = (
     "그림만 바꾼",
@@ -367,20 +378,39 @@ def check_home_composition(label: str, home: str, errors: list[str]) -> Scan:
         'data-composition-journey',
         'data-composition-motion',
         'data-composition-stage',
+        'id="field-problem"',
+        'id="before-after"',
         'id="architecture"',
         'id="modules"',
         'id="solutions"',
+        'id="what-changes"',
         'id="current-stage"',
+        'id="company"',
         "PUBLIC DEMOS",
+        "EXTERNAL VALIDATION",
     )
     for marker in required:
         if marker not in home:
             errors.append(f"home motion content missing ({label}): {marker}")
 
-    forbidden = ('class="transformation"', 'id="before-after"', 'id="approach"', 'data-field-story', "KICXUP CHALLENGE")
+    forbidden = ('class="transformation"', 'id="approach"', 'data-field-story', "KICXUP CHALLENGE", "SEALINK PoC")
     for marker in forbidden:
         if marker in home:
             errors.append(f"obsolete home content present ({label}): {marker}")
+
+    narrative_order = (
+        'id="field-problem"',
+        'id="before-after"',
+        'data-composition-journey',
+        'id="what-changes"',
+        'id="current-stage"',
+        'id="pilot"',
+        'id="company"',
+        'id="contact"',
+    )
+    positions = [home.find(marker) for marker in narrative_order]
+    if positions != sorted(positions) or -1 in positions:
+        errors.append(f"home narrative order invalid ({label}): {positions}")
 
     if len(scan.composition_roots) != 1:
         errors.append(f"home motion root count ({label}): expected 1, got {len(scan.composition_roots)}")

@@ -26,8 +26,8 @@ from factory_os_v2 import (
 BASE_URL = "https://flowmatic-os.com"
 CONTACT_EMAIL = "contact@flowmatic-os.com"
 CONTACT_ENDPOINT = "https://formspree.io/f/xojgorkl"
-CSS_HREF = "/style-v5.20.css?v=5.27"
-HOME_CSS_HREF = "/style-v5.20.css?v=5.28"
+CSS_HREF = "/style-v5.20.css?v=5.29"
+HOME_CSS_HREF = "/style-v5.20.css?v=5.29"
 SCRIPT_SRC = "/script.js?v=5.22"
 HOME_SCRIPT_SRC = "/script.js?v=5.26"
 NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
@@ -46,7 +46,7 @@ LANGS = {
         "dir": "ltr",
         "skip": "본문으로 건너뛰기",
         "open": "메뉴 열기",
-        "nav": {"architecture": "Platform", "modules": "Modules", "solutions": "Solutions", "pilot": "파일럿 상담"},
+        "nav": {"problem": "문제", "architecture": "Platform", "intelligence": "지능축", "company": "회사", "pilot": "파일럿 상담"},
         "home": "홈",
         "all_products": "전체 제품 보기",
         "product_demo": "제품 데모",
@@ -69,7 +69,7 @@ LANGS = {
         "dir": "ltr",
         "skip": "Skip to content",
         "open": "Open menu",
-        "nav": {"architecture": "Platform", "modules": "Modules", "solutions": "Solutions", "pilot": "Discuss a pilot"},
+        "nav": {"problem": "Problem", "architecture": "Platform", "intelligence": "Intelligence", "company": "Company", "pilot": "Discuss a pilot"},
         "home": "Home",
         "all_products": "All products",
         "product_demo": "Product demo",
@@ -92,7 +92,7 @@ LANGS = {
         "dir": "rtl",
         "skip": "تجاوز إلى المحتوى",
         "open": "فتح القائمة",
-        "nav": {"architecture": "المنصة", "modules": "الوحدات", "solutions": "الحلول", "pilot": "ناقش مشروعًا تجريبيًا"},
+        "nav": {"problem": "المشكلة", "architecture": "المنصة", "intelligence": "مجالات الذكاء", "company": "الشركة", "pilot": "ناقش مشروعًا تجريبيًا"},
         "home": "الرئيسية",
         "all_products": "كل المنتجات",
         "product_demo": "عرض المنتج",
@@ -1032,9 +1032,10 @@ def header(lang: str, slug: str) -> str:
     home = page_path(lang)
     nav = t["nav"]
     anchors = [
+        ("field-problem", nav["problem"]),
         ("architecture", nav["architecture"]),
-        ("modules", nav["modules"]),
-        ("solutions", nav["solutions"]),
+        ("what-changes", nav["intelligence"]),
+        ("company", nav["company"]),
         ("pilot", nav["pilot"]),
     ]
     nav_html = "".join(f'<a href="{home}#{key}">{e(label)}</a>' for key, label in anchors)
@@ -1140,12 +1141,13 @@ def before_after_section(lang: str) -> str:
     before_items = "".join(f"<li>{e(item)}</li>" for item in data["before_items"])
     after_flow = "".join(f"<span>{e(item)}</span>" for item in BEFORE_AFTER["flow"])
     labels = {
-        "ko": ("BEFORE", "AFTER", "사람의 반복 연결", "같은 운영 문맥"),
-        "en": ("BEFORE", "AFTER", "Repeated manual handoffs", "One operating context"),
-        "ar": ("قبل", "بعد", "تسليم يدوي متكرر", "سياق تشغيل واحد"),
+        "ko": ("기존 시스템", "FLOWMATIC", "수집·저장·표시·제어", "판단·업무·완료 확인"),
+        "en": ("EXISTING SYSTEMS", "FLOWMATIC", "Collect · store · display · control", "Decide · act · verify"),
+        "ar": ("الأنظمة القائمة", "FLOWMATIC", "جمع · تخزين · عرض · تحكم", "قرار · تنفيذ · تحقق"),
     }[lang]
-    return f"""<section aria-labelledby="before-after-title" class="before-after section-grid" id="before-after">
-<div class="cell span-12 reveal"><p class="eyebrow">What changes first</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="before-after-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+    eyebrow = {"ko": "02 · 운영 계층", "en": "02 · OPERATING LAYER", "ar": "02 · طبقة التشغيل"}[lang]
+    return f"""<section aria-labelledby="before-after-title" class="before-after flowmatic-role section-grid" id="before-after">
+<div class="cell span-12 reveal"><p class="eyebrow">{e(eyebrow)}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="before-after-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
 <article class="cell span-5 outcome-before reveal"><p class="eyebrow">{e(labels[0])} · {e(labels[2])}</p><h3>{e(data["before"])}</h3><ul>{before_items}</ul></article>
 <div class="cell span-2 before-after-arrow reveal delay-1" aria-hidden="true">→</div>
 <article class="cell span-5 outcome-after reveal delay-2"><p class="eyebrow">{e(labels[1])} · {e(labels[3])}</p><h3>{e(data["after"])}</h3><div class="context-flow">{after_flow}</div></article>
@@ -1159,10 +1161,56 @@ def outcomes_section(lang: str) -> str:
         f'<div class="outcome-row"><strong>{e(domain)}</strong><span>{e(before)}</span><span>{e(after)}</span></div>'
         for domain, before, after in data["rows"]
     )
+    eyebrow = {"ko": "04 · 네 개 지능축의 변화", "en": "04 · FOUR INTELLIGENCE OUTCOMES", "ar": "04 · نتائج مجالات الذكاء الأربعة"}[lang]
     return f"""<section aria-labelledby="outcomes-title" class="what-changes section-grid" id="what-changes">
-<div class="cell span-7 reveal"><p class="eyebrow">Four Intelligence outcomes</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="outcomes-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<div class="cell span-7 reveal"><p class="eyebrow">{e(eyebrow)}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="outcomes-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
 <div class="cell span-12 outcome-table reveal delay-1" role="table"><div class="outcome-row outcome-head" role="row">{head}</div>{rows}</div>
 </section>"""
+
+
+COMPANY_STORY = {
+    "ko": {
+        "title": "제조 현장의 반복 업무에서 시작한|운영지능 소프트웨어 회사.",
+        "body": "Flowmatic은 생산기술·가공·품질·물류 현장에서 사람이 시스템 사이를 연결하던 문제에서 시작했습니다. 검증된 설비와 업무체계는 유지하고, 그 사이의 수작업 간극을 운영 이벤트와 완료 이력으로 표준화합니다.",
+        "thesis": "Operation standardization, not talent standardization.",
+        "cards": (
+            ("현장에서 시작", "추상적인 자동화가 아니라 반복 비교·재입력·전달·확인에 드는 실제 공수에서 출발합니다."),
+            ("한 문제부터 검증", "한 라인에서 기준선을 정하고 업무시간·원인 확인시간·대응 리드타임의 전후를 측정합니다."),
+            ("같은 구조로 확장", "검증된 Context·Engine·Module 조합을 다음 공정·라인·사이트에 재사용합니다."),
+        ),
+    },
+    "en": {
+        "title": "A manufacturing operating-intelligence company|born from repetitive field work.",
+        "body": "Flowmatic began with a recurring factory problem: people still bridge the gaps between production engineering, machining, quality, logistics, and their systems. We keep proven assets in place and standardize the manual gap as operational events and verified completion history.",
+        "thesis": "Operation standardization, not talent standardization.",
+        "cards": (
+            ("Born in the field", "Start from the real effort spent comparing, re-entering, handing off, and confirming work—not from abstract automation."),
+            ("Prove one problem", "Set a baseline on one line and measure work time, cause-confirmation time, and response lead time before and after."),
+            ("Reuse the structure", "Carry validated Context, Engine, and Module compositions into the next process, line, and site."),
+        ),
+    },
+    "ar": {
+        "title": "شركة برمجيات ذكاء تشغيلي للتصنيع|نشأت من العمل الميداني المتكرر.",
+        "body": "بدأ Flowmatic من مشكلة متكررة في المصانع: ما زال الأشخاص يربطون الفجوات بين هندسة الإنتاج والتشغيل والجودة واللوجستيات وأنظمتها. نُبقي الأصول المثبتة في مكانها ونحوّل الفجوة اليدوية إلى أحداث تشغيلية وسجل إنجاز موثّق.",
+        "thesis": "توحيد التشغيل، لا توحيد المواهب.",
+        "cards": (
+            ("نشأ في الميدان", "نبدأ من الوقت الحقيقي الذي يستهلكه التحقق وإعادة الإدخال والتسليم والتأكيد، لا من أتمتة نظرية."),
+            ("إثبات مشكلة واحدة", "نحدد خط أساس في خط واحد ونقيس وقت العمل ووقت تأكيد السبب وزمن الاستجابة قبل التطبيق وبعده."),
+            ("إعادة استخدام البنية", "ننقل تركيبات Context وEngine وModule المتحقق منها إلى العملية والخط والموقع التالي."),
+        ),
+    },
+}
+
+
+def company_section(lang: str) -> str:
+    data = COMPANY_STORY[lang]
+    cards = "".join(
+        f'<article class="cell company-card span-4 reveal delay-{index + 1}"><span>{index + 1:02}</span><h3>{e(title)}</h3><p>{e(body)}</p></article>'
+        for index, (title, body) in enumerate(data["cards"])
+    )
+    return f"""<section aria-labelledby="company-title" class="company-story section-grid" id="company">
+<div class="cell span-7 reveal"><p class="eyebrow">COMPANY</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="company-title">{lines(data["title"])}</h2><p class="body-large">{e(data["body"])}</p></div>
+<div class="cell blue company-thesis span-5 reveal delay-1"><p class="eyebrow">PRODUCT THESIS</p><strong>{e(data["thesis"])}</strong><span>Signal → Context → Decision → Action → Confirmation</span></div>{cards}</section>"""
 
 
 V156_RUNTIME = {
@@ -1198,7 +1246,7 @@ V156_SOLUTION_EXAMPLES = (
 
 HOME_COMPOSITION_COPY = {
     "ko": {
-        "kicker": "01 · COMPOSITION JOURNEY",
+        "kicker": "03 · COMPOSITION JOURNEY",
         "title": "흩어진 기준과 기능이 Module이 되고,|네 개의 Intelligence로 연결됩니다.",
         "body": "10개 Context가 현장의 공통 기준을 만들고, 12개 Engine이 그 기준을 읽습니다. 필요한 Engine은 12개 Module로 조합되고, Module은 네 개 지능축을 구성합니다.",
         "steps": (
@@ -1211,7 +1259,7 @@ HOME_COMPOSITION_COPY = {
         "demo_links": "CT 데모 →|NC 데모 →",
     },
     "en": {
-        "kicker": "01 · COMPOSITION JOURNEY",
+        "kicker": "03 · COMPOSITION JOURNEY",
         "title": "Scattered standards and capabilities become modules,|then connect into four intelligence domains.",
         "body": "Ten context entities establish a shared field reference. Twelve engines read that context, compose into twelve modules, and connect into four intelligence domains.",
         "steps": (
@@ -1224,7 +1272,7 @@ HOME_COMPOSITION_COPY = {
         "demo_links": "CT demo →|NC demo →",
     },
     "ar": {
-        "kicker": "01 · COMPOSITION JOURNEY",
+        "kicker": "03 · COMPOSITION JOURNEY",
         "title": "تتحول المعايير والقدرات المتفرقة إلى وحدات،|ثم ترتبط في أربعة مجالات للذكاء.",
         "body": "تنشئ عشرة عناصر Context مرجعًا ميدانيًا مشتركًا. وتقرأ اثنا عشر Engine هذا السياق، وتتجمع في اثنتي عشرة Module، ثم ترتبط في أربعة مجالات للذكاء.",
         "steps": (
@@ -1321,7 +1369,6 @@ def _decorate_home_rail(block: str, tokens: tuple, kind: str) -> str:
 
 def home_composition_section(lang: str) -> str:
     """Render one continuous scatter → module → intelligence motion scene."""
-    current_stage = _v156_section(_v156_source(lang), "current-stage")
     copy = HOME_COMPOSITION_COPY[lang]
 
     motion_labels = {
@@ -1329,7 +1376,7 @@ def home_composition_section(lang: str) -> str:
             "pause": "부유 멈춤", "resume": "부유 재생",
             "context": "공통 제조 기준 · Context", "engine": "제조 기능 · Engine",
             "module": "최소 배포 단위 · Module", "axis": "4 Intelligence",
-            "progress": "구성 진행률",
+            "progress": "스크롤 조립 진행",
             "summary": "Context 10개와 Engine 12개가 정렬되어 12개 Module을 이루고, 같은 Module이 네 Intelligence로 연결됩니다.",
             "axes": {
                 "machining": ("Machining Intelligence", "가공 해석 · NC 생성 · 측정/보정 · 공구관리", "가공 지능 보기"),
@@ -1342,7 +1389,7 @@ def home_composition_section(lang: str) -> str:
             "pause": "Pause drift", "resume": "Resume drift",
             "context": "Shared manufacturing reference · Context", "engine": "Manufacturing capability · Engine",
             "module": "Smallest deployable unit · Module", "axis": "4 Intelligence domains",
-            "progress": "Composition progress",
+            "progress": "Scroll assembly progress",
             "summary": "Ten context entities and twelve engines align into twelve modules. The same modules then connect into four intelligence domains.",
             "axes": {
                 "machining": ("Machining Intelligence", "Process interpretation · NC generation · compensation · tool control", "Explore Machining"),
@@ -1355,7 +1402,7 @@ def home_composition_section(lang: str) -> str:
             "pause": "إيقاف الحركة", "resume": "استئناف الحركة",
             "context": "مرجع التصنيع المشترك · Context", "engine": "قدرات التصنيع · Engine",
             "module": "أصغر وحدة قابلة للنشر · Module", "axis": "أربعة مجالات للذكاء",
-            "progress": "تقدم التكوين",
+            "progress": "تقدم التركيب أثناء التمرير",
             "summary": "تنتظم عشرة عناصر Context واثنا عشر Engine في اثنتي عشرة Module، ثم ترتبط الوحدات نفسها في أربعة مجالات للذكاء.",
             "axes": {
                 "machining": ("Machining Intelligence", "تفسير التشغيل · إنشاء NC · التعويض · إدارة الأدوات", "استكشف ذكاء التشغيل"),
@@ -1475,6 +1522,13 @@ def home_composition_section(lang: str) -> str:
 <div class="composition-motion__fallback" data-motion-fallback><p>{e(motion_labels["summary"])}</p>{"".join(fallback_steps)}</div>
 </div></section>"""
 
+    return f'<div class="v156-platform home-composition">{motion}</div>'
+
+
+def home_current_stage_section(lang: str) -> str:
+    """Render public evidence without promoting a named prospect as traction."""
+    current_stage = _v156_section(_v156_source(lang), "current-stage")
+    copy = HOME_COMPOSITION_COPY[lang]
     demo_label, nc_label = copy["demo_links"].split("|")
     public_demo = (
         '<article class="proof yellow"><b>PUBLIC DEMOS</b>'
@@ -1492,7 +1546,7 @@ def home_composition_section(lang: str) -> str:
     if replaced != 1:
         raise ValueError(f"Missing current-stage proof card ({lang})")
 
-    return f'<div class="v156-platform home-composition">{motion}{current_stage}</div>'
+    return f'<div class="v156-platform home-evidence">{current_stage}</div>'
 
 
 def v156_platform_sections(lang: str) -> str:
@@ -1505,8 +1559,8 @@ def v156_platform_sections(lang: str) -> str:
         'id="solutions"',
         "05 · CURRENT STAGE",
         "FUNCTIONAL PROTOTYPES",
-        "KICXUP CHALLENGE",
-        "SEALINK PoC",
+        "PUBLIC DEMOS",
+        "EXTERNAL VALIDATION",
         "<!-- V156_RUNTIME_NOTE -->",
         "<!-- V156_SOLUTION_EXAMPLES -->",
     )
@@ -1907,16 +1961,21 @@ def home_page(lang: str, canonical_path: str) -> str:
 {header(lang, "home")}
 <main id="main">
 <section aria-labelledby="hero-title" class="hero section-grid" id="hero">
-<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#architecture">{e(h["primary"])}</a><a class="fm-button" href="#current-stage">{e(h["secondary"])}</a></div></div>
+<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#field-problem">{e(h["primary"])}</a><a class="fm-button" href="#what-changes">{e(h["secondary"])}</a></div></div>
 <div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event →|Decision → Action","en":"Motion → Event →|Decision → Action","ar":"Motion → Event →|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
 <div class="cell yellow hero-note span-4 reveal delay-2"><strong>{e(FLOW_STEPS[lang][0][0])}</strong><span>{e(FLOW_STEPS[lang][0][1])}</span></div>
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>{e(h["primary"])}</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
+<div class="v156-platform home-problem">{_v156_section(_v156_source(lang), "field-problem")}</div>
+{before_after_section(lang)}
 {home_composition_section(lang)}
+{outcomes_section(lang)}
+{home_current_stage_section(lang)}
 {deployment_modes_section(lang)}
 <section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
 <div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
+{company_section(lang)}
 {contact_section(lang)}
 </main>{footer(lang)}<script src="{HOME_SCRIPT_SRC}"></script></body></html>"""
     return html
@@ -2142,6 +2201,7 @@ def notes() -> str:
 - Quality Intelligence: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; Defect → Loss → Priority → Work → Verify → Recurrence 구조를 기준으로 하며 Inspection은 Evidence / Input Layer로 표시합니다.
 - Machining Intelligence: Manufacturing Recipe, 기존 G-code 문맥 추론, safe assembly, 측정/보정, managed metadata, air-gapped USB 동기화를 V.Next 구조로 설명합니다. source-level 검증과 Active development / PoC 범위를 분리합니다.
 - Manufacturing Intelligence Platform: Manufacturing Context → Engine Pool → Module Pool → Solution Profile 조합 구조를 `/{{lang}}/platform/`에서 설명합니다. Event Bus·Audit·Adapter는 독립 제품이 아닌 경량 공통 런타임으로 한정합니다.
+- 홈 정보 흐름: 회사 정의 → 현장 문제 → 기존 시스템과 Flowmatic의 역할 차이 → Composition Journey → 4 Intelligence 업무효과 → 구현·검증 현황 → PoC → Company → 문의 순서입니다.
 - 홈 Composition Journey: 데스크톱의 가로형 조립 장면을 유지하고, 모바일은 동심원 분산 → 중앙 정렬 → 12 Module → 4 Intelligence 배선 순서의 가역 스크롤 장면을 사용합니다. `prefers-reduced-motion` 환경만 정적 4단계 요약을 표시합니다.
 - 신규 정식 URL: `/{{lang}}/machining-intelligence/`, `/{{lang}}/operations-intelligence/`, `/{{lang}}/logistics-intelligence/`, `/{{lang}}/platform/`; 기존 NC/CT/Quality/Work Standard/TMS/AMR URL은 하위 컴포넌트 페이지로 유지합니다.
 - Operations Intelligence: Functional MVP / internal validation 상태로 표시하며, Tracked Operational Cost를 완전 제조원가나 회계원가로 표현하지 않습니다.

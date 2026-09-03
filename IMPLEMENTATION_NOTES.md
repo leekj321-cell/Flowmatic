@@ -1,6 +1,6 @@
 # Flowmatic Implementation Notes
 
-- 작성일: 2026-09-01
+- 작성일: 2026-09-03
 - 기술 스택: 순수 정적 HTML/CSS/JavaScript, GitHub Pages 배포
 - 배포 플랫폼: GitHub Pages + CNAME `flowmatic-os.com`
 - 다국어 처리 방식: `/ko/`, `/en/`, `/ar/` 정적 HTML을 생성하며 각 HTML에는 해당 언어만 렌더링합니다. 기존 루트 URL과 `*.html` 제품 URL은 한국어 호환 페이지로 유지합니다.
@@ -9,6 +9,7 @@
 - Quality Intelligence: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; Defect → Loss → Priority → Work → Verify → Recurrence 구조를 기준으로 하며 Inspection은 Evidence / Input Layer로 표시합니다.
 - Machining Intelligence: Manufacturing Recipe, 기존 G-code 문맥 추론, safe assembly, 측정/보정, managed metadata, air-gapped USB 동기화를 V.Next 구조로 설명합니다. source-level 검증과 Active development / PoC 범위를 분리합니다.
 - Manufacturing Intelligence Platform: Manufacturing Context → Engine Pool → Module Pool → Solution Profile 조합 구조를 `/{lang}/platform/`에서 설명합니다. Event Bus·Audit·Adapter는 독립 제품이 아닌 경량 공통 런타임으로 한정합니다.
+- 홈 정보 흐름: 회사 정의 → 현장 문제 → 기존 시스템과 Flowmatic의 역할 차이 → Composition Journey → 4 Intelligence 업무효과 → 구현·검증 현황 → PoC → Company → 문의 순서입니다.
 - 홈 Composition Journey: 데스크톱의 가로형 조립 장면을 유지하고, 모바일은 동심원 분산 → 중앙 정렬 → 12 Module → 4 Intelligence 배선 순서의 가역 스크롤 장면을 사용합니다. `prefers-reduced-motion` 환경만 정적 4단계 요약을 표시합니다.
 - 신규 정식 URL: `/{lang}/machining-intelligence/`, `/{lang}/operations-intelligence/`, `/{lang}/logistics-intelligence/`, `/{lang}/platform/`; 기존 NC/CT/Quality/Work Standard/TMS/AMR URL은 하위 컴포넌트 페이지로 유지합니다.
 - Operations Intelligence: Functional MVP / internal validation 상태로 표시하며, Tracked Operational Cost를 완전 제조원가나 회계원가로 표현하지 않습니다.
