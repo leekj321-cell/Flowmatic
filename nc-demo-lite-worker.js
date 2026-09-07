@@ -1,3 +1,5 @@
+if (typeof importScripts === "function") importScripts("/nc-viewer-core.js?v=2.1");
+
 (function expose(root, factory) {
   const api = factory();
   if (typeof module !== "undefined" && module.exports) module.exports = api;
@@ -21,6 +23,9 @@
   }
 })(typeof self !== "undefined" ? self : globalThis, function createWorkerApi() {
   "use strict";
+
+  const viewerCore = typeof module !== "undefined" && module.exports
+    ? require("./nc-viewer-core.js") : self.FlowmaticNcViewerCore;
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const MAX_LINES = 100000;
@@ -426,6 +431,7 @@
     const totalTheoreticalTime = totals.rapidTime + totals.cuttingTime + totals.toolChangeTime;
     const status = totals.motionBlocks === 0 ? "unable" : (warningItems.some((item) => ["excluded", "limited", "file"].includes(item.category)) ? "partial" : "basic");
     return {
+      scene: viewerCore.parseNcText(text),
       totals: { ...totals, totalTheoreticalTime },
       settings,
       status,

@@ -23,7 +23,8 @@
       longLine: (n) => `비정상적으로 긴 행 ${n}개는 앞부분만 분석했습니다.`,
       fileSize: "5MB 이하 파일만 분석할 수 있습니다.",
       lineLimit: "100,000행 이하 파일만 분석할 수 있습니다.",
-      extension: "지원 확장자는 .nc, .cnc, .tap, .txt, .min 입니다.",
+      extension: "NC 텍스트 파일(.nc, .cnc, .tap, .txt, .min 또는 O번호)을 선택하세요. ZIP은 먼저 압축을 풀어주세요.",
+      format: "텍스트 G-code 형식이 아닙니다. TC 파일은 NC 텍스트로 내보낸 뒤 열어주세요.",
       readError: "파일을 읽을 수 없습니다.",
       noWarnings: "표시할 경고가 없습니다.",
       noTools: "공구별 결과가 아직 없습니다.",
@@ -61,6 +62,7 @@
       lineLimit: "Only files up to 100,000 lines can be analyzed.",
       extension: "Supported extensions are .nc, .cnc, .tap, .txt, and .min.",
       readError: "The file could not be read.",
+      format: "This is not a text G-code file. Export TC files as NC text first.",
       noWarnings: "No warnings to show.",
       noTools: "No tool result yet.",
       sampleName: "flowmatic-nc-sample.nc",
@@ -97,6 +99,7 @@
       lineLimit: "يمكن تحليل ملفات حتى 100,000 سطر فقط.",
       extension: "الصيغ المدعومة هي .nc و .cnc و .tap و .txt و .min.",
       readError: "تعذرت قراءة الملف.",
+      format: "هذا الملف ليس نص G-code. صدّر ملفات TC كنص NC أولاً.",
       noWarnings: "لا توجد تحذيرات.",
       noTools: "لا توجد نتيجة حسب الأداة بعد.",
       sampleName: "flowmatic-nc-sample.nc",
@@ -154,7 +157,7 @@
 
   function supportedFileName(fileName) {
     const lower = String(fileName || "").toLowerCase();
-    return VALID_EXTENSIONS.some((extension) => lower.endsWith(extension));
+    return VALID_EXTENSIONS.some((extension) => lower.endsWith(extension)) || /^o\d{1,8}$/i.test(lower);
   }
 
   function readSettings(root, previous) {
@@ -182,6 +185,8 @@
   }
 
   function renderEmpty(root) {
+    root.ncViewerScene = null;
+    root.dispatchEvent(new CustomEvent("flowmatic:nc-reset"));
     const t = copy();
     setText(root, '[data-nc-result="total"]', "—");
     setText(root, '[data-nc-result="status"]', t.idle);
@@ -294,6 +299,8 @@
   }
 
   function renderResult(root, result, fileMeta) {
+    root.ncViewerScene = result.scene || null;
+    root.dispatchEvent(new CustomEvent("flowmatic:nc-result", { detail: root.ncViewerScene }));
     const totals = result.totals || {};
     const t = copy();
     setText(root, '[data-nc-result="total"]', formatSeconds(totals.totalTheoreticalTime));
@@ -318,13 +325,21 @@
   function workerRequest(worker, action, payload, transfer) {
     const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
     return new Promise((resolve, reject) => {
+      const cleanup = () => {
+        clearTimeout(timer);
+        worker.removeEventListener("message", onMessage);
+        worker.removeEventListener("error", onError);
+      };
+      const onError = () => { cleanup(); reject({ code: "readError" }); };
       const onMessage = (event) => {
         if (!event.data || event.data.id !== id) return;
-        worker.removeEventListener("message", onMessage);
+        cleanup();
         if (event.data.ok) resolve(event.data.result);
         else reject(event.data.error || new Error("Worker error"));
       };
+      const timer = setTimeout(onError, 30000);
       worker.addEventListener("message", onMessage);
+      worker.addEventListener("error", onError);
       worker.postMessage({ id, action, ...payload }, transfer || []);
     });
   }
@@ -332,29 +347,40 @@
   roots.forEach((root) => {
     let settings = { rapidFeed: 20000, defaultFeed: 1000, toolChange: 6 };
     let lastSource = null;
-    const worker = new Worker("/nc-demo-lite-worker.js?v=1.0");
+    let revision = 0;
+    let worker;
+    try { worker = new Worker("/nc-demo-lite-worker.js?v=2.2"); }
+    catch (_) { renderError(root, copy().readError); return; }
     const fileInput = root.querySelector("[data-nc-file]");
     const dropzone = root.querySelector("[data-nc-dropzone]");
     const sampleButton = root.querySelector("[data-nc-sample]");
     const resetButton = root.querySelector("[data-nc-reset]");
     const recalculateButton = root.querySelector("[data-nc-recalculate]");
     const warningsButton = root.querySelector("[data-nc-show-warnings]");
+    root.querySelector("[data-nc-open]")?.addEventListener("click", () => fileInput?.click());
 
     async function analyzeSource(source) {
+      const requestRevision = ++revision;
       const t = copy();
+      renderEmpty(root);
+      root.dispatchEvent(new CustomEvent("flowmatic:nc-loading"));
       settings = readSettings(root, settings);
       setText(root, '[data-nc-result="status"]', t.working);
       const meta = { name: source.name, size: source.size };
       try {
         let result;
         if (source.type === "file") {
-          const buffer = await source.file.arrayBuffer();
+          const buffer = source.file.arrayBuffer ? await source.file.arrayBuffer() : await new Promise((resolve, reject) => {
+            const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsArrayBuffer(source.file);
+          });
           result = await workerRequest(worker, "parseBuffer", { buffer, options: settings }, [buffer]);
         } else {
           result = await workerRequest(worker, "parseText", { text: source.text, options: settings });
         }
-        renderResult(root, result, meta);
+        if (requestRevision === revision) renderResult(root, result, meta);
       } catch (error) {
+        if (requestRevision !== revision) return;
+        root.dispatchEvent(new CustomEvent("flowmatic:nc-reset"));
         const message = t[error.code] || error.message || t.readError;
         renderError(root, message);
       }
@@ -364,7 +390,7 @@
       const t = copy();
       if (!file) return;
       if (!supportedFileName(file.name)) {
-        renderError(root, t.extension);
+        renderError(root, /\.tc$/i.test(file.name) ? t.format : t.extension);
         return;
       }
       if (file.size > MAX_FILE_SIZE) {
@@ -380,6 +406,7 @@
     }
 
     if (dropzone) {
+      dropzone.addEventListener('click', () => fileInput?.click());
       ["dragenter", "dragover"].forEach((name) => {
         dropzone.addEventListener(name, (event) => {
           event.preventDefault();
@@ -406,14 +433,17 @@
 
     if (sampleButton) {
       sampleButton.addEventListener("click", async () => {
+        const sampleRevision = ++revision;
         const t = copy();
         try {
-          const response = await fetch("/demo-data/flowmatic-nc-sample.nc", { cache: "no-store" });
+          const response = await fetch("/demo-data/flowmatic-nc-sample.nc?v=synthetic-1", { cache: "no-store" });
           if (!response.ok) throw new Error(t.sampleLoadError);
           const text = await response.text();
+          if (sampleRevision !== revision) return;
           lastSource = { type: "text", text, name: t.sampleName, size: new Blob([text]).size };
           await analyzeSource(lastSource);
         } catch (_) {
+          if (sampleRevision !== revision) return;
           renderError(root, t.sampleLoadError);
         }
       });
@@ -421,6 +451,7 @@
 
     if (resetButton) {
       resetButton.addEventListener("click", () => {
+        revision++;
         lastSource = null;
         root.dataset.ncWarningsExpanded = "false";
         if (fileInput) fileInput.value = "";
@@ -443,5 +474,7 @@
     }
 
     renderEmpty(root);
+    const bootNotice = root.querySelector('[data-nc-boot]');
+    if (bootNotice) bootNotice.hidden = true;
   });
 })();

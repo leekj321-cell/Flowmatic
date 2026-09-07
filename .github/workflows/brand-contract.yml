@@ -17,4 +17,7 @@ jobs:
           python-version: "3.12"
       - name: Verify locked CI assets
         run: python3 tools/validate_brand_contract.py
-
+      - name: Verify public NC example and translations
+        run: python3 tools/validate_nc_public_release.py
+      - name: Verify NC viewer behavior
+        run: node --test tests/nc-viewer.test.cjs

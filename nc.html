@@ -34,6 +34,7 @@
 <link rel="mask-icon" href="/assets/branding/flowmatic-logo-mark.svg?v=20260803.2" color="#111111">
 <link rel="manifest" href="/site.webmanifest?v=20260803.2">
 <link rel="stylesheet" href="/style-v5.20.css?v=5.29">
+<link rel="stylesheet" href="/nc-viewer-3d.css?v=2.1">
 </head>
 <body class="technology-page flowmatic-nc" data-lang="ko" data-static-lang="true">
 <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -46,6 +47,37 @@
 </div>
 </header>
 <main id="main">
+<section class="nc-workspace" data-nc-demo-lite aria-labelledby="nc-browser-demo-title">
+<div class="nc-app-top"><h2 id="nc-browser-demo-title">G-code Viewer</h2><strong data-nc-meta="file">NC —</strong></div>
+<div class="nc-boot-notice" data-nc-boot>화면을 시작하는 중입니다. 안내가 계속 보이면 페이지를 새로고침하거나 브라우저에서 다시 열어주세요.</div><div data-nc-alert role="alert" hidden></div>
+<input class="sr-only" data-nc-file id="nc-demo-file" type="file" aria-label="NC 파일 선택">
+<div class="nc-viewer" data-nc-viewer><div class="nc-workbench">
+<div class="nc-viewer-surface" data-viewer-surface><canvas data-viewer-canvas tabindex="0" aria-label="3D 공구 경로. 방향키로 회전, 더하기와 빼기로 확대, Home 키로 화면 맞춤."></canvas><div class="nc-viewer-message" data-viewer-message>NC 파일을 열거나 샘플을 실행하세요.</div>
+<div class="nc-viewer-camera"><button data-viewer-fit type="button">3D</button><button data-viewer-top type="button">Top</button><button data-viewer-zoom-in type="button" aria-label="확대">+</button><button data-viewer-zoom-out type="button" aria-label="축소">−</button></div>
+<div class="nc-viewer-coordinates" data-viewer-coordinates dir="ltr">X — &nbsp; Y — &nbsp; Z —</div></div>
+<div class="nc-code-pane"><p class="nc-panel-label">G-code List</p>
+<div class="nc-current"><p>현재 Tool: <strong data-viewer-selected>—</strong></p><p>이송상태: <strong data-viewer-motion>—</strong></p></div>
+<button class="nc-rapid-toggle" data-viewer-rapid-toggle type="button" aria-pressed="true">급속이송 숨김</button><input data-viewer-rapid class="sr-only" type="checkbox" checked tabindex="-1" aria-label="급속이송 표시">
+<div class="nc-navigation"><button data-viewer-prev type="button" disabled>Prev Tool</button><button data-viewer-next type="button" disabled>Next Tool</button><button data-viewer-console-toggle type="button" aria-expanded="false">Tool Console</button></div>
+<fieldset class="nc-tool-console" data-viewer-console hidden><legend>Tool Console</legend><label class="nc-diameter-row">공구 직경 Ø <input data-viewer-diameter type="number" min="0.01" max="10000" step="any" inputmode="decimal" placeholder="—" disabled aria-label="공구 직경"> mm <small data-viewer-diameter-source>—</small></label>
+<div class="nc-viewer-tool-list" data-viewer-tools aria-label="공구 목록"></div><button class="nc-console-all" data-viewer-all type="button" aria-pressed="true">전체 공구</button></fieldset>
+<div class="nc-code-table" aria-label="NC Code"><div class="nc-code-columns"><span>Line</span><span>NC Code</span><span>Tool</span><span>D(mm)</span><span>WCS</span></div><div class="nc-code-scroll" data-viewer-code-scroll tabindex="0" aria-label="G-code List"><div data-viewer-code-spacer></div><div data-viewer-code-rows></div></div></div></div>
+<aside class="nc-file-pane"><fieldset><legend>파일</legend><div class="nc-demo-actions"><button class="fm-button primary" data-nc-open type="button">NC 파일 열기</button><button class="fm-button" data-nc-sample type="button">샘플 실행</button><button class="fm-button" data-nc-reset type="button">초기화</button></div><p>파일은 이 브라우저 안에서만 분석되며 서버로 전송되지 않습니다.</p><div data-nc-dropzone tabindex="0" role="button" aria-controls="nc-demo-file">NC, CNC, TAP 또는 TXT 파일을 여기에 놓으세요.</div></fieldset></aside>
+</div><div class="nc-viewer-foot"><p class="nc-viewer-desktop-hint">드래그: 회전 · 휠: 확대 · 오른쪽 드래그: 이동 · 경로 클릭: 공구 위치</p><p class="nc-viewer-touch-hint">한 손가락: 회전 · 두 손가락: 확대·이동</p><p>프로그램 좌표 기준 · 직경 단위 mm</p></div><p class="nc-viewer-status" data-viewer-status role="status">—</p><details class="nc-viewer-review" data-viewer-review hidden><summary>경로 검토 항목</summary><ul data-viewer-warnings></ul></details></div><details class="nc-analysis-details"><summary>기존 시간 분석</summary><div class="section-grid"><div class="cell span-5 nc-demo-input-cell"><dl class="nc-demo-file-meta"><div><dt>크기</dt><dd data-nc-meta="size">—</dd></div><div><dt>전체 행 수</dt><dd data-nc-meta="lines">—</dd></div><div><dt>계산 가능한 이동</dt><dd data-nc-meta="motions">—</dd></div><div><dt>제외된 명령</dt><dd data-nc-meta="excluded">—</dd></div></dl>
+<details class="nc-demo-settings"><summary>계산 설정</summary><div class="nc-demo-setting-grid"><label>Rapid Feed<input data-nc-setting="rapidFeed" inputmode="decimal" min="1" step="100" type="number" value="20000"><span>mm/min</span></label><label>Default Cutting Feed<input data-nc-setting="defaultFeed" inputmode="decimal" min="1" step="10" type="number" value="1000"><span>mm/min</span></label><label>Tool Change Time<input data-nc-setting="toolChange" inputmode="decimal" min="0" step="0.1" type="number" value="6.0"><span>sec/change</span></label></div><button class="fm-button primary" data-nc-recalculate type="button">다시 계산</button></details></div>
+<div class="cell span-7 nc-demo-result-cell reveal delay-2" aria-live="polite">
+<p class="eyebrow">이론상 프로그램 예상시간</p><strong class="nc-demo-total" data-nc-result="total">—</strong><p class="nc-demo-condition">프로그램에 기록된 좌표와 이송속도를 기준으로 계산한 이론값입니다.</p>
+<div class="nc-demo-status"><span>Analysis Status</span><strong data-nc-result="status">샘플을 실행하거나 로컬 NC 파일을 선택하세요.</strong></div>
+<div class="nc-demo-kpi-grid"><article><span>Cutting</span><strong data-nc-result="cutting">—</strong></article><article><span>Rapid</span><strong data-nc-result="rapid">—</strong></article><article><span>Tool Change</span><strong data-nc-result="toolChange">—</strong></article><article><span>Tools</span><strong data-nc-result="tools">—</strong></article><article><span>Motion Blocks</span><strong data-nc-result="motionBlocks">—</strong></article><article><span>Excluded Blocks</span><strong data-nc-result="excludedBlocks">—</strong></article></div>
+<div class="nc-demo-timebar" aria-label="이론상 프로그램 예상시간"><span data-nc-bar="cutting"></span><span data-nc-bar="rapid"></span><span data-nc-bar="toolChange"></span></div>
+<div class="nc-demo-legend"><span>Cutting</span><span>Rapid</span><span>Tool Change</span></div>
+<p class="nc-demo-disclaimer">실제 설비 시간은 가감속, 공구교환 동작, 스핀들 응답, PLC 대기, 클램핑, 매크로, 서브프로그램 및 설비 고유 동작에 따라 달라질 수 있습니다.</p>
+</div>
+<div class="cell span-6 nc-demo-warning-cell reveal"><h3>경고 및 계산 제외 항목</h3><ul data-nc-warnings></ul><button class="fm-button" data-nc-show-warnings type="button" hidden>전체 경고 보기</button></div>
+<div class="cell span-6 nc-demo-tool-cell reveal delay-1"><h3>공구별 시간</h3><div class="nc-demo-tool-list" data-nc-tools role="table" aria-label="공구별 시간"></div></div>
+<div class="cell span-12 nc-demo-preview-cell reveal"><h3>G-code 미리보기</h3><div class="nc-demo-preview" data-nc-preview aria-label="G-code 미리보기"></div></div>
+</div></details>
+</section>
 <section aria-labelledby="tech-title" class="detail-overview section-grid">
 <div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">G-code Intelligence · 구 Flowmatic NC</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title"><span class="copy-lines"><span class="copy-line">가공 전</span><span class="copy-line">공구 경로 검토</span></span></h1><p class="body-large">NC 코드를 해석해 공구 움직임·예상 사이클타임·위험 경로를 시각화합니다.</p><div class="detail-meta"><span class="status-badge-list"><span class="status-badge is-demo">Public browser demo</span><span class="status-badge is-progress">Desktop functional prototype</span></span><span>한 개 설비 · 한 개 공정 · 대표 NC 프로그램 세트</span></div><a class="detail-inline-back" href="/ko/#solutions">← 전체 제품 보기</a></div>
 <div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">현재 Operating sequence</p></div><div aria-label="NC code becomes a visual toolpath and review result" class="tech-visual nc-explainer" data-tech-animation="nc">
@@ -57,28 +89,6 @@
 <section aria-label="Component context" class="component-context section-grid"><div class="cell yellow span-12 reveal"><p class="eyebrow">Component context</p><p class="body-large">Machining Intelligence component · NC Browser Demo = public local theoretical-time analysis · Desktop Engineering = separate functional prototype</p><a class="product-link" href="/ko/machining-intelligence/"><span>Machining Intelligence</span><span aria-hidden="true">→</span></a></div></section>
 <section aria-labelledby="demo-title" class="detail-demo section-grid"><div class="cell span-4 demo-copy reveal"><p class="eyebrow">제품 데모</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title"><span class="copy-lines"><span class="copy-line">G-code Intelligence 실제 데모</span></span></h2><p class="body-large">NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.</p></div>
 <div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="/flowmatic_nc_demo" data-video-title="G-code Intelligence demo"><video aria-label="G-code Intelligence demo" controls hidden playsinline preload="metadata" poster="/assets/branding/flowmatic-og-ko-r1.png" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>브라우저에서 영상을 재생할 수 없습니다. 아래 설명으로 핵심 흐름을 확인하세요.</strong></p></div></div><p class="video-summary">NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.</p></div></section>
-<section aria-labelledby="nc-browser-demo-title" class="nc-browser-demo-lite section-grid" data-nc-demo-lite>
-<div class="cell span-12 nc-demo-title-cell reveal"><p class="eyebrow">TRY FLOWMATIC NC</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="nc-browser-demo-title"><span class="copy-lines"><span class="copy-line">NC 프로그램의</span><span class="copy-line">시간 구조 분석</span></span></h2><p class="body-large">G-code의 절삭·급속이송·공구교환을 분석해 이론상 프로그램 시간을 산출합니다.</p></div>
-<div class="cell span-5 nc-demo-input-cell reveal delay-1">
-<div class="nc-demo-dropzone" data-nc-dropzone tabindex="0" role="button" aria-controls="nc-demo-file"><strong>NC, CNC, TAP 또는 TXT 파일을 여기에 놓으세요.</strong><span>파일은 이 브라우저 안에서만 분석되며 서버로 전송되지 않습니다.</span></div>
-<input accept=".nc,.cnc,.tap,.txt,.min" class="sr-only" data-nc-file id="nc-demo-file" type="file">
-<div class="nc-demo-actions"><label class="fm-button primary" for="nc-demo-file">NC 파일 열기</label><button class="fm-button" data-nc-sample type="button">샘플 실행</button><button class="fm-button" data-nc-reset type="button">초기화</button></div>
-<p class="nc-demo-privacy">파일은 이 브라우저 안에서만 분석되며 서버로 전송되지 않습니다.</p>
-<dl class="nc-demo-file-meta"><div><dt>파일</dt><dd data-nc-meta="file">—</dd></div><div><dt>크기</dt><dd data-nc-meta="size">—</dd></div><div><dt>전체 행 수</dt><dd data-nc-meta="lines">—</dd></div><div><dt>계산 가능한 이동</dt><dd data-nc-meta="motions">—</dd></div><div><dt>제외된 명령</dt><dd data-nc-meta="excluded">—</dd></div></dl>
-<details class="nc-demo-settings"><summary>계산 설정</summary><div class="nc-demo-setting-grid"><label>Rapid Feed<input data-nc-setting="rapidFeed" inputmode="decimal" min="1" step="100" type="number" value="20000"><span>mm/min</span></label><label>Default Cutting Feed<input data-nc-setting="defaultFeed" inputmode="decimal" min="1" step="10" type="number" value="1000"><span>mm/min</span></label><label>Tool Change Time<input data-nc-setting="toolChange" inputmode="decimal" min="0" step="0.1" type="number" value="6.0"><span>sec/change</span></label></div><button class="fm-button primary" data-nc-recalculate type="button">다시 계산</button></details>
-</div>
-<div class="cell span-7 nc-demo-result-cell reveal delay-2" aria-live="polite">
-<p class="eyebrow">이론상 프로그램 예상시간</p><strong class="nc-demo-total" data-nc-result="total">—</strong><p class="nc-demo-condition">프로그램에 기록된 좌표와 이송속도를 기준으로 계산한 이론값입니다.</p>
-<div class="nc-demo-status"><span>Analysis Status</span><strong data-nc-result="status">샘플을 실행하거나 로컬 NC 파일을 선택하세요.</strong></div>
-<div class="nc-demo-kpi-grid"><article><span>Cutting</span><strong data-nc-result="cutting">—</strong></article><article><span>Rapid</span><strong data-nc-result="rapid">—</strong></article><article><span>Tool Change</span><strong data-nc-result="toolChange">—</strong></article><article><span>Tools</span><strong data-nc-result="tools">—</strong></article><article><span>Motion Blocks</span><strong data-nc-result="motionBlocks">—</strong></article><article><span>Excluded Blocks</span><strong data-nc-result="excludedBlocks">—</strong></article></div>
-<div class="nc-demo-timebar" aria-label="이론상 프로그램 예상시간"><span data-nc-bar="cutting"></span><span data-nc-bar="rapid"></span><span data-nc-bar="toolChange"></span></div>
-<div class="nc-demo-legend"><span>Cutting</span><span>Rapid</span><span>Tool Change</span></div>
-<p class="nc-demo-disclaimer">실제 설비 시간은 가감속, 공구교환 동작, 스핀들 응답, PLC 대기, 클램핑, 매크로, 서브프로그램 및 설비 고유 동작에 따라 달라질 수 있습니다.</p>
-</div>
-<div class="cell span-6 nc-demo-warning-cell reveal"><h3>경고 및 계산 제외 항목</h3><div data-nc-alert role="alert" hidden></div><ul data-nc-warnings></ul><button class="fm-button" data-nc-show-warnings type="button" hidden>전체 경고 보기</button></div>
-<div class="cell span-6 nc-demo-tool-cell reveal delay-1"><h3>공구별 시간</h3><div class="nc-demo-tool-list" data-nc-tools role="table" aria-label="공구별 시간"></div></div>
-<div class="cell span-12 nc-demo-preview-cell reveal"><h3>G-code 미리보기</h3><div class="nc-demo-preview" data-nc-preview aria-label="G-code 미리보기"></div></div>
-</section>
 <section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">파일럿 검증 데이터</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title"><span class="copy-lines"><span class="copy-line">가공 전 공구 경로 검토</span></span></h2><p class="body-large">NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.</p></div><article class="cell spec-card span-4 reveal delay-1"><span>01</span><h3>대상 사용자</h3><ul><li>CNC 프로그래머</li><li>생산기술 엔지니어</li><li>가공 검토 담당자</li></ul></article>
 <article class="cell spec-card span-4 reveal delay-2"><span>02</span><h3>입력</h3><ul><li>NC/G-code 프로그램</li><li>저장소에 이미 사용 중인 공구·좌표·이송 정보</li></ul></article>
 <article class="cell spec-card span-4 reveal delay-3"><span>03</span><h3>운영 이벤트</h3><ul><li>급속 이동 검토 지점</li><li>경로 위험 후보</li><li>사이클타임 검토</li></ul></article>
@@ -91,4 +101,4 @@
 <p>스마트팩토리가 데이터를 수집하고 보여준다면, Flowmatic은 무엇을 먼저 처리해야 하는지 정하고 끝날 때까지 추적합니다.</p>
 <div class="footer-links"><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a><a href="/ko/#hero">홈</a></div>
 <small>© 2026 Flowmatic</small>
-</footer><script src="/script.js?v=5.22"></script><script src="/nc-demo-lite.js?v=1.0"></script></body></html>
+</footer><script src="/script.js?v=5.22"></script><script src="/nc-demo-lite.js?v=2.2"></script><script type="module" src="/nc-viewer-3d.js?v=2.1"></script></body></html>

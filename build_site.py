@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import date
 from html import escape
+from nc_viewer_section import viewer_section
 import json
 from pathlib import Path
 import re
@@ -30,7 +31,7 @@ CSS_HREF = "/style-v5.20.css?v=5.29"
 HOME_CSS_HREF = "/style-v5.20.css?v=5.29"
 SCRIPT_SRC = "/script.js?v=5.22"
 HOME_SCRIPT_SRC = "/script.js?v=5.26"
-NC_DEMO_SRC = "/nc-demo-lite.js?v=1.0"
+NC_DEMO_SRC = "/nc-demo-lite.js?v=2.2"
 WEB_V156_CONTENT_DIR = Path(__file__).resolve().parent / "content" / "web_v156"
 BRAND_PATH = "/assets/branding"
 BRAND_VERSION = "20260803.2"
@@ -2134,16 +2135,8 @@ NC_BROWSER_DEMO = {
 
 def nc_browser_demo_section(lang: str) -> str:
     t = NC_BROWSER_DEMO[lang]
-    return f"""<section aria-labelledby="nc-browser-demo-title" class="nc-browser-demo-lite section-grid" data-nc-demo-lite>
-<div class="cell span-12 nc-demo-title-cell reveal"><p class="eyebrow">{e(t["eyebrow"])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="nc-browser-demo-title">{lines(t["title"])}</h2><p class="body-large">{e(t["body"])}</p></div>
-<div class="cell span-5 nc-demo-input-cell reveal delay-1">
-<div class="nc-demo-dropzone" data-nc-dropzone tabindex="0" role="button" aria-controls="nc-demo-file"><strong>{e(t["drop"])}</strong><span>{e(t["privacy"])}</span></div>
-<input accept=".nc,.cnc,.tap,.txt,.min" class="sr-only" data-nc-file id="nc-demo-file" type="file">
-<div class="nc-demo-actions"><label class="fm-button primary" for="nc-demo-file">{e(t["open"])}</label><button class="fm-button" data-nc-sample type="button">{e(t["sample"])}</button><button class="fm-button" data-nc-reset type="button">{e(t["reset"])}</button></div>
-<p class="nc-demo-privacy">{e(t["privacy"])}</p>
-<dl class="nc-demo-file-meta"><div><dt>{e(t["file"])}</dt><dd data-nc-meta="file">—</dd></div><div><dt>{e(t["size"])}</dt><dd data-nc-meta="size">—</dd></div><div><dt>{e(t["lines"])}</dt><dd data-nc-meta="lines">—</dd></div><div><dt>{e(t["motions"])}</dt><dd data-nc-meta="motions">—</dd></div><div><dt>{e(t["excluded"])}</dt><dd data-nc-meta="excluded">—</dd></div></dl>
-<details class="nc-demo-settings"><summary>{e(t["settings"])}</summary><div class="nc-demo-setting-grid"><label>{e(t["rapid_feed"])}<input data-nc-setting="rapidFeed" inputmode="decimal" min="1" step="100" type="number" value="20000"><span>mm/min</span></label><label>{e(t["default_feed"])}<input data-nc-setting="defaultFeed" inputmode="decimal" min="1" step="10" type="number" value="1000"><span>mm/min</span></label><label>{e(t["tool_change"])}<input data-nc-setting="toolChange" inputmode="decimal" min="0" step="0.1" type="number" value="6.0"><span>sec/change</span></label></div><button class="fm-button primary" data-nc-recalculate type="button">{e(t["recalculate"])}</button></details>
-</div>
+    analysis = f'''<div class="cell span-5 nc-demo-input-cell"><dl class="nc-demo-file-meta"><div><dt>{e(t["size"])}</dt><dd data-nc-meta="size">—</dd></div><div><dt>{e(t["lines"])}</dt><dd data-nc-meta="lines">—</dd></div><div><dt>{e(t["motions"])}</dt><dd data-nc-meta="motions">—</dd></div><div><dt>{e(t["excluded"])}</dt><dd data-nc-meta="excluded">—</dd></div></dl>
+<details class="nc-demo-settings"><summary>{e(t["settings"])}</summary><div class="nc-demo-setting-grid"><label>{e(t["rapid_feed"])}<input data-nc-setting="rapidFeed" inputmode="decimal" min="1" step="100" type="number" value="20000"><span>mm/min</span></label><label>{e(t["default_feed"])}<input data-nc-setting="defaultFeed" inputmode="decimal" min="1" step="10" type="number" value="1000"><span>mm/min</span></label><label>{e(t["tool_change"])}<input data-nc-setting="toolChange" inputmode="decimal" min="0" step="0.1" type="number" value="6.0"><span>sec/change</span></label></div><button class="fm-button primary" data-nc-recalculate type="button">{e(t["recalculate"])}</button></details></div>
 <div class="cell span-7 nc-demo-result-cell reveal delay-2" aria-live="polite">
 <p class="eyebrow">{e(t["result"])}</p><strong class="nc-demo-total" data-nc-result="total">—</strong><p class="nc-demo-condition">{e(t["condition"])}</p>
 <div class="nc-demo-status"><span>{e(t["status"])}</span><strong data-nc-result="status">{e(t["empty"])}</strong></div>
@@ -2152,10 +2145,11 @@ def nc_browser_demo_section(lang: str) -> str:
 <div class="nc-demo-legend"><span>{e(t["cutting"])}</span><span>{e(t["rapid"])}</span><span>{e(t["tool_change_label"])}</span></div>
 <p class="nc-demo-disclaimer">{e(t["disclaimer"])}</p>
 </div>
-<div class="cell span-6 nc-demo-warning-cell reveal"><h3>{e(t["warnings"])}</h3><div data-nc-alert role="alert" hidden></div><ul data-nc-warnings></ul><button class="fm-button" data-nc-show-warnings type="button" hidden>{e(t["show_all"])}</button></div>
+<div class="cell span-6 nc-demo-warning-cell reveal"><h3>{e(t["warnings"])}</h3><ul data-nc-warnings></ul><button class="fm-button" data-nc-show-warnings type="button" hidden>{e(t["show_all"])}</button></div>
 <div class="cell span-6 nc-demo-tool-cell reveal delay-1"><h3>{e(t["tool_results"])}</h3><div class="nc-demo-tool-list" data-nc-tools role="table" aria-label="{e(t["tool_results"])}"></div></div>
 <div class="cell span-12 nc-demo-preview-cell reveal"><h3>{e(t["preview"])}</h3><div class="nc-demo-preview" data-nc-preview aria-label="{e(t["preview"])}"></div></div>
-</section>"""
+'''
+    return viewer_section(lang, t, analysis)
 
 
 def product_page(lang: str, slug: str, canonical_path: str) -> str:
@@ -2176,18 +2170,21 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
     related_items = "".join(f'<li><a href="{page_path(lang, rel)}">{e(product_name(PRODUCTS[rel], lang))}</a> — {e(PRODUCTS[rel]["outcome"][lang])}</li>' for rel in product["related"])
     nc_demo = f"\n{nc_browser_demo_section(lang)}" if slug == "nc" else ""
     quality_status = f"\n{quality_status_section(lang)}" if slug == "quality" else ""
-    extra_script = f'<script src="{NC_DEMO_SRC}"></script>' if slug == "nc" else ""
+    extra_script = f'<script src="{NC_DEMO_SRC}"></script><script type="module" src="/nc-viewer-3d.js?v=2.1"></script>' if slug == "nc" else ""
+    head = meta_head(lang, slug, title, description, canonical_path)
+    if slug == "nc":
+        head = head.replace("</head>", '<link rel="stylesheet" href="/nc-viewer-3d.css?v=2.1">\n</head>')
     html = f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
-{meta_head(lang, slug, title, description, canonical_path)}
+{head}
 <body class="technology-page {product["class"]}" data-lang="{lang}" data-static-lang="true">
 {header(lang, slug)}
-<main id="main">
+<main id="main">{nc_demo}
 <section aria-labelledby="tech-title" class="detail-overview section-grid">
 <div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#solutions">← {e(LANGS[lang]["all_products"])}</a></div>
 <div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
 {component_context_section(lang, slug)}
-<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{nc_demo}{quality_status}{quality_current_section(lang) if slug == "quality" else ""}
+<section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{quality_status}{quality_current_section(lang) if slug == "quality" else ""}
 <section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
 <section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#solutions">{e(LANGS[lang]["all_products"])}</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script>{extra_script}</body></html>"""
