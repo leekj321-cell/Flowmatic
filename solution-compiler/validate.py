@@ -31,6 +31,12 @@ for module_id, spec in modules.items():
 assert catalog.get("objective_rules")
 assert catalog.get("gap_rules")
 
+# Data Management contract: canonical reference + change history are one shared module.
+data_caps = set(modules["flowmatic.data_management.modular"]["capabilities"])
+assert {"reference.master@1", "revision.history@1", "offset.history@1", "integrity.manifest@1", "offline.conflict@1"} <= data_caps
+assert "offset.event@1" in modules["flowmatic.measurement.modular"]["capabilities"]
+assert "revision.output@1" in modules["flowmatic.generator.modular"]["capabilities"]
+
 # V0.4 UX contract: only one free-text intent field remains.
 assert 'id="customProblem"' not in html
 assert 'id="intent"' in html
@@ -60,6 +66,16 @@ assert any(
     for rule in catalog["gap_rules"]
 )
 
+# Measurement-linked NC generation must compose Generator + Measurement + Data Management.
+text = "측정치수 연동 자동 G코드 생성, 오프셋 변경이력과 기준정보 관리".lower()
+matched_modules = set()
+for rule in catalog["objective_rules"]:
+    if any(term.lower() in text for term in rule["terms"]):
+        matched_modules.update(rule["modules"])
+assert "flowmatic.generator.modular" in matched_modules
+assert "flowmatic.measurement.modular" in matched_modules
+assert "flowmatic.data_management.modular" in matched_modules
+
 for forbidden in ("OPENAI_API_KEY=", "GITHUB_DISPATCH_TOKEN=", "ghp_", "github_pat_", "sk-proj-", "sk-"):
     assert forbidden not in html
     assert forbidden not in json.dumps(config)
@@ -67,5 +83,6 @@ for forbidden in ("OPENAI_API_KEY=", "GITHUB_DISPATCH_TOKEN=", "ghp_", "github_p
 print("SOLUTION_COMPILER_WEB_GATE=PASS")
 print("UX=SINGLE_INTENT_FIELD")
 print("UNCLASSIFIED=FAIL_CLOSED_CANDIDATE_REVIEW")
+print("DATA_MANAGEMENT=REFERENCE_MASTER+CHANGE_HISTORY")
 print(f"PROBLEMS={len(catalog['problems'])}")
 print(f"MODULES={len(modules)}")
