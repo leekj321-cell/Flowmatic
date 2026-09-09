@@ -32,8 +32,13 @@ assert catalog.get("objective_rules")
 assert catalog.get("gap_rules")
 
 # Data Management contract: canonical reference + change history are one shared module.
-data_caps = set(modules["flowmatic.data_management.modular"]["capabilities"])
+data_spec = modules["flowmatic.data_management.modular"]
+data_caps = set(data_spec["capabilities"])
 assert {"reference.master@1", "revision.history@1", "offset.history@1", "integrity.manifest@1", "offline.conflict@1"} <= data_caps
+layers = {layer["id"]: layer for layer in data_spec["layers"]}
+assert set(layers) == {"reference-master", "change-history"}
+assert "reference.master@1" in layers["reference-master"]["capabilities"]
+assert "offset.history@1" in layers["change-history"]["capabilities"]
 assert "offset.event@1" in modules["flowmatic.measurement.modular"]["capabilities"]
 assert "revision.output@1" in modules["flowmatic.generator.modular"]["capabilities"]
 
