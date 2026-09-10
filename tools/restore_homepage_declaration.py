@@ -28,10 +28,11 @@ def main():
     p=ROOT/'business-narrative.css';css=p.read_text()
     css+='''
 /* WEB-019 / RT-022: approved primary declaration; content copy cannot replace it. */
-body.bn-page .bn-hero #hero-title{font-size:clamp(24px,4.2vw,64px)!important;line-height:1.08!important;font-weight:800!important;letter-spacing:-.035em!important;direction:ltr!important;text-align:left!important;unicode-bidi:isolate;max-width:none!important;width:100%;margin:10px 0 28px;word-break:normal!important;overflow-wrap:normal!important}
+body.bn-page .bn-hero #hero-title{font-size:clamp(24px,3.7vw,56px)!important;line-height:1.08!important;font-weight:800!important;letter-spacing:-.035em!important;direction:ltr!important;text-align:left!important;unicode-bidi:isolate;max-width:none!important;width:100%;margin:10px 0 28px;word-break:normal!important;overflow-wrap:normal!important}
 body.bn-page .bn-hero #hero-title .copy-lines{display:block!important;width:100%!important;min-width:0;max-width:100%}
 body.bn-page .bn-hero #hero-title .copy-line{display:block!important;white-space:nowrap!important;width:auto!important;max-width:100%;font-size:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;word-break:normal!important;overflow-wrap:normal!important}
 @media(max-width:768px){body.bn-page .bn-hero #hero-title{font-size:clamp(24px,7.2vw,52px)!important}.bn-hero .bn-promise h2{font-size:clamp(24px,6.5vw,38px)}}
+@media(max-width:359px){body.bn-page .bn-hero #hero-title{font-size:23px!important}}
 '''
     p.write_text(css)
     print('Restored approved declaration and Operations ownership; validators and motion assets untouched')
