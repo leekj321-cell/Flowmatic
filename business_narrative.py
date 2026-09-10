@@ -1,7 +1,10 @@
 """Business-first static website composition. Original animation/viewer code is reused."""
 from html import escape as e
 from bs4 import BeautifulSoup
-RELEASE='2026.09.10-r2'
+RELEASE='2026.09.10-r3'
+from pathlib import Path
+import json
+DECLARATION='|'.join(json.loads((Path(__file__).parent/'homepage-declaration.json').read_text())['lines'])
 COPY={k:{} for k in ('ko','en','ar')}
 def text(key,ko,en,ar):
     for lang,value in zip(COPY,(ko,en,ar)): COPY[lang][key]=value
@@ -94,7 +97,7 @@ def configure(site):
         assert set(t)==set(COPY['ko'])
         x=wr.TEXT[lang]
         x.update(nav=t['nav'],run=t['run'],consult=t['consult'],work_title=t['problem'],work_body=t['problem_body'],people=t['people'],goal=t['problem_end'],products_title=t['products'],products_body=t['products_body'],demos_title=t['demos'],demos_body=t['demos_body'],nc_demo=t['nc_title'],nc_body=t['nc_body'],ct_demo=t['ct_title'],ct_body=t['ct_body'],pilot_title=t['pilot'],pilot_body=t['pilot_body'],example=t['example'],engineering=t['technical'])
-        site['HOME'][lang].update(h1=t['hero'],primary=t['explore'],secondary=t['consult'],contact_title=t['contact'],contact_body=t['contact_body'])
+        site['HOME'][lang].update(h1=DECLARATION,primary=t['explore'],secondary=t['consult'],contact_title=t['contact'],contact_body=t['contact_body'])
         site['CONTACT_FORM'][lang].update(brief=t['brief'],brief_template='')
         site['HOME_COMPOSITION_COPY'][lang].update(kicker='Flowmatic',title=t['assembly'],body=t['assembly_body'],steps=t['assembly_steps'])
         site['PRODUCTS']['work-standard']['hero'][lang]=t['standard']
@@ -109,7 +112,12 @@ def configure(site):
     def workflow(lang):
         t=COPY[lang]
         steps=''.join(f'<li><strong>{e(a)}</strong><span>{e(b)}</span></li>' for a,b in t['workflow_steps'])
-        return f'<section class="field-flow section-grid bn-workflow" id="workflow" aria-labelledby="workflow-title"><div class="cell span-5 flow-copy"><h2 id="workflow-title" class="bn-h2">{e(t["workflow"])}</h2><p class="body-large">{e(t["workflow_body"])}</p><ol class="flow-explanation">{steps}</ol></div><div class="cell span-7 flow-visual-cell"><p class="wr-label">{e(t["principle"])}</p>{site["field_story"](lang)}<p class="wr-footnote">{e(t["principle_note"])}</p></div></section>'
+        return section('workflow',t['workflow'],t['workflow_body'],cards(t['workflow_steps']))
+    def operations_motion(lang):
+        t=COPY[lang]
+        html=site['operations_story_section'](lang).replace('class="field-flow section-grid"','class="field-flow section-grid bn-workflow"')
+        visual=site['field_story'](lang)
+        return html.replace(visual+'</div>',visual+f'<p class="wr-label">{e(t["principle"])}</p><p class="wr-footnote">{e(t["principle_note"])}</p></div>')
     def composition(lang):
         html=site['home_composition_section'](lang)
         pairs={'ko':('설비상태 · Cycle · 손실 · 예방보전 · 운영판단','발주 요청 · 소모품 · 공수 · 운영비용'),'en':('Machine state · cycle · loss · maintenance · operating decisions','Purchase requests · consumables · labor · operating costs'),'ar':('حالة الآلة · الدورة · الخسارة · الصيانة · القرار','طلبات الشراء · المستهلكات · العمل · التكاليف التشغيلية')}
@@ -125,7 +133,7 @@ def configure(site):
         t=COPY[lang];return '<div class="bn-end-actions">'+action(f'/{lang}/?interest={slug}#contact',t['consult'])+action(f'/{lang}/#products',t['explore'],False)+'</div>'
     def home(lang,path):
         t=COPY[lang];x=wr.TEXT[lang]
-        hero=f'<section id="hero" class="hero section-grid bn-hero" aria-labelledby="hero-title"><div class="cell span-7 hero-copy"><p class="eyebrow">Flowmatic</p><h1 id="hero-title">{e(t["hero"]).replace("|","<br>")}</h1><p class="body-large bn-definition">{e(x["intro"])}</p><div class="hero-actions">{action("#products",t["explore"])}{action("#contact",t["consult"],False)}</div><p class="bn-brand-slogan" id="brand-slogan" lang="en" dir="ltr">Elegant Engineering. Intelligent Operations. Flowmatic.</p></div><div class="cell blue span-5 bn-promise"><h2>{e(t["promise"]).replace("|","<br>")}</h2><p>{e(t["note"])}</p></div></section>'
+        hero=f'<section id="hero" class="hero section-grid bn-hero" aria-labelledby="hero-title"><div class="cell span-7 hero-copy"><p class="eyebrow">Flowmatic</p><h1 id="hero-title" class="hero-title semantic-copy brand-hero-title" lang="en" dir="ltr" data-brand-contract="WEB-019">{site["lines"](DECLARATION)}</h1><p class="body-large bn-definition">{e(x["intro"])}</p><div class="hero-actions">{action("#products",t["explore"])}{action("#contact",t["consult"],False)}</div></div><div class="cell blue span-5 bn-promise"><h2>{e(t["promise"]).replace("|","<br>")}</h2><p>{e(t["note"])}</p></div></section>'
         body=hero+wr.customer_section(lang)+workflow(lang)+wr.products_section(lang)+demos(lang)
         body+=section('capability',t['capability'],t['capability_body'],cards(t['benefits']),t['benefit_note'])+wr.preprocessing_section(lang)+composition(lang)+growth(lang)+wr.pilot_section(lang)
         body+=section('company',t['company'],t['company_body'],action('#contact',t['consult'],False))+site['contact_section'](lang).replace('rows="8"','rows="5"')
@@ -139,7 +147,7 @@ def configure(site):
         if slug=='operations-intelligence':
             fields=''.join(f'<div><dt>{e(a)}</dt><dd>{e(b)}</dd></div>' for a,b in t['fields'])
             example=f'<div class="wr-grid wr-grid-two"><article class="wr-card"><h3>{e(t["input"])}</h3><blockquote>{e(t["memo"])}</blockquote></article><article class="wr-card"><h3>{e(t["output"])}</h3><dl class="bn-request">{fields}</dl></article></div>'
-            body=subhero(t['ops'],t['ops_body'],'Operations Intelligence')+section('request-example',t['ops_example'],'',example,t['ops_scope'])+section('operating-resources',t['resources'],t['resources_body'])+end(lang,slug)
+            body=subhero(t['ops'],t['ops_body'],'Operations Intelligence')+section('request-example',t['ops_example'],'',example,t['ops_scope'])+section('operating-resources',t['resources'],t['resources_body'])+operations_motion(lang)+end(lang,slug)
             return document(lang,slug,path,body,t['ops_body'])
         if slug=='logistics-intelligence':
             body=subhero(t['logistics'],t['logistics_body'],'Logistics Intelligence')+section('material-work',t['scope'],'','',t['logistics_scope'])
@@ -166,4 +174,4 @@ def configure(site):
         for node in soup.select('.detail-animation-head .eyebrow'):node.string={'ko':'업무 흐름 예시','en':'Workflow illustration','ar':'رسم توضيحي لسير العمل'}[lang]
         return str(soup)
     site['home_page']=home;site['intelligence_page']=intelligence;site['product_page']=product
-    site['notes']=lambda: '# Website release '+RELEASE+'\n\nCompany proposition -> field problem -> workflow -> products and actual demos -> organizational capability -> reusable information -> composition and expansion -> paid pilot and inquiry.\n\nNC is a scoped machining component, not the company proposition. Original field animation explains cross-workflow connection, not purchasing. Original animation scripts, render functions, viewer and video bytes are unchanged.\n\nReview: author content review and browser regression, not independent Strategy Office sign-off or native Arabic proofreading.\n'
+    site['notes']=lambda: '# Website release '+RELEASE+'\n\nCompany proposition -> field problem -> workflow -> products and actual demos -> organizational capability -> reusable information -> composition and expansion -> paid pilot and inquiry.\n\nNC is a scoped machining component, not the company proposition. WEB-019 / RT-022: canonical first-screen English declaration is the primary three-line H1 in all locales. WEB-020 / RT-023: original operational animation belongs only to the Operations page, with an illustrative integration boundary. Original animation scripts, render functions, viewer and video bytes are unchanged.\n\nReview: author content review and browser regression, not independent Strategy Office sign-off or native Arabic proofreading.\n'
