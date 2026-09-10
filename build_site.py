@@ -1055,7 +1055,7 @@ def header(lang: str, slug: str) -> str:
     t = LANGS[lang]
     home = page_path(lang)
     labels = web_release.TEXT[lang]["nav"]
-    targets = [home+"#products", home+"#demos", page_path(lang, "platform"), home+"#company", home+"#pilot"]
+    targets = [home+"#products", home+"#demos", page_path(lang, "platform"), home+"#company", home+"#contact"]
     nav_html = "".join(f'<a href="{target}">{e(label)}</a>' for target, label in zip(targets, labels))
     ci = f'{BRAND_PATH}/canonical/flowmatic-ci-ko-horizontal.png' if lang == "ko" else f'{BRAND_PATH}/canonical/flowmatic-ci-global-horizontal.svg'
     lang_html = "".join(
@@ -2259,6 +2259,8 @@ def main() -> None:
 
 
 web_release.configure(globals())
+import business_narrative
+business_narrative.configure(globals())
 
 if __name__ == "__main__":
     main()
