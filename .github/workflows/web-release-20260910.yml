@@ -1,15 +1,23 @@
-name: Website release QA
+name: Website business-first release QA
 on:
   push:
-    branches: [web/refresh-20260910, main]
-    paths: ['tools/web_release_qa.py', 'web_release_content.py', 'web-refresh.css', 'build_site.py', 'nc-demo-lite.js', 'nc_viewer_section.py', '.github/workflows/web-release-20260910.yml']
+    branches: [web/business-first-20260910, main]
+    paths:
+      - business_narrative.py
+      - business-narrative.css
+      - tools/apply_business_narrative.py
+      - tools/web_business_qa.py
+      - build_site.py
+      - web_release_content.py
+      - web-refresh.css
+      - .github/workflows/web-release-20260910.yml
 permissions:
   contents: write
 concurrency:
-  group: website-release-${{ github.ref }}
+  group: website-business-first-${{ github.ref }}
   cancel-in-progress: false
 jobs:
-  browser-and-content:
+  verify:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -19,90 +27,82 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Finish measured text-container corrections
-        if: github.ref == 'refs/heads/web/refresh-20260910'
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p=Path('web-refresh.css');s=p.read_text()
-          if '/* Final text-container bounds */' not in s:
-              s+='''
-          /* Final text-container bounds */
-          body .hero .brand-hero-title,body .hero .brand-hero-title .copy-lines{width:100%;max-width:100%}
-          .v156-platform .section-title{overflow-wrap:anywhere;word-break:normal}
-          .card-title-fit .copy-line{white-space:normal!important;width:auto!important;max-width:100%;overflow-wrap:anywhere;word-break:normal;line-height:1.16}
-          .card-title-fit .copy-lines{width:100%!important;min-width:0}
-          '''
-              p.write_text(s)
-          PY
-      - name: Install browser test dependencies
+      - name: Install verification dependencies
         run: |
           python -m pip install playwright==1.58.0 beautifulsoup4==4.14.3 Pillow==12.1.0
           python -m playwright install --with-deps chromium
           sudo apt-get update -qq
-          sudo apt-get install -y ffmpeg fonts-noto-cjk
-      - name: Build and verify protected animation and media sources
+          sudo apt-get install -y fonts-noto-cjk
+      - name: Install and build approved business narrative
         run: |
-          set -euo pipefail
-          git fetch origin 451148d2b85a0d5022210a0399d8a02d63adc0e4 --depth=1
+          python tools/apply_business_narrative.py
+          python -m py_compile business_narrative.py tools/web_business_qa.py
+          python build_site.py
+      - name: Protect original motion, viewer, media, domain and brand
+        run: |
+          git fetch --depth=1 origin 34faae11f9c63ecb031f0a727473c738b939d8fc
           python - <<'PY'
-          import ast, pathlib, subprocess
-          base='451148d2b85a0d5022210a0399d8a02d63adc0e4'
-          for path in ['script.js','style-v5.20.css','nc-viewer-3d.js','nc-viewer-core.js','nc-viewer-canvas.js','nc-viewer-3d.css','flowmatic_nc_demo.mp4','flowmatic_ct_demo.mp4','demo-data/flowmatic-nc-sample.nc']:
-              assert pathlib.Path(path).read_bytes()==subprocess.check_output(['git','show',base+':'+path]), 'Protected original changed: '+path
-          old=subprocess.check_output(['git','show',base+':build_site.py']).decode().replace('\r\n','\n')
-          new=pathlib.Path('build_site.py').read_text()
+          import ast, subprocess
+          from pathlib import Path
+          base='34faae11f9c63ecb031f0a727473c738b939d8fc'
+          protected=['CNAME','script.js','style-v5.20.css','nc-viewer-3d.js','nc-viewer-core.js','nc-viewer-canvas.js','nc-viewer-3d.css','flowmatic_nc_demo.mp4','flowmatic_ct_demo.mp4','demo-data/flowmatic-nc-sample.nc']
+          for path in protected:
+              assert Path(path).read_bytes()==subprocess.check_output(['git','show',base+':'+path]), path
+          before=subprocess.check_output(['git','show',base+':build_site.py']).decode().replace('\r\n','\n')
+          after=Path('build_site.py').read_text()
           for name in ['home_composition_section','operations_story_section','field_story']:
               def source(text):
                   node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef) and n.name==name)
                   return ast.get_source_segment(text,node)
-              assert source(old)==source(new), name+' changed'
-          print('PASS: protected animation renderers, scripts, styles, NC viewer and media unchanged')
+              assert source(before)==source(after), name
+          print('PASS: original domain, motion, viewer, video bytes and animation render functions preserved')
           PY
-          python build_site.py
           python tools/validate_brand_contract.py
           python tools/validate_nc_public_release.py
           node --test tests/nc-viewer.test.cjs
-      - name: Feature-branch browser rehearsal and actual preview capture
-        id: browser
-        if: github.ref == 'refs/heads/web/refresh-20260910'
-        run: python tools/web_release_qa.py --browser --capture-assets
-      - name: Wait for official Pages release
+      - name: Candidate browser and meaning-position regression
+        id: candidate
+        if: github.ref == 'refs/heads/web/business-first-20260910'
+        run: python tools/web_business_qa.py --browser
+      - name: Await exact official release
         if: github.ref == 'refs/heads/main'
         run: |
           python - <<'PY'
           import json,time,urllib.request
-          for attempt in range(30):
+          for i in range(45):
               try:
-                  data=json.load(urllib.request.urlopen('https://flowmatic-os.com/release.json?check='+str(time.time_ns()),timeout=15))
-                  if data.get('release')=='2026.09.10-r1': break
-              except Exception: pass
+                  u='https://flowmatic-os.com/release.json?verify='+str(time.time())
+                  data=json.load(urllib.request.urlopen(u,timeout=20))
+                  if data.get('release')=='2026.09.10-r2':break
+              except Exception as exc: print(type(exc).__name__)
               time.sleep(10)
-          else: raise SystemExit('Official domain did not serve the intended release')
+          else:raise SystemExit('Official domain did not reach r2; deployment is not verified')
           PY
-      - name: Official-domain browser verification
+      - name: Official domain browser regression
         if: github.ref == 'refs/heads/main'
-        run: python tools/web_release_qa.py --browser --base https://flowmatic-os.com
-      - name: Export evidence and candidate source
+        run: python tools/web_business_qa.py --browser --base https://flowmatic-os.com
+      - name: Commit only a passing candidate for visual review
+        if: success() && github.ref == 'refs/heads/web/business-first-20260910'
+        run: |
+          git config user.name 'Flowmatic Web Release'
+          git config user.email 'automation@flowmatic-os.com'
+          git add build_site.py business_narrative.py business-narrative.css tools/apply_business_narrative.py tools/web_business_qa.py IMPLEMENTATION_NOTES.md release.json robots.txt sitemap.xml '*.html' ko en ar html-vnext
+          git add -u .release-transfer || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build verified business-first website r2 in all three languages'
+            git push origin HEAD:web/business-first-20260910
+          fi
+      - name: Export actual source and review evidence
         if: always()
         run: |
           mkdir -p qa-artifacts
-          git diff --stat > qa-artifacts/change-stat.txt
-          git diff -- build_site.py nc-demo-lite.js nc_viewer_section.py > qa-artifacts/source.patch
-          tar -czf qa-artifacts/candidate-source.tgz build_site.py web_release_content.py web-refresh.css nc-demo-lite.js nc_viewer_section.py tools/web_release_qa.py media/web-release 2>/dev/null || true
+          git rev-parse HEAD > qa-artifacts/review-commit.txt
+          git diff 34faae11f9c63ecb031f0a727473c738b939d8fc --stat > qa-artifacts/changed-files.txt || true
+          tar -czf qa-artifacts/candidate-source.tgz build_site.py business_narrative.py business-narrative.css web_release_content.py web-refresh.css tools/apply_business_narrative.py tools/web_business_qa.py release.json ko en ar index.html html-vnext '*.html' 2>/dev/null || true
+          printf '%s\n' 'Owner-approved narrative; author review plus technical browser tests. Not independent reader validation, native Arabic review, physical handset testing or real inquiry receipt.' > qa-artifacts/review-boundary.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: website-qa-${{ github.run_id }}
-          path: qa-artifacts/
+          name: website-business-qa-${{ github.run_id }}
+          path: qa-artifacts
           retention-days: 14
-      - name: Save review candidate on feature branch (never publish main here)
-        if: always() && github.ref == 'refs/heads/web/refresh-20260910' && steps.browser.outcome != 'skipped'
-        run: |
-          test -f qa-artifacts/report.json
-          git config user.name 'Flowmatic Website QA'
-          git config user.email 'automation@flowmatic-os.com'
-          git add build_site.py nc-demo-lite.js nc_viewer_section.py web_release_content.py web-refresh.css tools/web_release_qa.py media/web-release release.json IMPLEMENTATION_NOTES.md sitemap.xml robots.txt
-          git add '*.html' ko/ en/ ar/ html-vnext/
-          git diff --cached --quiet || git commit -m 'Website: review candidate; inspect QA artifact before publication'
-          git push origin HEAD:web/refresh-20260910
