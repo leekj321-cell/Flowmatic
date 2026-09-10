@@ -1,0 +1,11 @@
+{
+  "policy": "WEB-019 / RT-022",
+  "status": "APPROVED_LOCKED",
+  "authority": "Owner's fixed first-screen declaration; restored by explicit 2026-09-10 instruction",
+  "approved_reference_commit": "34faae11f9c63ecb031f0a727473c738b939d8fc",
+  "lines": ["Elegant Engineering.", "Intelligent Operations.", "Flowmatic."],
+  "element": "main #hero h1#hero-title",
+  "language": "en",
+  "direction": "ltr",
+  "placement": "primary first-screen headline in every locale"
+}
