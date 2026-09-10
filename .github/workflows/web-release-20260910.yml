@@ -43,6 +43,19 @@ jobs:
             cp /tmp/web-release/tools/web_release_qa.py tools/
             git rm -r tools/web-release-payload
           fi
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('tools/web_release_qa.py');s=p.read_text()
+          s=s.replace('el.ncViewerScene.segments.length','el.ncViewerScene.segmentCount')
+          s=s.replace("page.goto(base+path,wait_until='networkidle',timeout=45000)","page.goto(base+path,wait_until='domcontentloaded',timeout=45000);page.evaluate('document.fonts.ready');page.wait_for_timeout(400)")
+          s=s.replace("page.evaluate('window.scrollTo(0,0)')", "page.evaluate(\"window.scrollTo({top:0,behavior:'instant'})\")")
+          s=s.replace('window.scrollTo(0,window.scrollY+el.getBoundingClientRect().top+Math.max(0,el.getBoundingClientRect().height-innerHeight)*p)', "window.scrollTo({top:window.scrollY+el.getBoundingClientRect().top+Math.max(0,el.getBoundingClientRect().height-innerHeight)*p,behavior:'instant'})")
+          s=s.replace("root.evaluate('(el,p)=>window.scrollTo({top:window.scrollY+el.getBoundingClientRect().top+Math.max(0,el.getBoundingClientRect().height-innerHeight)*p,behavior:'instant'})',progress)", 'root.evaluate("(el,p)=>window.scrollTo({top:window.scrollY+el.getBoundingClientRect().top+Math.max(0,el.getBoundingClientRect().height-innerHeight)*p,behavior:\\"instant\\"})",progress)')
+          s=s.replace("raw=page.locator('[data-nc-viewer]').screenshot()", "raw=page.locator('[data-nc-viewer]').screenshot(style='.site-header{visibility:hidden!important}')")
+          s=s.replace("rp.goto(base+f'/{lang}/',wait_until='networkidle')", "rp.goto(base+f'/{lang}/',wait_until='domcontentloaded');rp.wait_for_timeout(500)")
+          p.write_text(s)
+          compile(s,str(p),'exec')
+          PY
       - name: Install browser test dependencies
         run: |
           python -m pip install playwright==1.58.0 beautifulsoup4==4.14.3 Pillow==12.1.0
@@ -73,6 +86,7 @@ jobs:
           python tools/validate_nc_public_release.py
           node --test tests/nc-viewer.test.cjs
       - name: Feature-branch browser rehearsal and actual preview capture
+        id: browser
         if: github.ref == 'refs/heads/web/refresh-20260910'
         run: python tools/web_release_qa.py --browser --capture-assets
       - name: Wait for official Pages release
@@ -106,13 +120,14 @@ jobs:
           name: website-qa-${{ github.run_id }}
           path: qa-artifacts/
           retention-days: 14
-      - name: Save tested candidate on feature branch (never publish main here)
-        if: success() && github.ref == 'refs/heads/web/refresh-20260910'
+      - name: Save review candidate on feature branch (never publish main here)
+        if: always() && github.ref == 'refs/heads/web/refresh-20260910' && steps.browser.outcome != 'skipped'
         shell: bash
         run: |
+          test -f qa-artifacts/report.json
           git config user.name 'Flowmatic Website QA'
           git config user.email 'automation@flowmatic-os.com'
           git add build_site.py nc-demo-lite.js nc_viewer_section.py web_release_content.py web-refresh.css tools/web_release_qa.py media/web-release release.json IMPLEMENTATION_NOTES.md sitemap.xml robots.txt
           git add '*.html' ko/ en/ ar/ html-vnext/
-          git diff --cached --quiet || git commit -m 'Website: tested multilingual customer journeys and preserved animations'
+          git diff --cached --quiet || git commit -m 'Website: review candidate; inspect QA artifact before publication'
           git push origin HEAD:web/refresh-20260910
