@@ -19,23 +19,30 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Refine candidate layout and tests
+      - name: Finish multilingual headline fit and text-bound checks
         if: github.ref == 'refs/heads/web/refresh-20260910'
         run: |
           python - <<'PY'
           from pathlib import Path
-          p=Path('tools/web_release_qa.py');s=p.read_text()
-          old="pause=root.locator('[data-motion-pause]');pause.click();check(f'{lang}: animation pause {w}',pause.get_attribute('aria-pressed')=='true');pause.click()"
-          new="pause=root.locator('[data-motion-pause]')\n    if w>900:\n     pause.click();check(f'{lang}: animation pause {w}',pause.get_attribute('aria-pressed')=='true');pause.click()\n    else:check(f'{lang}: compact animation omits disabled drift control',pause.is_hidden() and pause.is_disabled())"
-          s=s.replace(old,new);compile(s,str(p),'exec');p.write_text(s)
           p=Path('web-refresh.css');s=p.read_text()
-          if '/* QA layout corrections */' not in s:
-              s+='\n/* QA layout corrections */\n.site-header .lang-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--fm-black);padding:0 6px}\n.site-header .lang-button.is-active{color:var(--fm-white)}\n.flowmatic-nc main{padding-top:var(--header-height)}\n'
+          if '/* Nested headline fit */' not in s:
+              s+='''
+          /* Nested headline fit: preserve slogan wording/lines and animation mechanics. */
+          body .hero .brand-hero-title{--fit-min:18px!important}
+          .hero-title:not(.brand-hero-title) .copy-line,.section-title .copy-line{white-space:normal!important;width:auto!important;max-width:100%;overflow-wrap:anywhere;word-break:normal;line-height:1.16}
+          .hero-title:not(.brand-hero-title) .copy-lines,.section-title .copy-lines{width:100%!important;min-width:0}
+          @media(max-width:900px){
+          [data-composition-motion] .composition-motion__head .section-title{font-size:clamp(18px,5.4vw,26px)!important;line-height:1.12;max-width:100%;--fit-min:18px}
+          .detail-hero-copy .hero-title,.v156-platform-hero .hero-title{--fit-max:42px;--fit-min:28px}
+          }
+          '''
               p.write_text(s)
-          p=Path('web_release_content.py');s=p.read_text()
-          if "site['COMPONENT_CONTEXT']['nc'][1][lang]=" not in s:
-              s=s.replace("site['COMPANY_STORY'][lang]['body']=t['intro']+' '+t['support']", "site['COMPANY_STORY'][lang]['body']=t['intro']+' '+t['support']\n        site['COMPONENT_CONTEXT']['nc'][1][lang]=t['live']+' · '+t['nc_body']+' '+t['scopes'][1][1]")
-              p.write_text(s)
+          p=Path('tools/web_release_qa.py');s=p.read_text()
+          needle="     if slug=='home':"
+          if 'headline text bounds' not in s:
+              s=s.replace(needle,"     clipped=page.locator('h1,h2,h3,h1 .copy-line,h2 .copy-line,h3 .copy-line').evaluate_all(\"els=>els.filter(e=>e.clientWidth>0&&getComputedStyle(e).display!=='none'&&e.scrollWidth>e.clientWidth+2).map(e=>({text:e.textContent.slice(0,120),width:e.clientWidth,scroll:e.scrollWidth}))\")\n     check(f'{lang}/{slug}: headline text bounds {w}x{h}',not clipped,clipped)\n"+needle)
+          s=s.replace('page.wait_for_timeout(90)','page.wait_for_timeout(160)')
+          compile(s,str(p),'exec');p.write_text(s)
           PY
       - name: Install browser test dependencies
         run: |
