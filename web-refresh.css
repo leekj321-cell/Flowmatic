@@ -63,3 +63,9 @@ body .hero .brand-hero-title{--fit-min:18px!important}
 [data-composition-motion] .composition-motion__head .section-title{font-size:clamp(18px,5.4vw,26px)!important;line-height:1.12;max-width:100%;--fit-min:18px}
 .detail-hero-copy .hero-title,.v156-platform-hero .hero-title{--fit-max:42px;--fit-min:28px}
 }
+
+/* Final text-container bounds */
+body .hero .brand-hero-title,body .hero .brand-hero-title .copy-lines{width:100%;max-width:100%}
+.v156-platform .section-title{overflow-wrap:anywhere;word-break:normal}
+.card-title-fit .copy-line{white-space:normal!important;width:auto!important;max-width:100%;overflow-wrap:anywhere;word-break:normal;line-height:1.16}
+.card-title-fit .copy-lines{width:100%!important;min-width:0}
