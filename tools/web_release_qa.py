@@ -107,7 +107,10 @@ def browser_checks(base,baseline=None,capture_assets=False):
      states.append(root.get_attribute('data-composition-state'))
      if progress in [0,1]:page.screenshot(path=str(OUT/f'{lang}-assembly-{w}-{int(progress)}.png'))
     check(f'{lang}: reversible assembly {w}',len(set(states))>=3 and states[0]==states[-1],states)
-    pause=root.locator('[data-motion-pause]');pause.click();check(f'{lang}: animation pause {w}',pause.get_attribute('aria-pressed')=='true');pause.click()
+    pause=root.locator('[data-motion-pause]')
+    if w>900:
+     pause.click();check(f'{lang}: animation pause {w}',pause.get_attribute('aria-pressed')=='true');pause.click()
+    else:check(f'{lang}: compact animation omits disabled drift control',pause.is_hidden() and pause.is_disabled())
    page.set_viewport_size({'width':390,'height':844});go(f'/{lang}/operations-intelligence/');check(f'{lang}: Operations animation present',page.locator('[data-field-story]').count()==1)
    page.locator('[data-field-story]').scroll_into_view_if_needed();x=page.locator('[data-field-story]').screenshot();page.wait_for_timeout(650);y=page.locator('[data-field-story]').screenshot();check(f'{lang}: Operations animation advances',x!=y)
    # Responsive menu + non-delivery contact validation.

@@ -224,6 +224,7 @@ def configure(site):
         site['PRODUCTS']['nc']['description'][lang]=t['nc_body']+' '+t['limits']
         site['PRODUCTS']['nc']['hero_body'][lang]=t['nc_body']
         site['COMPANY_STORY'][lang]['body']=t['intro']+' '+t['support']
+        site['COMPONENT_CONTEXT']['nc'][1][lang]=t['live']+' · '+t['nc_body']+' '+t['scopes'][1][1]
     # Assert the translation schema and card counts rather than falling back to Korean.
     expected=set(TEXT['ko'])
     for lang,t in TEXT.items():

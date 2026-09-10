@@ -49,3 +49,8 @@ body[data-lang="ar"] .nc-code-table,body[data-lang="ar"] .nc-viewer-coordinates{
 @media(max-width:768px){:root{--header-height:112px}.site-header{height:112px;min-height:112px;display:grid;grid-template-columns:1fr;grid-template-rows:48px 48px;gap:2px;padding:6px 14px}.site-header .brand{justify-content:center}.header-actions{margin:0!important;width:100%;justify-content:space-between;gap:12px}.site-nav{inset:112px 0 0 0}.site-nav a{white-space:normal}.wr-grid-three{grid-template-columns:1fr}.wr-grid-two{grid-template-columns:1fr}.wr-heading{margin-bottom:24px}.wr-card{padding:22px}.wr-demo{padding:0}.wr-preview.wr-card{padding:0}.wr-section{padding:28px 20px}.wr-note{padding:16px;font-size:14px}.v156-platform-hero-grid>span{font-size:22px!important}.wr-demo-copy{padding:22px}.nc-workspace{scroll-margin-top:124px}}
 @media(max-width:520px){.wr-grid-four{grid-template-columns:1fr}.wr-section{padding:28px 16px}.wr-card h3{font-size:22px}.wr-heading h2{font-size:28px}.hero .hero-copy{padding-top:24px}.hero .hero-actions{gap:10px;margin-top:18px}.hero .hero-actions .fm-button{min-height:44px;font-size:15px;padding:10px 14px}}
 @media(prefers-reduced-motion:reduce){.wr-section *{scroll-behavior:auto!important}.wr-technical{transition:none}}
+
+/* QA layout corrections */
+.site-header .lang-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--fm-black);padding:0 6px}
+.site-header .lang-button.is-active{color:var(--fm-white)}
+.flowmatic-nc main{padding-top:var(--header-height)}
