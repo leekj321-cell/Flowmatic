@@ -1,240 +1,69 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" dir="ltr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Flowmatic Operations Intelligence</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowmatic Operations Intelligence | Procurement · Consumption · Labor · Cost</title>
+<meta name="description" content="구매·소모품·공구비·공수를 실제 운영 문맥에 연결하고 생산량 기준 이상 후보를 드러냅니다.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="canonical" href="https://flowmatic-os.com/ko/operations-intelligence/">
+<link rel="alternate" hreflang="ko" href="https://flowmatic-os.com/ko/operations-intelligence/">
+<link rel="alternate" hreflang="en" href="https://flowmatic-os.com/en/operations-intelligence/">
+<link rel="alternate" hreflang="ar" href="https://flowmatic-os.com/ar/operations-intelligence/">
+<link rel="alternate" hreflang="x-default" href="https://flowmatic-os.com/ko/operations-intelligence/">
+<meta property="og:title" content="Flowmatic Operations Intelligence | Procurement · Consumption · Labor · Cost">
+<meta property="og:description" content="구매·소모품·공구비·공수를 실제 운영 문맥에 연결하고 생산량 기준 이상 후보를 드러냅니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://flowmatic-os.com/ko/operations-intelligence/">
+<meta property="og:image" content="https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png">
+<meta property="og:image:secure_url" content="https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="플로우매틱 공식 제조 운영지능 소프트웨어 미리보기">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Flowmatic Operations Intelligence | Procurement · Consumption · Labor · Cost">
+<meta name="twitter:description" content="구매·소모품·공구비·공수를 실제 운영 문맥에 연결하고 생산량 기준 이상 후보를 드러냅니다.">
+<meta name="twitter:image" content="https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png">
+<meta name="twitter:image:alt" content="플로우매틱 공식 제조 운영지능 소프트웨어 미리보기">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "name": "Flowmatic", "url": "https://flowmatic-os.com/", "email": "contact@flowmatic-os.com", "logo": "https://flowmatic-os.com/assets/branding/canonical/flowmatic-ci-global-horizontal.png", "image": "https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png"}, {"@type": "WebPage", "name": "Flowmatic Operations Intelligence | Procurement · Consumption · Labor · Cost", "description": "구매·소모품·공구비·공수를 실제 운영 문맥에 연결하고 생산량 기준 이상 후보를 드러냅니다.", "url": "https://flowmatic-os.com/ko/operations-intelligence/", "inLanguage": "ko"}]}</script>
+<link rel="icon" href="/assets/branding/flowmatic-logo-mark.svg?v=20260803.2" sizes="any" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico?v=20260803.2" sizes="16x16 32x32 48x48" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico?v=20260803.2" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/branding/apple-touch-icon.png?v=20260803.2">
+<link rel="mask-icon" href="/assets/branding/flowmatic-logo-mark.svg?v=20260803.2" color="#111111">
+<link rel="manifest" href="/site.webmanifest?v=20260803.2">
+<link rel="stylesheet" href="/style-v5.20.css?v=5.29">
+<link rel="stylesheet" href="/web-refresh.css?v=2026.09.10-r1">
+<meta name="flowmatic-release" content="2026.09.10-r1">
 </head>
-<body data-page="operations-intelligence" data-html-version="vnext">
-  <a href="#main">본문으로 건너뛰기</a>
-
-  <header data-site-header>
-    <a href="home.html" aria-label="Flowmatic 홈">Flowmatic</a>
-    <nav aria-label="주요 메뉴">
-      <a href="platform.html">Platform</a>
-      <a href="modules.html">Modules</a>
-      <a href="home.html#intelligence">Intelligence</a>
-      <a href="home.html#pilot">파일럿 상담</a>
-    </nav>
-  </header>
-
-  <main id="main">
-    <section aria-labelledby="operations-title" data-page-hero>
-      <p>Operations Intelligence</p>
-      <h1 id="operations-title">현장 신호와 요청을 Event로 바꾸고, 담당·조치·완료까지 연결합니다.</h1>
-      <p>설비 상태·현장 요청·자원 사용량을 같은 운영 문맥으로 기록하고 우선순위와 다음 행동을 연결합니다. 조달 요청 구조화와 비용·소비 이상 탐지는 현재 구현 범위에서 확인할 수 있습니다.</p>
-      <p>
-        <a href="#operations-flow">작동 흐름 보기</a>
-        <a href="#operations-scope">현재 구현 범위 보기</a>
-      </p>
-    </section>
-
-    <section id="operations-flow" aria-labelledby="operations-flow-title" data-operations-story>
-      <header>
-        <p>Operational event loop</p>
-        <h2 id="operations-flow-title">읽고, 기록하고, 조치하고, 확인합니다.</h2>
-        <p>현장 신호와 요청을 Event로 만들고, 담당·다음 행동·완료 조건을 같은 이력에 연결합니다.</p>
-      </header>
-
-      <ol aria-label="Operations Intelligence 작동 순서" data-operations-sequence>
-        <li data-operations-stage="read">
-          <article>
-            <header>
-              <span>01</span>
-              <h3>현장 읽기</h3>
-            </header>
-            <p>카메라·NC·검사·작업자·설비·현장 요청에서 필요한 신호를 수집합니다.</p>
-            <ul aria-label="현장 입력" data-flow-inputs>
-              <li data-flow-node="camera">Camera</li>
-              <li data-flow-node="nc-code">NC Code</li>
-              <li data-flow-node="inspection">Inspection</li>
-              <li data-flow-node="operator">Operator</li>
-              <li data-flow-node="machine">Machine</li>
-              <li data-flow-node="request">Request</li>
-            </ul>
-          </article>
-        </li>
-
-        <li data-operations-stage="record">
-          <article>
-            <header>
-              <span>02</span>
-              <h3>Event 기록</h3>
-            </header>
-            <p>품목·수량·시간·비용·상태·출처를 보존하고, 불확실한 값은 후보 상태로 남깁니다.</p>
-            <ul aria-label="Event 유형" data-flow-events>
-              <li data-flow-node="request-event">Request Event</li>
-              <li data-flow-node="machine-state-event">Machine State Event</li>
-              <li data-flow-node="resource-event">Resource Event</li>
-              <li data-flow-node="anomaly-candidate">Anomaly Candidate</li>
-            </ul>
-          </article>
-        </li>
-
-        <li data-operations-stage="act">
-          <article>
-            <header>
-              <span>03</span>
-              <h3>다음 행동 연결</h3>
-            </header>
-            <p>Event의 우선순위와 책임 범위에 따라 검토·안내·알림·호출을 담당자에게 연결합니다.</p>
-            <ul aria-label="후속 행동" data-flow-actions>
-              <li data-flow-node="review">Review</li>
-              <li data-flow-node="guide">Guide</li>
-              <li data-flow-node="alert">Alert</li>
-              <li data-flow-node="call">Call</li>
-              <li data-flow-node="allocate">Allocate</li>
-            </ul>
-          </article>
-        </li>
-
-        <li data-operations-stage="confirm">
-          <article>
-            <header>
-              <span>04</span>
-              <h3>응답 확인</h3>
-            </header>
-            <p>사람 또는 설비의 응답, 조치 결과, 완료 시점을 기록하고 Event를 종결합니다.</p>
-            <ul aria-label="확인 결과" data-flow-results>
-              <li data-flow-node="acknowledged">Acknowledged</li>
-              <li data-flow-node="assigned">Assigned</li>
-              <li data-flow-node="resolved">Resolved</li>
-              <li data-flow-node="closed">Closed</li>
-            </ul>
-          </article>
-        </li>
-      </ol>
-    </section>
-
-    <section aria-labelledby="operations-modules-title" data-intelligence-axis="operations">
-      <header>
-        <p>Module composition</p>
-        <h2 id="operations-modules-title">운영 문제에 맞춰 필요한 Module을 연결합니다.</h2>
-      </header>
-      <div>
-        <article data-module-ref="module-tms">
-          <h3>TMS</h3>
-          <p>공구 사용이력과 잔여수명을 운영 기준에 연결합니다.</p>
-          <a href="modules.html#tms" aria-label="TMS Module 보기">Module 보기</a>
-        </article>
-        <article data-module-ref="module-preventive-maintenance">
-          <h3>Preventive Maintenance</h3>
-          <p>Machine State·측정·공구수명의 이상 추세를 검토합니다.</p>
-          <a href="modules.html#preventive-maintenance" aria-label="Preventive Maintenance Module 보기">Module 보기</a>
-        </article>
-        <article data-module-ref="module-machine-monitor">
-          <h3>Machine Monitor</h3>
-          <p>가동·대기·정지·호출을 Event로 바꾸고 대응 리드타임을 계산합니다.</p>
-          <a href="modules.html#machine-monitor" aria-label="Machine Monitor Module 보기">Module 보기</a>
-        </article>
-        <article data-module-ref="module-root-cause">
-          <h3>Root Cause</h3>
-          <p>품질 변화와 Tool·Machine·INDEX·NC Revision 변화를 같은 시점에서 비교합니다.</p>
-          <a href="modules.html#root-cause" aria-label="Root Cause Module 보기">Module 보기</a>
-        </article>
-        <article data-module-ref="module-data-management">
-          <h3>Data Management</h3>
-          <p>운영 기준 데이터의 Revision·출처·배포 이력을 관리합니다.</p>
-          <a href="modules.html#data-management" aria-label="Data Management Module 보기">Module 보기</a>
-        </article>
-        <article data-module-ref="module-control-tower">
-          <h3>Control Tower</h3>
-          <p>선택된 Module의 상태·손실·담당·완료 결과를 같은 기준으로 집계합니다.</p>
-          <a href="modules.html#control-tower" aria-label="Control Tower Module 보기">Module 보기</a>
-        </article>
-      </div>
-    </section>
-
-    <section id="operations-scope" aria-labelledby="operations-scope-title">
-      <header>
-        <p>Current scope</p>
-        <h2 id="operations-scope-title">요청 구조화, 자원 정규화, 이상 후보 탐지를 기능 단위로 확인합니다.</h2>
-      </header>
-
-      <div>
-        <article>
-          <p>Functional MVP</p>
-          <h3>Procurement Intelligence</h3>
-          <p>메일·채팅에서 품명·규격·수량·UOM·사용 문맥을 추출하고 confidence·reason과 함께 후보를 제시합니다. 담당자가 확인한 항목만 기존 요청양식으로 출력합니다.</p>
-          <ul>
-            <li>수량이 없을 때 1EA로 자동 확정하지 않음</li>
-            <li>규격이 충돌할 때 자동 확정하지 않음</li>
-            <li>알 수 없는 포장 단위를 임의 환산하지 않음</li>
-            <li>수량과 사용 위치를 분리해 확인</li>
-            <li>확인된 항목만 양식으로 출력</li>
-          </ul>
-        </article>
-
-        <article>
-          <p>Functional MVP</p>
-          <h3>Resource Economics</h3>
-          <p>Tool·Consumable·Labor Event를 Tracked Operational Cost로 묶고 생산량과 가동시간으로 정규화합니다.</p>
-          <ul>
-            <li>Cost / Production EA</li>
-            <li>Cost / Good EA</li>
-            <li>Man-hour / 1,000 EA</li>
-            <li>Consumption / 1,000 EA</li>
-            <li>Consumption / running hour</li>
-          </ul>
-        </article>
-
-        <article>
-          <p>MVP candidate detection</p>
-          <h3>Cost / Consumption Anomaly</h3>
-          <p>Rolling Median + MAD와 EWMA로 생산량·가동시간 기준의 이상 후보를 식별하고 담당자 검토로 보냅니다.</p>
-          <ul>
-            <li>Rolling Median + MAD</li>
-            <li>EWMA</li>
-            <li>Production-normalized candidates</li>
-            <li>Human review required</li>
-          </ul>
-        </article>
-
-        <article>
-          <p>Prototype</p>
-          <h3>Operations Composition Surface</h3>
-          <p>Factory·Group·Period 공통 기준에서 필요한 운영 Module을 실행하고, Control Tower가 선택된 Module의 결과를 집계합니다.</p>
-          <ul>
-            <li>Factory · Group · Period filter</li>
-            <li>Selected Module execution</li>
-            <li>Status · loss · owner · completion aggregation</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section aria-labelledby="operations-boundary-title">
-      <header>
-        <p>Applied boundary</p>
-        <h2 id="operations-boundary-title">현재 연결된 비용과 데이터 범위를 구분합니다.</h2>
-      </header>
-      <p>Tracked Operational Cost는 현재 연동된 공구·소모품·공수 비용을 포함합니다. Material·Energy·Maintenance·Outsource를 포괄하는 제조원가·회계원가와는 구분합니다.</p>
-      <p>실시간 ERP/MES Adapter, 재고·예산·공급사·수요예측, Maintenance 상관분석, 전체 Quality Adapter는 외부 데이터 연결 후 검증합니다.</p>
-    </section>
-
-    <section aria-labelledby="operations-pilot-title">
-      <header>
-        <p>Pilot</p>
-        <h2 id="operations-pilot-title">한 요청 흐름 또는 한 자원 지표부터 전후를 측정합니다.</h2>
-      </header>
-      <ul>
-        <li>대표 요청 문서와 기존 출력 양식</li>
-        <li>확정이 필요한 품목·규격·수량 규칙</li>
-        <li>생산량·가동시간·사용량 기준선</li>
-        <li>담당자 확인과 완료 조건</li>
-      </ul>
-      <p>
-        <a href="home.html?interest=operations-intelligence#contact">Operations 파일럿 상담</a>
-        <a href="platform.html">Platform 구조 보기</a>
-      </p>
-    </section>
-  </main>
-
-  <footer>
-    <a href="home.html">Flowmatic</a>
-    <p>한 라인에서 측정하고, 다음 공정의 확장 여부를 판단합니다.</p>
-    <p><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a></p>
-    <small>© 2026 Flowmatic</small>
-  </footer>
-</body>
-</html>
+<body class="intelligence-page" data-lang="ko" data-static-lang="true"><a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="site-header" data-header>
+<a aria-label="Flowmatic home" class="brand" href="/ko/#hero"><img alt="Flowmatic" class="wr-corporate-ci" src="/assets/branding/canonical/flowmatic-ci-ko-horizontal.png" width="220"></a>
+<div class="header-actions">
+<nav class="site-nav" data-nav id="site-nav"><a href="/ko/#products">제품</a><a href="/ko/#demos">데모</a><a href="/ko/platform/">플랫폼 구조</a><a href="/ko/#company">회사</a><a href="/ko/#pilot">파일럿 상담</a></nav>
+<div aria-label="Language switcher" class="lang-switcher"><a class="lang-button is-active" data-lang-button="ko" data-lang-link="ko" hreflang="ko" lang="ko" href="/ko/operations-intelligence/">KR</a><a class="lang-button" data-lang-button="en" data-lang-link="en" hreflang="en" lang="en" href="/en/operations-intelligence/">EN</a><a class="lang-button" data-lang-button="ar" data-lang-link="ar" hreflang="ar" lang="ar" href="/ar/operations-intelligence/">العربية</a></div>
+<button aria-controls="site-nav" aria-expanded="false" class="nav-toggle" data-nav-toggle type="button"><span class="sr-only">메뉴 열기</span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+</div>
+</header><main id="main">
+<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">Functional MVP / internal validation</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title"><span class="copy-lines"><span class="copy-line">구매·소모품·공수의 반복 정리를 운영 판단으로.</span></span></h1><p class="body-large">요청의 품목·수량을 정리하고 생산량 대비 자원 사용과 비용의 이상 후보를 검토합니다. 설비 상태·CT는 가공/영상 분석과 연결할 데이터이며, 완전한 제조원가나 회계원가를 뜻하지 않습니다.</p><a class="detail-inline-back" href="/ko/#products">← 전체 지능축 보기</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">Operations Intelligence</p><div class="intelligence-flow vertical"><span>Intake</span><span>Resolve</span><span>Allocate</span><span>Track</span><span>Normalize</span><span>Detect</span></div></div></section>
+<section aria-labelledby="operations-flow-title" class="field-flow section-grid" id="operations-flow">
+<div class="cell span-5 flow-copy reveal"><p class="eyebrow">Operations Intelligence 작동 방식</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="operations-flow-title"><span class="copy-lines"><span class="copy-line">읽고, 기록하고,</span><span class="copy-line">조치하고, 확인합니다.</span></span></h2><p class="body-large">카메라·NC·검사·작업자 입력을 Event로 기록하고, 담당·조치·완료까지 하나의 이력으로 닫습니다.</p><ol class="flow-explanation"><li><strong>관찰</strong><span>카메라·NC 코드·작업자 입력에서 현장 신호를 수집합니다.</span></li><li><strong>이벤트화</strong><span>원시 신호를 지연·위험·수요 Event로 변환합니다.</span></li><li><strong>행동 연결</strong><span>Event별 알림·검토·안내·호출을 지정합니다.</span></li><li><strong>확인</strong><span>사람 또는 설비의 응답을 기록하고 Event를 종결합니다.</span></li></ol></div>
+<div class="cell span-7 flow-visual-cell reveal delay-1"><div aria-label="Flowmatic operational flow animation" class="field-story" data-field-story>
+<div aria-hidden="true" class="story-rail"></div>
+<section class="story-stage stage-read" data-story-stage="read"><span class="stage-number">01</span><p class="stage-label">현장 읽기</p><div class="factory-machine"><span class="machine-door"></span><span class="machine-part"></span><span class="machine-arm"></span></div><div class="camera-unit"><span></span></div><div class="camera-cone"></div><span class="signal-chip chip-camera">카메라</span><span class="signal-chip chip-code">NC 코드</span><span class="signal-chip chip-operator">작업자</span><span class="phase-box read-collector">현장 데이터</span></section>
+<section class="story-stage stage-event" data-story-stage="event"><span class="stage-number">02</span><p class="stage-label">이벤트 생성</p><span class="phase-box stage-intake intake-blue">데이터 입력</span><span class="phase-box stage-output event-output">이벤트</span><div class="event-engine"><span class="event-scan-line"></span><span class="event-name event-cycle">사이클 완료</span><span class="event-name event-material">자재 부족</span><span class="event-name event-risk">경로 위험</span></div></section>
+<section class="story-stage stage-action" data-story-stage="action"><span class="stage-number">03</span><p class="stage-label">다음 행동 선택</p><span class="phase-box stage-intake intake-red">이벤트 입력</span><span class="phase-box stage-output action-output">행동</span><div class="action-router"><span class="router-core">FLOWMATIC</span><span class="action-node node-guide">안내</span><span class="action-node node-alert">알림</span><span class="action-node node-call">호출</span></div></section>
+<section class="story-stage stage-confirm" data-story-stage="confirm"><span class="stage-number">04</span><p class="stage-label">응답 확인</p><span class="phase-box stage-intake intake-yellow">행동 입력</span><span class="phase-box stage-output confirm-output">종결</span><div class="response-scene"><span class="operator-screen">작업자<br><b>확인</b></span><span class="mini-depot">보급소</span><span class="mini-line">라인</span><span class="mini-amr"></span><span class="closed-state">이벤트 종결</span></div></section>
+<span aria-hidden="true" class="story-packet packet-main"></span>
+</div></div>
+</section>
+<section class="section-grid"><div class="cell span-12 reveal"><figure class="factory-asset"><picture><source srcset="/assets/factory-os/01_operations_intelligence.svg" type="image/svg+xml"><img alt="Operations Intelligence architecture" decoding="async" height="720" loading="lazy" src="/assets/factory-os/01_operations_intelligence.png" width="1200"></picture></figure></div></section>
+<section aria-label="Architecture details" class="intelligence-details section-grid"><article class="cell intelligence-section-card span-6 reveal delay-1"><p class="eyebrow">Functional MVP</p><h2>Procurement Intelligence</h2><p>메일·채팅에서 품명·규격·수량·UOM·문맥을 추출하고 confidence·reason과 함께 후보를 제시합니다. 담당자 확인 항목만 기존 요청양식으로 출력합니다.</p><ul><li>No silent 1EA default for missing quantity</li><li>No auto-confirm on conflicting specifications</li><li>No arbitrary conversion of unknown pack units</li><li>Quantity / use-location split</li><li>Confirmed-only template export</li></ul></article><article class="cell intelligence-section-card span-6 reveal delay-2"><p class="eyebrow">Functional MVP</p><h2>Resource Economics</h2><p>Tool·Consumable·Labor event를 Tracked Operational Cost로 묶고 생산량과 가동시간으로 정규화합니다.</p><ul><li>Cost / Production EA</li><li>Cost / Good EA</li><li>Man-hour / 1,000 EA</li><li>Consumption / 1,000 EA</li><li>Consumption / running hour</li></ul></article><article class="cell intelligence-section-card span-6 reveal delay-1"><p class="eyebrow">MVP candidate detection</p><h2>Cost / Consumption Anomaly</h2><p>Rolling Median + MAD와 EWMA로 이상 후보를 식별합니다. 예측정비 원인분석은 범위에 포함되지 않습니다.</p><ul><li>Rolling Median + MAD</li><li>EWMA</li><li>Production-normalized candidates</li><li>Human review remains required</li></ul></article><article class="cell intelligence-section-card span-6 reveal delay-2"><p class="eyebrow">Prototype</p><h2>Operations Composition Surface</h2><p>Factory·Group·Period 공통 기준에서 필요한 운영 Module을 실행하고, Control Tower가 선택된 Module의 결과를 집계합니다.</p><ul><li>Real-time ERP/MES adapters pending</li><li>Live inventory / budget / supplier / forecasting pending</li><li>Maintenance correlation and full Quality adapter pending</li></ul></article><div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">적용 범위</p><p class="body-large">Tracked Operational Cost는 현재 연동된 공구·소모품·공수 비용만 포함합니다. Material·Energy·Maintenance·Outsource를 포괄하는 제조원가·회계원가는 아닙니다.</p></div></section>
+<section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="/ko/?interest=operations-intelligence#contact">파일럿 상담</a><a class="fm-button" href="/ko/platform/">플랫폼 구조 상세</a></div></section>
+</main><footer class="site-footer">
+<a aria-label="Flowmatic home" class="footer-brand" href="/ko/#hero"><img alt="Flowmatic" class="wr-corporate-ci" src="/assets/branding/canonical/flowmatic-ci-ko-horizontal.png" width="220"></a>
+<p>자료·작업 기준·판단과 처리 이력을 연결해, 담당자가 바뀌어도 다음 업무에 활용하도록 합니다.</p>
+<div class="footer-links"><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a><a href="/ko/#hero">홈</a></div>
+<small>© 2026 Flowmatic · 2026.09.10-r1</small>
+</footer><script src="/script.js?v=5.22"></script></body></html>

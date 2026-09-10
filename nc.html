@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>G-code Intelligence | Machining Intelligence 구성요소</title>
-<meta name="description" content="NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.">
+<meta name="description" content="공개 합성 샘플이 바로 표시됩니다. 공구 전환·회전·확대와 로컬 NC 파일 검토를 체험하세요. 경로 검토와 이론시간 참고용입니다. 실제 절삭·충돌 검증·설비 안전 승인·자동 제어를 대신하지 않습니다.">
 <meta name="theme-color" content="#FFFFFF">
-<link rel="canonical" href="https://flowmatic-os.com/nc.html">
+<link rel="canonical" href="https://flowmatic-os.com/ko/nc/">
 <link rel="alternate" hreflang="ko" href="https://flowmatic-os.com/ko/nc/">
 <link rel="alternate" hreflang="en" href="https://flowmatic-os.com/en/nc/">
 <link rel="alternate" hreflang="ar" href="https://flowmatic-os.com/ar/nc/">
 <link rel="alternate" hreflang="x-default" href="https://flowmatic-os.com/ko/nc/">
 <meta property="og:title" content="G-code Intelligence | Machining Intelligence 구성요소">
-<meta property="og:description" content="NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.">
+<meta property="og:description" content="공개 합성 샘플이 바로 표시됩니다. 공구 전환·회전·확대와 로컬 NC 파일 검토를 체험하세요. 경로 검토와 이론시간 참고용입니다. 실제 절삭·충돌 검증·설비 안전 승인·자동 제어를 대신하지 않습니다.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://flowmatic-os.com/nc.html">
+<meta property="og:url" content="https://flowmatic-os.com/ko/nc/">
 <meta property="og:image" content="https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png">
 <meta property="og:image:secure_url" content="https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png">
 <meta property="og:image:type" content="image/png">
@@ -23,10 +23,10 @@
 <meta property="og:image:alt" content="플로우매틱 공식 제조 운영지능 소프트웨어 미리보기">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="G-code Intelligence | Machining Intelligence 구성요소">
-<meta name="twitter:description" content="NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.">
+<meta name="twitter:description" content="공개 합성 샘플이 바로 표시됩니다. 공구 전환·회전·확대와 로컬 NC 파일 검토를 체험하세요. 경로 검토와 이론시간 참고용입니다. 실제 절삭·충돌 검증·설비 안전 승인·자동 제어를 대신하지 않습니다.">
 <meta name="twitter:image" content="https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png">
 <meta name="twitter:image:alt" content="플로우매틱 공식 제조 운영지능 소프트웨어 미리보기">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "name": "Flowmatic", "url": "https://flowmatic-os.com/", "email": "contact@flowmatic-os.com", "logo": "https://flowmatic-os.com/assets/branding/canonical/flowmatic-ci-global-horizontal.png", "image": "https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png"}, {"@type": "WebPage", "name": "G-code Intelligence | Machining Intelligence 구성요소", "description": "NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.", "url": "https://flowmatic-os.com/nc.html", "inLanguage": "ko"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "name": "Flowmatic", "url": "https://flowmatic-os.com/", "email": "contact@flowmatic-os.com", "logo": "https://flowmatic-os.com/assets/branding/canonical/flowmatic-ci-global-horizontal.png", "image": "https://flowmatic-os.com/assets/branding/flowmatic-og-ko-r1.png"}, {"@type": "WebPage", "name": "G-code Intelligence | Machining Intelligence 구성요소", "description": "공개 합성 샘플이 바로 표시됩니다. 공구 전환·회전·확대와 로컬 NC 파일 검토를 체험하세요. 경로 검토와 이론시간 참고용입니다. 실제 절삭·충돌 검증·설비 안전 승인·자동 제어를 대신하지 않습니다.", "url": "https://flowmatic-os.com/ko/nc/", "inLanguage": "ko"}]}</script>
 <link rel="icon" href="/assets/branding/flowmatic-logo-mark.svg?v=20260803.2" sizes="any" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico?v=20260803.2" sizes="16x16 32x32 48x48" type="image/x-icon">
 <link rel="shortcut icon" href="/favicon.ico?v=20260803.2" type="image/x-icon">
@@ -34,20 +34,22 @@
 <link rel="mask-icon" href="/assets/branding/flowmatic-logo-mark.svg?v=20260803.2" color="#111111">
 <link rel="manifest" href="/site.webmanifest?v=20260803.2">
 <link rel="stylesheet" href="/style-v5.20.css?v=5.29">
+<link rel="stylesheet" href="/web-refresh.css?v=2026.09.10-r1">
+<meta name="flowmatic-release" content="2026.09.10-r1">
 <link rel="stylesheet" href="/nc-viewer-3d.css?v=2.1">
 </head>
 <body class="technology-page flowmatic-nc" data-lang="ko" data-static-lang="true">
 <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 <header class="site-header" data-header>
-<a aria-label="Flowmatic home" class="brand" href="/ko/#hero"><img alt="" aria-hidden="true" class="brand-mark" height="30" src="/assets/branding/flowmatic-logo-mark.svg" width="30"><span>Flowmatic</span></a>
+<a aria-label="Flowmatic home" class="brand" href="/ko/#hero"><img alt="Flowmatic" class="wr-corporate-ci" src="/assets/branding/canonical/flowmatic-ci-ko-horizontal.png" width="220"></a>
 <div class="header-actions">
-<nav class="site-nav" data-nav id="site-nav"><a href="/ko/#field-problem">문제</a><a href="/ko/#architecture">Platform</a><a href="/ko/#what-changes">지능축</a><a href="/ko/#company">회사</a><a href="/ko/#pilot">파일럿 상담</a></nav>
+<nav class="site-nav" data-nav id="site-nav"><a href="/ko/#products">제품</a><a href="/ko/#demos">데모</a><a href="/ko/platform/">플랫폼 구조</a><a href="/ko/#company">회사</a><a href="/ko/#pilot">파일럿 상담</a></nav>
 <div aria-label="Language switcher" class="lang-switcher"><a class="lang-button is-active" data-lang-button="ko" data-lang-link="ko" hreflang="ko" lang="ko" href="/ko/nc/">KR</a><a class="lang-button" data-lang-button="en" data-lang-link="en" hreflang="en" lang="en" href="/en/nc/">EN</a><a class="lang-button" data-lang-button="ar" data-lang-link="ar" hreflang="ar" lang="ar" href="/ar/nc/">العربية</a></div>
 <button aria-controls="site-nav" aria-expanded="false" class="nav-toggle" data-nav-toggle type="button"><span class="sr-only">메뉴 열기</span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
 </div>
 </header>
 <main id="main">
-<section class="nc-workspace" data-nc-demo-lite aria-labelledby="nc-browser-demo-title">
+<div class="wr-sample-note" data-public-sample-note><p>공개용 합성 샘플 자동 표시 · 실제 사내 가공코드가 아닙니다. 로컬 파일은 업로드하지 않습니다.</p><p>경로 검토와 이론시간 참고용입니다. 실제 절삭·충돌 검증·설비 안전 승인·자동 제어를 대신하지 않습니다.</p></div><section class="nc-workspace" data-nc-demo-lite data-nc-autoload aria-labelledby="nc-browser-demo-title">
 <div class="nc-app-top"><h2 id="nc-browser-demo-title">G-code Viewer</h2><strong data-nc-meta="file">NC —</strong></div>
 <div class="nc-boot-notice" data-nc-boot>화면을 시작하는 중입니다. 안내가 계속 보이면 페이지를 새로고침하거나 브라우저에서 다시 열어주세요.</div><div data-nc-alert role="alert" hidden></div>
 <input class="sr-only" data-nc-file id="nc-demo-file" type="file" aria-label="NC 파일 선택">
@@ -58,7 +60,7 @@
 <div class="nc-code-pane"><p class="nc-panel-label">G-code List</p>
 <div class="nc-current"><p>현재 Tool: <strong data-viewer-selected>—</strong></p><p>이송상태: <strong data-viewer-motion>—</strong></p></div>
 <button class="nc-rapid-toggle" data-viewer-rapid-toggle type="button" aria-pressed="true">급속이송 숨김</button><input data-viewer-rapid class="sr-only" type="checkbox" checked tabindex="-1" aria-label="급속이송 표시">
-<div class="nc-navigation"><button data-viewer-prev type="button" disabled>Prev Tool</button><button data-viewer-next type="button" disabled>Next Tool</button><button data-viewer-console-toggle type="button" aria-expanded="false">Tool Console</button></div>
+<div class="nc-navigation"><button data-viewer-prev type="button" disabled>이전 공구</button><button data-viewer-next type="button" disabled>다음 공구</button><button data-viewer-console-toggle type="button" aria-expanded="false">Tool Console</button></div>
 <fieldset class="nc-tool-console" data-viewer-console hidden><legend>Tool Console</legend><label class="nc-diameter-row">공구 직경 Ø <input data-viewer-diameter type="number" min="0.01" max="10000" step="any" inputmode="decimal" placeholder="—" disabled aria-label="공구 직경"> mm <small data-viewer-diameter-source>—</small></label>
 <div class="nc-viewer-tool-list" data-viewer-tools aria-label="공구 목록"></div><button class="nc-console-all" data-viewer-all type="button" aria-pressed="true">전체 공구</button></fieldset>
 <div class="nc-code-table" aria-label="NC Code"><div class="nc-code-columns"><span>Line</span><span>NC Code</span><span>Tool</span><span>D(mm)</span><span>WCS</span></div><div class="nc-code-scroll" data-viewer-code-scroll tabindex="0" aria-label="G-code List"><div data-viewer-code-spacer></div><div data-viewer-code-rows></div></div></div></div>
@@ -79,26 +81,27 @@
 </div></details>
 </section>
 <section aria-labelledby="tech-title" class="detail-overview section-grid">
-<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">G-code Intelligence · 구 Flowmatic NC</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title"><span class="copy-lines"><span class="copy-line">가공 전</span><span class="copy-line">공구 경로 검토</span></span></h1><p class="body-large">NC 코드를 해석해 공구 움직임·예상 사이클타임·위험 경로를 시각화합니다.</p><div class="detail-meta"><span class="status-badge-list"><span class="status-badge is-demo">Public browser demo</span><span class="status-badge is-progress">Desktop functional prototype</span></span><span>한 개 설비 · 한 개 공정 · 대표 NC 프로그램 세트</span></div><a class="detail-inline-back" href="/ko/#solutions">← 전체 제품 보기</a></div>
-<div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">현재 Operating sequence</p></div><div aria-label="NC code becomes a visual toolpath and review result" class="tech-visual nc-explainer" data-tech-animation="nc">
+<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">G-code Intelligence · 구 Flowmatic NC</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title"><span class="copy-lines"><span class="copy-line">가공 전</span><span class="copy-line">공구 경로 검토</span></span></h1><p class="body-large">공개 합성 샘플이 바로 표시됩니다. 공구 전환·회전·확대와 로컬 NC 파일 검토를 체험하세요.</p><div class="detail-meta"><span class="status-badge-list"><span class="status-badge is-demo">Public browser demo</span><span class="status-badge is-progress">Desktop functional prototype</span></span><span>한 개 설비 · 한 개 공정 · 대표 NC 프로그램 세트</span></div><a class="detail-inline-back" href="/ko/#products">← 전체 제품 보기</a></div>
+<div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">현재 Operating sequence</p><p class="wr-example-note">설명용 애니메이션 · 고정 수치는 예시이며 위 파일의 분석 결과가 아닙니다.</p></div><div aria-label="NC code becomes a visual toolpath and review result" class="tech-visual nc-explainer" data-tech-animation="nc">
 <div class="visual-label label-input">1 · 코드 읽기</div><div class="nc-code-panel"><span class="code-line active">N120 G01 X20. Y40. F800</span><span class="code-line">N130 G02 X60. Y40. R20.</span><span class="code-line risk-line">N140 G00 Z-4.0</span><span class="code-line">N150 M81 INDEX</span></div><div class="visual-arrow arrow-a">→</div>
 <div class="visual-label label-process">2 · 움직임 재구성</div><div class="nc-path-stage"><svg aria-hidden="true" viewBox="0 0 420 270"><path class="nc-route" d="M40 220 L40 55 L180 55 Q230 55 230 110 L230 165 L365 165 L365 225"></path><circle class="nc-moving-tool" r="11"><animateMotion dur="6s" path="M40 220 L40 55 L180 55 Q230 55 230 110 L230 165 L365 165 L365 225" repeatCount="indefinite"></animateMotion></circle><circle class="nc-risk-zone" cx="230" cy="150" r="24"></circle></svg><span class="risk-caption">급속 이동 확인</span></div><div class="visual-arrow arrow-b">→</div>
 <div class="visual-label label-output">3 · 가공 전 검토</div><div class="nc-result-panel"><span><b>CT</b> 213.4 s</span><span><b>공구</b> 12</span><span class="result-alert"><b>검토</b> 1 path</span></div></div></div><article class="cell span-4 detail-feature reveal delay-1"><span>01</span><h3 class="semantic-copy card-title-fit" data-fit-min="19" data-fit-text><span class="copy-lines"><span class="copy-line">NC 프로그램 해석</span></span></h3><p>공구·이송·좌표·인덱스 동작을 추출합니다.</p></article>
 <article class="cell span-4 detail-feature reveal delay-2"><span>02</span><h3 class="semantic-copy card-title-fit" data-fit-min="19" data-fit-text><span class="copy-lines"><span class="copy-line">공구 움직임 재구성</span></span></h3><p>공구의 이동 위치와 순서를 시각화합니다.</p></article>
 <article class="cell span-4 detail-feature reveal delay-3"><span>03</span><h3 class="semantic-copy card-title-fit" data-fit-min="19" data-fit-text><span class="copy-lines"><span class="copy-line">가공 전 검토</span></span></h3><p>예상 사이클타임과 위험 경로를 확인합니다.</p></article></section>
 <section aria-label="Component context" class="component-context section-grid"><div class="cell yellow span-12 reveal"><p class="eyebrow">Component context</p><p class="body-large">Machining Intelligence component · NC Browser Demo = public local theoretical-time analysis · Desktop Engineering = separate functional prototype</p><a class="product-link" href="/ko/machining-intelligence/"><span>Machining Intelligence</span><span aria-hidden="true">→</span></a></div></section>
-<section aria-labelledby="demo-title" class="detail-demo section-grid"><div class="cell span-4 demo-copy reveal"><p class="eyebrow">제품 데모</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title"><span class="copy-lines"><span class="copy-line">G-code Intelligence 실제 데모</span></span></h2><p class="body-large">NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.</p></div>
-<div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="/flowmatic_nc_demo" data-video-title="G-code Intelligence demo"><video aria-label="G-code Intelligence demo" controls hidden playsinline preload="metadata" poster="/assets/branding/flowmatic-og-ko-r1.png" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>브라우저에서 영상을 재생할 수 없습니다. 아래 설명으로 핵심 흐름을 확인하세요.</strong></p></div></div><p class="video-summary">NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.</p></div></section>
-<section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">파일럿 검증 데이터</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title"><span class="copy-lines"><span class="copy-line">가공 전 공구 경로 검토</span></span></h2><p class="body-large">NC/G-code를 공구 경로, 예상 사이클타임, 검토 지점으로 바꿔 가공 전에 확인합니다.</p></div><article class="cell spec-card span-4 reveal delay-1"><span>01</span><h3>대상 사용자</h3><ul><li>CNC 프로그래머</li><li>생산기술 엔지니어</li><li>가공 검토 담당자</li></ul></article>
+
+<section aria-labelledby="demo-title" class="detail-demo section-grid"><div class="cell span-4 demo-copy reveal"><p class="eyebrow">제품 데모</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title"><span class="copy-lines"><span class="copy-line">G-code Intelligence 실제 데모</span></span></h2><p class="body-large">실제 프로그램 녹화 · 내부 시연. 경로 검토와 이론시간 참고용입니다. 실제 절삭·충돌 검증·설비 안전 승인·자동 제어를 대신하지 않습니다.</p></div>
+<div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="/flowmatic_nc_demo" data-video-title="G-code Intelligence demo"><video aria-label="G-code Intelligence demo" controls hidden playsinline preload="metadata" poster="/assets/branding/flowmatic-og-ko-r1.png" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>브라우저에서 영상을 재생할 수 없습니다. 아래 설명으로 핵심 흐름을 확인하세요.</strong></p></div></div><p class="video-summary">실제 프로그램 녹화 · 내부 시연. 경로 검토와 이론시간 참고용입니다. 실제 절삭·충돌 검증·설비 안전 승인·자동 제어를 대신하지 않습니다.</p></div></section>
+<section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">파일럿 검증 데이터</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title"><span class="copy-lines"><span class="copy-line">가공 전 공구 경로 검토</span></span></h2><p class="body-large">공개 합성 샘플이 바로 표시됩니다. 공구 전환·회전·확대와 로컬 NC 파일 검토를 체험하세요. 경로 검토와 이론시간 참고용입니다. 실제 절삭·충돌 검증·설비 안전 승인·자동 제어를 대신하지 않습니다.</p></div><article class="cell spec-card span-4 reveal delay-1"><span>01</span><h3>대상 사용자</h3><ul><li>CNC 프로그래머</li><li>생산기술 엔지니어</li><li>가공 검토 담당자</li></ul></article>
 <article class="cell spec-card span-4 reveal delay-2"><span>02</span><h3>입력</h3><ul><li>NC/G-code 프로그램</li><li>저장소에 이미 사용 중인 공구·좌표·이송 정보</li></ul></article>
 <article class="cell spec-card span-4 reveal delay-3"><span>03</span><h3>운영 이벤트</h3><ul><li>급속 이동 검토 지점</li><li>경로 위험 후보</li><li>사이클타임 검토</li></ul></article>
 <article class="cell spec-card span-4 reveal delay-1"><span>04</span><h3>결과</h3><ul><li>공구 경로 시각화</li><li>이동 순서</li><li>예상 사이클타임</li><li>가공 전 검토 지점</li></ul></article>
 <article class="cell spec-card span-4 reveal delay-2"><span>05</span><h3>파일럿 적용 조건</h3><ul><li>지원 형식은 대상 컨트롤러와 실제 프로그램으로 검증</li><li>첫 파일럿은 하나의 설비 또는 프로그램 계열로 제한</li></ul></article>
 <article class="cell spec-card span-4 reveal delay-3"><span>06</span><h3>측정 KPI</h3><ul><li>가공 전 검토 시간</li><li>가공 전에 발견한 검토 항목 수</li><li>프로그램 수정 반복 횟수</li></ul></article><div class="cell yellow span-12 reveal"><p class="body-large"><strong>파일럿 범위:</strong> 한 개 설비 · 한 개 공정 · 대표 NC 프로그램 세트</p></div></section>
-<section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">관련 제품</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title"><span class="copy-lines"><span class="copy-line">같은 운영 흐름에서</span><span class="copy-line">연결되는 모듈</span></span></h2><ul class="related-list"><li><a href="/ko/tms/">Flowmatic TMS — 공구 관리</a> — 공구 수명·재고·위치 관리</li><li><a href="/ko/work-standard/">Flowmatic Work Standard</a> — 작업자 단계별 안내</li></ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="/ko/?interest=nc#contact">파일럿 상담</a><a class="fm-button" href="/ko/#solutions">전체 제품 보기</a></div></section>
+<section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">관련 제품</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title"><span class="copy-lines"><span class="copy-line">같은 운영 흐름에서</span><span class="copy-line">연결되는 모듈</span></span></h2><ul class="related-list"><li><a href="/ko/tms/">Flowmatic TMS — 공구 관리</a> — 공구 수명·재고·위치 관리</li><li><a href="/ko/work-standard/">Flowmatic Work Standard</a> — 작업자 단계별 안내</li></ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="/ko/?interest=nc#contact">파일럿 상담</a><a class="fm-button" href="/ko/#products">전체 제품 보기</a></div></section>
 </main><footer class="site-footer">
-<a aria-label="Flowmatic home" class="footer-brand" href="/ko/#hero"><img alt="" aria-hidden="true" class="brand-mark" height="34" src="/assets/branding/flowmatic-logo-mark.svg" width="34"><strong>Flowmatic</strong></a>
-<p>스마트팩토리가 데이터를 수집하고 보여준다면, Flowmatic은 무엇을 먼저 처리해야 하는지 정하고 끝날 때까지 추적합니다.</p>
+<a aria-label="Flowmatic home" class="footer-brand" href="/ko/#hero"><img alt="Flowmatic" class="wr-corporate-ci" src="/assets/branding/canonical/flowmatic-ci-ko-horizontal.png" width="220"></a>
+<p>자료·작업 기준·판단과 처리 이력을 연결해, 담당자가 바뀌어도 다음 업무에 활용하도록 합니다.</p>
 <div class="footer-links"><a href="mailto:contact@flowmatic-os.com">contact@flowmatic-os.com</a><a href="/ko/#hero">홈</a></div>
-<small>© 2026 Flowmatic</small>
-</footer><script src="/script.js?v=5.22"></script><script src="/nc-demo-lite.js?v=2.2"></script><script type="module" src="/nc-viewer-3d.js?v=2.1"></script></body></html>
+<small>© 2026 Flowmatic · 2026.09.10-r1</small>
+</footer><script src="/script.js?v=5.22"></script><script src="/nc-demo-lite.js?v=2026.09.10-r1"></script><script type="module" src="/nc-viewer-3d.js?v=2.1"></script></body></html>

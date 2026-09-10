@@ -19,7 +19,7 @@ LABELS = {
         "top_button": "Top",
         "boot": "화면을 시작하는 중입니다. 안내가 계속 보이면 페이지를 새로고침하거나 브라우저에서 다시 열어주세요.",
         "title": "3D 공구 경로", "body": "NC 파일을 열고 공구별 경로와 직경을 확인하세요.",
-        "prev": "Prev Tool", "next": "Next Tool", "all": "전체 공구", "fit": "3D 맞춤", "top": "위에서 보기",
+        "prev": "이전 공구", "next": "다음 공구", "all": "전체 공구", "fit": "3D 맞춤", "top": "위에서 보기",
         "rapid": "급속이송 표시", "diameter": "공구 직경", "selected": "선택 공구", "tools": "공구 목록",
         "hint": "드래그: 회전 · 휠: 확대 · 오른쪽 드래그: 이동 · 경로 클릭: 공구 위치",
         "touch": "한 손가락: 회전 · 두 손가락: 확대·이동", "empty": "NC 파일을 열거나 샘플을 실행하세요.",
@@ -80,7 +80,7 @@ LABELS = {
 def viewer_section(lang, t, analysis):
     v = LABELS[lang]
     extra = f'<details class="nc-analysis-details"><summary>{e(v["time"])}</summary><div class="section-grid">{analysis}</div></details>' if analysis else ''
-    return f'''<section class="nc-workspace" data-nc-demo-lite aria-labelledby="nc-browser-demo-title">
+    return f'''<section class="nc-workspace" data-nc-demo-lite data-nc-autoload aria-labelledby="nc-browser-demo-title">
 <div class="nc-app-top"><h2 id="nc-browser-demo-title">{e(v['app'])}</h2><strong data-nc-meta="file">NC —</strong></div>
 <div class="nc-boot-notice" data-nc-boot>{e(v['boot'])}</div><div data-nc-alert role="alert" hidden></div>
 <input class="sr-only" data-nc-file id="nc-demo-file" type="file" aria-label="{e(v['file_select'])}">

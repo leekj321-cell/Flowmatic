@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import date
 from html import escape
 from nc_viewer_section import viewer_section
+import web_release_content as web_release
 import json
 from pathlib import Path
 import re
@@ -31,7 +32,7 @@ CSS_HREF = "/style-v5.20.css?v=5.29"
 HOME_CSS_HREF = "/style-v5.20.css?v=5.29"
 SCRIPT_SRC = "/script.js?v=5.22"
 HOME_SCRIPT_SRC = "/script.js?v=5.26"
-NC_DEMO_SRC = "/nc-demo-lite.js?v=2.2"
+NC_DEMO_SRC = "/nc-demo-lite.js?v=2026.09.10-r1"
 WEB_V156_CONTENT_DIR = Path(__file__).resolve().parent / "content" / "web_v156"
 BRAND_PATH = "/assets/branding"
 BRAND_VERSION = "20260803.2"
@@ -1045,28 +1046,25 @@ def meta_head(
 <link rel="mask-icon" href="{BRAND_MARK}?v={BRAND_VERSION}" color="#111111">
 <link rel="manifest" href="/site.webmanifest?v={BRAND_VERSION}">
 <link rel="stylesheet" href="{stylesheet_href}">
+<link rel="stylesheet" href="/web-refresh.css?v={web_release.RELEASE}">
+<meta name="flowmatic-release" content="{web_release.RELEASE}">
 </head>"""
 
 
 def header(lang: str, slug: str) -> str:
     t = LANGS[lang]
     home = page_path(lang)
-    nav = t["nav"]
-    anchors = [
-        ("field-problem", nav["problem"]),
-        ("architecture", nav["architecture"]),
-        ("what-changes", nav["intelligence"]),
-        ("company", nav["company"]),
-        ("pilot", nav["pilot"]),
-    ]
-    nav_html = "".join(f'<a href="{home}#{key}">{e(label)}</a>' for key, label in anchors)
+    labels = web_release.TEXT[lang]["nav"]
+    targets = [home+"#products", home+"#demos", page_path(lang, "platform"), home+"#company", home+"#pilot"]
+    nav_html = "".join(f'<a href="{target}">{e(label)}</a>' for target, label in zip(targets, labels))
+    ci = f'{BRAND_PATH}/canonical/flowmatic-ci-ko-horizontal.png' if lang == "ko" else f'{BRAND_PATH}/canonical/flowmatic-ci-global-horizontal.svg'
     lang_html = "".join(
         f'<a class="lang-button{" is-active" if code == lang else ""}" data-lang-button="{code}" data-lang-link="{code}" hreflang="{code}" lang="{code}" href="{page_path(code, slug)}">{e(meta["label"])}</a>'
         for code, meta in LANGS.items()
     )
     return f"""<a class="skip-link" href="#main">{e(t["skip"])}</a>
 <header class="site-header" data-header>
-<a aria-label="Flowmatic home" class="brand" href="{home}#hero"><img alt="" aria-hidden="true" class="brand-mark" height="30" src="{BRAND_MARK}" width="30"><span>Flowmatic</span></a>
+<a aria-label="Flowmatic home" class="brand" href="{home}#hero"><img alt="Flowmatic" class="wr-corporate-ci" src="{ci}" width="220"></a>
 <div class="header-actions">
 <nav class="site-nav" data-nav id="site-nav">{nav_html}</nav>
 <div aria-label="Language switcher" class="lang-switcher">{lang_html}</div>
@@ -1077,11 +1075,12 @@ def header(lang: str, slug: str) -> str:
 
 def footer(lang: str) -> str:
     h = HOME[lang]
+    ci = f'{BRAND_PATH}/canonical/flowmatic-ci-ko-horizontal.png' if lang == "ko" else f'{BRAND_PATH}/canonical/flowmatic-ci-global-horizontal.svg'
     return f"""<footer class="site-footer">
-<a aria-label="Flowmatic home" class="footer-brand" href="{page_path(lang)}#hero"><img alt="" aria-hidden="true" class="brand-mark" height="34" src="{BRAND_MARK}" width="34"><strong>Flowmatic</strong></a>
+<a aria-label="Flowmatic home" class="footer-brand" href="{page_path(lang)}#hero"><img alt="Flowmatic" class="wr-corporate-ci" src="{ci}" width="220"></a>
 <p>{e(h["support"])}</p>
 <div class="footer-links"><a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><a href="{page_path(lang)}#hero">{e(LANGS[lang]["home"])}</a></div>
-<small>© 2026 Flowmatic</small>
+<small>© 2026 Flowmatic · {web_release.RELEASE}</small>
 </footer>"""
 
 
@@ -1795,14 +1794,20 @@ def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
     contact = {"ko":"파일럿 상담","en":"Discuss a pilot","ar":"ناقش مشروعًا تجريبيًا"}[lang]
     vnext_diagrams = machining_vnext_diagrams(lang, data) if slug == "machining-intelligence" else ""
     operations_story = operations_story_section(lang) if slug == "operations-intelligence" else ""
+    is_machining = slug == "machining-intelligence"
+    overview = web_release.machining_overview(lang) if is_machining else ""
+    demo_cta = f'<div class="hero-actions"><a class="fm-button primary" href="/{lang}/nc/">{e(web_release.TEXT[lang]["run"])}</a></div>' if is_machining else ""
+    technical_open = f'<details class="wr-technical"><summary>{e(web_release.TEXT[lang]["engineering"])}</summary>' if is_machining else ""
+    technical_close = '</details>' if is_machining else ""
     return f"""<!doctype html>
 <html lang="{lang}" dir="{LANGS[lang]["dir"]}">
 {meta_head(lang, slug, data["title"][lang], data["description"][lang], canonical_path)}
 <body class="intelligence-page" data-lang="{lang}" data-static-lang="true">{header(lang, slug)}<main id="main">
-<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p><a class="detail-inline-back" href="{page_path(lang)}#solutions">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div>{asset}</section>
-{operations_story}{vnext_diagrams}
-<section aria-label="Architecture details" class="intelligence-details section-grid">{sections}<div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">{e(guardrail)}</p><p class="body-large">{e(data["guardrail"][lang])}</p></div></section>
-<section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(contact)}</a><a class="fm-button" href="{page_path(lang, 'platform')}">Flowmatic Platform / Factory OS</a></div></section>
+<section aria-labelledby="intelligence-title" class="intelligence-hero section-grid"><div class="cell span-7 reveal"><p class="eyebrow">{e(data["status"][lang])}</p><h1 class="hero-title semantic-copy" data-fit-min="34" data-fit-text id="intelligence-title">{lines(data["hero"][lang])}</h1><p class="body-large">{e(data["body"][lang])}</p>{demo_cta}<a class="detail-inline-back" href="{page_path(lang)}#products">← {e(back)}</a></div><div class="cell blue span-5 reveal delay-1"><p class="kicker">{e(data["label"])}</p><div class="intelligence-flow vertical">{flow}</div></div></section>
+{overview}{operations_story}{technical_open}{vnext_diagrams}
+<section class="section-grid">{asset}</section>
+<section aria-label="Architecture details" class="intelligence-details section-grid">{sections}<div class="cell red span-12 guardrail-panel reveal"><p class="eyebrow">{e(guardrail)}</p><p class="body-large">{e(data["guardrail"][lang])}</p></div></section>{technical_close}
+<section class="section-grid"><div class="cell yellow span-12 cta-actions"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(contact)}</a><a class="fm-button" href="{page_path(lang, 'platform')}">{e(web_release.TEXT[lang]["platform_link"])}</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script></body></html>"""
 
 
@@ -1982,20 +1987,21 @@ def home_page(lang: str, canonical_path: str) -> str:
 {header(lang, "home")}
 <main id="main">
 <section aria-labelledby="hero-title" class="hero section-grid" id="hero">
-<div class="cell hero-copy span-7 reveal"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p><div class="hero-actions"><a class="fm-button primary" href="#field-problem">{e(h["primary"])}</a><a class="fm-button" href="#what-changes">{e(h["secondary"])}</a></div></div>
+<div class="cell hero-copy span-7"><p class="eyebrow">{e(h["eyebrow"])}</p><h1 class="hero-title semantic-copy brand-hero-title" data-fit-min="40" data-fit-text id="hero-title">{lines(h["h1"])}</h1><div class="hero-actions"><a class="fm-button primary" href="/{lang}/nc/">{e(h["primary"])}</a><a class="fm-button" href="#contact">{e(h["secondary"])}</a></div><p class="body-large">{e(h["brand_subcopy"])}</p><p>{e(h["body"])}</p></div>
 <div class="cell blue hero-layer span-5 reveal delay-1"><p class="kicker">Engineering Intelligence OS</p><h2 class="semantic-copy" data-fit-min="27" data-fit-text>{lines({"ko":"Motion → Event →|Decision → Action","en":"Motion → Event →|Decision → Action","ar":"Motion → Event →|Decision → Action"}[lang])}</h2><p class="semantic-copy copy-body" data-fit-min="17" data-fit-text>{lines(h["support"])}</p></div>
 <div class="cell yellow hero-note span-4 reveal delay-2"><strong>{e(FLOW_STEPS[lang][0][0])}</strong><span>{e(FLOW_STEPS[lang][0][1])}</span></div>
 <div class="cell red hero-note span-3 reveal delay-3"><strong>{e(FLOW_STEPS[lang][1][0])}</strong><span>{e(FLOW_STEPS[lang][1][1])}</span></div>
 <div class="cell hero-scroll span-5 reveal delay-4"><span>{e(h["primary"])}</span><span aria-hidden="true" class="scroll-line"></span></div>
 </section>
-<div class="v156-platform home-problem">{_v156_section(_v156_source(lang), "field-problem")}</div>
-{before_after_section(lang)}
+{web_release.products_section(lang)}
+{web_release.demos_section(lang)}
+{web_release.customer_section(lang)}
+{web_release.workflow_section(lang)}
+{web_release.preprocessing_section(lang)}
 {home_composition_section(lang)}
-{outcomes_section(lang)}
+{web_release.reuse_section(lang)}
 {home_current_stage_section(lang)}
-{deployment_modes_section(lang)}
-<section aria-labelledby="pilot-title" class="pilot section-grid" id="pilot">
-<div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 진행 방식","en":"Pilot approach","ar":"نهج المشروع التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="pilot-title">{lines(h["pilot_title"])}</h2></div>{pilot}<div class="cell yellow span-12 pilot-note reveal"><p class="body-large">{e(h["deploy_note"])}</p></div></section>
+{web_release.pilot_section(lang)}
 {company_section(lang)}
 {contact_section(lang)}
 </main>{footer(lang)}<script src="{HOME_SCRIPT_SRC}"></script></body></html>"""
@@ -2005,7 +2011,7 @@ def home_page(lang: str, canonical_path: str) -> str:
 def demo_panel(product: dict, slug: str, lang: str) -> str:
     if product["status"] == "demo":
         title = {"ko": f"{product['name']} 실제 데모", "en": f"{product['name']} working demo", "ar": f"عرض {product['name']} العملي"}[lang]
-        summary = product["description"][lang]
+        summary = (web_release.TEXT[lang]["recorded"] + ". " + (web_release.TEXT[lang]["ct_body"] if slug == "ct" else web_release.TEXT[lang]["limits"]))
         return f"""<div class="cell span-4 demo-copy reveal"><p class="eyebrow">{e(LANGS[lang]["product_demo"])}</p><h2 class="section-title semantic-copy" data-fit-min="28" data-fit-text id="demo-title">{lines(title)}</h2><p class="body-large">{e(summary)}</p></div>
 <div class="cell span-8 demo-cell reveal delay-1"><div class="demo-player" data-demo-video data-video-base="{e(product["video"])}" data-video-title="{e(product["name"])} demo"><video aria-label="{e(product["name"])} demo" controls hidden playsinline preload="metadata" poster="{OG_IMAGE_PATHS[lang]}" width="1920" height="1080"></video><div class="video-placeholder" data-video-placeholder><span aria-hidden="true" class="video-icon">▶</span><p><strong>{e(LANGS[lang]["video_unavailable"])}</strong></p></div></div><p class="video-summary">{e(summary)}</p></div>"""
     scope = {"ko": "현재 개발 범위 · 현장 연동 전", "en": "Current development scope · field integration pending", "ar": "نطاق التطوير الحالي · التكامل الميداني قيد الانتظار"}[lang]
@@ -2168,7 +2174,7 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
     ]
     specs = "\n".join(f'<article class="cell spec-card span-4 reveal delay-{(i % 3) + 1}"><span>{i+1:02}</span><h3>{e(head)}</h3>{ul(items)}</article>' for i, (head, items) in enumerate(spec_cards))
     related_items = "".join(f'<li><a href="{page_path(lang, rel)}">{e(product_name(PRODUCTS[rel], lang))}</a> — {e(PRODUCTS[rel]["outcome"][lang])}</li>' for rel in product["related"])
-    nc_demo = f"\n{nc_browser_demo_section(lang)}" if slug == "nc" else ""
+    nc_demo = f"\n{web_release.sample_banner(lang)}{nc_browser_demo_section(lang)}" if slug == "nc" else ""
     quality_status = f"\n{quality_status_section(lang)}" if slug == "quality" else ""
     extra_script = f'<script src="{NC_DEMO_SRC}"></script><script type="module" src="/nc-viewer-3d.js?v=2.1"></script>' if slug == "nc" else ""
     head = meta_head(lang, slug, title, description, canonical_path)
@@ -2181,12 +2187,13 @@ def product_page(lang: str, slug: str, canonical_path: str) -> str:
 {header(lang, slug)}
 <main id="main">{nc_demo}
 <section aria-labelledby="tech-title" class="detail-overview section-grid">
-<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#solutions">← {e(LANGS[lang]["all_products"])}</a></div>
-<div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
+<div class="cell span-5 detail-hero-copy reveal"><p class="eyebrow">{e(product_name(product, lang))}</p><h1 class="hero-title semantic-copy" data-fit-min="30" data-fit-text id="tech-title">{lines(product["hero"][lang])}</h1><p class="body-large">{e(product["hero_body"][lang])}</p><div class="detail-meta">{status_badges(product, lang)}<span>{e(product["pilot_scope"][lang])}</span></div><a class="detail-inline-back" href="{page_path(lang)}#products">← {e(LANGS[lang]["all_products"])}</a></div>
+<div class="cell span-7 detail-animation reveal delay-1"><div class="detail-animation-head"><p class="eyebrow">{e({"ko":"현재 Operating sequence","en":"Current operating sequence","ar":"تسلسل التشغيل الحالي"}[lang])}</p><p class="wr-example-note">{e(web_release.TEXT[lang]["example"])}</p></div>{tech_visual(slug, lang)}</div>{steps}</section>
 {component_context_section(lang, slug)}
+{web_release.workflow_section(lang, quality=True) if slug == "quality" else ""}
 <section aria-labelledby="demo-title" class="detail-demo section-grid">{demo_panel(product, slug, lang)}</section>{quality_status}{quality_current_section(lang) if slug == "quality" else ""}
 <section aria-labelledby="spec-title" class="detail-specs section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e({"ko":"파일럿 검증 데이터","en":"Pilot validation data","ar":"بيانات التحقق التجريبي"}[lang])}</p><h2 class="section-title semantic-copy" data-fit-min="34" data-fit-text id="spec-title">{lines(product["outcome"][lang])}</h2><p class="body-large">{e(product["description"][lang])}</p></div>{specs}<div class="cell yellow span-12 reveal"><p class="body-large"><strong>{e({"ko":"파일럿 범위","en":"Pilot scope","ar":"نطاق المشروع التجريبي"}[lang])}:</strong> {e(product["pilot_scope"][lang])}</p></div></section>
-<section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#solutions">{e(LANGS[lang]["all_products"])}</a></div></section>
+<section aria-labelledby="related-title" class="related-flow section-grid"><div class="cell blue span-8 reveal"><p class="eyebrow">{e(LANGS[lang]["related"])}</p><h2 class="section-title semantic-copy" data-fit-min="30" data-fit-text id="related-title">{lines({"ko":"같은 운영 흐름에서|연결되는 모듈","en":"Modules connected|in the same operating flow","ar":"وحدات متصلة|في نفس التدفق التشغيلي"}[lang])}</h2><ul class="related-list">{related_items}</ul></div><div class="cell yellow span-4 cta-actions detail-cta-actions reveal delay-1"><a class="fm-button primary" href="{page_path(lang)}?interest={slug}#contact">{e(LANGS[lang]["pilot"])}</a><a class="fm-button" href="{page_path(lang)}#products">{e(LANGS[lang]["all_products"])}</a></div></section>
 </main>{footer(lang)}<script src="{SCRIPT_SRC}"></script>{extra_script}</body></html>"""
     return html
 
@@ -2218,7 +2225,7 @@ def notes() -> str:
 - Quality Intelligence: `/ko/quality/`, `/en/quality/`, `/ar/quality/` 및 한국어 호환 URL `/quality.html`; Defect → Loss → Priority → Work → Verify → Recurrence 구조를 기준으로 하며 Inspection은 Evidence / Input Layer로 표시합니다.
 - Machining Intelligence: Manufacturing Recipe, 기존 G-code 문맥 추론, safe assembly, 측정/보정, managed metadata, air-gapped USB 동기화를 V.Next 구조로 설명합니다. source-level 검증과 Active development / PoC 범위를 분리합니다.
 - Manufacturing Intelligence Platform: Manufacturing Context → Engine Pool → Module Pool → Solution Profile 조합 구조를 `/{{lang}}/platform/`에서 설명합니다. Event Bus·Audit·Adapter는 독립 제품이 아닌 경량 공통 런타임으로 한정합니다.
-- 홈 정보 흐름: 회사 정의 → 현장 문제 → 기존 시스템과 Flowmatic의 역할 차이 → Composition Journey → 4 Intelligence 업무효과 → 구현·검증 현황 → PoC → Company → 문의 순서입니다.
+- 홈 정보 흐름: 회사 정의·직접 데모 → 업무별 제품 → 실제 데모 → 고객 업무 → 연결 예시 → 전처리 → 승인 Composition Journey → 적용 구상 → 구현 현황 → 4~8주 도입 제안 → Company → 문의 순서입니다.
 - 홈 Composition Journey: 데스크톱의 가로형 조립 장면을 유지하고, 모바일은 동심원 분산 → 중앙 정렬 → 12 Module → 4 Intelligence 배선 순서의 가역 스크롤 장면을 사용합니다. `prefers-reduced-motion` 환경만 정적 4단계 요약을 표시합니다.
 - 신규 정식 URL: `/{{lang}}/machining-intelligence/`, `/{{lang}}/operations-intelligence/`, `/{{lang}}/logistics-intelligence/`, `/{{lang}}/platform/`; 기존 NC/CT/Quality/Work Standard/TMS/AMR URL은 하위 컴포넌트 페이지로 유지합니다.
 - Operations Intelligence: Functional MVP / internal validation 상태로 표시하며, Tracked Operational Cost를 완전 제조원가나 회계원가로 표현하지 않습니다.
@@ -2232,19 +2239,26 @@ def notes() -> str:
 
 
 def main() -> None:
-    write(Path("index.html"), home_page("ko", "/"))
+    write(Path("index.html"), home_page("ko", "/ko/"))
     for slug in PRODUCTS:
-        write(Path(f"{slug}.html"), product_page("ko", slug, f"/{slug}.html"))
+        write(Path(f"{slug}.html"), product_page("ko", slug, page_path("ko", slug)))
     for lang in LANGS:
         write(Path(lang) / "index.html", home_page(lang, page_path(lang)))
         for slug in PRODUCTS:
             write(Path(lang) / slug / "index.html", product_page(lang, slug, page_path(lang, slug)))
         for slug in FACTORY_OS_PAGES:
             write(Path(lang) / slug / "index.html", intelligence_page(lang, slug, page_path(lang, slug)))
+    legacy = {"index": "home", "home": "home", "modules": "home", "operations-intelligence": "operations-intelligence", "platform": "platform"}
+    for name, slug in legacy.items():
+        html = home_page("ko", "/ko/") if slug == "home" else intelligence_page("ko", slug, page_path("ko", slug))
+        write(Path("html-vnext") / (name + ".html"), html)
+    write(Path("release.json"), json.dumps({"release": web_release.RELEASE, "locales": list(LANGS), "baseline": "451148d2b85a0d5022210a0399d8a02d63adc0e4"}, ensure_ascii=False))
     write(Path("robots.txt"), "User-agent: *\nAllow: /\nSitemap: https://flowmatic-os.com/sitemap.xml\n")
     write(Path("sitemap.xml"), sitemap())
     write(Path("IMPLEMENTATION_NOTES.md"), notes())
 
+
+web_release.configure(globals())
 
 if __name__ == "__main__":
     main()

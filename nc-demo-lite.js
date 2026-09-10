@@ -476,5 +476,7 @@
     renderEmpty(root);
     const bootNotice = root.querySelector('[data-nc-boot]');
     if (bootNotice) bootNotice.hidden = true;
+    // Public synthetic sample only. Manual reset never restarts the sample.
+    if (root.hasAttribute("data-nc-autoload") && sampleButton) sampleButton.click();
   });
 })();
