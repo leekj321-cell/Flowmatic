@@ -1,6 +1,6 @@
 /* Business-first hierarchy; original animation/viewer assets stay unchanged. */
 .bn-page main{padding-top:var(--header-height)}
-.bn-page .bn-hero{padding-top:0}
+.bn-page main>.bn-hero:first-child{padding-top:0;min-height:calc(100vh - var(--header-height));min-height:calc(100svh - var(--header-height))}
 .bn-hero .hero-copy{min-height:620px;justify-content:center;padding:clamp(28px,4.8vw,72px);gap:0}
 .bn-hero #hero-title{font-size:clamp(32px,3.7vw,55px);font-weight:800;line-height:1.22;letter-spacing:-.045em;margin:10px 0 26px;word-break:keep-all;overflow-wrap:anywhere;max-width:100%}
 .bn-hero .bn-definition{font-size:clamp(17px,1.5vw,21px);line-height:1.8;max-width:44ch;margin:0 0 12px}
@@ -18,14 +18,15 @@
 .bn-workflow .flow-copy{min-height:0;padding:clamp(24px,4vw,56px)}
 .bn-workflow .flow-visual-cell{padding:clamp(22px,3vw,44px);display:flex;flex-direction:column;justify-content:center;min-width:0}
 .bn-workflow .field-story{width:100%;max-width:100%}
-.bn-workflow .flow-explanation li{grid-template-columns:1fr;gap:5px;padding:15px 0}
-.bn-workflow .flow-explanation li>strong{font-size:17px;line-height:1.5}
+body.bn-page .bn-workflow .flow-explanation li{display:grid;grid-template-columns:1fr;gap:5px;padding:15px 0}
+.bn-workflow .flow-explanation li>strong{font-size:17px;line-height:1.5;width:auto}
 .bn-workflow .flow-explanation li>span{font-size:16px;line-height:1.7}
 .bn-workflow .flow-explanation{margin:20px 0 0}
+.bn-workflow .flow-copy>.body-large{font-size:clamp(17px,1.5vw,21px);line-height:1.8}
 .bn-page .wr-demo>video{display:block;width:100%;height:auto;aspect-ratio:8/5;background:#101820;object-fit:contain}
 .bn-subhero{padding:clamp(30px,5vw,72px);border-bottom:var(--border) solid var(--fm-black);background:#fff}
 .bn-subhero h1{font-size:clamp(32px,4vw,58px);line-height:1.25;font-weight:800;letter-spacing:-.035em;max-width:1100px;word-break:keep-all;overflow-wrap:anywhere;margin:16px 0 24px}
-.bn-subhero>.body-large{max-width:85ch;line-height:1.85;margin:0 0 22px}
+.bn-subhero>.body-large{font-size:clamp(17px,1.5vw,21px);max-width:85ch;line-height:1.85;margin:0 0 22px}
 .bn-subhero>.fm-button{margin-top:4px;max-width:100%;white-space:normal;line-height:1.5}
 .bn-request{margin:0;width:100%}
 .bn-request>div{display:grid;grid-template-columns:1fr 2fr;gap:12px;border-bottom:1px solid #c7ced4;padding:12px 0}
