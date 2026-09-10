@@ -33,6 +33,7 @@ body.bn-page .bn-hero #hero-title .copy-lines{display:block!important;width:100%
 body.bn-page .bn-hero #hero-title .copy-line{display:block!important;white-space:nowrap!important;width:auto!important;max-width:100%;font-size:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;word-break:normal!important;overflow-wrap:normal!important}
 @media(max-width:768px){body.bn-page .bn-hero #hero-title{font-size:clamp(24px,7.2vw,52px)!important}.bn-hero .bn-promise h2{font-size:clamp(24px,6.5vw,38px)}}
 @media(max-width:359px){body.bn-page .bn-hero #hero-title{font-size:23px!important}}
+@media(min-width:769px) and (max-width:1180px){body.bn-page .bn-hero .hero-copy,body.bn-page .bn-hero .bn-promise{grid-column:span 12!important}body.bn-page .bn-hero .hero-copy{min-height:0}body.bn-page .bn-hero #hero-title{font-size:clamp(40px,5.5vw,60px)!important}}
 '''
     p.write_text(css)
     print('Restored approved declaration and Operations ownership; validators and motion assets untouched')
