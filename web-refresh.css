@@ -54,3 +54,12 @@ body[data-lang="ar"] .nc-code-table,body[data-lang="ar"] .nc-viewer-coordinates{
 .site-header .lang-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--fm-black);padding:0 6px}
 .site-header .lang-button.is-active{color:var(--fm-white)}
 .flowmatic-nc main{padding-top:var(--header-height)}
+
+/* Nested headline fit: preserve slogan wording/lines and animation mechanics. */
+body .hero .brand-hero-title{--fit-min:18px!important}
+.hero-title:not(.brand-hero-title) .copy-line,.section-title .copy-line{white-space:normal!important;width:auto!important;max-width:100%;overflow-wrap:anywhere;word-break:normal;line-height:1.16}
+.hero-title:not(.brand-hero-title) .copy-lines,.section-title .copy-lines{width:100%!important;min-width:0}
+@media(max-width:900px){
+[data-composition-motion] .composition-motion__head .section-title{font-size:clamp(18px,5.4vw,26px)!important;line-height:1.12;max-width:100%;--fit-min:18px}
+.detail-hero-copy .hero-title,.v156-platform-hero .hero-title{--fit-max:42px;--fit-min:28px}
+}

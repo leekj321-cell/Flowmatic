@@ -88,9 +88,11 @@ def browser_checks(base,baseline=None,capture_assets=False):
    for slug in ['home']+list(site.PRODUCTS)+list(site.FACTORY_OS_PAGES):
     path=f'/{lang}/'+('' if slug=='home' else slug+'/');go(path)
     for w,h in SIZES:
-     page.set_viewport_size({'width':w,'height':h});page.evaluate("window.scrollTo({top:0,behavior:'instant'})");page.wait_for_timeout(90)
+     page.set_viewport_size({'width':w,'height':h});page.evaluate("window.scrollTo({top:0,behavior:'instant'})");page.wait_for_timeout(160)
      box=page.evaluate('({scroll:document.documentElement.scrollWidth, viewport:innerWidth})')
      check(f'{lang}/{slug}: no horizontal overflow {w}x{h}',box['scroll']<=w+1,box)
+     clipped=page.locator('h1,h2,h3,h1 .copy-line,h2 .copy-line,h3 .copy-line').evaluate_all("els=>els.filter(e=>e.clientWidth>0&&getComputedStyle(e).display!=='none'&&e.scrollWidth>e.clientWidth+2).map(e=>({text:e.textContent.slice(0,120),width:e.clientWidth,scroll:e.scrollWidth}))")
+     check(f'{lang}/{slug}: headline text bounds {w}x{h}',not clipped,clipped)
      if slug=='home':
       if w in (320,390,1440):page.screenshot(path=str(OUT/f'{lang}-home-{w}.png'))
       cta=page.locator('.hero-actions a.primary').bounding_box();check(f'{lang}: immediate first-screen CTA {w}x{h}',cta is not None and cta['y']+cta['height']<=h+1,cta)
