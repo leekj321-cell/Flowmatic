@@ -1,20 +1,20 @@
 """Business-first static website composition. Original animation/viewer code is reused."""
 from html import escape as e
 from bs4 import BeautifulSoup
-RELEASE='2026.09.10-r3'
+RELEASE='2026.09.13-r4'
 from pathlib import Path
 import json
 DECLARATION='|'.join(json.loads((Path(__file__).parent/'homepage-declaration.json').read_text())['lines'])
 COPY={k:{} for k in ('ko','en','ar')}
 def text(key,ko,en,ar):
     for lang,value in zip(COPY,(ko,en,ar)): COPY[lang][key]=value
-text('hero','기존 설비와 데이터로,|제조업무를 시스템화합니다.','Systematize manufacturing work.|Use the equipment and data you have.','نُنظّم أعمال التصنيع،|بالمعدات والبيانات المتاحة لديك.')
+text('hero','보유설비와 데이터로,|제조업무를 시스템화합니다.','Systematize manufacturing work.|Use the equipment and data you have.','نُنظّم أعمال التصنيع،|بالمعدات والبيانات المتاحة لديك.')
 text('promise','반복 확인을 줄이고,|경험이 회사에 남게.','Less repeated checking.|Experience that stays with the business.','تكرار أقل في التحقق،|وخبرة تبقى داخل الشركة.')
 text('note','사용 가능한 설비와 자료는 살리고, 사람이 이어오던 생산·품질·관리 업무에 필요한 프로그램을 더합니다.','Keep usable equipment and information. Add software that helps people prepare, review and manage production.','نستفيد من المعدات والمعلومات القابلة للاستخدام، ونضيف برامج تدعم العاملين في الإنتاج والجودة والإدارة.')
 text('explore','제품 살펴보기','Explore the products','تعرّف على المنتجات')
-text('consult','도입 문의','Discuss deployment','ناقش التطبيق')
+text('consult','데모 요청','Request a demo','اطلب عرضًا توضيحيًا')
 text('run','공구 경로 3D로 보기','View the toolpath in 3D','اعرض مسار الأداة ثلاثي الأبعاد')
-text('nav',['제품','제품 시연','플랫폼 구조','회사','도입 문의'],['Products','Product demonstrations','Platform structure','Company','Contact'],['المنتجات','عروض المنتجات','بنية المنصة','الشركة','تواصل معنا'])
+text('nav',['제품', '제품 시연', '플랫폼', '회사', '데모 요청'],['Products', 'Demos', 'Platform', 'Company', 'Request a demo'],['المنتجات', 'العروض', 'المنصة', 'الشركة', 'اطلب عرضًا'])
 text('problem','자료가 있어도, 업무를 이어받으려면 다시 확인해야 합니다.','The files exist. Taking over the work still means asking again.','الملفات موجودة، لكن تسلّم العمل لا يزال يتطلب السؤال من جديد.')
 text('problem_body','최신 자료를 찾고, 이전 판단을 묻고, 진행 상태를 다시 정리하는 일. 자료와 실제 업무 사이의 빈칸을 몇 사람의 기억과 수작업이 메우고 있습니다.','Finding the latest information, understanding past decisions and checking progress still depend on a few people. They bridge the gap between stored information and the work that needs to happen.','البحث عن أحدث المعلومات وفهم القرارات السابقة والتحقق من التقدم يعتمد على عدد قليل من الأشخاص. فهم يسدّون الفجوة بين المعلومات المخزنة والعمل المطلوب.')
 text('people',[('“최신 도면이 어느 것입니까?”','새 담당자는 작업을 시작하기 전에 자료를 다시 찾아보고 묻습니다.'),('“이 조건은 왜 바꿨습니까?”','숙련자는 사람에게 남아 있는 판단 근거를 반복해서 설명합니다.'),('“검사는 어디까지 했습니까?”','관리자는 담당자마다 연락해 진행 상태를 모읍니다.')],[('“Which drawing is current?”','A new team member searches and asks again before work can begin.'),('“Why was this setting changed?”','Experienced staff repeat the reasoning when it was never recorded.'),('“How far has inspection progressed?”','Managers contact each person to assemble the current status.')],[('«أي رسم هو الأحدث؟»','يبحث الموظف الجديد ويسأل قبل أن يبدأ العمل.'),('«لماذا تغيّر هذا الإعداد؟»','يكرر أصحاب الخبرة شرح أسباب القرارات التي لم تُسجّل.'),('«إلى أين وصل الفحص؟»','يتواصل المدير مع كل مسؤول لجمع حالة التقدم.')])
@@ -24,14 +24,14 @@ text('workflow_body','자료를 읽고 필요한 결과를 정리한 뒤, 담당
 text('workflow_steps',[('자료를 정리합니다','도면·NC·영상·검사기록에서 검토할 정보와 계산 결과를 준비합니다.'),('사람의 판단을 돕습니다','담당자는 근거를 보고 필요한 조치와 책임 범위를 결정합니다.'),('다음 업무로 이어갑니다','처리 결과와 변경 이유를 다시 참고할 기준과 이력으로 남깁니다.')],[('Prepare the information','Organize drawings, NC, video and inspection records for review.'),('Support human judgment','The responsible person reviews the evidence and decides the next action.'),('Carry the result forward','Retain the outcome and the reason for a change for the next task.')],[('تجهيز المعلومات','تنظيم الرسومات وNC والفيديو وسجلات الفحص للمراجعة.'),('دعم الحكم البشري','يراجع المسؤول الأدلة ويقرر الإجراء التالي.'),('نقل النتيجة إلى العمل التالي','حفظ النتيجة وسبب التغيير للرجوع إليهما لاحقًا.')])
 text('principle','작동 원리 예시','Illustration of the operating principle','رسم توضيحي لمبدأ العمل')
 text('principle_note','현장 신호 → 업무 알림 → 담당자 확인의 연결 원리입니다. 개별 프로그램은 확보했으며, 여러 업무의 현장 연계는 도입 범위에 따라 검증합니다.','Field signal → work notification → human confirmation. Individual applications are available; cross-workflow integration requires deployment-specific validation.','إشارة ميدانية ← تنبيه عمل ← تأكيد المسؤول. التطبيقات الفردية متاحة، أما ربط سير العمل في الموقع فيتطلب التحقق وفق نطاق التطبيق.')
-text('products','가공 준비부터 품질 대응까지, 반복 업무를 바꿉니다.','Change recurring work, from machining review to quality response.','تحسين العمل المتكرر، من مراجعة التشغيل إلى الاستجابة للجودة.')
+text('products','필요한 업무부터 선택하세요.','Choose the workflow you need.','اختر العمل الذي تحتاج إليه.')
 text('products_body','필요한 업무부터 적용하고, 입력 자료·담당자의 판단·처리 결과를 기준으로 적용 범위를 정합니다.','Start with the workflow that matters. Define its inputs, the decisions people make and the results they need.','نبدأ بالعمل المهم، ونحدد مدخلاته والقرارات التي يتخذها الفريق والنتائج المطلوبة.')
-text('demos','설명한 업무 변화를 실제 화면에서 확인합니다.','See the working software behind the workflow.','شاهد البرامج العملية التي تدعم سير العمل.')
-text('demos_body','가공 프로그램은 공구 경로로, 작업 영상은 시간 기록으로 확인합니다. 서로 다른 입력과 프로그램의 개별 시연입니다.','Review a machining program as a toolpath and a work video as a time record. These are separate demonstrations with different inputs and applications.','راجع برنامج التشغيل كمسار للأداة وفيديو العمل كسجل زمني. هذه عروض منفصلة بمدخلات وتطبيقات مختلفة.')
-text('nc_title','문자로 된 가공 프로그램을, 공구 움직임으로 확인합니다.','See how the tool moves—not just the lines of code.','شاهد حركة الأداة، لا أسطر البرنامج فقط.')
-text('nc_body','샘플의 공구별 경로를 선택하고 회전·확대하며 검토합니다. 가공 준비·검토 제품 중 브라우저에서 체험할 수 있는 기능입니다.','Select a sample toolpath, rotate the view and zoom in. This browser experience demonstrates one part of machining preparation and review.','اختر مسار أداة من العينة ودوّر العرض وكبّره. هذه التجربة في المتصفح تعرض جزءًا من إعداد التشغيل ومراجعته.')
-text('ct_title','작업 영상을, 비교할 수 있는 시간 기록으로 정리합니다.','Turn work video into a time record that can be compared.','حوّل فيديو العمل إلى سجل زمني قابل للمقارنة.')
-text('ct_body','작업 구간과 가동·비가동 시간을 영상과 함께 확인하는 실제 프로그램 녹화입니다. 이 페이지에서 새 영상을 분석하는 기능은 아닙니다.','A recording of the actual application showing work intervals and running or idle periods. This page does not analyze a new video.','تسجيل للتطبيق الفعلي يوضح فترات العمل والتشغيل والتوقف مع الفيديو. هذه الصفحة لا تحلل فيديو جديدًا.')
+text('demos','실제 제품을 먼저 확인하세요.','See the software in action.','شاهد البرامج أثناء العمل.')
+text('demos_body','NC 경로는 직접 조작하고, 작업시간 분석은 실제 프로그램 녹화로 확인할 수 있습니다.','Explore the NC toolpath in your browser and watch a recording of the work-time analysis application.','استكشف مسار NC في المتصفح وشاهد تسجيلًا لتطبيق تحليل وقت العمل.')
+text('nc_title','NC 코드를 공구 경로로 검토','Review NC as a toolpath','مراجعة NC كمسار للأداة')
+text('nc_body','샘플의 공구별 경로를 선택하고 회전·확대하며 검토합니다. 가공 준비·검토 제품의 일부 기능을 체험할 수 있습니다.','Select a sample toolpath, rotate the view and zoom in to try one part of machining preparation and review.','اختر مسار أداة من العينة ودوّر العرض وكبّره لتجربة جزء من إعداد التشغيل ومراجعته.')
+text('ct_title','작업 영상을 시간 기록으로 분석','Analyze work video as a time record','تحليل فيديو العمل كسجل زمني')
+text('ct_body','작업 구간과 가동·비가동 시간을 영상과 함께 확인하는 녹화입니다. 고객 영상의 분석 범위는 데모 요청 시 협의합니다.','Watch recorded work intervals and running or idle periods alongside the video. Contact us to discuss analysis of your own footage.','شاهد تسجيلًا لفترات العمل والتشغيل والتوقف مع الفيديو. تواصل معنا لمناقشة تحليل مقاطعك.')
 text('capability','한 사람의 경험이, 회사가 반복해서 활용할 수 있는 역량이 됩니다.','Make individual experience reusable across the business.','اجعل خبرة الفرد قابلة لإعادة الاستخدام داخل الشركة.')
 text('capability_body','분석·계산·검토로 담당자의 업무 수행을 돕고, 공통 자료와 기준·이력으로 다른 담당자가 이어받을 수 있는 업무를 만듭니다.','Analysis, calculation and review support the person doing the work. Shared information, standards and history help another person take it over.','يدعم التحليل والحساب والمراجعة أداء المسؤول، وتساعد المعلومات والمعايير والسجلات المشتركة شخصًا آخر على تسلّم العمل.')
 text('benefits',[('신규 담당자의 업무 적응','필요한 자료와 이전 판단 근거를 찾아보고 업무를 시작합니다.'),('숙련자의 전문역량 활용','반복 정리와 설명보다 검토와 개선에 집중하도록 돕습니다.'),('업무 연속성과 성장 대응','사람이 바뀌고 일이 늘어도 기준과 처리 경험을 조직에 남기는 것이 목표입니다.')],[('Help new team members get started','Find relevant information and reasons for previous decisions.'),('Use expertise for improvement','Focus on review and improvement rather than repeated organization and explanation.'),('Maintain continuity as work grows','Keep standards and experience available when people change or workloads increase.')],[('مساعدة الموظفين الجدد','الوصول إلى المعلومات وأسباب القرارات السابقة.'),('توجيه الخبرة إلى التحسين','التركيز على المراجعة والتحسين بدل تكرار التنظيم والشرح.'),('استمرارية العمل والنمو','إبقاء المعايير والخبرة متاحة عند تغيّر الموظفين أو زيادة العمل.')])
@@ -45,11 +45,11 @@ text('growth_steps',[('첫 업무','한 라인·한 업무의 유료 적용과 �
 text('growth_note','사업모델은 업무 도입비와 지속 이용료, 적용 확대에 따른 추가 구축입니다. 반복 설치의 경제성은 후속 현장에서 검증합니다.','The model combines deployment fees, recurring usage fees and additional implementation as scope expands. Repeat-deployment economics require field validation.','يجمع النموذج رسوم التطبيق والاستخدام المستمر والتنفيذ الإضافي عند التوسع. وتتطلب جدوى تكرار التطبيق التحقق الميداني.')
 text('pilot','한 업무에서 도입 가치를 확인하고, 필요한 범위로 넓힙니다.','Verify the value in one workflow, then expand where it helps.','تحقّق من القيمة في عمل واحد، ثم توسّع حيث يفيد.')
 text('pilot_body','자동차부품·정밀가공 등 제조기업의 한 라인·한 업무부터 시작합니다. 4~8주는 제안 범위이며 자료·연결·교육·지원 조건을 확인해 기간과 총비용을 합의합니다.','Start with one workflow on one line at an automotive-parts or precision-machining manufacturer. Four to eight weeks is a proposal, not a guaranteed schedule. Agree on data, integration, training, support and total cost.','نبدأ بعمل واحد في خط واحد لدى مصنع لقطع السيارات أو التشغيل الدقيق. أربعة إلى ثمانية أسابيع مدة مقترحة وليست مضمونة؛ ويُتفق على البيانات والربط والتدريب والدعم والتكلفة الإجمالية.')
-text('contact','현재 가장 번거로운|업무부터 들려주세요.','Tell us which work|takes too much effort.','أخبرنا عن العمل|الذي يستهلك جهدًا كبيرًا.')
-text('contact_body','제품명을 정하지 않아도 됩니다. 반복해서 확인하거나 정리하는 업무를 알려주시면, 사용할 자료와 적용 범위를 함께 검토합니다. 투자·사업협력 문의도 같은 창구로 받습니다.','You do not need to choose a product first. Describe the repeated checking or organization and we will review the information and deployment scope with you. Investment and partnership inquiries are also welcome.','لا تحتاج إلى اختيار منتج أولًا. صِف أعمال التحقق أو التنظيم المتكررة لنراجع معك المعلومات ونطاق التطبيق. ونرحّب أيضًا باستفسارات الاستثمار والشراكة.')
+text('contact','우리 현장에 맞는|데모를 요청하세요.','Request a demo|for your workflow.','اطلب عرضًا توضيحيًا|لعملك.')
+text('contact_body','확인하고 싶은 업무와 보유 자료를 알려주세요. 적합한 제품과 적용 범위를 검토해 데모 일정을 협의합니다. 투자·사업협력 문의도 받습니다.','Tell us about your workflow and available information. We will review the product fit and scope, then arrange a demo with you. Investment and partnership inquiries are also welcome.','أخبرنا عن عملك والمعلومات المتاحة. سنراجع ملاءمة المنتج ونطاقه، ثم نتفق معك على موعد العرض. نرحب أيضًا باستفسارات الاستثمار والشراكة.')
 text('brief','현재 어려운 업무 또는 문의 내용','Current workflow problem or inquiry','صعوبة العمل الحالية أو موضوع الاستفسار')
 text('company','현장 경험이 기업의 운영역량으로 남도록.','Keep field experience inside the business.','إبقاء الخبرة الميدانية داخل الشركة.')
-text('company_body','Flowmatic은 제조 현장의 반복 확인·정리·전달 업무에서 출발했습니다. 기존 설비와 자료를 활용하는 업무 프로그램을 바탕으로, 한 업무의 도입과 지속 이용, 후속 현장 확장을 추진합니다.','Flowmatic started with repeated checking, organization and handoffs in manufacturing. We are pursuing initial paid deployments, recurring use and further sites using software built around existing equipment and information.','انطلقت Flowmatic من أعمال التحقق والتنظيم والتسليم المتكررة في التصنيع. نسعى إلى التطبيقات المدفوعة الأولى والاستخدام المستمر والتوسع، ببرامج تستفيد من المعدات والمعلومات الموجودة.')
+text('company_body','Flowmatic은 제조 현장의 반복 확인·정리·전달 업무에서 출발했습니다. 보유설비와 자료를 활용해 담당자의 판단을 돕고, 처리 경험이 회사에 남는 제조 AI 플랫폼을 만듭니다.','Flowmatic started with repeated checking, organization and handoffs in manufacturing. We build a manufacturing AI platform that uses the equipment and information you have to support human judgment and retain work experience.','انطلقت Flowmatic من أعمال التحقق والتنظيم والتسليم المتكررة في التصنيع. نبني منصة ذكاء اصطناعي للتصنيع تستخدم المعدات والمعلومات المتاحة لدعم الحكم البشري والاحتفاظ بخبرة العمل.')
 text('example','업무 흐름 예시 · 고정 수치는 사용 장면을 설명하는 예시입니다.','Workflow illustration. Fixed numbers explain the example; they are not measured results.','رسم توضيحي للعمل. الأرقام الثابتة لشرح المثال وليست نتائج مقاسة.')
 text('technical','기술 구조·세부 적용 조건','Technical structure and detailed conditions','البنية التقنية وشروط التطبيق التفصيلية')
 text('input','사용할 자료','Information used','المعلومات المستخدمة')
@@ -80,6 +80,23 @@ text('platform','한 번 만든 기능을,|여러 제조업무에 활용합니�
 text('standard','공정 지식을 작업 기준으로 정리합니다.','Turn process knowledge into usable work standards.','نحوّل معرفة العملية إلى معايير عمل قابلة للاستخدام.')
 text('standard_body','공정 순서·조건·도면과 확인 항목을 작업자가 참고할 기준으로 정리합니다.','Organize the process sequence, conditions, drawings and checkpoints people need.','تنظيم تسلسل العملية وظروفها ورسوماتها ونقاط التحقق التي يحتاج إليها العاملون.')
 
+text('watch','제품 시연 보기','Explore the demos','شاهد العروض')
+text('preview','제품 화면 · NC 경로 검토','Product view · NC toolpath review','شاشة المنتج · مراجعة مسار NC')
+text('preview_note','샘플 공구 경로 · 브라우저 체험 제공','Sample toolpath · available to try in your browser','مسار أداة من العينة · متاح للتجربة في المتصفح')
+text('roles_title','담당 업무에서 무엇이 달라질까요?','What changes in your day-to-day work?','ما الذي يتغير في عملك اليومي؟')
+text('roles_body','반복 확인과 정리를 줄이기 위한 적용 예시입니다. 실제 도입 범위와 효과는 현장 자료로 검증합니다.','These examples show where software can reduce repeated checking and organization. Scope and results are validated with your site data.','أمثلة لتقليل التحقق والتنظيم المتكرر. يُتحقق من نطاق التطبيق ونتائجه باستخدام بيانات موقعك.')
+text('before','현재 업무','Current task','العمل الحالي')
+text('after','적용 방향','With Flowmatic','مع Flowmatic')
+text('roles',[['생산기술', '도면·NC·공구 정보를 각각 찾아 대조', '공구 경로와 가공 정보를 한 검토 흐름으로 확인', 'machining-intelligence'], ['라인 운영', '작업 영상을 되돌려 보며 시간과 사용량 정리', '작업시간 분석과 자원 사용량 검토를 필요한 업무부터 적용', 'operations-intelligence'], ['품질', '검사기록을 모아 불량과 후속 조치를 정리', '불량·손실 추세를 검토하고 조치 우선순위와 이력 관리', 'quality']],[['Production engineering', 'Find and compare drawings, NC and tool information separately.', 'Review toolpaths and machining information in a common review workflow.', 'machining-intelligence'], ['Line operations', 'Replay work footage and organize time and resource usage.', 'Start with work-time analysis or resource-usage review where needed.', 'operations-intelligence'], ['Quality', 'Collect inspection records and organize defects and follow-up actions.', 'Review defect and loss trends, action priorities and history.', 'quality']],[['هندسة الإنتاج', 'البحث عن الرسومات وNC ومعلومات الأدوات ومقارنتها كلٌّ على حدة.', 'مراجعة مسارات الأدوات ومعلومات التشغيل ضمن سير مراجعة مشترك.', 'machining-intelligence'], ['تشغيل الخط', 'إعادة مشاهدة فيديو العمل وتنظيم الوقت واستخدام الموارد.', 'البدء بتحليل وقت العمل أو مراجعة استخدام الموارد حسب الحاجة.', 'operations-intelligence'], ['الجودة', 'جمع سجلات الفحص وتنظيم العيوب وإجراءات المتابعة.', 'مراجعة اتجاهات العيوب والخسائر وأولويات الإجراءات وسجلها.', 'quality']])
+text('role_link','관련 제품 보기','View related product','عرض المنتج المرتبط')
+text('connect_title','보유 자료에서 시작해, 필요한 업무로 연결합니다.','Start with your information. Connect the work you need.','ابدأ بمعلوماتك واربط الأعمال التي تحتاج إليها.')
+text('connect_body','도면·NC·영상·검사기록을 검토할 정보로 정리하고, 담당자의 판단과 처리 결과가 다음 업무에 남도록 연결합니다.','Organize drawings, NC, video and inspection records for review, then carry human decisions and outcomes into the next task.','نظّم الرسومات وNC والفيديو وسجلات الفحص للمراجعة، ثم انقل قرارات المسؤولين والنتائج إلى المهمة التالية.')
+text('connect_steps',[['자료 정리', '보유설비·도면·NC·영상·검사기록'], ['담당자 검토', '분석 결과와 판단 근거 확인'], ['업무 연결', '가공·품질·운영·물류에 단계적 적용']],[['Prepare information', 'Equipment, drawings, NC, video and inspection records'], ['Human review', 'Analysis results and the basis for a decision'], ['Connect workflows', 'Phased use across machining, quality, operations and logistics']],[['تنظيم المعلومات', 'المعدات والرسومات وNC والفيديو وسجلات الفحص'], ['مراجعة المسؤول', 'نتائج التحليل وأساس القرار'], ['ربط الأعمال', 'تطبيق تدريجي في التشغيل والجودة والإدارة واللوجستيات']])
+text('platform_more','플랫폼 구조와 확장 방식 보기','Explore the platform and expansion approach','استكشف بنية المنصة وطريقة التوسع')
+text('availability','희망 일정·시간대 (선택)','Preferred date, time and time zone (optional)','التاريخ والوقت والمنطقة الزمنية المفضلة (اختياري)')
+text('schedule_note','요청을 확인한 뒤 연락해 일정을 협의합니다. 제출만으로 예약이 확정되지는 않습니다.','We will contact you to arrange a time after reviewing your request. Submitting this form does not confirm a booking.','سنتواصل معك للاتفاق على موعد بعد مراجعة طلبك. إرسال النموذج لا يؤكد الحجز.')
+text('sent','요청이 접수되었습니다. 남겨주신 연락처로 데모 일정 또는 문의 내용을 안내드리겠습니다.','Your request has been received. We will contact you about a demo time or your inquiry.','تم استلام طلبك. سنتواصل معك بشأن موعد العرض أو استفسارك.')
+
 def action(url,label,primary=True):
     return f'<a class="fm-button{" primary" if primary else ""}" href="{url}">{e(label)}</a>'
 def cards(items,cols=3):
@@ -97,8 +114,9 @@ def configure(site):
         assert set(t)==set(COPY['ko'])
         x=wr.TEXT[lang]
         x.update(nav=t['nav'],run=t['run'],consult=t['consult'],work_title=t['problem'],work_body=t['problem_body'],people=t['people'],goal=t['problem_end'],products_title=t['products'],products_body=t['products_body'],demos_title=t['demos'],demos_body=t['demos_body'],nc_demo=t['nc_title'],nc_body=t['nc_body'],ct_demo=t['ct_title'],ct_body=t['ct_body'],pilot_title=t['pilot'],pilot_body=t['pilot_body'],example=t['example'],engineering=t['technical'])
-        site['HOME'][lang].update(h1=DECLARATION,primary=t['explore'],secondary=t['consult'],contact_title=t['contact'],contact_body=t['contact_body'])
-        site['CONTACT_FORM'][lang].update(brief=t['brief'],brief_template='')
+        if lang=='ko':x['intro']=x['intro'].replace('기존 설비','보유설비')
+        site['HOME'][lang].update(h1=DECLARATION,primary=t['consult'],secondary=t['watch'],contact_title=t['contact'],contact_body=t['contact_body'])
+        site['CONTACT_FORM'][lang].update(brief=t['brief'],brief_template='',submit=t['consult'],sent=t['sent'])
         site['HOME_COMPOSITION_COPY'][lang].update(kicker='Flowmatic',title=t['assembly'],body=t['assembly_body'],steps=t['assembly_steps'])
         site['PRODUCTS']['work-standard']['hero'][lang]=t['standard']
         site['PRODUCTS']['work-standard']['hero_body'][lang]=t['standard_body']
@@ -131,12 +149,30 @@ def configure(site):
         return section('demos',t['demos'],t['demos_body'],'<div class="wr-grid wr-grid-two">'+nc+ct+'</div>')
     def end(lang,slug):
         t=COPY[lang];return '<div class="bn-end-actions">'+action(f'/{lang}/?interest={slug}#contact',t['consult'])+action(f'/{lang}/#products',t['explore'],False)+'</div>'
+    def role_changes(lang):
+        t=COPY[lang]
+        items=''.join(f'<article class="wr-card bn-role"><h3>{e(role)}</h3><dl><div><dt>{e(t["before"])}</dt><dd>{e(before)}</dd></div><div><dt>{e(t["after"])}</dt><dd>{e(after)}</dd></div></dl><a class="bn-text-link" href="/{lang}/{slug}/">{e(t["role_link"])}</a></article>' for role,before,after,slug in t['roles'])
+        aliases='<span id="field-problem" class="bn-anchor"></span><span id="workflow" class="bn-anchor"></span><span id="capability" class="bn-anchor"></span>'
+        return section('work-changes',t['roles_title'],t['roles_body'],aliases+'<div class="wr-grid wr-grid-three">'+items+'</div>')
+    def platform_summary(lang):
+        t=COPY[lang]
+        aliases='<span id="preprocessing" class="bn-anchor"></span><span id="growth" class="bn-anchor"></span>'
+        steps='<ol class="bn-connect-steps">'+''.join(f'<li><span class="bn-number">{i+1:02}</span><h3>{e(title)}</h3><p>{e(body)}</p></li>' for i,(title,body) in enumerate(t['connect_steps']))+'</ol>'
+        return section('architecture',t['connect_title'],t['connect_body'],aliases+steps+action(f'/{lang}/platform/',t['platform_more'],False))
+    def contact(lang):
+        t=COPY[lang]
+        doc=BeautifulSoup(site['contact_section'](lang).replace('rows="8"','rows="4"'),'html.parser')
+        field=BeautifulSoup(f'<div class="contact-field contact-field-wide"><label for="contact-availability">{e(t["availability"])}</label><input id="contact-availability" name="availability" type="text" maxlength="200" aria-describedby="contact-schedule-note"></div>','html.parser')
+        doc.select_one('.contact-form-grid').append(field)
+        note=BeautifulSoup(f'<p class="bn-schedule-note" id="contact-schedule-note">{e(t["schedule_note"])}</p>','html.parser')
+        doc.select_one('.contact-submit').insert_before(note)
+        return str(doc)
     def home(lang,path):
         t=COPY[lang];x=wr.TEXT[lang]
-        hero=f'<section id="hero" class="hero section-grid bn-hero" aria-labelledby="hero-title"><div class="cell span-7 hero-copy"><p class="eyebrow">Flowmatic</p><h1 id="hero-title" class="hero-title semantic-copy brand-hero-title" lang="en" dir="ltr" data-brand-contract="WEB-019">{site["lines"](DECLARATION)}</h1><p class="body-large bn-definition">{e(x["intro"])}</p><div class="hero-actions">{action("#products",t["explore"])}{action("#contact",t["consult"],False)}</div></div><div class="cell blue span-5 bn-promise"><h2>{e(t["promise"]).replace("|","<br>")}</h2><p>{e(t["note"])}</p></div></section>'
-        body=hero+wr.customer_section(lang)+workflow(lang)+wr.products_section(lang)+demos(lang)
-        body+=section('capability',t['capability'],t['capability_body'],cards(t['benefits']),t['benefit_note'])+wr.preprocessing_section(lang)+composition(lang)+growth(lang)+wr.pilot_section(lang)
-        body+=section('company',t['company'],t['company_body'],action('#contact',t['consult'],False))+site['contact_section'](lang).replace('rows="8"','rows="5"')
+        preview=f'<div class="cell blue span-5 bn-promise bn-product-preview"><h2>{e(t["preview"])}</h2><a class="bn-preview-frame" href="#demos"><img src="/media/web-release/nc-{lang}.webp" alt="{e(x["nc_alt"])}" width="960" height="600" fetchpriority="high"></a><p>{e(t["preview_note"])}</p></div>'
+        hero=f'<section id="hero" class="hero section-grid bn-hero" aria-labelledby="hero-title"><div class="cell span-7 hero-copy"><p class="eyebrow">Flowmatic</p><h1 id="hero-title" class="hero-title semantic-copy brand-hero-title" lang="en" dir="ltr" data-brand-contract="WEB-019">{site["lines"](DECLARATION)}</h1><p class="body-large bn-definition">{e(x["intro"])}</p><div class="hero-actions">{action("#contact",t["consult"])}{action("#demos",t["watch"],False)}</div></div>{preview}</section>'
+        body=hero+demos(lang)+role_changes(lang)+wr.products_section(lang)+platform_summary(lang)+wr.pilot_section(lang)
+        body+=section('company',t['company'],t['company_body'])+contact(lang)
         return document(lang,'home',path,body)
     def intelligence(lang,slug,path):
         t=COPY[lang];x=wr.TEXT[lang]
@@ -174,4 +210,4 @@ def configure(site):
         for node in soup.select('.detail-animation-head .eyebrow'):node.string={'ko':'업무 흐름 예시','en':'Workflow illustration','ar':'رسم توضيحي لسير العمل'}[lang]
         return str(soup)
     site['home_page']=home;site['intelligence_page']=intelligence;site['product_page']=product
-    site['notes']=lambda: '# Website release '+RELEASE+'\n\nCompany proposition -> field problem -> workflow -> products and actual demos -> organizational capability -> reusable information -> composition and expansion -> paid pilot and inquiry.\n\nNC is a scoped machining component, not the company proposition. WEB-019 / RT-022: canonical first-screen English declaration is the primary three-line H1 in all locales. WEB-020 / RT-023: original operational animation belongs only to the Operations page, with an illustrative integration boundary. Original animation scripts, render functions, viewer and video bytes are unchanged.\n\nReview: author content review and browser regression, not independent Strategy Office sign-off or native Arabic proofreading.\n'
+    site['notes']=lambda: '# Website release '+RELEASE+'\n\nOwner-selected B: square Mondrian section frames, 12px content cards and 8px controls. Home sequence: company declaration and actual product preview -> actual demos -> role-specific work examples -> four product domains -> compact platform summary -> pilot -> company -> demo request. Full original scroll composition remains on the platform detail page. Legacy home fragment links remain available.\n\nNC is a scoped machining component, not the company proposition. WEB-019 / RT-022: canonical first-screen English declaration is the primary three-line H1 in all locales. WEB-020 / RT-023: original operational animation belongs only to the Operations page, with an illustrative integration boundary. Original animation scripts, render functions, viewer and video bytes are unchanged.\n\nRequest a demo uses the existing contact endpoint with optional preferred time/time zone. No owner booking-calendar URL was supplied or found; submission requests follow-up and does not confirm a reservation.\n\nValidation expectations changed only for the owner-approved home order, contact CTA, Korean term and relocation of the complete assembly to the platform page. Review: author content review and browser regression, not independent Strategy Office sign-off or native Arabic proofreading.\n'
