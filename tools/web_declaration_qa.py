@@ -99,6 +99,7 @@ def browser_checks(base):
                         check(f'{lang}: B square frame and partial rounding {w}',layout['card']==12 and layout['button']==8 and layout['frame']==0,layout)
                         check(f'{lang}: actual product and early demos {w}',layout['imageLoaded'] and layout['demoTop']<(1000 if w>=1180 else 1500),layout)
                         if w in [320,390,1440]:page.screenshot(path=str(OUT/f'{lang}-home-{w}.png'))
+                        if w in [390,1440]:page.screenshot(path=str(OUT/f'{lang}-home-full-{w}.png'),full_page=True)
                     if slug in ['nc','operations-intelligence'] and w in [390,1440]:page.screenshot(path=str(OUT/f'{lang}-{slug}-{w}.png'))
             for w,h in [(390,844),(1440,900)]:
                 page.set_viewport_size({'width':w,'height':h});go('/'+lang+'/platform/');root=page.locator('[data-composition-motion]')
@@ -132,7 +133,7 @@ def browser_checks(base):
             page.locator('[data-lang-link="en"]').click();check(lang+': language switch retains NC context',urlsplit(page.url).path=='/en/nc/')
             go('/'+lang+'/');video=page.locator('#demos video');video.scroll_into_view_if_needed();video.evaluate('(v)=>{v.muted=true;return v.play()}');page.wait_for_timeout(750)
             playback=video.evaluate('(v)=>({time:v.currentTime,paused:v.paused,error:v.error?.code||null})');check(lang+': CT recording actually plays',playback['time']>0 and not playback['paused'] and playback['error'] is None,playback);video.evaluate('(v)=>v.pause()')
-            page.locator('#work-changes').screenshot(path=str(OUT/f'{lang}-work-changes-390.png'),style='.site-header{visibility:hidden!important}')
+            page.locator('#work-changes').screenshot(path=str(OUT/f'{lang}-work-changes-390.png'),style='.site-header,.skip-link{visibility:hidden!important}')
             page.locator('[data-nav-toggle]').click();check(lang+': mobile navigation opens',page.locator('[data-nav-toggle]').get_attribute('aria-expanded')=='true');page.locator('[data-nav-toggle]').click()
             form=page.locator('[data-contact-form]');form.scroll_into_view_if_needed();form.locator('button[type=submit]').click();check(lang+': blank contact blocked',bool(page.locator('[data-contact-form-status]').inner_text().strip()))
             submitted=[]
