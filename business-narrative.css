@@ -69,7 +69,7 @@ body[data-lang=ar]{font-family:"Malgun Gothic","Noto Sans Arabic","Noto Sans",Ar
 .wr-status{color:#45535f;line-height:1.7!important}
 .bn-page main>.bn-hero:first-child{min-height:0}
 .bn-hero .hero-copy{min-height:560px;padding:clamp(32px,4vw,64px);border-width:2px}
-.bn-hero .bn-definition{max-width:44ch;line-height:1.75;font-size:clamp(17px,1.45vw,20px)}
+.bn-hero .bn-definition{max-width:44ch;line-height:1.75;font-size:clamp(17px,1.45vw,20px);font-weight:400;letter-spacing:0}
 .bn-hero .hero-actions{margin-top:20px}
 .bn-hero .bn-product-preview{padding:clamp(24px,3vw,44px);gap:20px;background:#1264d8;color:#fff;border-width:2px}
 .bn-hero .bn-product-preview h2{font-size:clamp(19px,1.6vw,24px);line-height:1.5;letter-spacing:0}
@@ -112,6 +112,7 @@ body[data-lang=ar]{font-family:"Malgun Gothic","Noto Sans Arabic","Noto Sans",Ar
 .contact-field textarea{min-height:140px}
 .bn-schedule-note{font-size:14px;line-height:1.8;margin:20px 0 0;max-width:72ch}
 body[data-lang=ar] .bn-role dd{word-break:normal}
+body[data-lang=ar] .bn-hero .hero-copy>.bn-definition{direction:rtl;text-align:right}
 @media(min-width:769px) and (max-width:1180px){
   .bn-hero .bn-product-preview{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);column-gap:32px;align-items:center}
   .bn-product-preview .bn-preview-frame{grid-column:2;grid-row:1/3;max-width:500px;justify-self:end}
