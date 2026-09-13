@@ -106,6 +106,7 @@ body[data-lang=ar]{font-family:"Malgun Gothic","Noto Sans Arabic","Noto Sans",Ar
 .bn-page #company .wr-section-head{margin-bottom:0}
 .bn-anchor{display:block;position:relative;scroll-margin-top:calc(var(--header-height) + 28px)}
 .bn-page .contact-intro,.bn-page .contact-form-cell{border-width:2px;padding:clamp(28px,4vw,56px)}
+body.bn-page #contact .contact-intro>.body-large{font-size:18px;line-height:1.8;font-weight:400;letter-spacing:0;max-width:46ch}
 .bn-page .contact-form-cell{background:#fff9e6}
 .contact-field label{font-size:15px;line-height:1.6;font-weight:700}
 .contact-field input,.contact-field select,.contact-field textarea{border:1px solid #697783;border-radius:8px;font-size:16px}
