@@ -1,7 +1,7 @@
-name: Website declaration restoration and runtime QA
+name: Website readability and runtime QA
 on:
   push:
-    branches: [web/declaration-restore-20260910, main]
+    branches: [web/readability-b-20260913, main]
     paths:
       - business_narrative.py
       - business-narrative.css
@@ -10,6 +10,17 @@ on:
       - tools/restore_homepage_declaration.py
       - tools/web_declaration_qa.py
       - tools/web_business_qa.py
+      - build_site.py
+      - web_release_content.py
+      - web-refresh.css
+      - .github/workflows/web-release-20260910.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - business_narrative.py
+      - business-narrative.css
+      - homepage-declaration.json
+      - tools/web_declaration_qa.py
       - build_site.py
       - web_release_content.py
       - web-refresh.css
@@ -36,9 +47,8 @@ jobs:
           python -m playwright install --with-deps chromium
           sudo apt-get update -qq
           sudo apt-get install -y fonts-noto-cjk
-      - name: Restore only approved declaration and animation ownership
+      - name: Build the owner-approved readability revision
         run: |
-          python tools/restore_homepage_declaration.py
           python tools/apply_business_narrative.py
           python -m py_compile business_narrative.py tools/web_declaration_qa.py
           python build_site.py
@@ -64,7 +74,7 @@ jobs:
           python tools/validate_nc_public_release.py
           node --test tests/nc-viewer.test.cjs
       - name: Candidate declaration, negative fixtures and full browser regression
-        if: github.ref == 'refs/heads/web/declaration-restore-20260910'
+        if: github.ref != 'refs/heads/main'
         run: python tools/web_declaration_qa.py --browser
       - name: Await exact official release
         if: github.ref == 'refs/heads/main'
@@ -75,23 +85,23 @@ jobs:
           for i in range(45):
               try:
                   data=json.load(urllib.request.urlopen('https://flowmatic-os.com/release.json?verify='+str(time.time()),timeout=20))
-                  if data.get('release')=='2026.09.10-r3':break
+                  if data.get('release')=='2026.09.13-r4':break
               except Exception as exc:print(type(exc).__name__)
               time.sleep(10)
-          else:raise SystemExit('Official domain has not reached r3')
+          else:raise SystemExit('Official domain has not reached r4')
           PY
       - name: Official domain declaration and runtime regression
         if: github.ref == 'refs/heads/main'
         run: python tools/web_declaration_qa.py --browser --base https://flowmatic-os.com
       - name: Commit only a passing candidate for visual review
-        if: success() && github.ref == 'refs/heads/web/declaration-restore-20260910'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/web/readability-b-20260913'
         run: |
           git config user.name 'Flowmatic Web Release'
           git config user.email 'automation@flowmatic-os.com'
           git add build_site.py business_narrative.py business-narrative.css IMPLEMENTATION_NOTES.md release.json robots.txt sitemap.xml '*.html' ko en ar html-vnext
           if ! git diff --cached --quiet; then
-            git commit -m 'Restore locked first-screen declaration and Operations ownership r3'
-            git push origin HEAD:web/declaration-restore-20260910
+            git commit -m 'Generate approved readability B pages r4'
+            git push origin HEAD:web/readability-b-20260913
           fi
       - name: Export tested source and actual screenshots
         if: always()
@@ -100,7 +110,7 @@ jobs:
           git rev-parse HEAD > qa-artifacts/review-commit.txt
           git diff ebe68b65290e356ffb9f739f83c4c28eb811a059 --stat > qa-artifacts/changed-files.txt || true
           tar -czf qa-artifacts/candidate-source.tgz build_site.py business_narrative.py business-narrative.css web_release_content.py web-refresh.css homepage-declaration.json tools release.json ko en ar index.html html-vnext .github/workflows/web-release-20260910.yml 2>/dev/null || true
-          printf '%s\n' 'Owner-authorized restoration. Author review and technical QA; not independent sign-off, physical-device testing, native Arabic proofreading, or real email receipt.' > qa-artifacts/review-boundary.txt
+          printf '%s\n' 'Owner-selected readability B. Author review and technical QA; not independent sign-off, physical-device testing, native Arabic proofreading, or real email receipt.' > qa-artifacts/review-boundary.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
