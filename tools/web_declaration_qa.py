@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 EXPECTED=['Elegant Engineering.','Intelligent Operations.','Flowmatic.']
-RELEASE='2026.09.10-r3'
+RELEASE='2026.09.13-r4'
 LANGS=['ko','en','ar']
 SIZES=[(320,568),(360,800),(390,844),(768,1024),(1024,768),(1440,900)]
 R2='ebe68b65290e356ffb9f739f83c4c28eb811a059'
@@ -54,9 +54,12 @@ def static_checks():
         doc=soup((ROOT/lang/'index.html').read_text());h=doc.select_one('#hero-title')
         check(lang+': original H1 exact three-line assertion',original_contract(doc))
         check(lang+': primary English declaration, not fallback paragraph',h.get('lang')=='en' and h.get('dir')=='ltr' and h.get('data-brand-contract')=='WEB-019' and len(doc.select('h1'))==1 and not doc.select('#brand-slogan'))
-        order=[n.get('id') for n in doc.select('main [id]')];anchors=['hero','field-problem','workflow','products','demos','capability','preprocessing','architecture','growth','pilot','company','contact']
+        order=[n.get('id') for n in doc.select('main [id]')];anchors=['hero','demos','work-changes','products','architecture','pilot','company','contact']
         check(lang+': approved post-declaration business sequence',all(a in order for a in anchors) and [order.index(a) for a in anchors]==sorted(order.index(a) for a in anchors))
-        check(lang+': no NC-first CTA',doc.select_one('.hero-actions a.primary')['href']=='#products' and not doc.select('#hero a[href$="/nc/"]'))
+        check(lang+': demo request CTA preserves platform positioning',doc.select_one('.hero-actions a.primary')['href']=='#contact' and doc.select_one('.hero-actions a:not(.primary)')['href']=='#demos' and not doc.select('#hero a[href$="/nc/"]'))
+        check(lang+': actual product image in hero',doc.select_one('#hero img')['src']==f'/media/web-release/nc-{lang}.webp')
+        check(lang+': full assembly moved to platform detail',not doc.select('[data-composition-motion]') and len(soup((ROOT/lang/'platform/index.html').read_text()).select('[data-composition-motion]'))==1)
+        check(lang+': optional scheduling preference with honest request flow',doc.select_one('[name=availability]') is not None and not doc.select_one('[name=availability]').has_attr('required') and bool(doc.select_one('#contact-schedule-note').get_text(strip=True)))
         check(lang+': product and demo composition preserved',len(doc.select('#products .wr-product'))==4 and len(doc.select('#demos .wr-demo'))==2)
         check(lang+': home and platform do not duplicate Operations animation',not doc.select('[data-field-story]') and not soup((ROOT/lang/'platform/index.html').read_text()).select('[data-field-story]'))
         check(lang+': Operations contains original four-stage animation',len(soup((ROOT/lang/'operations-intelligence/index.html').read_text()).select('#operations-flow [data-story-stage]'))==4)
@@ -65,7 +68,7 @@ def static_checks():
         for ref,want,label in [(R1,True,'approved r1'),(R2,False,'rejected r2')]:
             raw=subprocess.check_output(['git','show',ref+':'+lang+'/index.html']).decode()
             check(lang+': unchanged original assertion on '+label,original_contract(soup(raw))==want)
-    check('approved Korean company definition retained','제조 현장의 기존 설비와 데이터를 활용해, 사람에 의존하던 생산·품질·관리 업무를 시스템화하는 제조 AI 플랫폼.' in (ROOT/'ko/index.html').read_text())
+    check('Korean company definition retains scope and owner-preferred equipment term','제조 현장의 보유설비와 데이터를 활용해, 사람에 의존하던 생산·품질·관리 업무를 시스템화하는 제조 AI 플랫폼.' in (ROOT/'ko/index.html').read_text())
 
 def browser_checks(base):
     from playwright.sync_api import sync_playwright
@@ -77,7 +80,7 @@ def browser_checks(base):
         page.on('pageerror',lambda e:errors.append(str(e)));page.on('response',lambda r:http.append((r.status,r.url)) if r.status>=400 else None)
         def go(path):
             page.goto(base+path,wait_until='domcontentloaded',timeout=45000);page.evaluate('document.fonts.ready');page.wait_for_timeout(400)
-            check('served r3 '+path,page.locator('meta[name="flowmatic-release"]').get_attribute('content')==RELEASE)
+            check('served '+RELEASE+' '+path,page.locator('meta[name="flowmatic-release"]').get_attribute('content')==RELEASE)
         for lang in LANGS:
             for slug in ['home']+list(site.PRODUCTS)+list(site.FACTORY_OS_PAGES):
                 go('/'+lang+'/'+('' if slug=='home' else slug+'/'))
@@ -92,10 +95,14 @@ def browser_checks(base):
                         visible=metrics['display']!='none' and metrics['visibility']=='visible' and float(metrics['opacity'])>0 and metrics['top']>=metrics['header']-1 and metrics['bottom']<=h+1
                         check(f'{lang}: WEB-019 first-screen primary hierarchy {w}',visible and metrics['font']>=23 and metrics['weight']>=800 and metrics['direction']=='ltr' and metrics['align']=='left',metrics)
                         check(f'{lang}: exactly three rendered declaration lines {w}',[x['text'] for x in metrics['lines']]==EXPECTED and len(set(round(x['y'],1) for x in metrics['lines']))==3 and all(x['rects']==1 for x in metrics['lines']),metrics['lines'])
+                        layout=page.evaluate("()=>({card:parseFloat(getComputedStyle(document.querySelector('#demos .wr-card')).borderRadius),button:parseFloat(getComputedStyle(document.querySelector('.hero-actions a')).borderRadius),frame:parseFloat(getComputedStyle(document.querySelector('#hero')).borderRadius),demoTop:document.querySelector('#demos').getBoundingClientRect().top,imageLoaded:document.querySelector('#hero img').naturalWidth>0})")
+                        check(f'{lang}: B square frame and partial rounding {w}',layout['card']==12 and layout['button']==8 and layout['frame']==0,layout)
+                        check(f'{lang}: actual product and early demos {w}',layout['imageLoaded'] and layout['demoTop']<(1000 if w>=1180 else 1500),layout)
                         if w in [320,390,1440]:page.screenshot(path=str(OUT/f'{lang}-home-{w}.png'))
+                        if w in [390,1440]:page.screenshot(path=str(OUT/f'{lang}-home-full-{w}.png'),full_page=True)
                     if slug in ['nc','operations-intelligence'] and w in [390,1440]:page.screenshot(path=str(OUT/f'{lang}-{slug}-{w}.png'))
             for w,h in [(390,844),(1440,900)]:
-                page.set_viewport_size({'width':w,'height':h});go('/'+lang+'/');root=page.locator('[data-composition-motion]')
+                page.set_viewport_size({'width':w,'height':h});go('/'+lang+'/platform/');root=page.locator('[data-composition-motion]')
                 counts=root.evaluate("el=>[el.querySelectorAll('[data-token-kind=context]').length,el.querySelectorAll('[data-token-kind=engine]').length,el.querySelectorAll('[data-motion-module]').length,el.querySelectorAll('[data-motion-axis]').length]")
                 check(f'{lang}: assembly counts {w}',counts==[10,12,12,4],counts);states=[]
                 for progress in [0,.38,.68,1,0]:
@@ -122,17 +129,22 @@ def browser_checks(base):
             ctx.on('request',track)
             page.locator('[data-nc-file]').set_input_files({'name':'public-local-test.nc','mimeType':'text/plain','buffer':b'G21 G90\nT1 M6\nG0 X0 Y0 Z5\nG1 X20 Y0 Z0 F100\nM30\n'})
             page.wait_for_function("document.querySelector('[data-nc-demo-lite]').ncViewerScene?.tools.length===1");check(lang+': local NC file sends no POST',not posts);ctx.remove_listener('request',track)
-            go('/'+lang+'/');page.locator('.hero-actions a.primary').click();check(lang+': hero leads to products',urlsplit(page.url).fragment=='products');page.locator('#demos a.fm-button').first.click();check(lang+': contextual demo correct locale',urlsplit(page.url).path=='/'+lang+'/nc/')
+            go('/'+lang+'/');page.locator('.hero-actions a.primary').click();check(lang+': hero leads to demo request',urlsplit(page.url).fragment=='contact');page.locator('.hero-actions a:not(.primary)').click();check(lang+': secondary CTA leads to demos',urlsplit(page.url).fragment=='demos');page.locator('#demos a.fm-button').first.click();check(lang+': contextual demo correct locale',urlsplit(page.url).path=='/'+lang+'/nc/')
             page.locator('[data-lang-link="en"]').click();check(lang+': language switch retains NC context',urlsplit(page.url).path=='/en/nc/')
             go('/'+lang+'/');video=page.locator('#demos video');video.scroll_into_view_if_needed();video.evaluate('(v)=>{v.muted=true;return v.play()}');page.wait_for_timeout(750)
             playback=video.evaluate('(v)=>({time:v.currentTime,paused:v.paused,error:v.error?.code||null})');check(lang+': CT recording actually plays',playback['time']>0 and not playback['paused'] and playback['error'] is None,playback);video.evaluate('(v)=>v.pause()')
-            page.locator('#workflow').screenshot(path=str(OUT/f'{lang}-workflow-390.png'),style='.site-header{visibility:hidden!important}')
+            page.locator('#work-changes').screenshot(path=str(OUT/f'{lang}-work-changes-390.png'),style='.site-header,.skip-link{visibility:hidden!important}')
             page.locator('[data-nav-toggle]').click();check(lang+': mobile navigation opens',page.locator('[data-nav-toggle]').get_attribute('aria-expanded')=='true');page.locator('[data-nav-toggle]').click()
             form=page.locator('[data-contact-form]');form.scroll_into_view_if_needed();form.locator('button[type=submit]').click();check(lang+': blank contact blocked',bool(page.locator('[data-contact-form-status]').inner_text().strip()))
-            ctx.route('https://formspree.io/**',lambda r:r.fulfill(status=200,content_type='application/json',body='{"ok":true}'))
+            submitted=[]
+            def mock_submit(route):
+                submitted.append(route.request.post_data or '')
+                route.fulfill(status=200,content_type='application/json',body='{"ok":true}')
+            ctx.route('https://formspree.io/**',mock_submit)
             for key,val in [('organization','Release QA (mock only)'),('name','Release QA'),('reply','qa@example.invalid')]:form.locator('[name='+key+']').fill(val)
-            form.locator('[name=brief]').fill('Mock transport. No inquiry sent.');form.locator('button[type=submit]').click();page.wait_for_timeout(100);check(lang+': contact mock success',site.CONTACT_FORM[lang]['sent'] in page.locator('[data-contact-form-status]').inner_text());ctx.unroute('https://formspree.io/**')
-            reduced=browser.new_context(viewport={'width':390,'height':844},reduced_motion='reduce');rp=reduced.new_page();rp.goto(base+'/'+lang+'/',wait_until='domcontentloaded');rp.wait_for_timeout(500)
+            form.locator('[name=availability]').fill('Tuesday 14:00 KST (mock)')
+            form.locator('[name=brief]').fill('Mock transport. No inquiry sent.');form.locator('button[type=submit]').click();page.wait_for_timeout(100);check(lang+': contact mock success',site.CONTACT_FORM[lang]['sent'] in page.locator('[data-contact-form-status]').inner_text());check(lang+': scheduling preference included in request',any('Tuesday 14:00 KST (mock)' in body for body in submitted));ctx.unroute('https://formspree.io/**')
+            reduced=browser.new_context(viewport={'width':390,'height':844},reduced_motion='reduce');rp=reduced.new_page();rp.goto(base+'/'+lang+'/platform/',wait_until='domcontentloaded');rp.wait_for_timeout(500)
             check(lang+': reduced motion retains four domains',rp.locator('.composition-motion__fallback-axis').count()==4 and rp.locator('.composition-motion__fallback-axis').first.is_visible());reduced.close()
         check('browser uncaught exceptions',not errors,errors);check('HTTP errors',not http,http);browser.close()
 def main():
