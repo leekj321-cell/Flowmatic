@@ -1,11 +1,13 @@
 {
   "policy": "WEB-019 / RT-022",
-  "status": "APPROVED_LOCKED",
-  "authority": "Owner's fixed first-screen declaration; restored by explicit 2026-09-10 instruction",
+  "status": "LEGACY_GENERATOR_COMPATIBILITY",
+  "authority": "Historical R4 declaration retained only because the legacy detail-page generator and rollback tools still reference it. It is not the public homepage authority after STC-lite R5.",
   "approved_reference_commit": "34faae11f9c63ecb031f0a727473c738b939d8fc",
   "lines": ["Elegant Engineering.", "Intelligent Operations.", "Flowmatic."],
-  "element": "main #hero h1#hero-title",
+  "element": "legacy main #hero h1#hero-title",
   "language": "en",
   "direction": "ltr",
-  "placement": "primary first-screen headline in every locale"
+  "placement": "legacy generator fallback only",
+  "public_homepage_authority": "release.json + tracked locale home files + tools/build_stc_r5_site.py",
+  "superseded_by": "2026.09.17-r5-stc"
 }
