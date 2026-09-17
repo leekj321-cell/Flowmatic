@@ -1,1 +1,1 @@
-{"release": "2026.09.13-r4", "locales": ["ko", "en", "ar"], "baseline": "451148d2b85a0d5022210a0399d8a02d63adc0e4"}
+{"release":"2026.09.17-r5-stc","scope":"stc-lite-home","base_release":"2026.09.13-r4","locales":["ko","en","ar"],"canonical_build":"python tools/build_stc_r5_site.py","canonical_qa":"python tools/stc_r5_qa.py --browser"}
