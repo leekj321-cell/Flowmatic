@@ -126,6 +126,67 @@ body.stc-home{background:#fff;color:var(--stc-ink)}
 .stc-form-status{font-size:.78rem;min-height:1.3em;margin-top:10px;color:#5e6974}
 .stc-note{margin-top:14px;color:#6b7680;font-size:.78rem;line-height:1.55}
 .stc-home .site-footer{margin-top:0}
+
+/* 2026-09-17 brand catchphrase layer: keep the product H1 factual while adding the corporate promise. */
+.stc-hero .stc-kicker::after{
+  display:block;
+  margin-top:16px;
+  max-width:720px;
+  font-size:clamp(1.38rem,2.6vw,2.15rem);
+  line-height:1.12;
+  letter-spacing:-.035em;
+  text-transform:none;
+  font-weight:760;
+  color:var(--stc-ink);
+}
+body[data-lang="ko"] .stc-hero .stc-kicker::after{content:"상상이 현실이 되는 시대."}
+body[data-lang="en"] .stc-hero .stc-kicker::after{content:"Imagine it. Make it real."}
+body[data-lang="ar"] .stc-hero .stc-kicker::after{content:"عصر تتحول فيه الأفكار إلى واقع.";direction:rtl}
+
+#stack::after{
+  display:block;
+  width:min(1180px,calc(100% - 40px));
+  margin:42px auto 0;
+  padding:26px 30px;
+  border-left:7px solid var(--stc-cyan);
+  background:linear-gradient(90deg,#effbfe 0,#fff 76%);
+  font-size:clamp(1.25rem,2.8vw,2rem);
+  line-height:1.2;
+  letter-spacing:-.035em;
+  font-weight:820;
+  color:var(--stc-ink);
+}
+body[data-lang="ko"] #stack::after{content:"상상이 현실이 되는 시대. — Flowmatic"}
+body[data-lang="en"] #stack::after{content:"Imagine it. Make it real. — Flowmatic"}
+body[data-lang="ar"] #stack::after{content:"الأفكار تتحول إلى واقع. — Flowmatic";direction:rtl;border-left:0;border-right:7px solid var(--stc-cyan)}
+
+#contact .stc-cta-band > :first-child::before{
+  display:block;
+  margin:0 0 14px;
+  color:#86dff1;
+  font-size:clamp(1.15rem,2.4vw,1.7rem);
+  line-height:1.2;
+  letter-spacing:-.025em;
+  font-weight:780;
+}
+body[data-lang="ko"] #contact .stc-cta-band > :first-child::before{content:"상상이 현실이 되는 시대."}
+body[data-lang="en"] #contact .stc-cta-band > :first-child::before{content:"Imagine it. Make it real."}
+body[data-lang="ar"] #contact .stc-cta-band > :first-child::before{content:"عصر تتحول فيه الأفكار إلى واقع.";direction:rtl}
+
+.stc-home .site-footer::before{
+  display:block;
+  margin:0 0 22px;
+  padding:20px 0;
+  border-top:1px solid currentColor;
+  font-size:clamp(1.15rem,2.3vw,1.65rem);
+  line-height:1.2;
+  letter-spacing:-.03em;
+  font-weight:800;
+}
+body[data-lang="ko"] .site-footer::before{content:"상상이 현실이 되는 시대.  FLOWMATIC"}
+body[data-lang="en"] .site-footer::before{content:"Imagine it. Make it real.  FLOWMATIC"}
+body[data-lang="ar"] .site-footer::before{content:"الأفكار تتحول إلى واقع.  FLOWMATIC";direction:rtl}
+
 @media(max-width:1000px){
   .stc-hero-grid,.stc-section-head,.stc-stack-wrap,.stc-cta-band{grid-template-columns:1fr}
   .stc-hero-copy,.stc-hero-visual{min-height:auto}
@@ -151,4 +212,6 @@ body.stc-home{background:#fff;color:var(--stc-ink)}
   .stc-loop article{border-right:0;border-bottom:1px solid var(--stc-line)}
   .stc-loop article:last-child{border-bottom:0}
   .stc-cta-band{padding:26px 20px}
+  #stack::after{width:min(100% - 24px,1180px);padding:22px 20px;margin-top:30px}
+  .stc-hero .stc-kicker::after{margin-top:13px}
 }
