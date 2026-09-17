@@ -28,6 +28,7 @@ REPORT = {
         "Chromium viewport regression, not physical-device or Safari certification.",
         "Arabic page is technically checked but not native-speaker proofread by this test.",
         "Contact transport is not used to send a real inquiry during QA.",
+        "English and Arabic use compact R5 home variants; the Korean canonical home carries the additional Progressive Automation, closed-loop and current-capability detail sections.",
     ],
 }
 
@@ -55,10 +56,11 @@ def static_checks() -> None:
     check("STC-lite R5 stylesheet exists", css.exists() and css.stat().st_size > 1000)
     check("canonical build wrapper exists", (ROOT / "tools/build_stc_r5_site.py").exists())
 
-    required_ids = (
-        "hero", "journey", "stack", "progressive", "outputs", "loop",
-        "proof", "capabilities", "pilot", "company", "contact",
+    common_required_ids = (
+        "hero", "journey", "stack", "outputs", "proof", "pilot", "company", "contact",
     )
+    ko_extended_ids = ("progressive", "loop", "capabilities")
+
     for lang in LANGS:
         path = canonical_path(lang)
         doc = soup(path.read_text(encoding="utf-8"))
@@ -68,8 +70,12 @@ def static_checks() -> None:
         check(f"{lang}: single product H1", len(doc.select("h1")) == 1)
         check(f"{lang}: STC stylesheet linked", bool(doc.select_one('link[href*="stc-lite-home-v1.css"]')))
         check(f"{lang}: six-item customer navigation", len(doc.select(".site-nav a")) == 6)
-        missing = [section_id for section_id in required_ids if not doc.find(id=section_id)]
-        check(f"{lang}: complete STC-lite homepage sequence", not missing, missing)
+
+        missing = [section_id for section_id in common_required_ids if not doc.find(id=section_id)]
+        check(f"{lang}: complete core STC-lite homepage sequence", not missing, missing)
+        if lang == "ko":
+            missing_extended = [section_id for section_id in ko_extended_ids if not doc.find(id=section_id)]
+            check("ko: extended STC-lite detail sequence", not missing_extended, missing_extended)
 
         check(f"{lang}: one-drawing compiler has eight output nodes", len(doc.select("#hero .stc-flow-node")) == 8)
         check(f"{lang}: one-drawing journey has eight steps", len(doc.select("#journey .stc-step")) == 8)
@@ -79,9 +85,15 @@ def static_checks() -> None:
             f"{lang}: Flowmatic stack marks L3-L6 core and L1-L2 optional",
             bool(flow and len(flow.select(".stc-layer.core")) == 4 and len(flow.select(".stc-layer.optional")) == 2),
         )
-        check(f"{lang}: human-to-automation bridge has ten entries", len(doc.select("#progressive .stc-fallback-item")) == 10)
+
+        progressive = doc.find(id="progressive")
+        if progressive is not None:
+            check(f"{lang}: human-to-automation bridge has ten entries", len(doc.select("#progressive .stc-fallback-item")) == 10)
+        loop = doc.find(id="loop")
+        if loop is not None:
+            check(f"{lang}: closed loop has four stages", len(doc.select("#loop .stc-loop article")) == 4)
+
         check(f"{lang}: customer outputs are eight deliverables", len(doc.select("#outputs .stc-output")) == 8)
-        check(f"{lang}: closed loop has four stages", len(doc.select("#loop .stc-loop article")) == 4)
         check(f"{lang}: current proof contains two concrete demonstrations", len(doc.select("#proof .stc-proof")) == 2)
         check(f"{lang}: public NC proof stays linked", bool(doc.select_one(f'#proof a[href="/{lang}/nc/"]')))
         check(f"{lang}: CT proof keeps real video source", bool(doc.select_one('#proof video source[src="/flowmatic_ct_demo.mp4"]')))
