@@ -8,7 +8,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -102,9 +101,10 @@ def static_checks() -> None:
         else:
             check(f"{lang}: LTR document", doc.html.get("dir") == "ltr")
 
-    root_doc = soup((ROOT / "index.html").read_text(encoding="utf-8"))
-    ko_doc = soup((ROOT / "ko/index.html").read_text(encoding="utf-8"))
-    check("root is Korean canonical STC-lite home", root_doc.h1.get_text(" ", strip=True) == ko_doc.h1.get_text(" ", strip=True))
+    root_text = (ROOT / "index.html").read_text(encoding="utf-8")
+    root_doc = soup(root_text)
+    refresh = root_doc.select_one('meta[http-equiv="refresh"]')
+    check("root redirects to Korean STC-lite home", bool(refresh and "/ko/" in refresh.get("content", "") and "Flowmatic STC-lite" in root_text))
 
     for relative in ("ko/nc/index.html", "ko/ct/index.html", "ko/platform/index.html"):
         check(f"legacy/detail route preserved: {relative}", (ROOT / relative).exists())
