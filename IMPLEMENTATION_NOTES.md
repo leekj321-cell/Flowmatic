@@ -1,9 +1,52 @@
-# Website release 2026.09.13-r4
+# Website release 2026.09.17-r5-stc
 
-Owner-selected B: square Mondrian section frames, 12px content cards and 8px controls. Home sequence: company declaration and actual product preview -> actual demos -> role-specific work examples -> four product domains -> compact platform summary -> pilot -> company -> demo request. Full original scroll composition remains on the platform detail page. Legacy home fragment links remain available.
+STC-lite R5 supersedes the R4 homepage narrative while preserving the existing product/detail routes, working NC/CT proof assets, corporate CI, and shared runtime.
 
-NC is a scoped machining component, not the company proposition. WEB-019 / RT-022: canonical first-screen English declaration is the primary three-line H1 in all locales. WEB-020 / RT-023: original operational animation belongs only to the Operations page, with an illustrative integration boundary. Original animation scripts, render functions, viewer and video bytes are unchanged.
+## Public-home product narrative
 
-Request a demo uses the existing contact endpoint with optional preferred time/time zone. No owner booking-calendar URL was supplied or found; submission requests follow-up and does not confirm a reservation.
+The homepage now leads with **One Drawing → Running Factory** rather than a module list. The primary journey is:
 
-Validation expectations changed only for the owner-approved home order, contact CTA, Korean term and relocation of the complete assembly to the platform page. Review: author content review and browser regression, not independent Strategy Office sign-off or native Arabic proofreading.
+`Product Drawing → Process → Equipment → Tooling/Jig → Layout → Execution → Quality/Logistics → Actual Result → Blueprint Revision`
+
+The homepage also carries the mandatory Flowmatic Factory Stack comparison:
+
+- L6 Factory Orchestration
+- L5 Optimization
+- L4 Factory Engineering
+- L3 Execution / G-code / SCADA
+- L2 Connectivity / Adapter / Gateway
+- L1 Physical / Control / PLC / Sensor / CNC I/O / Robot / AMR
+
+Traditional full-stack deployment is presented as requiring L1 through L6. Flowmatic presents L3 through L6 as the core software/decision layer and L1/L2 as progressive/optional automation. When lower automation is absent, existing people and manual interfaces continue to provide the input/execution path. The page explicitly notes that this is a Flowmatic product communication model and not a claim that its L1–L6 labels are identical to ISA-95 levels.
+
+## Evidence boundary
+
+The homepage distinguishes current proof from target scope. Public NC 3D review and the existing cycle-time analysis recording remain concrete evidence. STC-lite Full functions such as complete drawing-to-factory generation, automatic equipment sizing, full jig generation, AMR/robot sourcing and fully closed-loop execution remain target capabilities unless separately validated.
+
+## Canonical build and QA
+
+`build_site.py` remains the legacy/detail-page generator and still contains R4 home generation logic. It must not be used directly for a public release.
+
+Canonical build:
+
+```bash
+python tools/build_stc_r5_site.py
+```
+
+The wrapper captures the tracked R5 home surfaces, runs the legacy generator for detail pages, and restores the R5 homes plus `release.json`. It fails closed if the tracked home is not marked `2026.09.17-r5-stc`.
+
+Canonical QA:
+
+```bash
+python tools/stc_r5_qa.py --browser
+```
+
+Legacy QA entry points now delegate to the R5 QA. GitHub Actions builds through the R5 wrapper, validates corporate identity and the NC public release, runs local Chromium regression, waits for the official GitHub Pages release marker, then re-runs R5 QA against `https://flowmatic-os.com`.
+
+## R4 compatibility
+
+`homepage-declaration.json` is retained only because historical generator/rollback code still references it. The three-line `Elegant Engineering. / Intelligent Operations. / Flowmatic.` declaration is no longer the public homepage authority. `release.json`, the tracked locale home pages, and the R5 build wrapper are authoritative.
+
+## Visual direction
+
+The owner-selected B direction remains: strong Mondrian structural frames with selectively rounded content cards/controls, while the locked corporate CI itself is never redrawn or recolored.
