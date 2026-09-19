@@ -1,1 +1,1 @@
-{"release":"2026.09.17-r5-stc","scope":"stc-lite-home","base_release":"2026.09.13-r4","locales":["ko","en","ar"],"canonical_build":"python tools/build_stc_r5_site.py","canonical_qa":"python tools/stc_r5_qa.py --browser"}
+{"release":"2026.09.19-r6-investor","scope":"investor-first-home","base_release":"2026.09.17-r5-stc","locales":["ko","en","ar"],"canonical_build":"python tools/build_stc_r5_site.py","canonical_qa":"python tools/stc_r5_qa.py --browser"}
