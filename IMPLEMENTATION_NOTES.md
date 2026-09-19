@@ -1,6 +1,6 @@
-# Website release 2026.09.17-r5-stc
+# Website release 2026.09.19-r6-investor
 
-STC-lite R5 supersedes the R4 homepage narrative while preserving the existing product/detail routes, working NC/CT proof assets, corporate CI, and shared runtime.
+Investor-first R6 supersedes the R5 copy hierarchy while preserving existing product/detail routes, working NC/CT proof assets, corporate CI, the L1–L6 comparison, and shared runtime.
 
 ## Public-home product narrative
 
@@ -21,7 +21,7 @@ Traditional full-stack deployment is presented as requiring L1 through L6. Flowm
 
 ## Evidence boundary
 
-The homepage distinguishes current proof from target scope. Public NC 3D review and the existing cycle-time analysis recording remain concrete evidence. STC-lite Full functions such as complete drawing-to-factory generation, automatic equipment sizing, full jig generation, AMR/robot sourcing and fully closed-loop execution remain target capabilities unless separately validated.
+The homepage uses explicit CURRENT / PILOT / TARGET boundaries. Public NC 3D review and the existing cycle-time analysis recording remain concrete evidence. Full drawing-to-factory generation, automatic equipment sizing, full jig generation, AMR/robot sourcing, and fully closed-loop execution remain target capabilities unless separately validated.
 
 ## Canonical build and QA
 
@@ -33,7 +33,7 @@ Canonical build:
 python tools/build_stc_r5_site.py
 ```
 
-The wrapper captures the tracked R5 home surfaces, runs the legacy generator for detail pages, and restores the R5 homes plus `release.json`. It fails closed if the tracked home is not marked `2026.09.17-r5-stc`.
+The wrapper captures the tracked R5 home surfaces, runs the legacy generator for detail pages, and restores the R5 homes plus `release.json`. It fails closed if the tracked home is not marked `2026.09.19-r6-investor`.
 
 Canonical QA:
 

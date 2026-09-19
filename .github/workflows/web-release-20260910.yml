@@ -1,4 +1,4 @@
-name: STC-lite R5 website build and runtime QA
+name: Investor-first Flowmatic website build and runtime QA
 on:
   push:
     branches: [main]
@@ -42,7 +42,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: stc-lite-r5-${{ github.ref }}
+  group: investor-home-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   verify:
@@ -61,7 +61,7 @@ jobs:
           python -m playwright install --with-deps chromium
           sudo apt-get update -qq
           sudo apt-get install -y fonts-noto-cjk
-      - name: Build canonical STC-lite R5 website
+      - name: Build canonical investor-first website
         run: |
           python tools/apply_business_narrative.py
           python -m py_compile tools/build_stc_r5_site.py tools/stc_r5_qa.py tools/web_declaration_qa.py tools/web_release_qa.py
@@ -72,14 +72,14 @@ jobs:
           python tools/validate_brand_contract.py
           python tools/validate_nc_public_release.py
           node --test tests/nc-viewer.test.cjs
-      - name: STC-lite R5 static and browser regression
+      - name: Investor-first static and browser regression
         run: python tools/stc_r5_qa.py --browser
-      - name: Await official GitHub Pages R5 release
+      - name: Await official GitHub Pages investor release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           python - <<'PY'
           import json,time,urllib.request
-          expected='2026.09.17-r5-stc'
+          expected='2026.09.19-r6-investor'
           for _ in range(45):
               try:
                   with urllib.request.urlopen('https://flowmatic-os.com/release.json?verify='+str(time.time()),timeout=20) as response:
@@ -91,9 +91,9 @@ jobs:
                   print(type(exc).__name__)
               time.sleep(10)
           else:
-              raise SystemExit('Official domain has not reached STC-lite R5')
+              raise SystemExit('Official domain has not reached investor-first release')
           PY
-      - name: Official-domain STC-lite R5 runtime regression
+      - name: Official-domain investor-first runtime regression
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: python tools/stc_r5_qa.py --browser --base https://flowmatic-os.com
       - name: Export QA evidence
@@ -102,10 +102,10 @@ jobs:
           mkdir -p qa-artifacts
           git rev-parse HEAD > qa-artifacts/review-commit.txt
           git status --short > qa-artifacts/working-tree.txt
-          printf '%s\n' 'STC-lite R5 canonical homepage. Browser QA is Chromium-based; Arabic native-speaker proofreading and physical-device certification remain outside this automated check.' > qa-artifacts/review-boundary.txt
+          printf '%s\n' 'Investor-first canonical homepage. Browser QA is Chromium-based; Arabic native-speaker proofreading and physical-device certification remain outside this automated check.' > qa-artifacts/review-boundary.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: stc-lite-r5-qa-${{ github.run_id }}
+          name: investor-home-qa-${{ github.run_id }}
           path: qa-artifacts
           retention-days: 14

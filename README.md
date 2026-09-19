@@ -4,14 +4,14 @@ Static Flowmatic website for GitHub Pages and `flowmatic-os.com`.
 
 ## Current public homepage
 
-The public homepage is **STC-lite R5** (`2026.09.17-r5-stc`). It presents Flowmatic as a manufacturing operating system that starts from a product drawing, creates manufacturing decisions across process/equipment/tooling/jig/layout/execution/quality/logistics, and can begin from the existing factory before progressive L1/L2 automation is added.
+The public homepage is **Investor-first R6** (`2026.09.19-r6-investor`). It presents Flowmatic as manufacturing operations AI for existing factories: start from working NC/CT proof, connect manufacturing decisions from drawing to production, validate one product or line in a 4–8 week pilot, and expand only where ROI is proven.
 
 Canonical homepage surfaces:
 
-- `/` and `/ko/`: Korean STC-lite R5 homepage.
-- `/en/`: English STC-lite R5 homepage.
-- `/ar/`: Arabic STC-lite R5 homepage.
-- `stc-lite-home-v1.css`: homepage-specific R5 styling.
+- `/` and `/ko/`: Korean investor-first homepage.
+- `/en/`: English investor-first homepage.
+- `/ar/`: Arabic investor-first homepage.
+- `stc-lite-home-v1.css`: homepage styling, including the investor-first type scale and hierarchy.
 - `release.json`: public homepage release authority.
 
 Existing product, platform and compatibility routes remain in place, including `/ko/{product}/`, `/en/{product}/`, `/ar/{product}/`, `/nc.html`, `/ct.html`, `/quality.html`, `/work-standard.html`, `/tms.html`, and `/amr.html`.
@@ -46,7 +46,7 @@ The current working demo assets include:
 - Public NC 3D browser demo
 - Existing Machining, Quality, Operations and Logistics detail routes
 
-The R5 homepage explicitly separates working/current proof from STC-lite Full target capabilities.
+The homepage separates CURRENT working proof, PILOT validation, and TARGET Factory OS capabilities.
 
 ## Branding
 
