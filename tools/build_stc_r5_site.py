@@ -1,4 +1,4 @@
-"""Canonical Flowmatic website build entry point for the investor-first Factory OS homepage.
+"""Canonical Flowmatic website build entry point for the investor-first Factory OS homepage with Manufacturing Value Loop.
 
 The legacy ``build_site.py`` still owns product/detail pages and protected
 motion/media composition. This wrapper rebuilds those detail pages and then
@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RELEASE = "2026.09.19-r6-investor"
+RELEASE = "2026.09.19-r6.1-value-loop"
 ROOT_REDIRECT = Path("index.html")
 LOCALE_HOMES = (Path("ko/index.html"), Path("en/index.html"), Path("ar/index.html"))
 CANONICAL = (ROOT_REDIRECT, *LOCALE_HOMES, Path("release.json"))
