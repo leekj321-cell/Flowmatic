@@ -63,3 +63,27 @@ Technical implementation terms belong in explicitly separated technical-detail c
 ## Multilingual rule
 
 Korean approved copy is the source of truth. English and Arabic must preserve the same CURRENT / PILOT / TARGET boundaries, pilot model, and business meaning without adding performance claims.
+
+
+## Hero visual contract
+
+The hero visual is a **Manufacturing Value Loop**, not a feature matrix or developer architecture board.
+
+Required clockwise stages:
+
+1. Planning / Layout
+2. Production
+3. Quality
+4. Logistics
+5. Management Decision
+6. Feedback
+
+Rules:
+
+- The loop is marked `TARGET · Factory OS`.
+- CURRENT proof remains in the proof section immediately below the hero.
+- Do not place Process / Equipment / Tooling / Layout / Execution / Quality / Logistics feature boxes in the hero.
+- Keep the loop segments fixed. Motion is limited to a subtle clockwise flow indicator and/or low-intensity sequential emphasis.
+- Respect `prefers-reduced-motion`.
+- On desktop the English headline must render in no more than three visual lines; two lines is preferred.
+- The six loop meanings must remain semantically aligned across Korean, English, and Arabic.

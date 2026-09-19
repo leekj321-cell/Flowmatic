@@ -1,4 +1,4 @@
-name: Investor-first Flowmatic website build and runtime QA
+name: Flowmatic value-loop hero build and runtime QA
 on:
   push:
     branches: [main]
@@ -61,7 +61,7 @@ jobs:
           python -m playwright install --with-deps chromium
           sudo apt-get update -qq
           sudo apt-get install -y fonts-noto-cjk
-      - name: Build canonical investor-first website
+      - name: Build canonical value-loop website
         run: |
           python tools/apply_business_narrative.py
           python -m py_compile tools/build_stc_r5_site.py tools/stc_r5_qa.py tools/web_declaration_qa.py tools/web_release_qa.py
@@ -72,14 +72,14 @@ jobs:
           python tools/validate_brand_contract.py
           python tools/validate_nc_public_release.py
           node --test tests/nc-viewer.test.cjs
-      - name: Investor-first static and browser regression
+      - name: Value-loop static and browser regression
         run: python tools/stc_r5_qa.py --browser
-      - name: Await official GitHub Pages investor release
+      - name: Await official GitHub Pages value-loop release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           python - <<'PY'
           import json,time,urllib.request
-          expected='2026.09.19-r6-investor'
+          expected='2026.09.19-r6.1-value-loop'
           for _ in range(45):
               try:
                   with urllib.request.urlopen('https://flowmatic-os.com/release.json?verify='+str(time.time()),timeout=20) as response:
@@ -91,9 +91,9 @@ jobs:
                   print(type(exc).__name__)
               time.sleep(10)
           else:
-              raise SystemExit('Official domain has not reached investor-first release')
+              raise SystemExit('Official domain has not reached value-loop hero release')
           PY
-      - name: Official-domain investor-first runtime regression
+      - name: Official-domain value-loop runtime regression
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: python tools/stc_r5_qa.py --browser --base https://flowmatic-os.com
       - name: Export QA evidence

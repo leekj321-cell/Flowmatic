@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
-RELEASE="2026.09.19-r6-investor"
+RELEASE="2026.09.19-r6.1-value-loop"
 LANGS=("ko","en","ar")
 OUT=ROOT/"qa-artifacts";OUT.mkdir(exist_ok=True)
 REPORT={"release":RELEASE,"checks":[],"limits":["Chromium viewport regression, not physical-device or Safari certification.","Arabic page is technically checked but not native-speaker proofread by this test.","Contact transport is not used to send a real inquiry during QA."]}
@@ -17,6 +17,8 @@ def soup(text):return BeautifulSoup(text,"html.parser")
 def static_checks():
  release=json.loads((ROOT/"release.json").read_text(encoding="utf-8"));check("release marker",release.get("release")==RELEASE,release)
  css=ROOT/"stc-lite-home-v1.css";check("homepage stylesheet exists",css.exists() and css.stat().st_size>1000)
+ css_text=css.read_text(encoding="utf-8")
+ check("value-loop stylesheet",all(x in css_text for x in (".stc-value-loop{","@keyframes stcValueFlow","@media(prefers-reduced-motion:reduce)")))
  ids=("hero","proof","journey","stack","progressive","outputs","loop","pilot","company","contact")
  for lang in LANGS:
   doc=soup((ROOT/lang/"index.html").read_text(encoding="utf-8"));tag=doc.select_one('meta[name="flowmatic-release"]')
@@ -31,7 +33,12 @@ def static_checks():
   positions=[raw.find(f'id="{i}"') for i in ids]
   check(f"{lang}: investor-first section order",all(x>=0 for x in positions) and positions==sorted(positions),positions)
   check(f"{lang}: proof immediately after hero",positions[0] < positions[1] < positions[2],positions[:3])
-  check(f"{lang}: compiler eight nodes",len(doc.select("#hero .stc-flow-node"))==8)
+  check(f"{lang}: value loop exists",len(doc.select("#hero .stc-value-loop"))==1)
+  check(f"{lang}: six value-loop segments",len(doc.select("#hero .stc-value-segment"))==6)
+  check(f"{lang}: six accessible loop stages",len(doc.select("#hero .stc-value-loop-stage .sr-only li"))==6)
+  check(f"{lang}: no legacy hero flow nodes",len(doc.select("#hero .stc-flow-node"))==0)
+  check(f"{lang}: target loop boundary","TARGET · Factory OS" in doc.select_one("#hero .stc-value-loop-card").get_text(" ",strip=True))
+  check(f"{lang}: two headline line spans",len(doc.select("#hero h1 .stc-hero-line"))==2)
   check(f"{lang}: journey eight steps",len(doc.select("#journey .stc-step"))==8)
   check(f"{lang}: two six-layer stacks",len(doc.select("#stack .stc-stack-card"))==2 and len(doc.select("#stack .stc-layer"))==12)
   flow=doc.select_one("#stack .stc-stack-card.flow");check(f"{lang}: L3-L6 core L1-L2 optional",bool(flow and len(flow.select('.stc-layer.core'))==4 and len(flow.select('.stc-layer.optional'))==2))
@@ -70,8 +77,12 @@ def browser_checks(base):
    check(f"{lang}: no internal acronym in visible page",'STC' not in page.locator('body').inner_text())
    check(f"{lang}: no internal acronym in browser title",'STC' not in page.title())
    for w,h in viewports:
-    page.set_viewport_size({'width':w,'height':h});page.evaluate("scrollTo({top:0,behavior:'instant'})");page.wait_for_timeout(120);m=page.evaluate('({scroll:document.documentElement.scrollWidth,width:innerWidth})');check(f"{lang}: no overflow {w}",m['scroll']<=w+1,m);check(f"{lang}: H1 visible {w}",page.locator('#hero h1').is_visible());check(f"{lang}: stack visible {w}",page.locator('#stack .stc-stack-card').count()==2)
+    page.set_viewport_size({'width':w,'height':h});page.evaluate("scrollTo({top:0,behavior:'instant'})");page.wait_for_timeout(120);m=page.evaluate('({scroll:document.documentElement.scrollWidth,width:innerWidth})');check(f"{lang}: no overflow {w}",m['scroll']<=w+1,m);check(f"{lang}: H1 visible {w}",page.locator('#hero h1').is_visible());check(f"{lang}: value loop visible {w}",page.locator('#hero .stc-value-loop').is_visible());check(f"{lang}: stack visible {w}",page.locator('#stack .stc-stack-card').count()==2)
+    if w==1440:
+     lines=page.locator('#hero h1').evaluate("(el)=>{const s=getComputedStyle(el),lh=parseFloat(s.lineHeight),h=el.getBoundingClientRect().height;return {visual:h/lh,height:h,lineHeight:lh}}")
+     check(f"{lang}: headline <=3 visual lines",lines['visual']<=3.15,lines)
     if w in (390,1440):page.screenshot(path=str(OUT/f'{lang}-factory-os-{w}.png'),full_page=True)
+   page.emulate_media(reduced_motion="reduce");motion=page.locator('#hero .stc-value-flow-dash').evaluate("(el)=>getComputedStyle(el).animationName");check(f"{lang}: reduced motion disables loop animation",motion=="none",motion);page.emulate_media(reduced_motion="no-preference")
    page.locator('#hero a[href="#proof"]').click();check(f"{lang}: primary reaches proof",urlsplit(page.url).fragment=='proof');page.locator('#hero a[href="#contact"]').click();check(f"{lang}: secondary reaches contact",urlsplit(page.url).fragment=='contact')
   browser.close()
  check('no page errors',not errors,errors);relevant=[x for x in http if not any(y in x[1] for y in ('formspree','favicon'))];check('no relevant HTTP errors',not relevant,relevant)
