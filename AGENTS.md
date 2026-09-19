@@ -15,7 +15,7 @@ This rule is fail-closed and takes precedence over local visual styling, templat
 
 ## Mandatory website release rule
 
-The public homepage authority is **STC-lite R5** (`2026.09.17-r5-stc`).
+The public homepage authority is **Investor-first R6** (`2026.09.19-r6-investor`).
 
 - Canonical build command: `python tools/build_stc_r5_site.py`
 - Canonical QA: `python tools/stc_r5_qa.py --browser`
@@ -27,11 +27,14 @@ Do **not** use `python build_site.py` as the public website release command. Tha
 
 `homepage-declaration.json` is legacy-generator compatibility data only. Its historical `Elegant Engineering. / Intelligent Operations. / Flowmatic.` declaration must not be restored as the public homepage H1 unless the owner explicitly reverses the R5 product direction.
 
-Any homepage change must preserve these R5 concepts unless explicitly instructed otherwise:
+Any homepage change must preserve these product concepts unless explicitly instructed otherwise:
 
 - One Drawing → Running Factory.
 - Design → Build → Run → Improve.
-- Flowmatic Factory Stack comparison: L3–L6 core; L1–L2 optional/progressive.
-- Human/manual fallback where lower automation layers are absent.
-- Explicit separation of current working proof from STC-lite Full target capabilities.
+- Flowmatic Factory Stack comparison with manufacturing-decision layers first and L1–L2 connected progressively after ROI is proven.
+- Current working proof must appear before architecture or long-range vision.
+- Explicit CURRENT / PILOT / TARGET claim boundaries.
+- One-product / one-line 4–8 week pilot with baseline, KPI comparison, ROI decision, and expansion path.
+- Primary users and budget owners must be visible in the public narrative.
 - Existing NC/CT proof routes and locked corporate identity.
+- Public copy must not expose internal labels such as STC-lite, Blueprint R2, L3–L6 CORE, CORE/OPTIONAL, INFERRED, manifest, hash, or Safety Contract outside an explicitly technical-detail context.
