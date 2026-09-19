@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
-RELEASE="2026.09.17-r5-stc"
+RELEASE="2026.09.19-r6-investor"
 LANGS=("ko","en","ar")
 OUT=ROOT/"qa-artifacts";OUT.mkdir(exist_ok=True)
 REPORT={"release":RELEASE,"checks":[],"limits":["Chromium viewport regression, not physical-device or Safari certification.","Arabic page is technically checked but not native-speaker proofread by this test.","Contact transport is not used to send a real inquiry during QA."]}
@@ -17,7 +17,7 @@ def soup(text):return BeautifulSoup(text,"html.parser")
 def static_checks():
  release=json.loads((ROOT/"release.json").read_text(encoding="utf-8"));check("release marker",release.get("release")==RELEASE,release)
  css=ROOT/"stc-lite-home-v1.css";check("homepage stylesheet exists",css.exists() and css.stat().st_size>1000)
- ids=("hero","journey","stack","progressive","outputs","loop","proof","capabilities","pilot","company","contact")
+ ids=("hero","proof","journey","stack","progressive","outputs","loop","pilot","company","contact")
  for lang in LANGS:
   doc=soup((ROOT/lang/"index.html").read_text(encoding="utf-8"));tag=doc.select_one('meta[name="flowmatic-release"]')
   check(f"{lang}: release marker",bool(tag and tag.get("content")==RELEASE))
@@ -27,6 +27,10 @@ def static_checks():
   check(f"{lang}: Factory OS title","Factory OS" in (doc.title.get_text() if doc.title else ""))
   check(f"{lang}: Factory OS navigation",bool(doc.select_one('#site-nav a[href="#journey"]')) and "Factory OS" in doc.select_one('#site-nav a[href="#journey"]').get_text())
   missing=[i for i in ids if not doc.find(id=i)];check(f"{lang}: complete homepage sequence",not missing,missing)
+  raw=(ROOT/lang/"index.html").read_text(encoding="utf-8")
+  positions=[raw.find(f'id="{i}"') for i in ids]
+  check(f"{lang}: investor-first section order",all(x>=0 for x in positions) and positions==sorted(positions),positions)
+  check(f"{lang}: proof immediately after hero",positions[0] < positions[1] < positions[2],positions[:3])
   check(f"{lang}: compiler eight nodes",len(doc.select("#hero .stc-flow-node"))==8)
   check(f"{lang}: journey eight steps",len(doc.select("#journey .stc-step"))==8)
   check(f"{lang}: two six-layer stacks",len(doc.select("#stack .stc-stack-card"))==2 and len(doc.select("#stack .stc-layer"))==12)
@@ -37,10 +41,19 @@ def static_checks():
   check(f"{lang}: two proofs",len(doc.select("#proof .stc-proof"))==2)
   check(f"{lang}: public NC link",bool(doc.select_one(f'#proof a[href="/{lang}/nc/"]')))
   check(f"{lang}: CT video",bool(doc.select_one('#proof video source[src="/flowmatic_ct_demo.mp4"]')))
-  text=doc.body.get_text(" ",strip=True);check(f"{lang}: working boundary","Full Factory OS target" in text and "WORKING" in text)
+  text=doc.body.get_text(" ",strip=True)
+  check(f"{lang}: current-target-pilot boundary",all(x in text for x in ("CURRENT","TARGET","PILOT")))
+  forbidden=("STC-lite","Blueprint R2","L3–L6 CORE","CORE / OPTIONAL","INFERRED","Safety Contract","Full Factory OS target")
+  exposed=[x for x in forbidden if x in text];check(f"{lang}: no internal public terms",not exposed,exposed)
+  check(f"{lang}: pilot duration","4–8" in text)
+  check(f"{lang}: ROI language","ROI" in text)
+  check(f"{lang}: six-step pilot",len(doc.select("#pilot .stc-pilot article"))==6)
+  check(f"{lang}: user and buyer",len(doc.select("#pilot .stc-audience article"))==2)
+  check(f"{lang}: three-step expansion",len(doc.select("#company .stc-expansion article"))==3)
+  check(f"{lang}: no unsupported percentage claim",not __import__("re").search(r"\b\d+(?:\.\d+)?\s*%",text))
   check(f"{lang}: ISA disclaimer","ISA-95" in text)
   primary=doc.select_one('#hero .stc-actions a.primary');secondary=doc.select_one('#hero .stc-actions a:not(.primary)')
-  check(f"{lang}: primary CTA",bool(primary and primary.get('href')=='#contact'));check(f"{lang}: secondary CTA",bool(secondary and secondary.get('href')=='#proof'))
+  check(f"{lang}: primary CTA",bool(primary and primary.get('href')=='#proof'));check(f"{lang}: secondary CTA",bool(secondary and secondary.get('href')=='#contact'))
   check(f"{lang}: direction",doc.html.get('dir')==('rtl' if lang=='ar' else 'ltr'))
  root=(ROOT/'index.html').read_text(encoding='utf-8');r=soup(root);refresh=r.select_one('meta[http-equiv="refresh"]');check("root Factory OS redirect",bool(refresh and '/ko/' in refresh.get('content','') and 'Flowmatic Factory OS' in root))
  for rel in ('ko/nc/index.html','ko/ct/index.html','ko/platform/index.html'):check(f"detail route preserved: {rel}",(ROOT/rel).exists())
@@ -59,7 +72,7 @@ def browser_checks(base):
    for w,h in viewports:
     page.set_viewport_size({'width':w,'height':h});page.evaluate("scrollTo({top:0,behavior:'instant'})");page.wait_for_timeout(120);m=page.evaluate('({scroll:document.documentElement.scrollWidth,width:innerWidth})');check(f"{lang}: no overflow {w}",m['scroll']<=w+1,m);check(f"{lang}: H1 visible {w}",page.locator('#hero h1').is_visible());check(f"{lang}: stack visible {w}",page.locator('#stack .stc-stack-card').count()==2)
     if w in (390,1440):page.screenshot(path=str(OUT/f'{lang}-factory-os-{w}.png'),full_page=True)
-   page.locator('#hero a[href="#contact"]').click();check(f"{lang}: primary reaches contact",urlsplit(page.url).fragment=='contact');page.locator('#hero a[href="#proof"]').click();check(f"{lang}: secondary reaches proof",urlsplit(page.url).fragment=='proof')
+   page.locator('#hero a[href="#proof"]').click();check(f"{lang}: primary reaches proof",urlsplit(page.url).fragment=='proof');page.locator('#hero a[href="#contact"]').click();check(f"{lang}: secondary reaches contact",urlsplit(page.url).fragment=='contact')
   browser.close()
  check('no page errors',not errors,errors);relevant=[x for x in http if not any(y in x[1] for y in ('formspree','favicon'))];check('no relevant HTTP errors',not relevant,relevant)
 def main():
