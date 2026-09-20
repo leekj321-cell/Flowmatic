@@ -2,7 +2,7 @@
 
 > **Writing authority:** This website-specific contract inherits `STRATEGIC_COMMUNICATIONS_CONTRACT.md`. If wording or tone guidance conflicts, the strategic communications contract governs. In particular, external headings must use analytical/report-style language rather than presentation narration.
 
-**Public homepage release:** `2026.09.19-r6-investor`
+**Public homepage release:** `2026.09.20-r6.2-formal-copy`
 
 This contract keeps Flowmatic's public website readable to investors and manufacturing customers without weakening the product architecture.
 
