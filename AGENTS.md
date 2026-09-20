@@ -27,7 +27,7 @@ This rule is fail-closed and takes precedence over local visual styling, templat
 
 ## Mandatory website release rule
 
-The public homepage authority is **Investor-first R6** (`2026.09.19-r6-investor`).
+The public homepage authority is **Formal Strategic Copy R6.2** (`2026.09.20-r6.2-formal-copy`).
 
 - Canonical build command: `python tools/build_stc_r5_site.py`
 - Canonical QA: `python tools/stc_r5_qa.py --browser`
