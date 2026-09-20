@@ -13,5 +13,5 @@
   "direction": "ltr",
   "placement": "legacy generator fallback only",
   "public_homepage_authority": "release.json + tracked locale home files + tools/build_stc_r5_site.py",
-  "superseded_by": "2026.09.19-r6-investor"
+  "superseded_by": "2026.09.20-r6.2-formal-copy"
 }

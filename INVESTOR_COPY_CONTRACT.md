@@ -1,6 +1,8 @@
 # Flowmatic Investor Copy Contract
 
-**Public homepage release:** `2026.09.19-r6-investor`
+> **Writing authority:** This website-specific contract inherits `STRATEGIC_COMMUNICATIONS_CONTRACT.md`. If wording or tone guidance conflicts, the strategic communications contract governs. In particular, external headings must use analytical/report-style language rather than presentation narration.
+
+**Public homepage release:** `2026.09.20-r6.2-formal-copy`
 
 This contract keeps Flowmatic's public website readable to investors and manufacturing customers without weakening the product architecture.
 
@@ -55,7 +57,7 @@ Technical implementation terms belong in explicitly separated technical-detail c
 
 - Hero H1 should remain dominant but must not crowd out the product proof.
 - Product proof is the second section and receives stronger visual emphasis than architecture.
-- Section headings should read as customer outcomes, not module names.
+- Section headings must use analytical/report-style labels or conclusions; conversational outcome narration is prohibited.
 - Long paragraphs are avoided; supporting text is generally one short paragraph.
 - Desktop pilot cards use a 3×2 rhythm; mobile collapses to one column.
 - CURRENT / PILOT / TARGET badges are visually distinct but subordinate to the main headline.

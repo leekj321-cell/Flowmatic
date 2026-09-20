@@ -1,5 +1,17 @@
 # Flowmatic Repository Instructions
 
+## Mandatory strategic communications rule
+
+Before creating or editing any Flowmatic investor pitch, IR deck, business plan, proposal, application narrative, executive report, market/competition analysis, company profile, or strategic website copy:
+
+1. Read `STRATEGIC_COMMUNICATIONS_CONTRACT.md`.
+2. Select the required profile: `strategic-report` for pitch/IR/report materials, `public-web` for website copy.
+3. Apply the formal report-style heading, competition-analysis, target-account, claim-state and evidence rules in that contract.
+4. When the output is text/HTML available in the repository or runtime, run `python tools/validate_strategic_copy.py --profile <profile> <files...>` before delivery.
+5. Do not patch individual phrases while leaving the underlying narrative style unchanged. If a style violation appears, normalize the entire artifact/section against the contract.
+
+This rule is fail-closed for external strategic communication. Conversational presentation narration, rhetorical headings, first-person promotional framing, subjective competitor praise/attack, and internal battle slang are prohibited unless the owner explicitly requests an internal-only working note.
+
 ## Mandatory corporate identity rule
 
 Before creating or editing any presentation, PDF, proposal, report, application, company profile, business card, social graphic, marketing image, website visual, or other Flowmatic-branded material:
@@ -15,7 +27,7 @@ This rule is fail-closed and takes precedence over local visual styling, templat
 
 ## Mandatory website release rule
 
-The public homepage authority is **Investor-first R6** (`2026.09.19-r6-investor`).
+The public homepage authority is **Formal Strategic Copy R6.2** (`2026.09.20-r6.2-formal-copy`).
 
 - Canonical build command: `python tools/build_stc_r5_site.py`
 - Canonical QA: `python tools/stc_r5_qa.py --browser`

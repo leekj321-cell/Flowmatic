@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RELEASE = "2026.09.19-r6.1-value-loop"
+RELEASE = "2026.09.20-r6.2-formal-copy"
 ROOT_REDIRECT = Path("index.html")
 LOCALE_HOMES = (Path("ko/index.html"), Path("en/index.html"), Path("ar/index.html"))
 CANONICAL = (ROOT_REDIRECT, *LOCALE_HOMES, Path("release.json"))

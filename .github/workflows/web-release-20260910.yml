@@ -1,4 +1,4 @@
-name: Flowmatic value-loop hero build and runtime QA
+name: Flowmatic formal strategic copy build and runtime QA
 on:
   push:
     branches: [main]
@@ -16,6 +16,9 @@ on:
       - web-refresh.css
       - tools/build_stc_r5_site.py
       - tools/stc_r5_qa.py
+      - tools/validate_strategic_copy.py
+      - STRATEGIC_COMMUNICATIONS_CONTRACT.md
+      - INVESTOR_COPY_CONTRACT.md
       - tools/web_declaration_qa.py
       - tools/web_release_qa.py
       - tools/apply_business_narrative.py
@@ -36,6 +39,9 @@ on:
       - web-refresh.css
       - tools/build_stc_r5_site.py
       - tools/stc_r5_qa.py
+      - tools/validate_strategic_copy.py
+      - STRATEGIC_COMMUNICATIONS_CONTRACT.md
+      - INVESTOR_COPY_CONTRACT.md
       - tools/web_declaration_qa.py
       - tools/web_release_qa.py
       - .github/workflows/web-release-20260910.yml
@@ -64,9 +70,12 @@ jobs:
       - name: Build canonical value-loop website
         run: |
           python tools/apply_business_narrative.py
-          python -m py_compile tools/build_stc_r5_site.py tools/stc_r5_qa.py tools/web_declaration_qa.py tools/web_release_qa.py
+          python -m py_compile tools/build_stc_r5_site.py tools/stc_r5_qa.py tools/validate_strategic_copy.py tools/web_declaration_qa.py tools/web_release_qa.py
           python tools/build_stc_r5_site.py
           git diff --exit-code -- index.html ko en ar release.json
+      - name: Strategic copy contract
+        run: |
+          python tools/validate_strategic_copy.py --self-test --profile public-web ko/index.html en/index.html ar/index.html
       - name: Protect corporate identity and NC public demo
         run: |
           python tools/validate_brand_contract.py
@@ -79,7 +88,7 @@ jobs:
         run: |
           python - <<'PY'
           import json,time,urllib.request
-          expected='2026.09.19-r6.1-value-loop'
+          expected='2026.09.20-r6.2-formal-copy'
           for _ in range(45):
               try:
                   with urllib.request.urlopen('https://flowmatic-os.com/release.json?verify='+str(time.time()),timeout=20) as response:
@@ -91,7 +100,7 @@ jobs:
                   print(type(exc).__name__)
               time.sleep(10)
           else:
-              raise SystemExit('Official domain has not reached value-loop hero release')
+              raise SystemExit('Official domain has not reached formal strategic copy release')
           PY
       - name: Official-domain value-loop runtime regression
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
