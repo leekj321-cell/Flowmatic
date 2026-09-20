@@ -43,9 +43,10 @@ EN_HARD = [
     r"\bWhat we are building\b",
     r"\bWhere is .+\?",
 ]
-EN_REPORT_BODY = [
+EN_PUBLIC_BODY = [
     r"\bwe\b|\bour\b|\byou\b|\byour\b",
 ]
+EN_REPORT_BODY = EN_PUBLIC_BODY
 EN_HEADING = [
     r"^(?:See|Start|Prove|Show|Discover|Meet)\b",
     r"^(?:Where|What|Who)\b.*\?$",
@@ -115,6 +116,7 @@ def main():
         failures += [(str(path),*x) for x in scan(AR_HEADING,heads,"AR-HEAD")]
         failures += [(str(path),*x) for x in scan(KO_HARD,body,"KO-HARD")]
         failures += [(str(path),*x) for x in scan(EN_HARD,body,"EN-HARD")]
+        failures += [(str(path),*x) for x in scan(EN_PUBLIC_BODY,body,"EN-PUBLIC")]
         if args.profile=="strategic-report":
             failures += [(str(path),*x) for x in scan(KO_REPORT_BODY,body,"KO-REPORT")]
             failures += [(str(path),*x) for x in scan(EN_REPORT_BODY,body,"EN-REPORT")]
