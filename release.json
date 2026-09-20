@@ -1,1 +1,1 @@
-{"release":"2026.09.19-r6.1-value-loop","scope":"value-loop-hero","base_release":"2026.09.19-r6-investor","locales":["ko","en","ar"],"canonical_build":"python tools/build_stc_r5_site.py","canonical_qa":"python tools/stc_r5_qa.py --browser"}
+{"release":"2026.09.20-r6.2-formal-copy","scope":"formal-strategic-copy-home","base_release":"2026.09.19-r6.1-value-loop","locales":["ko","en","ar"],"canonical_build":"python tools/build_stc_r5_site.py","canonical_qa":"python tools/stc_r5_qa.py --browser"}
