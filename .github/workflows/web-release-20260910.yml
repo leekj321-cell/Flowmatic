@@ -39,6 +39,9 @@ on:
       - web-refresh.css
       - tools/build_stc_r5_site.py
       - tools/stc_r5_qa.py
+      - tools/validate_strategic_copy.py
+      - STRATEGIC_COMMUNICATIONS_CONTRACT.md
+      - INVESTOR_COPY_CONTRACT.md
       - tools/web_declaration_qa.py
       - tools/web_release_qa.py
       - .github/workflows/web-release-20260910.yml
