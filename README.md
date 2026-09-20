@@ -4,7 +4,7 @@ Static Flowmatic website for GitHub Pages and `flowmatic-os.com`.
 
 ## Current public homepage
 
-The public homepage is **Investor-first R6** (`2026.09.19-r6-investor`). It presents Flowmatic as manufacturing operations AI for existing factories: start from working NC/CT proof, connect manufacturing decisions from drawing to production, validate one product or line in a 4–8 week pilot, and expand only where ROI is proven.
+The public homepage is **Formal Strategic Copy R6.2** (`2026.09.20-r6.2-formal-copy`). It preserves the Manufacturing Value Loop and investor-first information hierarchy while enforcing analytical/report-style strategic headings across Korean, English and Arabic.
 
 Canonical homepage surfaces:
 
@@ -31,6 +31,7 @@ The wrapper rebuilds legacy/detail pages and then restores the tracked STC-lite 
 Canonical QA:
 
 ```bash
+python tools/validate_strategic_copy.py --profile public-web ko/index.html en/index.html ar/index.html
 python tools/stc_r5_qa.py
 python tools/stc_r5_qa.py --browser
 ```
