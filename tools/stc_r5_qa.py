@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
-RELEASE="2026.09.19-r6.1-value-loop"
+RELEASE="2026.09.20-r6.2-formal-copy"
 LANGS=("ko","en","ar")
 OUT=ROOT/"qa-artifacts";OUT.mkdir(exist_ok=True)
 REPORT={"release":RELEASE,"checks":[],"limits":["Chromium viewport regression, not physical-device or Safari certification.","Arabic page is technically checked but not native-speaker proofread by this test.","Contact transport is not used to send a real inquiry during QA."]}
