@@ -1,4 +1,4 @@
-name: Flowmatic formal strategic copy build and runtime QA
+name: Flowmatic investor product-scroll build and runtime QA
 on:
   push:
     branches: [main]
@@ -8,6 +8,10 @@ on:
       - en/**
       - ar/**
       - stc-lite-home-v1.css
+      - investor-home.js
+      - content/investor_home.py
+      - media/product-20261018/**
+      - tools/build_investor_home.py
       - release.json
       - build_site.py
       - business_narrative.py
@@ -31,6 +35,10 @@ on:
       - en/**
       - ar/**
       - stc-lite-home-v1.css
+      - investor-home.js
+      - content/investor_home.py
+      - media/product-20261018/**
+      - tools/build_investor_home.py
       - release.json
       - build_site.py
       - business_narrative.py
@@ -88,7 +96,7 @@ jobs:
         run: |
           python - <<'PY'
           import json,time,urllib.request
-          expected='2026.09.20-r6.2-formal-copy'
+          expected=json.load(open('release.json'))['release']
           for _ in range(45):
               try:
                   with urllib.request.urlopen('https://flowmatic-os.com/release.json?verify='+str(time.time()),timeout=20) as response:
@@ -100,7 +108,7 @@ jobs:
                   print(type(exc).__name__)
               time.sleep(10)
           else:
-              raise SystemExit('Official domain has not reached formal strategic copy release')
+              raise SystemExit('Official domain has not reached approved product-scroll release')
           PY
       - name: Official-domain value-loop runtime regression
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'

@@ -1,3 +1,4 @@
 .gh-auth/
 __pycache__/
 *.py[cod]
+qa-artifacts/

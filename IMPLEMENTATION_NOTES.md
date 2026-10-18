@@ -1,52 +1,23 @@
-# Website release 2026.09.19-r6-investor
+# Website release 2026.10.18-r7-product-scroll
 
-Investor-first R6 supersedes the R5 copy hierarchy while preserving existing product/detail routes, working NC/CT proof assets, corporate CI, the L1–L6 comparison, and shared runtime.
+The owner approved the 18 October investor HTML preview and authorized PC/mobile and Korean, English and Arabic deployment, including automatic 01–04 transitions linked to native scrolling.
 
-## Public-home product narrative
+## Source and build
 
-The homepage now leads with **One Drawing → Running Factory** rather than a module list. The primary journey is:
+`content/investor_home.py` contains the Korean source copy and equivalent English/Arabic versions. `tools/build_investor_home.py` generates the three locale homes, root redirect and release marker. The canonical command remains `python tools/build_stc_r5_site.py`: it rebuilds legacy detail pages, generates the current homes, and preserves these notes. Do not run the legacy builder as a release command.
 
-`Product Drawing → Process → Equipment → Tooling/Jig → Layout → Execution → Quality/Logistics → Actual Result → Blueprint Revision`
+## Presentation and interaction
 
-The homepage also carries the mandatory Flowmatic Factory Stack comparison:
+The approved actual-product hero replaces the former target-loop illustration. Four unmodified product captures in `media/product-20261018/` illustrate process review, logistics planning, layout approval and production operations. Native page scrolling updates the visible capture and selected step in both directions. Numbered anchors and keyboard controls remain available. Focus never changes merely because the page scrolls. Mobile uses a compact sticky preview; short viewports and no-JavaScript browsers show inline images for all steps.
 
-- L6 Factory Orchestration
-- L5 Optimization
-- L4 Factory Engineering
-- L3 Execution / G-code / SCADA
-- L2 Connectivity / Adapter / Gateway
-- L1 Physical / Control / PLC / Sensor / CNC I/O / Robot / AMR
+## Evidence and retained concepts
 
-Traditional full-stack deployment is presented as requiring L1 through L6. Flowmatic presents L3 through L6 as the core software/decision layer and L1/L2 as progressive/optional automation. When lower automation is absent, existing people and manual interfaces continue to provide the input/execution path. The page explicitly notes that this is a Flowmatic product communication model and not a claim that its L1–L6 labels are identical to ISA-95 levels.
+Captures are internal demonstrations, not customer results. Logistics is a separate simulation; the throughput values and utilization shown in the screenshots are qualified in the adjacent text. Supported geometry, human approval and field validation limits are localized. The global Factory OS loop and L1–L6 adoption comparison remain explicitly TARGET. CURRENT / PILOT / TARGET, Design → Build → Run → Improve, user/budget-owner roles, one-product/one-line 4–8 week pilot, baseline/KPI/ROI, and proposed subscription/expansion model remain visible.
 
-## Evidence boundary
+Canonical KO/global brand bytes, existing NC/CT detail routes, CT video and contact endpoint are preserved. Product screenshots retain their original Korean UI in every locale, with a translated note explaining this.
 
-The homepage uses explicit CURRENT / PILOT / TARGET boundaries. Public NC 3D review and the existing cycle-time analysis recording remain concrete evidence. Full drawing-to-factory generation, automatic equipment sizing, full jig generation, AMR/robot sourcing, and fully closed-loop execution remain target capabilities unless separately validated.
+## Verification
 
-## Canonical build and QA
+`python tools/stc_r5_qa.py --browser` checks static structure, original image hashes, forward/reverse scrolling, manual and keyboard selection, original-image zoom, reduced motion, mobile menus, RTL, direct links, no-JavaScript content, contact behavior via interception, and viewport overflow. GitHub Actions runs local and official-domain Chromium checks. Physical-device/Safari certification and native Arabic proofreading are outside this check. No real inquiry is submitted during QA.
 
-`build_site.py` remains the legacy/detail-page generator and still contains R4 home generation logic. It must not be used directly for a public release.
-
-Canonical build:
-
-```bash
-python tools/build_stc_r5_site.py
-```
-
-The wrapper captures the tracked R5 home surfaces, runs the legacy generator for detail pages, and restores the R5 homes plus `release.json`. It fails closed if the tracked home is not marked `2026.09.19-r6-investor`.
-
-Canonical QA:
-
-```bash
-python tools/stc_r5_qa.py --browser
-```
-
-Legacy QA entry points now delegate to the R5 QA. GitHub Actions builds through the R5 wrapper, validates corporate identity and the NC public release, runs local Chromium regression, waits for the official GitHub Pages release marker, then re-runs R5 QA against `https://flowmatic-os.com`.
-
-## R4 compatibility
-
-`homepage-declaration.json` is retained only because historical generator/rollback code still references it. The three-line `Elegant Engineering. / Intelligent Operations. / Flowmatic.` declaration is no longer the public homepage authority. `release.json`, the tracked locale home pages, and the R5 build wrapper are authoritative.
-
-## Visual direction
-
-The owner-selected B direction remains: strong Mondrian structural frames with selectively rounded content cards/controls, while the locked corporate CI itself is never redrawn or recolored.
+The source of the previous live release is commit 9071f9f4323ee71b69806e16cdfae45abb1a9700, available for rollback.
