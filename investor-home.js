@@ -37,7 +37,7 @@
       const bottom = header.getBoundingClientRect().height + 10 + panel.offsetHeight;
       return Math.min(innerHeight - 60, bottom + Math.max(32, (innerHeight - bottom) * .25));
     }
-    return Math.max(header.offsetHeight + 50, innerHeight * .46);
+    return header.offsetHeight + 70;
   }
 
   function update() {
@@ -153,10 +153,12 @@
   addEventListener('pageshow', schedule);
   if ('ResizeObserver' in window) new ResizeObserver(schedule).observe(story);
   document.fonts?.ready.then(schedule);
-  addEventListener('load', () => {
+  function followStepHash() {
     const id = location.hash.replace('#step-', '');
     if (location.hash.startsWith('#step-') && byId.has(id)) jump(id);
     else schedule();
-  });
+  }
+  addEventListener('hashchange', followStepHash);
+  addEventListener('load', followStepHash);
   update();
 })();

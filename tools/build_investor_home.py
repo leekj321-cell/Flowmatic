@@ -33,7 +33,7 @@ def build_home(lang):
         steps.append(f'''<article class="story-step" id="step-{s['id']}" data-step="{s['id']}" aria-labelledby="title-{s['id']}">
 <div class="story-card"><p class="step-number"><bdi>{s['number']} / 04</bdi><span>{e(s['label'])}</span></p>
 <h3 id="title-{s['id']}">{e(s['title'])}</h3><p class="step-description">{e(s['description'])}</p>
-<figure class="step-image">{image(s)}<figcaption>{e(s['caption'])}</figcaption></figure>
+<figure class="step-image"><button type="button" class="image-open" data-open-shot="{s['id']}" aria-label="{e(c['zoom'])}">{image(s)}</button><figcaption>{e(s['caption'])}</figcaption></figure>
 <dl class="step-handoff">{fields}</dl><p class="step-boundary">{e(s['boundary'])}</p></div></article>''')
     tabs = ''.join(f'<a class="step-tab" href="#step-{s["id"]}" data-shot="{s["id"]}" aria-controls="product-panel" {"aria-current=step" if i==0 else ""}><bdi>{s["number"]}</bdi><span>{e(s["label"])}</span></a>' for i,s in enumerate(shots))
     values = ''.join(f'<div class="value-row"><span>{e(a)}</span><div><h3>{e(b)}</h3><p>{e(d)}</p></div></div>' for a,b,d in c['values'])

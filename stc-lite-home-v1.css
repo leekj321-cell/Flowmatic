@@ -27,3 +27,7 @@ body{word-break:normal}body[lang=ko],html[lang=ko] body{word-break:keep-all}.bra
 @media(max-height:610px){.js .product-visual{position:static}.js .step-image{display:block}.product-story{display:block}.product-visual{margin-bottom:30px}.story-step{min-height:0;padding:35px 0 60px}.story-card{max-width:900px}.step-image img{max-height:65vh;object-fit:contain}.shot-image{max-height:55vh}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{scroll-behavior:auto!important}.btn:hover{transform:none}}
 @media print{.product-visual{display:none!important}.product-story{display:block}.js .step-image{display:block}.story-step{min-height:0;padding:20px 0;break-inside:avoid}.additional-proof video{display:none}.stack-detail{display:block}.contact{display:none!important}.story-card{max-width:none}.step-handoff{display:block}.hero-summary div+div{border:0}.readiness-block{break-inside:avoid}.architecture{padding:20px 0}}
+
+/* Navigation remains directly usable when scripts are unavailable. */
+html:not(.js) .menu-toggle{display:none}
+@media(max-width:1000px){html:not(.js) .site-header{position:static}html:not(.js) .nav{height:auto;flex-wrap:wrap;padding-block:16px}html:not(.js) .nav-links{display:flex;position:static;flex-basis:100%;padding:8px 0 0;max-height:none;border-bottom:0}html:not(.js) .product-story{display:block}}

@@ -82,7 +82,7 @@ SCROLL_TO_STEP = '''(id) => {
  const h=document.querySelector('.site-header').offsetHeight;
  const sticky=innerWidth<=820&&getComputedStyle(panel).position==='sticky';
  const bottom=h+10+panel.offsetHeight;
- const line=sticky?Math.min(innerHeight-60,bottom+Math.max(32,(innerHeight-bottom)*.25)):Math.max(h+50,innerHeight*.46);
+ const line=sticky?Math.min(innerHeight-60,bottom+Math.max(32,(innerHeight-bottom)*.25)):h+70;
  const el=document.getElementById('step-'+id);
  scrollTo({top:Math.max(0,scrollY+el.getBoundingClientRect().top-line+24),behavior:'instant'});
 }'''
@@ -130,6 +130,9 @@ def browser_checks(base):
                     check(f'{lang} {w}x{h}: reverse {id}',page.locator('#product-panel').get_attribute('data-active-shot')==id)
                 if h<=610:
                     check(f'{lang}: landscape inline evidence fallback',page.locator('.step-image').first.is_visible())
+                    page.locator('#step-logistics [data-open-shot]').click()
+                    check(f'{lang}: landscape inline image zoom',page.locator('#image-dialog').is_visible() and page.locator('#dialog-image').get_attribute('src').endswith(FILES[1]))
+                    page.keyboard.press('Escape')
                 if w in [390,1440]:
                     page.evaluate("scrollTo({top:0,behavior:'instant'})")
                     page.screenshot(path=str(OUT/f'{lang}-home-{w}.png'),full_page=True)
@@ -168,11 +171,14 @@ def browser_checks(base):
             # A direct step link is useful when sharing a specific product stage.
             page.goto(base.rstrip('/')+f'/{lang}/#step-handover',wait_until='networkidle')
             page.wait_for_timeout(1000)
-            check(f'{lang}: direct step link',page.locator('#product-panel').get_attribute('data-active-shot')=='handover')
+            actual=page.locator('#product-panel').get_attribute('data-active-shot')
+            check(f'{lang}: direct step link',actual=='handover',{'actual':actual,'url':page.url,'scrollY':page.evaluate('scrollY')})
+            page.screenshot(path=str(OUT/f'{lang}-direct-step.png'))
         nojs=browser.new_context(java_script_enabled=False,viewport={'width':390,'height':844})
         fallback=nojs.new_page()
         for lang in COPY:
             fallback.goto(base.rstrip('/')+f'/{lang}/',wait_until='domcontentloaded')
+            check(f'{lang}: locale navigation without JS',fallback.locator('[data-lang-link]:visible').count()==3)
             check(f'{lang}: all four images available without JS',all(fallback.locator('.step-image').nth(i).is_visible() for i in range(4)))
         browser.close()
     check('no browser errors',not errors,errors)
