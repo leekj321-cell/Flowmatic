@@ -27,7 +27,7 @@ This rule is fail-closed and takes precedence over local visual styling, templat
 
 ## Mandatory website release rule
 
-The public homepage authority is **Formal Strategic Copy R6.2** (`2026.09.20-r6.2-formal-copy`).
+The public homepage authority is **Owner-approved Investor Product Scroll R7** (`2026.10.18-r7-product-scroll`). The owner approved the actual-product HTML preview and its PC/mobile and KO/EN/AR rollout on 2026-10-18.
 
 - Canonical build command: `python tools/build_stc_r5_site.py`
 - Canonical QA: `python tools/stc_r5_qa.py --browser`
@@ -35,7 +35,7 @@ The public homepage authority is **Formal Strategic Copy R6.2** (`2026.09.20-r6.
 - Canonical home surfaces: `index.html`, `ko/index.html`, `en/index.html`, `ar/index.html`
 - Homepage stylesheet: `stc-lite-home-v1.css`
 
-Do **not** use `python build_site.py` as the public website release command. That file remains the legacy/detail-page generator and still contains the superseded R4 homepage narrative. The R5 wrapper intentionally rebuilds detail pages and restores the tracked R5 home surfaces afterward.
+Do **not** use `python build_site.py` as the public website release command. That file remains the legacy/detail-page generator and still contains the superseded R4 homepage narrative. The canonical wrapper rebuilds detail pages, then generates current home surfaces from `content/investor_home.py` through `tools/build_investor_home.py`. The approved hero uses an actual product capture; the four product stages follow native scrolling.
 
 `homepage-declaration.json` is legacy-generator compatibility data only. Its historical `Elegant Engineering. / Intelligent Operations. / Flowmatic.` declaration must not be restored as the public homepage H1 unless the owner explicitly reverses the R5 product direction.
 

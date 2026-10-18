@@ -1,0 +1,31 @@
+{
+  "capture_date": "2026-10-18",
+  "type": "actual_product_capture",
+  "source": "Flowmatic_PC internal product QA captures",
+  "assets": [
+    {
+      "file": "ui-source-index-mid-rotation.png",
+      "sha256": "b897e9d9e8fd7abce266e971378026fbd32f3b66569c4b8070ebe3253583da93",
+      "type": "actual_product_capture",
+      "status": "실제 제품 화면 · 내부 시연"
+    },
+    {
+      "file": "ui-optimized-gantry.png",
+      "sha256": "39ca308de9166d43ae600777b0a5bc1aa3a82f0c4096c1acd4ca2183491fe3c5",
+      "type": "actual_product_capture",
+      "status": "실제 제품 화면 · 별도 시뮬레이션 예시"
+    },
+    {
+      "file": "ui-source-factory-approval.png",
+      "sha256": "a6743ab99934a4e63099799d70381a8e83cd31eb1c4ce269125ef16902612ab8",
+      "type": "actual_product_capture",
+      "status": "실제 제품 화면 · 내부 시연"
+    },
+    {
+      "file": "ui-source-final-factory-monitor.png",
+      "sha256": "50ed4ba5b76d902509479b3126a884605dac28db756c304649b4f6d185af1ed6",
+      "type": "actual_product_capture",
+      "status": "실제 제품 화면 · 시연 데이터"
+    }
+  ]
+}
