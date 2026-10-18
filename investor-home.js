@@ -54,12 +54,12 @@
     if (!frame) frame = requestAnimationFrame(update);
   }
 
-  function jump(id) {
+  function jump(id, behavior) {
     const step = steps.find(item => item.dataset.step === id);
     if (!step) return;
     // Align the selected text with the reading area, then let native scroll own state.
     const top = Math.max(0, scrollY + step.getBoundingClientRect().top - activationLine() + 24);
-    scrollTo({top, behavior: reducedMotion.matches ? 'instant' : 'smooth'});
+    scrollTo({top, behavior: behavior || (reducedMotion.matches ? 'instant' : 'smooth')});
   }
 
   tabs.forEach((tab, index) => {
@@ -155,7 +155,10 @@
   document.fonts?.ready.then(schedule);
   function followStepHash() {
     const id = location.hash.replace('#step-', '');
-    if (location.hash.startsWith('#step-') && byId.has(id)) jump(id);
+    if (location.hash.startsWith('#step-') && byId.has(id)) {
+      // Let the browser finish native fragment positioning, then reveal the text below the sticky view.
+      requestAnimationFrame(() => requestAnimationFrame(() => jump(id, 'instant')));
+    }
     else schedule();
   }
   addEventListener('hashchange', followStepHash);
