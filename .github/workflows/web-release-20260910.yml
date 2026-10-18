@@ -75,7 +75,7 @@ jobs:
           python -m playwright install --with-deps chromium
           sudo apt-get update -qq
           sudo apt-get install -y fonts-noto-cjk
-      - name: Build canonical value-loop website
+      - name: Build canonical product-scroll website
         run: |
           python tools/apply_business_narrative.py
           python -m py_compile tools/build_stc_r5_site.py tools/stc_r5_qa.py tools/validate_strategic_copy.py tools/web_declaration_qa.py tools/web_release_qa.py
@@ -89,9 +89,9 @@ jobs:
           python tools/validate_brand_contract.py
           python tools/validate_nc_public_release.py
           node --test tests/nc-viewer.test.cjs
-      - name: Value-loop static and browser regression
+      - name: Product-scroll static and browser regression
         run: python tools/stc_r5_qa.py --browser
-      - name: Await official GitHub Pages value-loop release
+      - name: Await official GitHub Pages product-scroll release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           python - <<'PY'
@@ -110,7 +110,7 @@ jobs:
           else:
               raise SystemExit('Official domain has not reached approved product-scroll release')
           PY
-      - name: Official-domain value-loop runtime regression
+      - name: Official-domain product-scroll runtime regression
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: python tools/stc_r5_qa.py --browser --base https://flowmatic-os.com
       - name: Export QA evidence

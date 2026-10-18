@@ -99,7 +99,7 @@ def browser_checks(base):
         for lang in COPY:
             page.goto(base.rstrip('/')+f'/{lang}/',wait_until='networkidle',timeout=60000)
             check(f'{lang}: served release',page.locator('meta[name="flowmatic-release"]').get_attribute('content')==RELEASE)
-            for w,h in [(360,800),(390,844),(768,1024),(1440,900),(1920,1080),(844,390)]:
+            for w,h in [(320,568),(360,800),(390,844),(768,1024),(1440,900),(1920,1080),(844,390)]:
                 page.set_viewport_size({'width':w,'height':h})
                 page.evaluate("scrollTo({top:0,behavior:'instant'})")
                 page.wait_for_timeout(180)

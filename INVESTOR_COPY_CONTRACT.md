@@ -2,22 +2,22 @@
 
 > **Writing authority:** This website-specific contract inherits `STRATEGIC_COMMUNICATIONS_CONTRACT.md`. If wording or tone guidance conflicts, the strategic communications contract governs. In particular, external headings must use analytical/report-style language rather than presentation narration.
 
-**Public homepage release:** `2026.09.20-r6.2-formal-copy`
+**Public homepage release:** `2026.10.18-r7-product-scroll`
 
 This contract keeps Flowmatic's public website readable to investors and manufacturing customers without weakening the product architecture.
 
 ## Narrative order
 
-1. Hero: customer, problem, result, current product
-2. CURRENT product proof
-3. Drawing-to-production manufacturing journey
-4. Traditional full-stack vs Flowmatic L1–L6 comparison
-5. Progressive automation
-6. Production-ready outputs
-7. Design → Build → Run → Improve loop
-8. 4–8 week PILOT, KPI, ROI
-9. Expansion: workflow → line → factory
-10. Final pilot CTA
+The owner-approved 2026-10-18 preview supersedes the previous homepage layout:
+
+1. Hero: customer, organizational operating value and actual current product capture
+2. Customer problem: concentrated expertise and repeated handoffs
+3. Four CURRENT product stages, linked to native scrolling, followed by NC/CT proof links
+4. Organizational value and CURRENT/PILOT validation scope
+5. TARGET progressive Factory Stack comparison and Design → Build → Run → Improve
+6. One-product/one-line 4–8 week PILOT, baseline, KPI and ROI
+7. Users, budget owners, proposed subscription and workflow/line/factory expansion
+8. Pilot contact
 
 ## Claim boundaries
 
@@ -56,7 +56,7 @@ Technical implementation terms belong in explicitly separated technical-detail c
 ## Typography and hierarchy
 
 - Hero H1 should remain dominant but must not crowd out the product proof.
-- Product proof is the second section and receives stronger visual emphasis than architecture.
+- Actual product proof begins in the hero and receives stronger visual emphasis than architecture.
 - Section headings must use analytical/report-style labels or conclusions; conversational outcome narration is prohibited.
 - Long paragraphs are avoided; supporting text is generally one short paragraph.
 - Desktop pilot cards use a 3×2 rhythm; mobile collapses to one column.
@@ -67,25 +67,15 @@ Technical implementation terms belong in explicitly separated technical-detail c
 Korean approved copy is the source of truth. English and Arabic must preserve the same CURRENT / PILOT / TARGET boundaries, pilot model, and business meaning without adding performance claims.
 
 
-## Hero visual contract
+## Approved product visual and scroll contract
 
-The hero visual is a **Manufacturing Value Loop**, not a feature matrix or developer architecture board.
+The hero and four product stages use unmodified actual product captures. The former Manufacturing Value Loop hero illustration is superseded by the owner-approved preview. The broader Design → Build → Run → Improve structure remains explicitly TARGET later in the page.
 
-Required clockwise stages:
-
-1. Planning / Layout
-2. Production
-3. Quality
-4. Logistics
-5. Management Decision
-6. Feedback
-
-Rules:
-
-- The loop is marked `TARGET · Factory OS`.
-- CURRENT proof remains in the proof section immediately below the hero.
-- Do not place Process / Equipment / Tooling / Layout / Execution / Quality / Logistics feature boxes in the hero.
-- Keep the loop segments fixed. Motion is limited to a subtle clockwise flow indicator and/or low-intensity sequential emphasis.
-- Respect `prefers-reduced-motion`.
-- On desktop the English headline must render in no more than three visual lines; two lines is preferred.
-- The six loop meanings must remain semantically aligned across Korean, English, and Arabic.
+- Stage order: process/machining review → production/logistics planning → layout approval → production operations.
+- Native scrolling changes the active image in both directions. Numbered links and keyboard controls remain available.
+- Automatic stage changes must not move focus or hijack wheel/touch input.
+- Short viewports and no-JavaScript browsers expose all stage evidence without requiring a tab click.
+- Original images can be enlarged. Product UI remains in the original Korean, with translated captions and a locale note.
+- Internal simulations and demonstration data must never be presented as customer outcomes.
+- Respect reduced-motion preferences and preserve canonical locale CI.
+- On desktop, the English headline remains within three visual lines.
