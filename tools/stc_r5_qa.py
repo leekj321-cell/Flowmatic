@@ -25,6 +25,11 @@ def static_checks():
     for asset in provenance['assets']:
         path=ROOT/'media/product-20261018'/asset['file']
         check('unaltered actual image: '+asset['file'],hashlib.sha256(path.read_bytes()).hexdigest()==asset['sha256'])
+    new_provenance=json.loads((ROOT/'media/product-20261020/provenance.json').read_text())
+    for asset in new_provenance['assets']:
+        path=ROOT/'media/product-20261020'/asset['file']
+        check('unaltered synthetic evidence: '+asset['file'],hashlib.sha256(path.read_bytes()).hexdigest()==asset['sha256'])
+    check('separate synthetic cases and no physical-effect claim',new_provenance['cases_independent'] and not new_provenance['physical_effect_validated'])
     css=(ROOT/'stc-lite-home-v1.css').read_text()
     check('reduced motion and short-viewport fallback',all(s in css for s in ['prefers-reduced-motion:reduce','@media(max-height:610px)','.step-image']))
     for lang in COPY:
@@ -38,6 +43,7 @@ def static_checks():
         pos=[raw.find('id="'+x+'"') for x in ids]
         check(f'{lang}: approved narrative order',min(pos)>=0 and pos==sorted(pos))
         check(f'{lang}: real product hero before architecture',bool(doc.select_one('#hero [data-open-shot="machining"] img')))
+        check(f'{lang}: two explicit product cases',len(doc.select('.product-case'))==2 and bool(doc.select_one('[data-case-pdf]')))
         check(f'{lang}: four scroll steps',[x.get('data-step') for x in doc.select('[data-step]')]==IDS)
         check(f'{lang}: optional manual jump links',[x.get('href') for x in doc.select('[data-shot]')]==['#step-'+i for i in IDS])
         shots=json.loads(doc.select_one('#product-evidence').text)
@@ -87,6 +93,23 @@ SCROLL_TO_STEP = '''(id) => {
  scrollTo({top:Math.max(0,scrollY+el.getBoundingClientRect().top-line+24),behavior:'instant'});
 }'''
 
+def capture_cases(page, lang, scope, width):
+    # Capture normal reading positions after lazy images have actually decoded.
+    for img in page.locator('#product-cases img').all():
+        img.scroll_into_view_if_needed()
+        img.evaluate('(el)=>el.decode()')
+    page.evaluate('document.activeElement?.blur()')
+    align = "(el)=>scrollTo({top:scrollY+el.getBoundingClientRect().top-document.querySelector('header').offsetHeight-20,behavior:'instant'})"
+    for card in page.locator('.product-case').all():
+        key=card.get_attribute('id')
+        card.evaluate(align)
+        page.wait_for_timeout(150)
+        page.screenshot(path=str(OUT/f'{lang}-{scope}-{key}-{width}-heading.png'))
+        card.locator('.case-figure').last.evaluate(align)
+        page.wait_for_timeout(150)
+        page.screenshot(path=str(OUT/f'{lang}-{scope}-{key}-{width}-evidence.png'))
+    check(f'{lang} {scope} {width}: case images decoded',page.locator('#product-cases img').evaluate_all('(els)=>els.every(el=>el.complete&&el.naturalWidth>0)'))
+
 def browser_checks(base):
     from playwright.sync_api import sync_playwright
     errors=[]; http=[]
@@ -134,6 +157,7 @@ def browser_checks(base):
                     check(f'{lang}: landscape inline image zoom',page.locator('#image-dialog').is_visible() and page.locator('#dialog-image').get_attribute('src').endswith(FILES[1]))
                     page.keyboard.press('Escape')
                 if w in [390,1440]:
+                    capture_cases(page,lang,'home',w)
                     page.evaluate("scrollTo({top:0,behavior:'instant'})")
                     page.screenshot(path=str(OUT/f'{lang}-home-{w}.png'),full_page=True)
             # Manual selection aligns the narrative; reduced motion removes the smooth scroll.
@@ -177,6 +201,43 @@ def browser_checks(base):
             panel_box=page.locator('#product-panel').bounding_box()
             check(f'{lang}: direct step heading below sticky image',title_box['y']>=panel_box['y']+panel_box['height'],{'title':title_box,'panel':panel_box})
             page.screenshot(path=str(OUT/f'{lang}-direct-step.png'))
+        for lang in COPY:
+            for route in ['platform','machining-intelligence','work-standard']:
+                page.goto(base.rstrip('/')+f'/{lang}/{route}/',wait_until='networkidle')
+                check(f'{lang} {route}: current detail release',page.locator('meta[name="flowmatic-release"]').get_attribute('content')==RELEASE)
+                for w in [320,390,1440]:
+                    page.set_viewport_size({'width':w,'height':900})
+                    page.locator('#product-cases').scroll_into_view_if_needed()
+                    page.wait_for_timeout(150)
+                    check(f'{lang} {route} {w}: no horizontal overflow',page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'))
+                    if w in [390,1440]:
+                        capture_cases(page,lang,route,w)
+                if route=='work-standard':
+                    # Chromium may keep a PDF viewer popup at about:blank. Verify
+                    # the response caused by the click, not the viewer's internal URL.
+                    with ctx.expect_event('response',predicate=lambda r:r.url.endswith('/media/product-20261020/synthetic-work-standard.pdf')) as delivered:
+                        with page.expect_popup() as popup:
+                            page.locator('[data-case-pdf]').click()
+                    pdf_response=delivered.value
+                    check(f'{lang}: PDF link opens actual sample',pdf_response.ok and 'application/pdf' in pdf_response.headers.get('content-type',''),{'status':pdf_response.status,'url':pdf_response.url})
+                    popup.value.close()
+                if route in ['platform','work-standard']:
+                    kind='change' if route=='platform' else 'standard'
+                    page.set_viewport_size({'width':390,'height':844})
+                    page.goto(base.rstrip('/')+f'/{lang}/#product-cases',wait_until='networkidle')
+                    page.wait_for_timeout(200)
+                    heading=page.locator('.cases-intro h2').bounding_box()
+                    header=page.locator('.site-header').bounding_box()
+                    check(f'{lang} {route}: shared case anchor readable',heading['y']>=header['y']+header['height'])
+                    page.locator(f'a[href="/{lang}/{route}/#case-{kind}"]').click()
+                    page.wait_for_load_state('networkidle')
+                    page.wait_for_timeout(200)
+                    heading=page.locator(f'#case-{kind} h3').bounding_box()
+                    header=page.locator('.site-header').bounding_box()
+                    check(f'{lang} {route}: case link lands below header',page.url.endswith(f'/{route}/#case-{kind}') and heading['y']>=header['y']+header['height'] and heading['y']<844,{'heading':heading,'header':header})
+                    page.screenshot(path=str(OUT/f'{lang}-{route}-anchor-390.png'))
+        pdf=ctx.request.get(base.rstrip('/')+'/media/product-20261020/synthetic-work-standard.pdf')
+        check('public PDF served as PDF',pdf.ok and 'application/pdf' in pdf.headers.get('content-type','') and pdf.body().startswith(b'%PDF-'))
         nojs=browser.new_context(java_script_enabled=False,viewport={'width':390,'height':844})
         fallback=nojs.new_page()
         for lang in COPY:

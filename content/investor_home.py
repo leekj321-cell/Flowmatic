@@ -2,7 +2,7 @@
 
 Product screenshots are unmodified internal product captures, not customer results.
 """
-RELEASE = '2026.10.18-r7-product-scroll'
+RELEASE = '2026.10.20-r8-plan-and-work-standard'
 FILES = ['ui-source-index-mid-rotation.png', 'ui-optimized-gantry.png',
          'ui-source-factory-approval.png', 'ui-source-final-factory-monitor.png']
 IDS = ['machining', 'logistics', 'handover', 'operations']
@@ -41,7 +41,7 @@ COPY = {
  'values':[['업무 적응','새 담당자의 판단 기준','앞서 선택한 공정·설비 조건과 검토 결과를 참고합니다.'],['숙련자 활용','제품·라인 검토 범위의 확대','반복적인 정보 정리와 확인 부담을 줄이는 것을 목표로 합니다.'],['업무 연속성','계획과 운영 기록의 연결','담당자가 바뀌어도 같은 작업장과 공정 기준에서 업무를 이어갑니다.']],
  'valueNote':'조직 효과는 준비 기간, 담당자 투입시간, 품질·납기 관련 지표로 현장에서 검증할 계획입니다.',
  'readinessTitle':'현재 구현 범위와 현장 검증 범위',
- 'currentTitle':'통합 시제품의 내부 구현·검증', 'current':['지원 형상의 공정·가공 프로그램 초안','설비·물류 조건에 따른 생산 계획 비교','공장 배치 검토와 선택 계획의 양산관리 이관','작업장·생산 단위 기준의 운영 화면'],
+ 'currentTitle':'통합 시제품의 내부 구현·검증', 'current':['지원 형상의 공정·가공 프로그램 초안','설비·물류 조건에 따른 생산 계획 비교','공장 배치 검토와 선택 계획의 양산관리 이관','작업장·생산 단위 기준의 운영 화면','담당자 승인 후 작업지시·자원 예약 반영 및 LOT·품질 근거 추적','3D 가공 개요·자세별 상세를 포함한 작업표준서 PDF 출력'],
  'pilotTitle':'고객 환경에서 확인할 도입 효과', 'pilot':['예측 가공시간과 실제 가공시간의 차이','계획 준비·검토에 드는 시간','업무 누락과 재작업의 변화','설치·설정 공수와 실제 운영 조건'],
  'boundary':'제품 화면은 내부 시연·시뮬레이션입니다. 고객 현장 성과, 실제 설비의 자동 제어, 양산 안전성은 별도의 검증 대상입니다.',
  'stackTitle':'제조 판단부터 적용하는 단계적 자동화', 'stackIntro':'기존 자료로 공정과 생산 계획을 먼저 검토하고, ROI가 확인된 범위에 설비 연결을 추가하는 도입 구조를 목표로 합니다.',
@@ -91,7 +91,7 @@ COPY = {
  'values':[['ONBOARDING','A reference for new team members','Reuse selected process and equipment conditions and review results.'],['EXPERT CAPACITY','More products and lines within reach','Aim to reduce repeated information preparation and checking.'],['CONTINUITY','Linked planning and operating records','Continue work from common workplace and process criteria when responsibilities change.']],
  'valueNote':'Organizational benefits will be validated on site through preparation time, staff effort, quality and delivery indicators.',
  'readinessTitle':'Current implementation and on-site validation scope',
- 'currentTitle':'Internal implementation and prototype validation', 'current':['Draft processes and machining programs for supported geometry','Production-plan comparison under equipment and logistics conditions','Factory layout review and handover of selected plans','Operating screens organized by workplace and production unit'],
+ 'currentTitle':'Internal implementation and prototype validation', 'current':['Draft processes and machining programs for supported geometry','Production-plan comparison under equipment and logistics conditions','Factory layout review and handover of selected plans','Operating screens organized by workplace and production unit','Reviewer-approved work orders and resource reservations with LOT and quality evidence','Work-instruction PDF export with a 3D machining overview and orientation details'],
  'pilotTitle':'Adoption benefits to validate in customer environments', 'pilot':['Difference between predicted and actual machining time','Time spent preparing and reviewing plans','Changes in omissions and rework','Installation, configuration effort and operating conditions'],
  'boundary':'Screens show internal demonstrations and simulations. Customer outcomes, automatic control of physical equipment and production safety require separate validation.',
  'stackTitle':'Progressive automation starting with manufacturing decisions', 'stackIntro':'The target adoption model uses existing information to review processes and production plans first, then adds equipment connections where ROI has been demonstrated.',
@@ -141,7 +141,7 @@ COPY = {
  'values':[['التأهيل','مرجع للموظفين الجدد','إعادة استخدام شروط العمليات والمعدات المختارة ونتائج المراجعة.'],['قدرة الخبراء','مراجعة المزيد من المنتجات والخطوط','الحد من تكرار إعداد المعلومات والتحقق منها هدف للتطبيق.'],['الاستمرارية','ربط سجلات التخطيط والتشغيل','استمرار العمل وفق معايير مشتركة للموقع والعمليات عند تغير المسؤوليات.']],
  'valueNote':'ستخضع الفوائد التنظيمية للتحقق الميداني عبر زمن التحضير وجهد الموظفين ومؤشرات الجودة والتسليم.',
  'readinessTitle':'نطاق التنفيذ الحالي والتحقق الميداني',
- 'currentTitle':'التنفيذ الداخلي والتحقق من النموذج الأولي', 'current':['مسودات العمليات وبرامج التشغيل للأشكال المدعومة','مقارنة خطط الإنتاج وفق شروط المعدات واللوجستيات','مراجعة تخطيط المصنع وتسليم الخطط المختارة','شاشات تشغيل حسب منطقة العمل ووحدة الإنتاج'],
+ 'currentTitle':'التنفيذ الداخلي والتحقق من النموذج الأولي', 'current':['مسودات العمليات وبرامج التشغيل للأشكال المدعومة','مقارنة خطط الإنتاج وفق شروط المعدات واللوجستيات','مراجعة تخطيط المصنع وتسليم الخطط المختارة','شاشات تشغيل حسب منطقة العمل ووحدة الإنتاج','أوامر عمل وحجوزات موارد بعد اعتماد المسؤول مع تتبع أدلة الدُفعات والجودة','تصدير تعليمات العمل إلى PDF مع نظرة عامة ثلاثية الأبعاد وتفاصيل الوضعيات'],
  'pilotTitle':'فوائد التبني المطلوب التحقق منها لدى العميل', 'pilot':['الفارق بين زمن التشغيل المتوقع والفعلي','الوقت اللازم لإعداد الخطط ومراجعتها','التغير في حالات السهو وإعادة العمل','جهد التركيب والإعداد وشروط التشغيل الفعلية'],
  'boundary':'تعرض الشاشات عروضًا ومحاكاة داخلية. وتتطلب نتائج العملاء والتحكم الآلي بالمعدات الفعلية وسلامة الإنتاج تحققًا مستقلًا.',
  'stackTitle':'أتمتة تدريجية تبدأ بقرارات التصنيع', 'stackIntro':'يستهدف نموذج التبني مراجعة العمليات وخطط الإنتاج بالاعتماد على المعلومات الحالية أولًا، ثم إضافة ربط المعدات في النطاق الذي ثبت فيه العائد على الاستثمار ROI.',

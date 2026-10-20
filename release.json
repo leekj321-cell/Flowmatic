@@ -1,7 +1,7 @@
 {
-  "release": "2026.10.18-r7-product-scroll",
-  "scope": "approved-investor-home-product-scroll",
-  "base_release": "2026.09.20-r6.2-formal-copy",
+  "release": "2026.10.20-r8-plan-and-work-standard",
+  "scope": "product-scroll-with-verified-synthetic-cases",
+  "base_release": "2026.10.18-r7-product-scroll",
   "locales": [
     "ko",
     "en",

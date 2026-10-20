@@ -1,7 +1,8 @@
 """Business-first static website composition. Original animation/viewer code is reused."""
 from html import escape as e
 from bs4 import BeautifulSoup
-RELEASE='2026.09.13-r4'
+from content.investor_home import RELEASE
+from content.product_cases import render_cases, COPY as CASE_COPY
 from pathlib import Path
 import json
 DECLARATION='|'.join(json.loads((Path(__file__).parent/'homepage-declaration.json').read_text())['lines'])
@@ -19,9 +20,9 @@ text('problem','자료가 있어도, 업무를 이어받으려면 다시 확인�
 text('problem_body','최신 자료를 찾고, 이전 판단을 묻고, 진행 상태를 다시 정리하는 일. 자료와 실제 업무 사이의 빈칸을 몇 사람의 기억과 수작업이 메우고 있습니다.','Finding the latest information, understanding past decisions and checking progress still depend on a few people. They bridge the gap between stored information and the work that needs to happen.','البحث عن أحدث المعلومات وفهم القرارات السابقة والتحقق من التقدم يعتمد على عدد قليل من الأشخاص. فهم يسدّون الفجوة بين المعلومات المخزنة والعمل المطلوب.')
 text('people',[('“최신 도면이 어느 것입니까?”','새 담당자는 작업을 시작하기 전에 자료를 다시 찾아보고 묻습니다.'),('“이 조건은 왜 바꿨습니까?”','숙련자는 사람에게 남아 있는 판단 근거를 반복해서 설명합니다.'),('“검사는 어디까지 했습니까?”','관리자는 담당자마다 연락해 진행 상태를 모읍니다.')],[('“Which drawing is current?”','A new team member searches and asks again before work can begin.'),('“Why was this setting changed?”','Experienced staff repeat the reasoning when it was never recorded.'),('“How far has inspection progressed?”','Managers contact each person to assemble the current status.')],[('«أي رسم هو الأحدث؟»','يبحث الموظف الجديد ويسأل قبل أن يبدأ العمل.'),('«لماذا تغيّر هذا الإعداد؟»','يكرر أصحاب الخبرة شرح أسباب القرارات التي لم تُسجّل.'),('«إلى أين وصل الفحص؟»','يتواصل المدير مع كل مسؤول لجمع حالة التقدم.')])
 text('problem_end','담당자 변경이나 물량·사업장 확대가 있을 때 확인·교육·조정 부담도 함께 커집니다.','Staff changes, higher volumes and more sites increase the burden of checking, training and coordination.','يزداد عبء التحقق والتدريب والتنسيق مع تغيّر الموظفين أو زيادة الإنتاج أو توسّع المواقع.')
-text('workflow','자료와 판단, 처리 결과가 다음 업무에 남도록 합니다.','Keep the information, decision and outcome with the work.','نُبقي المعلومات والقرار والنتيجة مع العمل.')
-text('workflow_body','자료를 읽고 필요한 결과를 정리한 뒤, 담당자가 검토하고 처리할 업무로 연결합니다. 무엇을 근거로 판단했고 어떻게 처리했는지 다음 담당자가 활용하도록 설계합니다.','Prepare the information and analysis a person needs to review a task. Record what informed the decision and what happened next, so the next person can use it.','نجهّز المعلومات والتحليل اللازمين لمراجعة المهمة، ونحفظ أساس القرار وما جرى بعده ليستفيد منه المسؤول التالي.')
-text('workflow_steps',[('자료를 정리합니다','도면·NC·영상·검사기록에서 검토할 정보와 계산 결과를 준비합니다.'),('사람의 판단을 돕습니다','담당자는 근거를 보고 필요한 조치와 책임 범위를 결정합니다.'),('다음 업무로 이어갑니다','처리 결과와 변경 이유를 다시 참고할 기준과 이력으로 남깁니다.')],[('Prepare the information','Organize drawings, NC, video and inspection records for review.'),('Support human judgment','The responsible person reviews the evidence and decides the next action.'),('Carry the result forward','Retain the outcome and the reason for a change for the next task.')],[('تجهيز المعلومات','تنظيم الرسومات وNC والفيديو وسجلات الفحص للمراجعة.'),('دعم الحكم البشري','يراجع المسؤول الأدلة ويقرر الإجراء التالي.'),('نقل النتيجة إلى العمل التالي','حفظ النتيجة وسبب التغيير للرجوع إليهما لاحقًا.')])
+text('workflow','자료·판단·처리 결과의 업무 간 연결','Information, decisions and outcomes across workflows','ربط المعلومات والقرارات والنتائج بين مسارات العمل')
+text('workflow_body','자료를 읽고 필요한 결과를 정리한 뒤, 담당자가 검토하고 처리할 업무로 연결합니다. 무엇을 근거로 판단했고 어떻게 처리했는지 다음 담당자가 활용하도록 설계합니다.','Review information and analysis a person needs to review a task. Record what informed the decision and what happened next, so the next person can use it.','نجهّز المعلومات والتحليل اللازمين لمراجعة المهمة، ونحفظ أساس القرار وما جرى بعده ليستفيد منه المسؤول التالي.')
+text('workflow_steps',[('검토 자료 정리','도면·NC·영상·검사기록에서 검토할 정보와 계산 결과를 준비합니다.'),('담당자 판단과 책임','담당자는 근거를 보고 필요한 조치와 책임 범위를 결정합니다.'),('결과와 변경 이력의 연결','처리 결과와 변경 이유를 다시 참고할 기준과 이력으로 남깁니다.')],[('Review information','Organize drawings, NC, video and inspection records for review.'),('Human judgment and responsibility','The responsible person reviews the evidence and decides the next action.'),('Outcome and change history','Retain the outcome and the reason for a change for the next task.')],[('تجهيز المعلومات','تنظيم الرسومات وNC والفيديو وسجلات الفحص للمراجعة.'),('دعم الحكم البشري','يراجع المسؤول الأدلة ويقرر الإجراء التالي.'),('نقل النتيجة إلى العمل التالي','حفظ النتيجة وسبب التغيير للرجوع إليهما لاحقًا.')])
 text('principle','작동 원리 예시','Illustration of the operating principle','رسم توضيحي لمبدأ العمل')
 text('principle_note','현장 신호 → 업무 알림 → 담당자 확인의 연결 원리입니다. 개별 프로그램은 확보했으며, 여러 업무의 현장 연계는 도입 범위에 따라 검증합니다.','Field signal → work notification → human confirmation. Individual applications are available; cross-workflow integration requires deployment-specific validation.','إشارة ميدانية ← تنبيه عمل ← تأكيد المسؤول. التطبيقات الفردية متاحة، أما ربط سير العمل في الموقع فيتطلب التحقق وفق نطاق التطبيق.')
 text('products','필요한 업무부터 선택하세요.','Choose the workflow you need.','اختر العمل الذي تحتاج إليه.')
@@ -36,8 +37,8 @@ text('capability','한 사람의 경험이, 회사가 반복해서 활용할 수
 text('capability_body','분석·계산·검토로 담당자의 업무 수행을 돕고, 공통 자료와 기준·이력으로 다른 담당자가 이어받을 수 있는 업무를 만듭니다.','Analysis, calculation and review support the person doing the work. Shared information, standards and history help another person take it over.','يدعم التحليل والحساب والمراجعة أداء المسؤول، وتساعد المعلومات والمعايير والسجلات المشتركة شخصًا آخر على تسلّم العمل.')
 text('benefits',[('신규 담당자의 업무 적응','필요한 자료와 이전 판단 근거를 찾아보고 업무를 시작합니다.'),('숙련자의 전문역량 활용','반복 정리와 설명보다 검토와 개선에 집중하도록 돕습니다.'),('업무 연속성과 성장 대응','사람이 바뀌고 일이 늘어도 기준과 처리 경험을 조직에 남기는 것이 목표입니다.')],[('Help new team members get started','Find relevant information and reasons for previous decisions.'),('Use expertise for improvement','Focus on review and improvement rather than repeated organization and explanation.'),('Maintain continuity as work grows','Keep standards and experience available when people change or workloads increase.')],[('مساعدة الموظفين الجدد','الوصول إلى المعلومات وأسباب القرارات السابقة.'),('توجيه الخبرة إلى التحسين','التركيز على المراجعة والتحسين بدل تكرار التنظيم والشرح.'),('استمرارية العمل والنمو','إبقاء المعايير والخبرة متاحة عند تغيّر الموظفين أو زيادة العمل.')])
 text('benefit_note','원가·품질·납기의 일관성과 업무 부담 개선은 고객 현장의 기존 방식과 비교해 확인할 도입 효과입니다.','Effects on work effort and cost, quality and delivery consistency are deployment goals to compare against the customer’s current process.','تحسين عبء العمل واتساق التكلفة والجودة والتسليم أهداف تُقارن بطريقة العمل الحالية لدى العميل.')
-text('assembly','공통 기능을 조합해, 필요한 제조업무로 확장합니다.','Reuse common capabilities across manufacturing workflows.','إعادة استخدام القدرات المشتركة في أعمال تصنيع متعددة.')
-text('assembly_body','Flowmatic이 공통 분석 기능과 업무 모듈을 조합합니다. 고객은 개선할 업무를 정하고, 현장별 설정과 추가 연결 범위를 함께 확인합니다.','Flowmatic combines analysis capabilities and workflow modules. Customers choose the work to improve; we define site-specific configuration and additional connections together.','تجمع Flowmatic قدرات التحليل ووحدات العمل. يختار العميل العمل المراد تحسينه، ونحدد معًا إعدادات الموقع والروابط الإضافية.')
+text('assembly','공통 분석 기능과 제조업무 모듈의 조합','Shared capabilities across manufacturing workflows','إعادة استخدام القدرات المشتركة في أعمال تصنيع متعددة.')
+text('assembly_body','Flowmatic이 공통 분석 기능과 업무 모듈을 조합합니다. 고객은 개선할 업무를 정하고, 현장별 설정과 추가 연결 범위를 함께 확인합니다.','Flowmatic combines analysis capabilities and workflow modules. The target workflow determines site-specific configuration and the required connections.','تجمع Flowmatic قدرات التحليل ووحدات العمل. يحدد مسار العمل المستهدف إعدادات الموقع والروابط الإضافية المطلوبة.')
 text('assembly_steps',[('01 · 흩어진 자료와 기능','설비·제품·공구의 기준과 분석 기능이 따로 놓여 있습니다.'),('02 · 같은 기준으로 연결','공통 기준 위에서 필요한 분석 기능을 연결합니다.'),('03 · 업무 프로그램 구성','담당자가 사용할 작업표준·공구·품질 업무로 구성합니다.'),('04 · 적용 업무 확장','같은 기반을 가공·품질·운영·물류에 활용합니다.')],[('01 · Separate information and tools','Equipment, product and tool references sit apart from analysis capabilities.'),('02 · Shared reference','Connect the required capabilities using the same manufacturing context.'),('03 · Workflow applications','Compose the work standards, tool review and quality tasks people use.'),('04 · Broader use','Apply the same foundation across machining, quality, operations and logistics.')],[('01 · معلومات وأدوات متفرقة','مراجع المعدات والمنتجات والأدوات منفصلة عن قدرات التحليل.'),('02 · مرجع مشترك','ربط القدرات المطلوبة باستخدام سياق التصنيع نفسه.'),('03 · تطبيقات العمل','تكوين معايير العمل ومراجعة الأدوات ومهام الجودة.'),('04 · استخدام أوسع','تطبيق الأساس نفسه على التشغيل والجودة والإدارة واللوجستيات.')])
 text('growth','한 업무의 도입에서, 지속 이용과 후속 현장으로.','From a first workflow to recurring use and further sites.','من تطبيق أول إلى استخدام مستمر ومواقع أخرى.')
 text('growth_body','공통 기능·연결 방식·설치 절차는 재사용하고, 고객별 설비·품목·업무 기준은 별도로 설정합니다. 고객이 직접 모듈을 조립할 필요는 없습니다.','Reuse common capabilities, connectors and deployment procedures. Configure each customer’s equipment, products and standards separately. Customers do not have to assemble the modules themselves.','نُعيد استخدام القدرات والروابط وإجراءات التطبيق، ونضبط معدات كل عميل ومنتجاته ومعاييره على حدة. لا يحتاج العميل إلى تجميع الوحدات بنفسه.')
@@ -55,7 +56,7 @@ text('technical','기술 구조·세부 적용 조건','Technical structure and 
 text('input','사용할 자료','Information used','المعلومات المستخدمة')
 text('output','담당자가 받는 결과','What the team receives','النتائج التي يحصل عليها الفريق')
 text('scope','현재 제공 범위와 적용 조건','Current scope and deployment conditions','النطاق الحالي وشروط التطبيق')
-text('mach','도면과 가공 프로그램을 함께 검토합니다.','Review the drawing and machining program together.','راجع الرسم وبرنامج التشغيل معًا.')
+text('mach','도면·가공 프로그램의 통합 검토','Integrated drawing and machining-program review','مراجعة متكاملة للرسم وبرنامج التشغيل')
 text('mach_body','도면·NC·공구·가공 조건과 변경 기록을 대조해 가공 준비와 검토를 지원합니다. 3D 체험은 전체 가공 프로그램 중 공구 경로를 확인하는 기능입니다.','Compare drawings, NC, tools, conditions and change records during preparation and review. The 3D experience is the toolpath-viewing component, not the entire machining application.','قارن الرسومات وNC والأدوات والظروف وسجلات التغيير أثناء الإعداد والمراجعة. التجربة ثلاثية الأبعاد مكوّن لعرض المسار، وليست تطبيق التشغيل كاملًا.')
 text('nc_hero','샘플 가공 프로그램의|공구 경로를 3D로 확인합니다.','Review a sample machining|toolpath in 3D.','راجع مسار أداة العينة|ثلاثي الأبعاد.')
 text('back','가공 준비·검토 제품으로 돌아가기','Back to machining preparation and review','العودة إلى إعداد التشغيل ومراجعته')
@@ -76,7 +77,7 @@ text('resources_body','생산량 대비 공구·소모품·공수 사용을 비�
 text('logistics','자재 요청부터, 운반과 투입 확인까지.','From a material request to delivery and confirmation.','من طلب المواد إلى التسليم والتأكيد.')
 text('logistics_body','누가 무엇을 요청했고, 누구에게 배정됐으며, 현장에 도착했는지 확인하는 물류 업무를 연결합니다. AMR은 이를 수행하는 연계 대상 중 하나입니다.','Connect what was requested, who it was assigned to and whether it reached the line. An AMR is one possible execution endpoint.','اربط ما طُلب ولمن أُسند وما إذا وصل إلى الخط. الروبوت المتنقل المستقل إحدى وسائل التنفيذ الممكن ربطها.')
 text('logistics_scope','프로토타입과 업무 연결 구상입니다. 실제 차량·현장 시스템 연결, 공간 제약, 통행·안전 규칙은 현장에서 별도 설정·검증합니다.','Prototype and integration concept. Vehicle and site-system connections, spatial constraints, traffic rules and safety require separate configuration and field validation.','نموذج أولي وتصوّر للربط. تتطلب المركبات وأنظمة الموقع والقيود المكانية وقواعد الحركة والسلامة ضبطًا وتحققًا ميدانيين منفصلين.')
-text('platform','한 번 만든 기능을,|여러 제조업무에 활용합니다.','Use common capabilities|across different manufacturing work.','قدرات مشتركة،|لأعمال تصنيع متعددة.')
+text('platform','제조 판단과 실행 기록을 잇는|공통 업무 플랫폼','Shared capabilities|for manufacturing decisions and records','قدرات مشتركة|لقرارات التصنيع وسجلاته')
 text('standard','공정 지식을 작업 기준으로 정리합니다.','Turn process knowledge into usable work standards.','نحوّل معرفة العملية إلى معايير عمل قابلة للاستخدام.')
 text('standard_body','공정 순서·조건·도면과 확인 항목을 작업자가 참고할 기준으로 정리합니다.','Organize the process sequence, conditions, drawings and checkpoints people need.','تنظيم تسلسل العملية وظروفها ورسوماتها ونقاط التحقق التي يحتاج إليها العاملون.')
 
@@ -123,8 +124,9 @@ def configure(site):
         site['PRODUCTS']['work-standard']['description'][lang]=t['standard_body']
     def document(lang,slug,path,body,description=None,extra=''):
         t=COPY[lang];x=wr.TEXT[lang]
-        head=site['meta_head'](lang,slug,'Flowmatic | '+t['hero'].replace('|',' '),description or x['intro'],path)
-        head=head.replace('</head>',f'<link rel="stylesheet" href="/business-narrative.css?v={RELEASE}"></head>')
+        page_title = CASE_COPY[lang]['standard']['title'] if slug=='work-standard' else t['platform'] if slug=='platform' else t['mach'] if slug=='machining-intelligence' else t['hero']
+        head=site['meta_head'](lang,slug,'Flowmatic | '+page_title.replace('|',' '),description or x['intro'],path)
+        head=head.replace('</head>',f'<link rel="stylesheet" href="/business-narrative.css?v={RELEASE}"><link rel="stylesheet" href="/product-cases.css?v={RELEASE}"></head>')
         if slug=='nc':head=head.replace('</head>','<link rel="stylesheet" href="/nc-viewer-3d.css?v=2.1"></head>')
         return f'<!doctype html><html lang="{lang}" dir="{site["LANGS"][lang]["dir"]}">{head}<body class="bn-page" data-lang="{lang}" data-static-lang="true">{site["header"](lang,slug)}<main id="main">{body}</main>{site["footer"](lang)}<script src="{site["SCRIPT_SRC"]}"></script>{extra}</body></html>'
     def workflow(lang):
@@ -178,7 +180,7 @@ def configure(site):
         t=COPY[lang];x=wr.TEXT[lang]
         if slug=='machining-intelligence':
             old=BeautifulSoup(original_intelligence(lang,slug,path),'html.parser');deep=old.select_one('details.wr-technical')
-            body=subhero(t['mach'],t['mach_body'],'Machining Intelligence')+wr.machining_overview(lang)+(str(deep) if deep else '')+end(lang,slug)
+            body=subhero(t['mach'],t['mach_body'],'Machining Intelligence')+render_cases(lang,('standard',),True)+wr.machining_overview(lang)+(str(deep) if deep else '')+end(lang,slug)
             return document(lang,slug,path,body,t['mach_body'])
         if slug=='operations-intelligence':
             fields=''.join(f'<div><dt>{e(a)}</dt><dd>{e(b)}</dd></div>' for a,b in t['fields'])
@@ -190,11 +192,15 @@ def configure(site):
             body+=f'<section class="bn-media-section"><p class="wr-label">{e(t["example"])}</p>{site["tech_visual"]("amr",lang)}{action(f"/{lang}/amr/","AMR",False)}</section>'+end(lang,slug)
             return document(lang,slug,path,body,t['logistics_body'])
         if slug=='platform':
-            body=subhero(t['platform'],t['assembly_body'],'Flowmatic Platform')+composition(lang)+growth(lang)+workflow(lang)+wr.reuse_section(lang)+end(lang,slug)
+            body=subhero(t['platform'],t['assembly_body'],'Flowmatic Platform')+render_cases(lang,('change',),True)+composition(lang)+growth(lang)+workflow(lang)+wr.reuse_section(lang)+end(lang,slug)
             return document(lang,slug,path,body,t['assembly_body'])
         return original_intelligence(lang,slug,path)
     def product(lang,slug,path):
         t=COPY[lang];x=wr.TEXT[lang]
+        if slug=='work-standard':
+            case=CASE_COPY[lang]['standard']
+            body=subhero(case['title'],case['body'],'Machining Intelligence')+render_cases(lang,('standard',),True)+end(lang,'machining-intelligence')
+            return document(lang,slug,path,body,case['body'])
         if slug=='nc':
             back=action(f'/{lang}/machining-intelligence/',t['back'],False)
             body=subhero(t['nc_hero'],t['nc_body'],'Machining Intelligence · 3D',back)+wr.sample_banner(lang)+site['nc_browser_demo_section'](lang)
@@ -204,7 +210,7 @@ def configure(site):
             body=subhero(t['quality'],t['quality_body'],'Quality Intelligence')+section('quality-work',t['output'],'',cards(t['quality_steps'],4),t['quality_scope'])
             body+=f'<section class="bn-media-section" id="inspection-evidence"><h2>{e(t["inspection"])}</h2><p>{e(t["inspection_body"])}</p><p class="wr-label">{e(t["example"])}</p>{site["tech_visual"]("quality",lang)}</section><details class="wr-technical"><summary>{e(t["technical"])}</summary>{original_quality(lang)}</details>'+end(lang,slug)
             return document(lang,slug,path,body,t['quality_body'])
-        html=original_product(lang,slug,path).replace('</head>',f'<link rel="stylesheet" href="/business-narrative.css?v={RELEASE}"></head>')
+        html=original_product(lang,slug,path).replace('</head>',f'<link rel="stylesheet" href="/business-narrative.css?v={RELEASE}"><link rel="stylesheet" href="/product-cases.css?v={RELEASE}"></head>')
         soup=BeautifulSoup(html,'html.parser')
         for node in soup.select('.component-context'):node.decompose()
         for node in soup.select('.detail-animation-head .eyebrow'):node.string={'ko':'업무 흐름 예시','en':'Workflow illustration','ar':'رسم توضيحي لسير العمل'}[lang]
