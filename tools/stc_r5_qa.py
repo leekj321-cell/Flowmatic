@@ -93,6 +93,23 @@ SCROLL_TO_STEP = '''(id) => {
  scrollTo({top:Math.max(0,scrollY+el.getBoundingClientRect().top-line+24),behavior:'instant'});
 }'''
 
+def capture_cases(page, lang, scope, width):
+    # Capture normal reading positions after lazy images have actually decoded.
+    for img in page.locator('#product-cases img').all():
+        img.scroll_into_view_if_needed()
+        img.evaluate('(el)=>el.decode()')
+    page.evaluate('document.activeElement?.blur()')
+    align = "(el)=>scrollTo({top:scrollY+el.getBoundingClientRect().top-document.querySelector('header').offsetHeight-20,behavior:'instant'})"
+    for card in page.locator('.product-case').all():
+        key=card.get_attribute('id')
+        card.evaluate(align)
+        page.wait_for_timeout(150)
+        page.screenshot(path=str(OUT/f'{lang}-{scope}-{key}-{width}-heading.png'))
+        card.locator('.case-figure').last.evaluate(align)
+        page.wait_for_timeout(150)
+        page.screenshot(path=str(OUT/f'{lang}-{scope}-{key}-{width}-evidence.png'))
+    check(f'{lang} {scope} {width}: case images decoded',page.locator('#product-cases img').evaluate_all('(els)=>els.every(el=>el.complete&&el.naturalWidth>0)'))
+
 def browser_checks(base):
     from playwright.sync_api import sync_playwright
     errors=[]; http=[]
@@ -140,10 +157,9 @@ def browser_checks(base):
                     check(f'{lang}: landscape inline image zoom',page.locator('#image-dialog').is_visible() and page.locator('#dialog-image').get_attribute('src').endswith(FILES[1]))
                     page.keyboard.press('Escape')
                 if w in [390,1440]:
+                    capture_cases(page,lang,'home',w)
                     page.evaluate("scrollTo({top:0,behavior:'instant'})")
                     page.screenshot(path=str(OUT/f'{lang}-home-{w}.png'),full_page=True)
-                    page.locator('#product-cases').screenshot(path=str(OUT/f'{lang}-cases-{w}.png'))
-                    check(f'{lang} {w}: case images loaded',page.locator('#product-cases img').evaluate_all('(els)=>els.every(el=>el.complete&&el.naturalWidth>0)'))
             # Manual selection aligns the narrative; reduced motion removes the smooth scroll.
             page.set_viewport_size({'width':390,'height':844})
             page.emulate_media(reduced_motion='reduce')
@@ -195,7 +211,7 @@ def browser_checks(base):
                     page.wait_for_timeout(150)
                     check(f'{lang} {route} {w}: no horizontal overflow',page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'))
                     if w in [390,1440]:
-                        page.locator('#product-cases').screenshot(path=str(OUT/f'{lang}-{route}-cases-{w}.png'))
+                        capture_cases(page,lang,route,w)
                 if route=='work-standard':
                     # Chromium may keep a PDF viewer popup at about:blank. Verify
                     # the response caused by the click, not the viewer's internal URL.
