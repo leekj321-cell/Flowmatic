@@ -1,0 +1,36 @@
+{
+  "evidence": "Actual unmodified product captures and PDF export",
+  "data": "Synthetic fixtures only; no customer production results",
+  "cases_independent": true,
+  "product_scope": "R16.25 I18 validation",
+  "case_a": "10-workplace, two-week synthetic plan approval and outcome records",
+  "case_b": "Separate synthetic machining fixture; work-instruction export",
+  "physical_effect_validated": false,
+  "assets": [
+    {
+      "file": "approved-work-orders.png",
+      "sha256": "e8c9864b8aa05d1e435ed3ba390318474b8434153d2f583e2b3f7de3d6564316",
+      "type": "product-capture"
+    },
+    {
+      "file": "lot-quality-trace.png",
+      "sha256": "de0edae0682e29eb8d22a9a97631086300f63b4549880d2c32f1b522aae15cbd",
+      "type": "product-capture"
+    },
+    {
+      "file": "plan-comparison.png",
+      "sha256": "368424fd1ffed547926acc95fc4a4b8da5ee12f620c3f096d72b0eae5eba4de5",
+      "type": "product-capture"
+    },
+    {
+      "file": "synthetic-work-standard.pdf",
+      "sha256": "3137cb1268f6b089edcb7263e0af1ab403adf1477c4d66e80e1199e0aa310fdd",
+      "type": "product-export"
+    },
+    {
+      "file": "work-standard-overview.png",
+      "sha256": "ca70c769cc93534dac742334a9c78f6c45a35215368ae4a95c3e8b1f1ecd0d7b",
+      "type": "product-export"
+    }
+  ]
+}

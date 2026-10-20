@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from content.investor_home import COPY, FILES, IDS, RELEASE
+from content.product_cases import render_cases
 
 def e(value):
     return escape(str(value), quote=True)
@@ -58,6 +59,7 @@ def build_home(lang):
 <meta property="og:title" content="{e(c['title'])}"><meta property="og:description" content="{e(c['meta'])}">
 <meta property="og:image" content="https://flowmatic-os.com{first['src']}"><meta property="og:type" content="website">
 <link rel="stylesheet" href="/stc-lite-home-v1.css?v={RELEASE}">
+<link rel="stylesheet" href="/product-cases.css?v={RELEASE}">
 <script src="/investor-home.js?v={RELEASE}" defer></script></head>
 <body><a class="skip" href="#main">{e(c['skip'])}</a>
 <header class="site-header"><div class="wrap nav"><a class="brand" href="/{lang}/#hero" aria-label="Flowmatic"><img src="/assets/branding/canonical/{logo}" alt="Flowmatic" width="220"></a>
@@ -72,7 +74,7 @@ def build_home(lang):
 <figcaption class="visual-foot"><span>{e(c['actual'])}</span><span class="zoom-hint">{e(c['zoom'])} ↗</span></figcaption></figure></div>
 <div class="hero-summary">{''.join(f'<div><small>{e(a)}</small><strong>{e(b)}</strong></div>' for a,b in c['summary'])}</div></section>
 <section class="problem" id="problem" aria-labelledby="problem-title"><div class="wrap problem-grid"><div>{eyebrow(c['nav'][0])}<h2 id="problem-title">{e(c['problemTitle'])}</h2></div><div class="problem-copy">{paragraphs(c['problem'])}<div class="problem-bottom">{''.join(f'<div><strong>{e(a)}</strong><span>{e(b)}</span></div>' for a,b in c['problemBottom'])}</div></div></div></section>
-<section class="product wrap" id="product" aria-labelledby="product-title"><span id="proof" class="anchor-alias"></span><span id="journey" class="anchor-alias"></span>
+<section class="product wrap" id="product" aria-labelledby="product-title"><span id="proof" class="anchor-alias"></span><span id="products" class="anchor-alias"></span><span id="demos" class="anchor-alias"></span><span id="journey" class="anchor-alias"></span>
 <div class="section-intro"><div>{eyebrow(c['nav'][1],'CURRENT')}<h2 id="product-title">{e(c['productTitle'])}</h2></div><p>{e(c['productIntro'])}</p></div>
 <div class="product-input"><strong>{e(c['inputTitle'])}</strong><span>{e(c['inputText'])}</span></div>
 <p class="scroll-hint">{e(c['scrollHint'])}</p>
@@ -84,6 +86,7 @@ def build_home(lang):
 <div class="story-steps">{''.join(steps)}</div></div><p class="sequence-note">{e(c['sequence'])}</p>
 <div class="additional-proof"><div><h3>{e(c['proofTitle'])}</h3><article><p class="proof-tag"><bdi>CURRENT · NC</bdi></p><h4>{e(c['ncTitle'])}</h4><p>{e(c['ncText'])}</p><a class="text-link" href="/{lang}/nc/">{e(c['ncLink'])} ↗</a></article><article><p class="proof-tag"><bdi>CURRENT · CT</bdi></p><h4>{e(c['ctTitle'])}</h4><p>{e(c['ctText'])}</p><a class="text-link" href="/{lang}/ct/">{e(c['ctLink'])} ↗</a></article></div><video controls playsinline preload="none" aria-label="{e(c['ctTitle'])}"><source src="/flowmatic_ct_demo.mp4" type="video/mp4"></video></div>
 </section>
+{render_cases(lang)}
 <section class="value" id="value" aria-labelledby="value-title"><div class="wrap value-grid"><div>{eyebrow(c['valueKicker'])}<h2 id="value-title">{e(c['valueTitle'])}</h2><p class="value-lead">{e(c['valueLead'])}</p></div><div><div class="value-list">{values}</div><p class="value-note">{e(c['valueNote'])}</p></div></div></section>
 <section class="readiness wrap" id="readiness" aria-labelledby="readiness-title"><h2 id="readiness-title">{e(c['readinessTitle'])}</h2><div class="readiness-grid">{readiness}</div><p class="scope-line">{e(c['boundary'])}</p></section>
 <section class="architecture wrap" id="stack" aria-labelledby="stack-title">{eyebrow('Factory OS','TARGET')}<h2 id="stack-title">{e(c['stackTitle'])}</h2><p class="architecture-intro">{e(c['stackIntro'])}</p>
@@ -105,7 +108,7 @@ def main():
     for lang in COPY:
         build_home(lang)
     (ROOT/'index.html').write_text(f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="flowmatic-release" content="{RELEASE}"><meta http-equiv="refresh" content="0;url=/ko/"><link rel="canonical" href="https://flowmatic-os.com/ko/"><title>Flowmatic Factory OS</title></head><body><a href="/ko/">Flowmatic Factory OS · 한국어</a> · <a href="/en/">English</a> · <a href="/ar/">العربية</a></body></html>\n''',encoding='utf-8')
-    (ROOT/'release.json').write_text(json.dumps({'release':RELEASE,'scope':'approved-investor-home-product-scroll','base_release':'2026.09.20-r6.2-formal-copy','locales':list(COPY),'canonical_build':'python tools/build_stc_r5_site.py','canonical_qa':'python tools/stc_r5_qa.py --browser'},ensure_ascii=False,indent=2)+'\n')
+    (ROOT/'release.json').write_text(json.dumps({'release':RELEASE,'scope':'product-scroll-with-verified-synthetic-cases','base_release':'2026.10.18-r7-product-scroll','locales':list(COPY),'canonical_build':'python tools/build_stc_r5_site.py','canonical_qa':'python tools/stc_r5_qa.py --browser'},ensure_ascii=False,indent=2)+'\n')
     print('PASS: product-first homepages generated for KO / EN / AR.')
 
 if __name__ == '__main__':

@@ -25,6 +25,11 @@ def static_checks():
     for asset in provenance['assets']:
         path=ROOT/'media/product-20261018'/asset['file']
         check('unaltered actual image: '+asset['file'],hashlib.sha256(path.read_bytes()).hexdigest()==asset['sha256'])
+    new_provenance=json.loads((ROOT/'media/product-20261020/provenance.json').read_text())
+    for asset in new_provenance['assets']:
+        path=ROOT/'media/product-20261020'/asset['file']
+        check('unaltered synthetic evidence: '+asset['file'],hashlib.sha256(path.read_bytes()).hexdigest()==asset['sha256'])
+    check('separate synthetic cases and no physical-effect claim',new_provenance['cases_independent'] and not new_provenance['physical_effect_validated'])
     css=(ROOT/'stc-lite-home-v1.css').read_text()
     check('reduced motion and short-viewport fallback',all(s in css for s in ['prefers-reduced-motion:reduce','@media(max-height:610px)','.step-image']))
     for lang in COPY:
@@ -38,6 +43,7 @@ def static_checks():
         pos=[raw.find('id="'+x+'"') for x in ids]
         check(f'{lang}: approved narrative order',min(pos)>=0 and pos==sorted(pos))
         check(f'{lang}: real product hero before architecture',bool(doc.select_one('#hero [data-open-shot="machining"] img')))
+        check(f'{lang}: two explicit product cases',len(doc.select('.product-case'))==2 and bool(doc.select_one('[data-case-pdf]')))
         check(f'{lang}: four scroll steps',[x.get('data-step') for x in doc.select('[data-step]')]==IDS)
         check(f'{lang}: optional manual jump links',[x.get('href') for x in doc.select('[data-shot]')]==['#step-'+i for i in IDS])
         shots=json.loads(doc.select_one('#product-evidence').text)
@@ -136,6 +142,8 @@ def browser_checks(base):
                 if w in [390,1440]:
                     page.evaluate("scrollTo({top:0,behavior:'instant'})")
                     page.screenshot(path=str(OUT/f'{lang}-home-{w}.png'),full_page=True)
+                    page.locator('#product-cases').screenshot(path=str(OUT/f'{lang}-cases-{w}.png'))
+                    check(f'{lang} {w}: case images loaded',page.locator('#product-cases img').evaluate_all('(els)=>els.every(el=>el.complete&&el.naturalWidth>0)'))
             # Manual selection aligns the narrative; reduced motion removes the smooth scroll.
             page.set_viewport_size({'width':390,'height':844})
             page.emulate_media(reduced_motion='reduce')
@@ -177,6 +185,25 @@ def browser_checks(base):
             panel_box=page.locator('#product-panel').bounding_box()
             check(f'{lang}: direct step heading below sticky image',title_box['y']>=panel_box['y']+panel_box['height'],{'title':title_box,'panel':panel_box})
             page.screenshot(path=str(OUT/f'{lang}-direct-step.png'))
+        for lang in COPY:
+            for route in ['platform','machining-intelligence','work-standard']:
+                page.goto(base.rstrip('/')+f'/{lang}/{route}/',wait_until='networkidle')
+                check(f'{lang} {route}: current detail release',page.locator('meta[name="flowmatic-release"]').get_attribute('content')==RELEASE)
+                for w in [320,390,1440]:
+                    page.set_viewport_size({'width':w,'height':900})
+                    page.locator('#product-cases').scroll_into_view_if_needed()
+                    page.wait_for_timeout(150)
+                    check(f'{lang} {route} {w}: no horizontal overflow',page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'))
+                    if w in [390,1440]:
+                        page.locator('#product-cases').screenshot(path=str(OUT/f'{lang}-{route}-cases-{w}.png'))
+                if route=='work-standard':
+                    with page.expect_popup() as popup:
+                        page.locator('[data-case-pdf]').click()
+                    pdf_page=popup.value
+                    check(f'{lang}: PDF link opens actual sample',pdf_page.url.endswith('/media/product-20261020/synthetic-work-standard.pdf'))
+                    pdf_page.close()
+        pdf=ctx.request.get(base.rstrip('/')+'/media/product-20261020/synthetic-work-standard.pdf')
+        check('public PDF served as PDF',pdf.ok and 'application/pdf' in pdf.headers.get('content-type','') and pdf.body().startswith(b'%PDF-'))
         nojs=browser.new_context(java_script_enabled=False,viewport={'width':390,'height':844})
         fallback=nojs.new_page()
         for lang in COPY:

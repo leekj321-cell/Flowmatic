@@ -10,6 +10,9 @@ on:
       - stc-lite-home-v1.css
       - investor-home.js
       - content/investor_home.py
+      - content/product_cases.py
+      - product-cases.css
+      - media/product-20261020/**
       - media/product-20261018/**
       - tools/build_investor_home.py
       - release.json
@@ -37,6 +40,9 @@ on:
       - stc-lite-home-v1.css
       - investor-home.js
       - content/investor_home.py
+      - content/product_cases.py
+      - product-cases.css
+      - media/product-20261020/**
       - media/product-20261018/**
       - tools/build_investor_home.py
       - release.json
