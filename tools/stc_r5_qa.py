@@ -197,11 +197,14 @@ def browser_checks(base):
                     if w in [390,1440]:
                         page.locator('#product-cases').screenshot(path=str(OUT/f'{lang}-{route}-cases-{w}.png'))
                 if route=='work-standard':
-                    with page.expect_popup() as popup:
-                        page.locator('[data-case-pdf]').click()
-                    pdf_page=popup.value
-                    check(f'{lang}: PDF link opens actual sample',pdf_page.url.endswith('/media/product-20261020/synthetic-work-standard.pdf'))
-                    pdf_page.close()
+                    # Chromium may keep a PDF viewer popup at about:blank. Verify
+                    # the response caused by the click, not the viewer's internal URL.
+                    with ctx.expect_event('response',predicate=lambda r:r.url.endswith('/media/product-20261020/synthetic-work-standard.pdf')) as delivered:
+                        with page.expect_popup() as popup:
+                            page.locator('[data-case-pdf]').click()
+                    pdf_response=delivered.value
+                    check(f'{lang}: PDF link opens actual sample',pdf_response.ok and 'application/pdf' in pdf_response.headers.get('content-type',''),{'status':pdf_response.status,'url':pdf_response.url})
+                    popup.value.close()
         pdf=ctx.request.get(base.rstrip('/')+'/media/product-20261020/synthetic-work-standard.pdf')
         check('public PDF served as PDF',pdf.ok and 'application/pdf' in pdf.headers.get('content-type','') and pdf.body().startswith(b'%PDF-'))
         nojs=browser.new_context(java_script_enabled=False,viewport={'width':390,'height':844})
