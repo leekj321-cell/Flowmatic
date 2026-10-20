@@ -221,6 +221,21 @@ def browser_checks(base):
                     pdf_response=delivered.value
                     check(f'{lang}: PDF link opens actual sample',pdf_response.ok and 'application/pdf' in pdf_response.headers.get('content-type',''),{'status':pdf_response.status,'url':pdf_response.url})
                     popup.value.close()
+                if route in ['platform','work-standard']:
+                    kind='change' if route=='platform' else 'standard'
+                    page.set_viewport_size({'width':390,'height':844})
+                    page.goto(base.rstrip('/')+f'/{lang}/#product-cases',wait_until='networkidle')
+                    page.wait_for_timeout(200)
+                    heading=page.locator('.cases-intro h2').bounding_box()
+                    header=page.locator('header').bounding_box()
+                    check(f'{lang} {route}: shared case anchor readable',heading['y']>=header['y']+header['height'])
+                    page.locator(f'a[href="/{lang}/{route}/#case-{kind}"]').click()
+                    page.wait_for_load_state('networkidle')
+                    page.wait_for_timeout(200)
+                    heading=page.locator(f'#case-{kind} h3').bounding_box()
+                    header=page.locator('header').bounding_box()
+                    check(f'{lang} {route}: case link lands below header',page.url.endswith(f'/{route}/#case-{kind}') and heading['y']>=header['y']+header['height'] and heading['y']<844,{'heading':heading,'header':header})
+                    page.screenshot(path=str(OUT/f'{lang}-{route}-anchor-390.png'))
         pdf=ctx.request.get(base.rstrip('/')+'/media/product-20261020/synthetic-work-standard.pdf')
         check('public PDF served as PDF',pdf.ok and 'application/pdf' in pdf.headers.get('content-type','') and pdf.body().startswith(b'%PDF-'))
         nojs=browser.new_context(java_script_enabled=False,viewport={'width':390,'height':844})
