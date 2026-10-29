@@ -3,6 +3,7 @@ from html import escape as e
 from bs4 import BeautifulSoup
 from content.investor_home import RELEASE
 from content.product_cases import render_cases, COPY as CASE_COPY
+from content.review_scope import render_review_scope
 from pathlib import Path
 import json
 DECLARATION='|'.join(json.loads((Path(__file__).parent/'homepage-declaration.json').read_text())['lines'])
@@ -64,7 +65,7 @@ text('quality','불량 기록에서, 먼저 처리할 품질 업무까지.','Fro
 text('quality_body','불량 추이·손실·검사 증빙을 함께 검토하고, 개선 우선순위와 후속 업무를 정리합니다. 검사수량 집계에 그치지 않고 무엇부터 처리할지 판단하는 업무를 지원합니다.','Review defect trends, losses and inspection evidence, then organize improvement priorities and follow-up work. Support the decision on what to address, not only the counting of inspections.','راجع اتجاهات العيوب والخسائر وأدلة الفحص، ثم نظّم أولويات التحسين والمتابعة. الهدف دعم قرار ما يجب معالجته، وليس عدّ الفحوص فقط.')
 text('quality_steps',[('불량과 손실 확인','기간·품목·공정별 기록을 대조'),('우선 업무 선정','반복 발생과 영향도를 기준으로 검토'),('조치와 담당자 연결','대상·담당·다음 조치를 정리'),('결과와 재발 확인','처리 결과와 이후 발생을 확인')],[('Review defects and losses','Compare records by period, product and process'),('Prioritize the work','Review recurrence and impact'),('Connect the action and assignee','Organize the subject, responsible person and next action'),('Verify and revisit','Check the outcome and subsequent recurrence')],[('مراجعة العيوب والخسائر','مقارنة السجلات حسب الفترة والمنتج والعملية'),('تحديد الأولويات','مراجعة التكرار والأثر'),('ربط الإجراء والمسؤول','تنظيم الموضوع والمسؤول والخطوة التالية'),('التحقق والمتابعة','مراجعة النتيجة وتكرار العيوب لاحقًا')])
 text('quality_scope','기능형 프로토타입을 확보했습니다. 우선순위 기준·데이터 연결·후속 업무 범위는 고객의 품질 절차에 맞춰 설정하고 검증합니다. 자동 원인 확정이나 무검토 설비 제어를 제공하는 장면은 아닙니다.','A functional prototype is available. Rules, data connections and follow-up scope require configuration and validation against the customer’s quality process. This is not automatic root-cause confirmation or unreviewed equipment control.','نموذج أولي وظيفي متاح. تتطلب القواعد وربط البيانات ونطاق المتابعة الضبط والتحقق وفق إجراءات جودة العميل. لا يمثل ذلك تأكيدًا آليًا للسبب الجذري أو تحكمًا بالمعدات دون مراجعة.')
-text('inspection','검사 기록은 품질 판단의 근거가 됩니다.','Inspection records provide evidence for quality decisions.','سجلات الفحص أدلة تدعم قرارات الجودة.')
+text('inspection','검사 기록과 품질 판단 근거','Inspection records and quality evidence','سجلات الفحص وأدلة قرارات الجودة')
 text('inspection_body','촬영·판정·집계는 품질 업무에 필요한 입력입니다. 아래 애니메이션은 검사 입력 흐름을 설명하며 실제 불량 추세나 엔진 산출 결과는 아닙니다.','Capture, judgment and counts are inputs to quality work. The animation illustrates inspection input, not an actual defect trend or live engine result.','التصوير والحكم والعدّ مدخلات لأعمال الجودة. يوضح الرسم المتحرك إدخال الفحص، وليس اتجاه عيوب فعليًا أو نتيجة مباشرة للمحرك.')
 text('ops','적어둔 메모를 그대로 넣으면 됩니다.','Start with the request note you already have.','ابدأ بملاحظة الطلب الموجودة لديك.')
 text('ops_body','품목과 수량은 알아서 정리됩니다. 담당자는 확인이 필요한 항목을 검토하고 발주 요청 업무로 이어갑니다.','Item names and quantities are organized for you. The responsible person reviews uncertain entries and carries the request into purchasing.','تُنظّم أسماء الأصناف والكميات. يراجع المسؤول البنود غير المؤكدة ويتابع طلب الشراء.')
@@ -79,6 +80,11 @@ text('logistics_body','누가 무엇을 요청했고, 누구에게 배정됐으�
 text('logistics_scope','프로토타입과 업무 연결 구상입니다. 실제 차량·현장 시스템 연결, 공간 제약, 통행·안전 규칙은 현장에서 별도 설정·검증합니다.','Prototype and integration concept. Vehicle and site-system connections, spatial constraints, traffic rules and safety require separate configuration and field validation.','نموذج أولي وتصوّر للربط. تتطلب المركبات وأنظمة الموقع والقيود المكانية وقواعد الحركة والسلامة ضبطًا وتحققًا ميدانيين منفصلين.')
 text('platform','제조 판단과 실행 기록을 잇는|공통 업무 플랫폼','Shared capabilities|for manufacturing decisions and records','قدرات مشتركة|لقرارات التصنيع وسجلاته')
 text('standard','공정 지식을 작업 기준으로 정리합니다.','Turn process knowledge into usable work standards.','نحوّل معرفة العملية إلى معايير عمل قابلة للاستخدام.')
+text('standard_page','3D 작업표준서','3D work instructions','تعليمات العمل ثلاثية الأبعاد')
+text('detail_titles',
+     {'quality':'품질 기록과 개선 업무','operations-intelligence':'발주 요청과 운영비용 검토','logistics-intelligence':'자재 요청과 운반 업무','nc':'NC 3D 경로 검토'},
+     {'quality':'Quality records and follow-up work','operations-intelligence':'Purchase requests and operating costs','logistics-intelligence':'Material requests and transport workflows','nc':'3D NC toolpath review'},
+     {'quality':'سجلات الجودة ومهام التحسين','operations-intelligence':'طلبات الشراء ومراجعة تكاليف التشغيل','logistics-intelligence':'طلبات المواد وأعمال النقل','nc':'مراجعة مسارات NC ثلاثية الأبعاد'})
 text('standard_body','공정 순서·조건·도면과 확인 항목을 작업자가 참고할 기준으로 정리합니다.','Organize the process sequence, conditions, drawings and checkpoints people need.','تنظيم تسلسل العملية وظروفها ورسوماتها ونقاط التحقق التي يحتاج إليها العاملون.')
 
 text('watch','제품 시연 보기','Explore the demos','شاهد العروض')
@@ -106,7 +112,8 @@ def cards(items,cols=3):
 def section(ident,title,body='',content='',note=''):
     return f'<section class="wr-section bn-section" id="{ident}" aria-labelledby="{ident}-title"><div class="wr-section-head"><h2 id="{ident}-title">{e(title)}</h2><p>{e(body)}</p></div>{content}<p class="wr-footnote">{e(note)}</p></section>'
 def subhero(title,body,label,cta=''):
-    return f'<section class="bn-subhero" aria-labelledby="page-title"><p class="eyebrow">{e(label)}</p><h1 id="page-title">{e(title).replace("|","<br>")}</h1><p class="body-large">{e(body)}</p>{cta}</section>'
+    lead=f'<p class="body-large">{e(body)}</p>' if body else ''
+    return f'<section class="bn-subhero" aria-labelledby="page-title"><p class="eyebrow">{e(label)}</p><h1 id="page-title">{e(title).replace("|","<br>")}</h1>{lead}{cta}</section>'
 
 def configure(site):
     wr=site['web_release'];wr.RELEASE=RELEASE
@@ -124,7 +131,7 @@ def configure(site):
         site['PRODUCTS']['work-standard']['description'][lang]=t['standard_body']
     def document(lang,slug,path,body,description=None,extra=''):
         t=COPY[lang];x=wr.TEXT[lang]
-        page_title = CASE_COPY[lang]['standard']['title'] if slug=='work-standard' else t['platform'] if slug=='platform' else t['mach'] if slug=='machining-intelligence' else t['hero']
+        page_title = t['detail_titles'].get(slug) or (CASE_COPY[lang]['standard']['title'] if slug=='work-standard' else t['platform'] if slug=='platform' else t['mach'] if slug=='machining-intelligence' else t['hero'])
         head=site['meta_head'](lang,slug,'Flowmatic | '+page_title.replace('|',' '),description or x['intro'],path)
         head=head.replace('</head>',f'<link rel="stylesheet" href="/business-narrative.css?v={RELEASE}"><link rel="stylesheet" href="/product-cases.css?v={RELEASE}"></head>')
         if slug=='nc':head=head.replace('</head>','<link rel="stylesheet" href="/nc-viewer-3d.css?v=2.1"></head>')
@@ -180,6 +187,8 @@ def configure(site):
         t=COPY[lang];x=wr.TEXT[lang]
         if slug=='machining-intelligence':
             old=BeautifulSoup(original_intelligence(lang,slug,path),'html.parser');deep=old.select_one('details.wr-technical')
+            if deep:
+                deep.append(BeautifulSoup(render_review_scope(lang,'machining'),'html.parser'))
             body=subhero(t['mach'],t['mach_body'],'Machining Intelligence')+render_cases(lang,('standard',),True)+wr.machining_overview(lang)+(str(deep) if deep else '')+end(lang,slug)
             return document(lang,slug,path,body,t['mach_body'])
         if slug=='operations-intelligence':
@@ -189,7 +198,7 @@ def configure(site):
             return document(lang,slug,path,body,t['ops_body'])
         if slug=='logistics-intelligence':
             body=subhero(t['logistics'],t['logistics_body'],'Logistics Intelligence')+section('material-work',t['scope'],'','',t['logistics_scope'])
-            body+=f'<section class="bn-media-section"><p class="wr-label">{e(t["example"])}</p>{site["tech_visual"]("amr",lang)}{action(f"/{lang}/amr/","AMR",False)}</section>'+end(lang,slug)
+            body+=f'<section class="bn-media-section"><p class="wr-label">{e(t["example"])}</p>{site["tech_visual"]("amr",lang)}{action(f"/{lang}/amr/","AMR",False)}</section><details class="wr-technical"><summary>{e(t["technical"])}</summary>{render_review_scope(lang,"logistics")}</details>'+end(lang,slug)
             return document(lang,slug,path,body,t['logistics_body'])
         if slug=='platform':
             body=subhero(t['platform'],t['assembly_body'],'Flowmatic Platform')+render_cases(lang,('change',),True)+composition(lang)+growth(lang)+workflow(lang)+wr.reuse_section(lang)+end(lang,slug)
@@ -199,7 +208,7 @@ def configure(site):
         t=COPY[lang];x=wr.TEXT[lang]
         if slug=='work-standard':
             case=CASE_COPY[lang]['standard']
-            body=subhero(case['title'],case['body'],'Machining Intelligence')+render_cases(lang,('standard',),True)+end(lang,'machining-intelligence')
+            body=subhero(t['standard_page'],'','Machining Intelligence')+render_cases(lang,('standard',),True)+end(lang,'machining-intelligence')
             return document(lang,slug,path,body,case['body'])
         if slug=='nc':
             back=action(f'/{lang}/machining-intelligence/',t['back'],False)
@@ -208,7 +217,7 @@ def configure(site):
             return document(lang,slug,path,body,t['nc_body'],f'<script src="{site["NC_DEMO_SRC"]}"></script><script type="module" src="/nc-viewer-3d.js?v=2.1"></script>')
         if slug=='quality':
             body=subhero(t['quality'],t['quality_body'],'Quality Intelligence')+section('quality-work',t['output'],'',cards(t['quality_steps'],4),t['quality_scope'])
-            body+=f'<section class="bn-media-section" id="inspection-evidence"><h2>{e(t["inspection"])}</h2><p>{e(t["inspection_body"])}</p><p class="wr-label">{e(t["example"])}</p>{site["tech_visual"]("quality",lang)}</section><details class="wr-technical"><summary>{e(t["technical"])}</summary>{original_quality(lang)}</details>'+end(lang,slug)
+            body+=f'<section class="bn-media-section" id="inspection-evidence"><h2>{e(t["inspection"])}</h2><p>{e(t["inspection_body"])}</p><p class="wr-label">{e(t["example"])}</p>{site["tech_visual"]("quality",lang)}</section><details class="wr-technical"><summary>{e(t["technical"])}</summary>{original_quality(lang)}{render_review_scope(lang,"quality")}</details>'+end(lang,slug)
             return document(lang,slug,path,body,t['quality_body'])
         html=original_product(lang,slug,path).replace('</head>',f'<link rel="stylesheet" href="/business-narrative.css?v={RELEASE}"><link rel="stylesheet" href="/product-cases.css?v={RELEASE}"></head>')
         soup=BeautifulSoup(html,'html.parser')
