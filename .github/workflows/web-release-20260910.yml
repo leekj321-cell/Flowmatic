@@ -11,6 +11,7 @@ on:
       - investor-home.js
       - content/investor_home.py
       - content/product_cases.py
+      - content/review_scope.py
       - product-cases.css
       - media/product-20261020/**
       - media/product-20261018/**
@@ -41,6 +42,7 @@ on:
       - investor-home.js
       - content/investor_home.py
       - content/product_cases.py
+      - content/review_scope.py
       - product-cases.css
       - media/product-20261020/**
       - media/product-20261018/**

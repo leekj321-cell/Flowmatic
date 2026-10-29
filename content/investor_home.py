@@ -2,7 +2,7 @@
 
 Product screenshots are unmodified internal product captures, not customer results.
 """
-RELEASE = '2026.10.20-r8-plan-and-work-standard'
+RELEASE = '2026.10.29-r9-detail-scope'
 FILES = ['ui-source-index-mid-rotation.png', 'ui-optimized-gantry.png',
          'ui-source-factory-approval.png', 'ui-source-final-factory-monitor.png']
 IDS = ['machining', 'logistics', 'handover', 'operations']
@@ -18,7 +18,7 @@ COPY = {
  'sub':'핵심 인력의 검토와 판단이 회사에 남도록. 플로우매틱은 제품을 어떻게 만들지 검토한 내용을 생산 현장의 업무 기준으로 연결합니다.',
  'view':'실제 제품 화면 보기', 'adopt':'도입 방식', 'zoom':'원본 확대', 'close':'닫기',
  'actual':'실제 제품 화면 · 내부 시연', 'interface':'제품 화면은 한국어 원본입니다.',
- 'summary':[['대상 고객','체계적인 운영이 필요한 중소 제조기업'],['첫 적용 업무','신규 품목의 양산 준비·라인 검토'],['도입 단위','한 품목·한 라인부터 단계적으로']],
+ 'summary':[['대상 고객','체계적인 운영이 필요한 중소 제조기업'],['첫 적용 업무','신규 품목의 양산 준비·기존 라인 검토'],['도입 단위','한 품목·한 라인부터 단계적으로']],
  'problemTitle':'소수 숙련자에게 집중되는 양산 준비와 생산 확대의 부담',
  'problem':['새로운 제품을 생산하려면 공정, 설비, 공구, 운반 방식과 검사 기준을 함께 결정해야 합니다. 정보가 도면과 여러 파일, 담당자의 경험에 흩어져 있으면 조건이 바뀔 때마다 확인과 조율이 반복됩니다.','이 과정이 소수의 숙련자에게 집중되면 신규 담당자의 업무 적응과 인수인계가 어려워지고, 더 많은 제품과 생산라인을 관리하는 부담이 커집니다.'],
  'problemBottom':[['신규 품목 도입','공정·설비·물류 조건의 동시 검토'],['담당자·생산량 변경','앞선 검토 기준의 인계와 재사용']],
@@ -68,7 +68,7 @@ COPY = {
  'sub':'Engineering decisions become part of the company’s operating knowledge. Flowmatic connects the review of how a product will be made to the standards used on the shop floor.',
  'view':'View product screens', 'adopt':'Adoption model', 'zoom':'Enlarge original', 'close':'Close',
  'actual':'Actual product screen · Internal demonstration', 'interface':'Product screens show the original Korean interface.',
- 'summary':[['CUSTOMERS','Manufacturers building repeatable operations'],['FIRST WORKFLOW','New-product production preparation and line review'],['INITIAL SCOPE','One product or one line']],
+ 'summary':[['CUSTOMERS','Manufacturers building repeatable operations'],['FIRST WORKFLOW','New-product preparation and existing-line review'],['INITIAL SCOPE','One product or one line']],
  'problemTitle':'Production preparation concentrated in a few experienced people',
  'problem':['A new product requires coordinated decisions on processes, equipment, tools, transport and inspection. When information sits across drawings, files and individual experience, each change creates another round of checks and coordination.','Concentrating these decisions in a few specialists makes onboarding and handovers harder, while increasing the burden of managing more products and production lines.'],
  'problemBottom':[['New-product introduction','Joint review of process, equipment and logistics conditions'],['Staff or volume changes','Handover and reuse of earlier review criteria']],
@@ -118,7 +118,7 @@ COPY = {
  'sub':'تصبح قرارات الخبراء جزءًا من المعرفة التشغيلية للشركة. تربط Flowmatic مراجعة طريقة تصنيع المنتج بمعايير العمل المستخدمة في المصنع.',
  'view':'عرض شاشات المنتج', 'adopt':'نموذج التبني', 'zoom':'تكبير الصورة الأصلية', 'close':'إغلاق',
  'actual':'شاشة فعلية للمنتج · عرض داخلي', 'interface':'تعرض الصور واجهة المنتج الأصلية باللغة الكورية.',
- 'summary':[['العملاء المستهدفون','شركات تصنيع تحتاج إلى عمليات منظمة وقابلة للتكرار'],['التطبيق الأول','التحضير لإنتاج منتج جديد ومراجعة الخط'],['النطاق الأولي','منتج واحد أو خط واحد']],
+ 'summary':[['العملاء المستهدفون','شركات تصنيع تحتاج إلى عمليات منظمة وقابلة للتكرار'],['التطبيق الأول','التحضير لمنتج جديد ومراجعة الخطوط القائمة'],['النطاق الأولي','منتج واحد أو خط واحد']],
  'problemTitle':'تركّز التحضير للإنتاج لدى عدد محدود من الخبراء',
  'problem':['يتطلب إنتاج منتج جديد قرارات مترابطة بشأن العمليات والمعدات والأدوات والنقل والفحص. وعندما تتوزع المعلومات بين الرسومات والملفات والخبرات الفردية، يستلزم كل تغيير جولة جديدة من التحقق والتنسيق.','يؤدي تركّز هذه القرارات لدى عدد محدود من المختصين إلى صعوبة تأهيل الموظفين وتسليم المهام، ويزيد عبء إدارة المزيد من المنتجات وخطوط الإنتاج.'],
  'problemBottom':[['إدخال منتج جديد','مراجعة مشتركة لشروط العمليات والمعدات واللوجستيات'],['تغير الموظفين أو حجم الإنتاج','نقل معايير المراجعة السابقة وإعادة استخدامها']],
