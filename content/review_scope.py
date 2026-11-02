@@ -15,7 +15,7 @@ COPY = {
             ),
             "scope": (
                 "각 기능은 별도의 내부 설계·계획 시험 범위이며, "
-                "실제 절삭·충돌 검증은 포함하지 않습니다."
+                "치구·공구의 최종 선정·제작도면, 통합 실행과 현장 절삭·충돌 검증은 완료 범위에 포함하지 않습니다."
             ),
         },
         "quality": {
@@ -53,8 +53,9 @@ COPY = {
                 "design criteria support static production capacity estimates."
             ),
             "scope": (
-                "These are separate internal design and planning tests, without "
-                "validation of cutting or collision clearance."
+                "These are separate internal design and planning tests. Final fixture "
+                "and tool selection, fabrication drawings, integrated desktop "
+                "operation, cutting and collision clearance remain unverified."
             ),
         },
         "quality": {
@@ -92,7 +93,7 @@ COPY = {
             ),
             "scope": (
                 "تستند هذه الوظائف إلى اختبارات داخلية منفصلة للتصميم والتخطيط، "
-                "ولا تشمل التحقق من أداء القطع أو خلو المسارات من التصادم."
+                "ولا تشمل إنجاز الاختيار النهائي للتثبيت والأدوات أو رسومات التصنيع أو التشغيل المكتبي المتكامل أو التحقق من أداء القطع وخلو المسارات من التصادم."
             ),
         },
         "quality": {

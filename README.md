@@ -51,6 +51,8 @@ The current working demo assets include:
 
 The homepage separates CURRENT working proof, PILOT validation, and TARGET Factory OS capabilities.
 
+The work-instruction example uses actual STEP geometry and linked planned NC. The public PDF is the first nine pages of a 21-page product export; page content is preserved, internal engineering appendices are omitted, and source STEP files are not published. The overview and orientation previews are rendered from that excerpt. Historical PDF links serve the same current excerpt. Cutting, collision clearance and shop-floor approval remain unverified.
+
 ## Branding
 
 All new Flowmatic presentations, PDFs, proposals, reports, applications, company profiles, business cards, generated visuals and website revisions must follow `BRANDING.md` and `brand-policy.json` and use the locked assets in `/assets/branding/canonical/`.
