@@ -3,7 +3,7 @@ from html import escape as e
 from bs4 import BeautifulSoup
 # Detail pages retain their last approved release marker until their content changes.
 # The product-first homepage has an independent brand-copy release.
-RELEASE = '2026.11.02-r11-public-terminology'
+RELEASE = '2026.11.02-r12-step-work-standard'
 from content.product_cases import render_cases, COPY as CASE_COPY
 from content.review_scope import render_review_scope
 from pathlib import Path
@@ -53,7 +53,7 @@ text('contact','우리 현장에 맞는|데모를 요청하세요.','Request a d
 text('contact_body','확인하고 싶은 업무와 보유 자료를 알려주세요. 적합한 제품과 적용 범위를 검토해 데모 일정을 협의합니다. 투자·사업협력 문의도 받습니다.','Tell us about your workflow and available information. We will review the product fit and scope, then arrange a demo with you. Investment and partnership inquiries are also welcome.','أخبرنا عن عملك والمعلومات المتاحة. سنراجع ملاءمة المنتج ونطاقه، ثم نتفق معك على موعد العرض. نرحب أيضًا باستفسارات الاستثمار والشراكة.')
 text('brief','현재 어려운 업무 또는 문의 내용','Current workflow problem or inquiry','صعوبة العمل الحالية أو موضوع الاستفسار')
 text('company','현장 경험이 기업의 운영역량으로 남도록.','Keep field experience inside the business.','إبقاء الخبرة الميدانية داخل الشركة.')
-text('company_body','Flowmatic은 제조 현장의 반복 확인·정리·전달 업무에서 출발했습니다. 보유설비와 자료를 활용해 담당자의 판단을 돕고, 처리 경험이 회사에 남는 제조 AI 플랫폼을 만듭니다.','Flowmatic started with repeated checking, organization and handoffs in manufacturing. We build a manufacturing AI platform that uses the equipment and information you have to support human judgment and retain work experience.','انطلقت Flowmatic من أعمال التحقق والتنظيم والتسليم المتكررة في التصنيع. نبني منصة ذكاء اصطناعي للتصنيع تستخدم المعدات والمعلومات المتاحة لدعم الحكم البشري والاحتفاظ بخبرة العمل.')
+text('company_body','Flowmatic은 제조 현장의 반복 확인·정리·전달 업무에서 출발했습니다. 보유설비와 자료를 활용해 담당자의 판단을 돕고, 처리 경험이 회사에 남는 제조 운영 플랫폼을 만듭니다.','Flowmatic started with repeated checking, organization and handoffs in manufacturing. The manufacturing operations platform uses existing equipment and information to support human review and retain work experience.','انطلقت Flowmatic من أعمال التحقق والتنظيم والتسليم المتكررة في التصنيع. تستخدم منصة عمليات التصنيع المعدات والمعلومات المتاحة لدعم المراجعة البشرية والاحتفاظ بخبرة العمل.')
 text('example','업무 흐름 예시 · 고정 수치는 사용 장면을 설명하는 예시입니다.','Workflow illustration. Fixed numbers explain the example; they are not measured results.','رسم توضيحي للعمل. الأرقام الثابتة لشرح المثال وليست نتائج مقاسة.')
 text('technical','기술 구조·세부 적용 조건','Technical structure and detailed conditions','البنية التقنية وشروط التطبيق التفصيلية')
 text('input','사용할 자료','Information used','المعلومات المستخدمة')

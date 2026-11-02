@@ -1,10 +1,10 @@
 {
-  "evidence": "Actual product captures, one declared screen excerpt, and an unchanged product-renderer PDF export",
-  "data": "Synthetic fixtures only; no customer production results",
+  "evidence": "Actual product captures, declared excerpts, and STEP-based work-instruction PDF pages",
+  "data": "Synthetic plan example and independent actual-STEP planning example; no customer production results",
   "cases_independent": true,
-  "product_scope": "Synthetic plan records and work-instruction export",
+  "product_scope": "Plan records and STEP-based work-instruction export",
   "case_a": "10-workplace, two-week synthetic plan approval and outcome records",
-  "case_b": "Separate synthetic machining fixture; four orientations and twelve operations",
+  "case_b": "Actual STEP geometry and linked planned NC; four orientations and twenty-five operations; nine-page public excerpt",
   "physical_effect_validated": false,
   "assets": [
     {
@@ -40,30 +40,37 @@
     },
     {
       "file": "synthetic-work-standard.pdf",
-      "sha256": "0929400ad924c2433daedc1bffd49ce67d8ef812a24d2c92fa2c56aeb79c9957",
-      "type": "product-renderer-export",
+      "sha256": "f4de6133d3c74c5cb6ad8769c700c4bc42d95bc52df5d8ddc0f02380a7007de2",
+      "type": "product-renderer-page-excerpt",
       "pages": 9,
-      "generated_at": "2026-10-27T18:28:16Z",
+      "source_pages": [
+        1,
+        9
+      ],
+      "source_total_pages": 21,
+      "generated_at": "2026-11-02T00:56:15.869461+00:00",
       "renderer": "StandardNavigation.paint / QPdfWriter",
-      "inputs": "Code-generated rectangular mesh and NC; no customer CAD or production records",
-      "source_digest": "9c50badaf00930f7574a8217de5a5091b08233d48078652001b3afd6a144f278",
-      "transformation": "None; original product-renderer PDF bytes retained",
-      "geometry_verified": false,
+      "inputs": "Actual STEP geometry and linked planned NC; no customer production outcomes",
+      "transformation": "First nine pages extracted without changing page content streams; internal engineering appendices omitted; public metadata set",
+      "actual_step_geometry_used": true,
+      "cad_topology_correspondence_verified": false,
       "machine_release": false,
-      "step_identifiers": "Test placeholders; not checksums of customer STEP files",
-      "native_ui_verified": false
+      "field_cutting_verified": false,
+      "collision_clearance_verified": false,
+      "native_ui_verified": false,
+      "compatibility_alias_of": "/media/product-20261102/step-work-standard.pdf"
     },
     {
       "file": "work-standard-overview.png",
-      "sha256": "cdc7647177bb69b142396deeb70ebfb9fe37eb32c10126504e7f728ab8d3f450",
-      "type": "pdf-first-page-render",
-      "source_sha256": "0929400ad924c2433daedc1bffd49ce67d8ef812a24d2c92fa2c56aeb79c9957",
+      "sha256": "dac693f4e60812341b4cf5edf57b994401532fa3fd905487531385bb932486fb",
+      "type": "pdf-page-render",
+      "source_sha256": "f4de6133d3c74c5cb6ad8769c700c4bc42d95bc52df5d8ddc0f02380a7007de2",
       "page": 1,
       "size": [
-        1287,
-        910
+        1600,
+        1131
       ],
-      "render": "Poppler PNG, width 1287 px, original aspect ratio"
+      "render": "Poppler PNG, width 1600 px, original aspect ratio"
     }
   ],
   "legacy_urls": "Updated to the same corrected evidence used by the current release"

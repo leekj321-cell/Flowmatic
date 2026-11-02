@@ -32,6 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Korean particles, hyphens and underscores as delimiters in public labels.
 FORBIDDEN = (
     ("internal product name", re.compile(r"(?<![A-Za-z0-9])stc(?:[-_\s]*lite)?(?![A-Za-z0-9])", re.I)),
+    ("excluded public copy", re.compile(r"(?<![A-Za-z0-9])ai(?![A-Za-z0-9])|인공지능|(?:ال)?ذكاء (?:ال)?اصطناعي", re.I)),
     ("retired shape label", re.compile(r"가시\s*외형")),
 )
 EXCLUDED_DIRS = frozenset({
@@ -49,6 +50,7 @@ PRODUCT_DIRS = (
     "media/product-20261018", "media/product-20261020", "media/product-20261102",
 )
 PDF_FILES = (
+    "media/product-20261102/step-work-standard.pdf",
     "media/product-20261020/synthetic-work-standard.pdf",
     "media/product-20261102/synthetic-work-standard.pdf",
 )
@@ -255,8 +257,8 @@ class Audit:
 
 
 def self_test() -> int:
-    positives = ("STC", "stc", "StC-LiTe", "stc_lite", "STClite", "STC로", "/stc-lite-home.css", "build_stc_r5_site.py", "가시외형", "가시 \n\t외형", "가시\u00a0외형")
-    negatives = ("ASTC", "STC2", "DISTRICT", "mystcfield", "가시성", "외형 보기", "NC revision R3 / CNC01 / 합성 시험 / 검토 필요", 'rel="manifest"')
+    positives = ("AI 플랫폼", "ai platform", "منصة ذكاء اصطناعي", "STC", "stc", "StC-LiTe", "stc_lite", "STClite", "STC로", "/stc-lite-home.css", "build_stc_r5_site.py", "가시외형", "가시 \n\t외형", "가시\u00a0외형")
+    negatives = ("RAIL", "AIR", "MAIL", "said", "ASTC", "STC2", "DISTRICT", "mystcfield", "가시성", "외형 보기", "NC revision R3 / CNC01 / 합성 시험 / 검토 필요", 'rel="manifest"')
     failures = [f"missed positive: {value!r}" for value in positives if not list(term_hits(value))]
     failures += [f"false positive: {value!r}" for value in negatives if list(term_hits(value))]
     documents = (

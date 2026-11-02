@@ -2,7 +2,7 @@
 
 Product screenshots are unmodified internal product captures, not customer results.
 """
-RELEASE = '2026.11.02-r11-public-terminology'
+RELEASE = '2026.11.02-r12-step-work-standard'
 FILES = ['ui-source-index-mid-rotation.png', 'ui-optimized-gantry.png',
          'ui-source-factory-approval.png', 'ui-source-final-factory-monitor.png']
 IDS = ['machining', 'logistics', 'handover', 'operations']

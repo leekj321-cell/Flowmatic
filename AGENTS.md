@@ -50,4 +50,6 @@ Any homepage change must preserve these product concepts unless explicitly instr
 - Primary users and budget owners must be visible in the public narrative.
 - Existing NC/CT proof routes and locked corporate identity.
 - The owner's 2026-11-02 instruction prohibits STC and STC-lite on every public surface, including technical details, images, PDFs, metadata and linked asset names. Use Flowmatic Factory OS for the public product name.
+- The approved public copy omits AI terminology. Keep implementation details below the approved company and product explanation.
+- Public STEP-based work-instruction samples contain only the required product-output pages and previews. Do not publish source STEP files, customer identifiers, or internal engineering appendices. Planned NC and internal output examples do not establish physical cutting, collision clearance, integrated desktop operation, or shop-floor approval.
 - Public copy must not expose other internal labels such as Blueprint R2, L3–L6 CORE, CORE/OPTIONAL, INFERRED, manifest, hash, or Safety Contract outside an explicitly technical-detail context.

@@ -108,7 +108,7 @@ def main():
     for lang in COPY:
         build_home(lang)
     (ROOT/'index.html').write_text(f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="flowmatic-release" content="{RELEASE}"><meta http-equiv="refresh" content="0;url=/ko/"><link rel="canonical" href="https://flowmatic-os.com/ko/"><title>Flowmatic Factory OS</title></head><body><a href="/ko/">Flowmatic Factory OS · 한국어</a> · <a href="/en/">English</a> · <a href="/ar/">العربية</a></body></html>\n''',encoding='utf-8')
-    (ROOT/'release.json').write_text(json.dumps({'release':RELEASE,'scope':'product-scroll-with-verified-synthetic-cases','base_release':'2026.10.18-r7-product-scroll','locales':list(COPY)},ensure_ascii=False,indent=2)+'\n')
+    (ROOT/'release.json').write_text(json.dumps({'release':RELEASE,'scope':'product-scroll-with-step-work-standard-excerpt','base_release':'2026.10.18-r7-product-scroll','locales':list(COPY)},ensure_ascii=False,indent=2)+'\n')
     print('PASS: product-first homepages generated for KO / EN / AR.')
 
 if __name__ == '__main__':

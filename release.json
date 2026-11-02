@@ -1,6 +1,6 @@
 {
-  "release": "2026.11.02-r11-public-terminology",
-  "scope": "product-scroll-with-verified-synthetic-cases",
+  "release": "2026.11.02-r12-step-work-standard",
+  "scope": "product-scroll-with-step-work-standard-excerpt",
   "base_release": "2026.10.18-r7-product-scroll",
   "locales": [
     "ko",

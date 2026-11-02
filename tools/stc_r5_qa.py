@@ -32,8 +32,8 @@ def static_checks():
         for asset in case_provenance['assets']:
             path=ROOT/'media'/folder/asset['file']
             check('declared evidence integrity: '+folder+'/'+asset['file'],hashlib.sha256(path.read_bytes()).hexdigest()==asset['sha256'])
-        check(folder+': separate synthetic cases and no physical-effect claim',case_provenance['cases_independent'] and not case_provenance['physical_effect_validated'])
-    for filename, legacy_name in [('plan-comparison-excerpt.png','plan-comparison.png'),('synthetic-work-standard.pdf','synthetic-work-standard.pdf'),('work-standard-overview.png','work-standard-overview.png')]:
+        check(folder+': independent cases and no physical-effect claim',case_provenance['cases_independent'] and not case_provenance['physical_effect_validated'])
+    for filename, legacy_name in [('plan-comparison-excerpt.png','plan-comparison.png'),('step-work-standard.pdf','synthetic-work-standard.pdf'),('work-standard-overview.png','work-standard-overview.png')]:
         check('legacy URL receives corrected evidence: '+legacy_name,(ROOT/'media/product-20261102'/filename).read_bytes()==(ROOT/'media/product-20261020'/legacy_name).read_bytes())
     css=(ROOT/'flowmatic-home.css').read_text()
     check('reduced motion and short-viewport fallback',all(s in css for s in ['prefers-reduced-motion:reduce','@media(max-height:610px)','.step-image']))
@@ -217,6 +217,7 @@ def browser_checks(base):
                     check(f'{lang} {route} {w}: no horizontal overflow',page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'))
                     if w in [390,1440]:
                         capture_cases(page,lang,route,w)
+                    check(f'{lang} {route} {w}: language controls within viewport',page.locator('.lang-switcher a').evaluate_all('(els)=>els.length===3&&els.every(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1})'))
                 if route=='work-standard':
                     # Chromium may keep a PDF viewer popup at about:blank. Verify
                     # the response caused by the click, not the viewer's internal URL.
