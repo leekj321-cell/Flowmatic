@@ -2,7 +2,9 @@
 
 > **Writing authority:** This website-specific contract inherits `STRATEGIC_COMMUNICATIONS_CONTRACT.md`. If wording or tone guidance conflicts, the strategic communications contract governs. In particular, external headings must use analytical/report-style language rather than presentation narration.
 
-**Public homepage release:** `2026.10.18-r7-product-scroll`
+**Public homepage release:** `2026.10.18-r7-product-scroll` (approved layout baseline)
+
+**Approved brand messaging, 2026-11-02:** The Korean homepage uses the era statement “상상이 현실이 되는 시대.”, brand headline “제조업의 Zero to One.”, and product value line “생산기술의 노하우를 시스템으로, 제조의 전 과정을 하나로.” In the English and Arabic versions, preserve the meaning rather than the legacy “One Drawing / A Running Factory” headline. Keep the four-stage technical story and CURRENT / PILOT / TARGET boundaries.
 
 This contract keeps Flowmatic's public website readable to investors and manufacturing customers without weakening the product architecture.
 

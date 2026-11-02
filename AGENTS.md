@@ -41,7 +41,7 @@ Do **not** use `python build_site.py` as the public website release command. Tha
 
 Any homepage change must preserve these product concepts unless explicitly instructed otherwise:
 
-- One Drawing → Running Factory.
+- Approved brand-copy hierarchy (2026-11-02): “상상이 현실이 되는 시대.” → “제조업의 Zero to One.” → “생산기술의 노하우를 시스템으로, 제조의 전 과정을 하나로.” Korean is authoritative; EN/AR carry the same meaning. The former “One Drawing → Running Factory” slogan is retired from the hero and footer, while the engineering-to-operations four-stage product story is retained.
 - Design → Build → Run → Improve.
 - Flowmatic Factory Stack comparison with manufacturing-decision layers first and L1–L2 connected progressively after ROI is proven.
 - Current working proof must appear before architecture or long-range vision.
