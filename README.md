@@ -4,14 +4,14 @@ Static Flowmatic website for GitHub Pages and `flowmatic-os.com`.
 
 ## Current public homepage
 
-The public homepage is **Formal Strategic Copy R6.2** (`2026.09.20-r6.2-formal-copy`). It preserves the Manufacturing Value Loop and investor-first information hierarchy while enforcing analytical/report-style strategic headings across Korean, English and Arabic.
+The public homepage follows the **Owner-approved Investor Product Scroll** (`2026.10.18-r7-product-scroll`). The current release is recorded in `release.json`. It preserves the Manufacturing Value Loop, actual product evidence and investor-first information hierarchy across Korean, English and Arabic.
 
 Canonical homepage surfaces:
 
 - `/` and `/ko/`: Korean investor-first homepage.
 - `/en/`: English investor-first homepage.
 - `/ar/`: Arabic investor-first homepage.
-- `stc-lite-home-v1.css`: homepage styling, including the investor-first type scale and hierarchy.
+- `flowmatic-home.css`: homepage styling, including the investor-first type scale and hierarchy.
 - `release.json`: public homepage release authority.
 
 Existing product, platform and compatibility routes remain in place, including `/ko/{product}/`, `/en/{product}/`, `/ar/{product}/`, `/nc.html`, `/ct.html`, `/quality.html`, `/work-standard.html`, `/tms.html`, and `/amr.html`.
@@ -26,17 +26,19 @@ Use:
 python tools/build_stc_r5_site.py
 ```
 
-The wrapper rebuilds legacy/detail pages and then restores the tracked STC-lite R5 home surfaces and R5 release metadata. It fails closed if the canonical homepage is not already marked as R5.
+The wrapper rebuilds detail pages and then generates the approved home surfaces from `content/investor_home.py`, including current release metadata.
 
 Canonical QA:
 
 ```bash
 python tools/validate_strategic_copy.py --profile public-web ko/index.html en/index.html ar/index.html
+python tools/validate_public_terms.py --self-test
+python tools/validate_public_terms.py
 python tools/stc_r5_qa.py
 python tools/stc_r5_qa.py --browser
 ```
 
-`tools/web_declaration_qa.py` and `tools/web_release_qa.py` are compatibility entry points that route to the R5 QA.
+`tools/web_declaration_qa.py` and `tools/web_release_qa.py` are compatibility entry points for the canonical homepage QA. The public-terminology check requires Poppler and Tesseract; it covers HTML, public evidence metadata, full PDF text and English OCR of product captures. Korean image text also requires visual review.
 
 ## Working demos
 
@@ -71,7 +73,7 @@ The site displays `contact@flowmatic-os.com`. The inquiry form uses the existing
 - `tools/build_stc_r5_site.py`: canonical build entry point.
 - `tools/stc_r5_qa.py`: canonical homepage static/browser regression.
 - `homepage-declaration.json`: historical R4 generator compatibility only; it is no longer public-homepage authority.
-- `.github/workflows/web-release-20260910.yml`: R5 build, QA and official-domain verification pipeline.
+- `.github/workflows/web-release-20260910.yml`: canonical build, QA and official-domain verification pipeline, including hashes of served evidence files.
 
 To refresh only the QR contact signature from the locked CI:
 

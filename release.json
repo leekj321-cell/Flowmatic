@@ -1,12 +1,10 @@
 {
-  "release": "2026.10.29-r9-detail-scope",
+  "release": "2026.11.02-r10-public-terminology",
   "scope": "product-scroll-with-verified-synthetic-cases",
   "base_release": "2026.10.18-r7-product-scroll",
   "locales": [
     "ko",
     "en",
     "ar"
-  ],
-  "canonical_build": "python tools/build_stc_r5_site.py",
-  "canonical_qa": "python tools/stc_r5_qa.py --browser"
+  ]
 }

@@ -1,0 +1,59 @@
+{
+  "evidence": "Actual product captures, one declared screen excerpt, and an unchanged product-renderer PDF export",
+  "data": "Synthetic fixtures only; no customer production results",
+  "cases_independent": true,
+  "product_scope": "Synthetic plan records and work-instruction export",
+  "case_a": "10-workplace, two-week synthetic plan approval and outcome records",
+  "case_b": "Separate synthetic machining fixture; four orientations and twelve operations",
+  "physical_effect_validated": false,
+  "assets": [
+    {
+      "file": "plan-comparison-excerpt.png",
+      "sha256": "d76b40cab37a0c2f4a35ea11fb0d2dd20692a676350d55d813cc23260a0d6c2a",
+      "type": "product-capture-excerpt",
+      "source_sha256": "368424fd1ffed547926acc95fc4a4b8da5ee12f620c3f096d72b0eae5eba4de5",
+      "source_size": [
+        2304,
+        1294
+      ],
+      "crop": [
+        0,
+        0,
+        2304,
+        1094
+      ],
+      "size": [
+        2304,
+        1094
+      ],
+      "transformation": "Single rectangular crop; original pixels preserved; no retouching or rescaling"
+    },
+    {
+      "file": "synthetic-work-standard.pdf",
+      "sha256": "0929400ad924c2433daedc1bffd49ce67d8ef812a24d2c92fa2c56aeb79c9957",
+      "type": "product-renderer-export",
+      "pages": 9,
+      "generated_at": "2026-10-27T18:28:16Z",
+      "renderer": "StandardNavigation.paint / QPdfWriter",
+      "inputs": "Code-generated rectangular mesh and NC; no customer CAD or production records",
+      "source_digest": "9c50badaf00930f7574a8217de5a5091b08233d48078652001b3afd6a144f278",
+      "transformation": "None; original product-renderer PDF bytes retained",
+      "geometry_verified": false,
+      "machine_release": false,
+      "step_identifiers": "Test placeholders; not checksums of customer STEP files",
+      "native_ui_verified": false
+    },
+    {
+      "file": "work-standard-overview.png",
+      "sha256": "cdc7647177bb69b142396deeb70ebfb9fe37eb32c10126504e7f728ab8d3f450",
+      "type": "pdf-first-page-render",
+      "source_sha256": "0929400ad924c2433daedc1bffd49ce67d8ef812a24d2c92fa2c56aeb79c9957",
+      "page": 1,
+      "size": [
+        1287,
+        910
+      ],
+      "render": "Poppler PNG, width 1287 px, original aspect ratio"
+    }
+  ]
+}
