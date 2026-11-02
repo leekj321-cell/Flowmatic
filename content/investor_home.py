@@ -2,19 +2,19 @@
 
 Product screenshots are unmodified internal product captures, not customer results.
 """
-RELEASE = '2026.10.29-r9-detail-scope'
+RELEASE = '2026.11.02-r10-brand-copy'
 FILES = ['ui-source-index-mid-rotation.png', 'ui-optimized-gantry.png',
          'ui-source-factory-approval.png', 'ui-source-final-factory-monitor.png']
 IDS = ['machining', 'logistics', 'handover', 'operations']
 
 COPY = {
 'ko': {
- 'title':'Flowmatic Factory OS — 도면 하나에서, 공장이 돌아갈 때까지.',
- 'meta':'공정 검토부터 생산 운영까지. 중소 제조기업의 검토 기준과 생산·품질 업무를 연결하는 Flowmatic Factory OS.',
+ 'title':'Flowmatic Factory OS — 제조업의 Zero to One.',
+ 'meta':'생산기술의 노하우를 시스템으로, 제조의 전 과정을 하나로. Flowmatic Factory OS는 공정 설계·생산 계획·양산 운영을 연결합니다.',
  'skip':'본문으로 바로가기', 'menu':'메뉴', 'nav':['고객의 문제','실제 제품','현재 단계','도입 방식'],
- 'kind':'제조 운영 소프트웨어', 'stage':'통합 시제품 · 내부 검증 단계',
- 'headline':['도면 하나에서,','공장이 돌아갈 때까지.'],
- 'lead':'중소 제조기업의 공정 계획과 생산·품질 업무가 같은 기준으로 이어지도록 돕습니다.',
+ 'kind':'상상이 현실이 되는 시대.', 'stage':'통합 시제품 · 내부 검증 단계',
+ 'headline':['제조업의','Zero to One.'],
+ 'lead':'생산기술의 노하우를 시스템으로, 제조의 전 과정을 하나로.',
  'sub':'핵심 인력의 검토와 판단이 회사에 남도록. 플로우매틱은 제품을 어떻게 만들지 검토한 내용을 생산 현장의 업무 기준으로 연결합니다.',
  'view':'실제 제품 화면 보기', 'adopt':'도입 방식', 'zoom':'원본 확대', 'close':'닫기',
  'actual':'실제 제품 화면 · 내부 시연', 'interface':'제품 화면은 한국어 원본입니다.',
@@ -56,15 +56,15 @@ COPY = {
  'adoptionSteps':[['적용 범위 설정','양산 준비나 라인 개선 중 한 품목·한 라인의 업무를 선정합니다.'],['Baseline 측정','현재 준비 시간, 담당자 공수, 오류·누락을 기록합니다.'],['Flowmatic 적용','도면·설비·생산 조건을 바탕으로 계획과 검토 기준을 연결합니다.'],['KPI 비교','예측·실측 차이, 준비 시간과 재작업을 동일 기준으로 비교합니다.'],['ROI 판단','확인된 효과와 설치·설정·운영 비용을 함께 검토합니다.'],['적용 범위 확대','검증된 공통 기능을 다음 품목·업무·라인에 재사용합니다.']],
  'audience':[['주요 사용자','생산기술·공정기술·품질·라인 운영 담당자'],['예산·도입 의사결정자','공장장·제조 담당 임원·대표']],
  'modelTitle':'사업모델 제안', 'model':'유료 Pilot → 지속 사용 구독 → 업무·라인·공장 단위 확장. 과금 단위와 조건은 확정 전이며, 현재 계약·매출 실적을 의미하지 않습니다.',
- 'contactTitle':'Pilot 적용 범위 검토', 'contactText':'제공 가능한 도면·생산량·설비 자료를 기준으로 적용 범위를 논의합니다.', 'contactLink':'도입 논의하기', 'footer':'도면 하나에서, 공장이 돌아갈 때까지.'
+ 'contactTitle':'Pilot 적용 범위 검토', 'contactText':'제공 가능한 도면·생산량·설비 자료를 기준으로 적용 범위를 논의합니다.', 'contactLink':'도입 논의하기', 'footer':'생산기술의 노하우를 시스템으로, 제조의 전 과정을 하나로.'
 },
 'en': {
- 'title':'Flowmatic Factory OS — One Drawing. A Running Factory.',
- 'meta':'From process review to production operations. Flowmatic connects manufacturing decisions and operating standards for small and medium-sized manufacturers.',
+ 'title':'Flowmatic Factory OS — Manufacturing, From Zero to One.',
+ 'meta':'Production engineering know-how, systematized. The entire manufacturing workflow, connected. Flowmatic Factory OS links process engineering, production planning and operations.',
  'skip':'Skip to content', 'menu':'Menu', 'nav':['The problem','Product','Current scope','Adoption'],
- 'kind':'Manufacturing operations software', 'stage':'Integrated prototype · Internal validation',
- 'headline':['One Drawing.','A Running Factory.'],
- 'lead':'Shared standards for process planning, production and quality at small and medium-sized manufacturers.',
+ 'kind':'An era when imagination becomes reality.', 'stage':'Integrated prototype · Internal validation',
+ 'headline':['Manufacturing,','From Zero to One.'],
+ 'lead':'Production engineering know-how, systematized. The entire manufacturing workflow, connected.',
  'sub':'Engineering decisions become part of the company’s operating knowledge. Flowmatic connects the review of how a product will be made to the standards used on the shop floor.',
  'view':'View product screens', 'adopt':'Adoption model', 'zoom':'Enlarge original', 'close':'Close',
  'actual':'Actual product screen · Internal demonstration', 'interface':'Product screens show the original Korean interface.',
@@ -106,15 +106,15 @@ COPY = {
  'adoptionSteps':[['Scope selection','Select one product or line for production preparation or line improvement.'],['Baseline measurement','Record current preparation time, staff effort, errors and omissions.'],['Flowmatic application','Connect plans and review criteria using drawings, equipment and production conditions.'],['KPI comparison','Compare forecast accuracy, preparation time and rework under the same criteria.'],['ROI decision','Evaluate measured benefits alongside installation, configuration and operating costs.'],['Scope expansion','Reuse validated common functions across adjacent products, workflows and lines.']],
  'audience':[['PRIMARY USERS','Manufacturing and process engineering, quality and line operations'],['BUDGET & ADOPTION OWNERS','Plant managers, manufacturing executives and CEOs']],
  'modelTitle':'Proposed commercial model', 'model':'Paid pilot → ongoing subscription → workflow, line and factory expansion. Pricing units and terms are not finalized; this does not represent current contracts or revenue.',
- 'contactTitle':'Pilot scope review', 'contactText':'Available drawings, production volumes and equipment information define the discussion.', 'contactLink':'Discuss adoption', 'footer':'One Drawing. A Running Factory.'
+ 'contactTitle':'Pilot scope review', 'contactText':'Available drawings, production volumes and equipment information define the discussion.', 'contactLink':'Discuss adoption', 'footer':'Production engineering know-how, systematized. The entire manufacturing workflow, connected.'
 },
 'ar': {
- 'title':'Flowmatic Factory OS — من الرسم الهندسي إلى تشغيل المصنع.',
- 'meta':'من مراجعة العمليات إلى تشغيل الإنتاج. تربط Flowmatic قرارات التصنيع ومعايير العمل لدى الشركات الصناعية الصغيرة والمتوسطة.',
+ 'title':'Flowmatic Factory OS — التصنيع من الصفر إلى الواحد.',
+ 'meta':'خبرات هندسة الإنتاج في نظام واحد، ومراحل التصنيع مترابطة في منظومة متكاملة. يجمع Flowmatic Factory OS تخطيط العمليات والإنتاج والتشغيل.',
  'skip':'الانتقال إلى المحتوى', 'menu':'القائمة', 'nav':['تحديات التصنيع','المنتج','النطاق الحالي','نموذج التبني'],
- 'kind':'برمجيات لإدارة عمليات التصنيع', 'stage':'نموذج أولي متكامل · تحقق داخلي',
- 'headline':['من الرسم الهندسي،','إلى تشغيل المصنع.'],
- 'lead':'معايير مشتركة تربط تخطيط العمليات والإنتاج والجودة لدى الشركات الصناعية الصغيرة والمتوسطة.',
+ 'kind':'عصر تتحول فيه الأفكار إلى واقع.', 'stage':'نموذج أولي متكامل · تحقق داخلي',
+ 'headline':['التصنيع،','من الصفر إلى الواحد.'],
+ 'lead':'خبرات هندسة الإنتاج في نظام واحد، ومراحل التصنيع مترابطة في منظومة متكاملة.',
  'sub':'تصبح قرارات الخبراء جزءًا من المعرفة التشغيلية للشركة. تربط Flowmatic مراجعة طريقة تصنيع المنتج بمعايير العمل المستخدمة في المصنع.',
  'view':'عرض شاشات المنتج', 'adopt':'نموذج التبني', 'zoom':'تكبير الصورة الأصلية', 'close':'إغلاق',
  'actual':'شاشة فعلية للمنتج · عرض داخلي', 'interface':'تعرض الصور واجهة المنتج الأصلية باللغة الكورية.',
@@ -156,6 +156,6 @@ COPY = {
  'adoptionSteps':[['تحديد النطاق','اختيار منتج واحد أو خط واحد للتحضير للإنتاج أو تحسين الخط.'],['قياس خط الأساس','تسجيل زمن التحضير وجهد الموظفين والأخطاء وحالات السهو الحالية.'],['تطبيق Flowmatic','ربط الخطط ومعايير المراجعة باستخدام الرسومات وشروط المعدات والإنتاج.'],['مقارنة KPI','مقارنة دقة التوقعات وزمن التحضير وإعادة العمل وفق معايير موحدة.'],['قرار ROI','تقييم الفوائد المقاسة إلى جانب تكاليف التركيب والإعداد والتشغيل.'],['توسيع النطاق','إعادة استخدام الوظائف المشتركة المُتحقق منها في المنتجات والمهام والخطوط المجاورة.']],
  'audience':[['المستخدمون الرئيسيون','هندسة التصنيع والعمليات والجودة وتشغيل الخطوط'],['مسؤولو الميزانية والتبني','مديرو المصانع وقيادات التصنيع والرؤساء التنفيذيون']],
  'modelTitle':'نموذج تجاري مقترح', 'model':'تجربة مدفوعة ثم اشتراك مستمر وتوسّع على مستوى المهام والخطوط والمصنع. لم تُحسم وحدات التسعير وشروطه، ولا يمثل ذلك عقودًا أو إيرادات حالية.',
- 'contactTitle':'مراجعة نطاق التجربة', 'contactText':'تحدد الرسومات وأحجام الإنتاج وبيانات المعدات المتاحة نطاق المناقشة.', 'contactLink':'مناقشة التبني', 'footer':'من الرسم الهندسي إلى تشغيل المصنع.'
+ 'contactTitle':'مراجعة نطاق التجربة', 'contactText':'تحدد الرسومات وأحجام الإنتاج وبيانات المعدات المتاحة نطاق المناقشة.', 'contactLink':'مناقشة التبني', 'footer':'خبرات هندسة الإنتاج في نظام واحد، ومراحل التصنيع مترابطة في منظومة متكاملة.'
 }
 }
