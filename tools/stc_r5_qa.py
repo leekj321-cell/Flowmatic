@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from content.investor_home import RELEASE, COPY, IDS, FILES
+from business_narrative import RELEASE as DETAIL_RELEASE
 OUT = ROOT/'qa-artifacts'
 OUT.mkdir(exist_ok=True)
 REPORT = {'release':RELEASE,'checks':[],'limits':['Chromium viewport regression, not physical-device or Safari certification.','Arabic is checked for equivalent meaning and layout; native-speaker proofreading is not claimed.','No real contact request is submitted.']}
@@ -204,7 +205,7 @@ def browser_checks(base):
         for lang in COPY:
             for route in ['platform','machining-intelligence','work-standard']:
                 page.goto(base.rstrip('/')+f'/{lang}/{route}/',wait_until='networkidle')
-                check(f'{lang} {route}: current detail release',page.locator('meta[name="flowmatic-release"]').get_attribute('content')==RELEASE)
+                check(f'{lang} {route}: current detail release',page.locator('meta[name="flowmatic-release"]').get_attribute('content')==DETAIL_RELEASE)
                 for w in [320,390,1440]:
                     page.set_viewport_size({'width':w,'height':900})
                     page.locator('#product-cases').scroll_into_view_if_needed()
