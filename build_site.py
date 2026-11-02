@@ -1080,7 +1080,7 @@ def footer(lang: str) -> str:
 <a aria-label="Flowmatic home" class="footer-brand" href="{page_path(lang)}#hero"><img alt="Flowmatic" class="wr-corporate-ci" src="{ci}" width="220"></a>
 <p>{e(h["support"])}</p>
 <div class="footer-links"><a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a><a href="{page_path(lang)}#hero">{e(LANGS[lang]["home"])}</a></div>
-<small>© 2026 Flowmatic · {web_release.RELEASE}</small>
+<small>© 2026 Flowmatic · {web_release.RELEASE[:10]}</small>
 </footer>"""
 
 
@@ -1614,35 +1614,50 @@ def machining_vnext_diagrams(lang: str, data: dict) -> str:
             "context_title": "여러 파일을 하나의 공정으로 묶는|제조 문맥의 중심축",
             "context_body": "Machine Setup은 좌표계와 공구만이 아니라 치구·기준핀·세팅 기준까지 같은 공정의 문맥으로 묶습니다.",
             "assembly_title": "Feature에서 단위공정으로.|검사 후 최종 NC로.",
+            "assembly_label": "NC 생성 · 연결 조건 검토 · 조립",
+            "continuity_check": "NC 연결 조건", "continuity_result": "통과 / 중단",
             "connected": "CONNECTED ENVIRONMENT", "air": "AIR-GAPPED ENVIRONMENT",
             "sync_title": "네트워크가 없는 설비도|같은 기준으로",
-            "sync_body": "패키지의 revision·hash·manifest·출처를 확인하고, 분기된 수정은 조용히 덮어쓰지 않고 Conflict review로 보냅니다.",
+            "sync_body": "버전·출처·무결성을 확인하고, 서로 다른 수정이 충돌하면 담당자 검토로 넘기도록 설계합니다.",
+            "transfer_package": "버전이 관리되는 전달자료",
+            "transfer_checks": "USB · 버전·출처·무결성 확인",
+            "transfer_decisions": "동일 버전 유지 · 새 버전은 확인 후 적용 · 수정 충돌은 담당자 검토",
         },
         "en": {
             "context_title": "The manufacturing context|that makes separate files one process",
             "context_body": "Machine Setup connects coordinates and tools with fixtures, reference pins, and setup references in the same process context.",
             "assembly_title": "From feature to unit process.|From checked blocks to final NC.",
+            "assembly_label": "Generate · Check continuity · Assemble",
+            "continuity_check": "NC continuity checks", "continuity_result": "Pass / Stop",
             "connected": "CONNECTED ENVIRONMENT", "air": "AIR-GAPPED ENVIRONMENT",
             "sync_title": "One operating baseline|without a connected factory",
-            "sync_body": "Verify revision, hash, manifest, and source. Divergent changes are never overwritten silently; they move to conflict review.",
+            "sync_body": "The transfer workflow is designed to verify version, source and integrity, with conflicting changes referred for review.",
+            "transfer_package": "Versioned transfer files",
+            "transfer_checks": "USB · Version, source and integrity checks",
+            "transfer_decisions": "Same version retained · New version applied after checks · Conflicts referred for review",
         },
         "ar": {
             "context_title": "سياق التصنيع|الذي يجعل الملفات المنفصلة عملية واحدة",
             "context_body": "يربط Machine Setup الإحداثيات والأدوات مع المثبتات ودبابيس المرجع ومراجع الإعداد في سياق عملية واحدة.",
             "assembly_title": "من الميزة إلى وحدة العملية.|ومن الكتل المفحوصة إلى NC النهائي.",
+            "assembly_label": "توليد · فحص الاستمرارية · تجميع",
+            "continuity_check": "فحص استمرارية NC", "continuity_result": "اجتياز / إيقاف",
             "connected": "بيئة متصلة", "air": "بيئة معزولة عن الشبكة",
             "sync_title": "معيار تشغيل واحد|من دون مصنع متصل",
-            "sync_body": "تحقق من revision وhash وmanifest والمصدر. لا تُستبدل التغييرات المتفرعة بصمت، بل تنتقل إلى مراجعة التعارض.",
+            "sync_body": "صُمم مسار النقل للتحقق من الإصدار والمصدر وسلامة البيانات، وإحالة التعديلات المتعارضة إلى المسؤول للمراجعة.",
+            "transfer_package": "ملفات نقل محددة الإصدار",
+            "transfer_checks": "USB · التحقق من الإصدار والمصدر وسلامة البيانات",
+            "transfer_decisions": "الإبقاء على الإصدار نفسه · تطبيق الإصدار الأحدث بعد التحقق · إحالة التعارضات للمراجعة",
         },
     }[lang]
     return f"""<section aria-labelledby="recipe-context-title" class="machining-context section-grid">
 <div class="cell span-5 reveal"><p class="eyebrow">Manufacturing Recipe context</p><h2 class="section-title semantic-copy" data-fit-min="32" data-fit-text id="recipe-context-title">{lines(labels["context_title"])}</h2><p class="body-large">{e(labels["context_body"])}</p><div class="setup-context">{setup}</div></div>
 <div class="cell span-7 recipe-hierarchy reveal delay-1">{hierarchy}</div>
 </section>
-<section aria-labelledby="assembly-title" class="machining-assembly section-grid"><div class="cell span-12 reveal"><p class="eyebrow">Generate · Safety Contract · Assemble</p><h2 class="section-title semantic-copy" data-fit-min="32" data-fit-text id="assembly-title">{lines(labels["assembly_title"])}</h2></div>
-<div class="cell span-12 assembly-flow reveal delay-1"><span>HOLE GROUP<br>Drill → Tap</span><span>FACE A<br>Milling</span><span>BORE B<br>Rough → Finish</span><b>OP20</b><strong>BOUNDARY CHECK<br>PASS / BLOCK</strong><b>FINAL NC</b></div></section>
+<section aria-labelledby="assembly-title" class="machining-assembly section-grid"><div class="cell span-12 reveal"><p class="eyebrow">{e(labels["assembly_label"])}</p><h2 class="section-title semantic-copy" data-fit-min="32" data-fit-text id="assembly-title">{lines(labels["assembly_title"])}</h2></div>
+<div class="cell span-12 assembly-flow reveal delay-1"><span>HOLE GROUP<br>Drill → Tap</span><span>FACE A<br>Milling</span><span>BORE B<br>Rough → Finish</span><b>OP20</b><strong>{e(labels["continuity_check"])}<br>{e(labels["continuity_result"])}</strong><b>FINAL NC</b></div></section>
 <section aria-labelledby="airgap-title" class="airgap section-grid"><div class="cell span-6 reveal"><p class="eyebrow">Air-gapped / USB operation</p><h2 class="section-title semantic-copy" data-fit-min="32" data-fit-text id="airgap-title">{lines(labels["sync_title"])}</h2><p class="body-large">{e(labels["sync_body"])}</p></div>
-<div class="cell span-6 airgap-flow reveal delay-1"><div><strong>{e(labels["connected"])}</strong><span>Engineering / Reference</span><span>NAS / Shared Folder</span><span>Local Machining Intelligence</span></div><div><strong>{e(labels["air"])}</strong><span>Versioned Transfer Package</span><span>USB · Verify revision / hash</span><span>Isolated Local PC</span><span>CNC / Local Operation</span></div><p>Same → No update · Newer → Safe update · Divergent → Conflict review</p></div></section>"""
+<div class="cell span-6 airgap-flow reveal delay-1"><div><strong>{e(labels["connected"])}</strong><span>Engineering / Reference</span><span>NAS / Shared Folder</span><span>Local Machining Intelligence</span></div><div><strong>{e(labels["air"])}</strong><span>{e(labels["transfer_package"])}</span><span>{e(labels["transfer_checks"])}</span><span>Isolated Local PC</span><span>CNC / Local Operation</span></div><p>{e(labels["transfer_decisions"])}</p></div></section>"""
 
 
 def certified_core_section(lang: str) -> str:
@@ -1784,7 +1799,7 @@ def intelligence_page(lang: str, slug: str, canonical_path: str) -> str:
     data = FACTORY_OS_PAGES[slug]
     flow = "".join(f"<span>{e(step)}</span>" for step in data["flow"])
     sections = "".join(
-        f'<article class="cell intelligence-section-card span-6 reveal delay-{(i % 2) + 1}"><p class="eyebrow">{e(status[lang])}</p><h2>{e(title)}</h2><p>{e(body[lang])}</p>{ul(items)}</article>'
+        f'<article class="cell intelligence-section-card span-6 reveal delay-{(i % 2) + 1}"><p class="eyebrow">{e(status[lang])}</p><h2>{e(title[lang] if isinstance(title, dict) else title)}</h2><p>{e(body[lang])}</p>{ul([item[lang] if isinstance(item, dict) else item for item in items])}</article>'
         for i, (title, status, body, items) in enumerate(data["sections"])
     )
     asset_alt = f'{data["label"]} architecture'

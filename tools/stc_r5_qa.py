@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from content.investor_home import RELEASE, COPY, IDS, FILES
+from content.product_cases import PDF
 from business_narrative import RELEASE as DETAIL_RELEASE
 OUT = ROOT/'qa-artifacts'
 OUT.mkdir(exist_ok=True)
@@ -26,12 +27,15 @@ def static_checks():
     for asset in provenance['assets']:
         path=ROOT/'media/product-20261018'/asset['file']
         check('unaltered actual image: '+asset['file'],hashlib.sha256(path.read_bytes()).hexdigest()==asset['sha256'])
-    new_provenance=json.loads((ROOT/'media/product-20261020/provenance.json').read_text())
-    for asset in new_provenance['assets']:
-        path=ROOT/'media/product-20261020'/asset['file']
-        check('unaltered synthetic evidence: '+asset['file'],hashlib.sha256(path.read_bytes()).hexdigest()==asset['sha256'])
-    check('separate synthetic cases and no physical-effect claim',new_provenance['cases_independent'] and not new_provenance['physical_effect_validated'])
-    css=(ROOT/'stc-lite-home-v1.css').read_text()
+    for folder in ['product-20261020','product-20261102']:
+        case_provenance=json.loads((ROOT/'media'/folder/'provenance.json').read_text())
+        for asset in case_provenance['assets']:
+            path=ROOT/'media'/folder/asset['file']
+            check('declared evidence integrity: '+folder+'/'+asset['file'],hashlib.sha256(path.read_bytes()).hexdigest()==asset['sha256'])
+        check(folder+': separate synthetic cases and no physical-effect claim',case_provenance['cases_independent'] and not case_provenance['physical_effect_validated'])
+    for filename, legacy_name in [('plan-comparison-excerpt.png','plan-comparison.png'),('synthetic-work-standard.pdf','synthetic-work-standard.pdf'),('work-standard-overview.png','work-standard-overview.png')]:
+        check('legacy URL receives corrected evidence: '+legacy_name,(ROOT/'media/product-20261102'/filename).read_bytes()==(ROOT/'media/product-20261020'/legacy_name).read_bytes())
+    css=(ROOT/'flowmatic-home.css').read_text()
     check('reduced motion and short-viewport fallback',all(s in css for s in ['prefers-reduced-motion:reduce','@media(max-height:610px)','.step-image']))
     for lang in COPY:
         raw=(ROOT/lang/'index.html').read_text()
@@ -216,7 +220,7 @@ def browser_checks(base):
                 if route=='work-standard':
                     # Chromium may keep a PDF viewer popup at about:blank. Verify
                     # the response caused by the click, not the viewer's internal URL.
-                    with ctx.expect_event('response',predicate=lambda r:r.url.endswith('/media/product-20261020/synthetic-work-standard.pdf')) as delivered:
+                    with ctx.expect_event('response',predicate=lambda r:r.url.endswith(PDF)) as delivered:
                         with page.expect_popup() as popup:
                             page.locator('[data-case-pdf]').click()
                     pdf_response=delivered.value
@@ -237,8 +241,14 @@ def browser_checks(base):
                     header=page.locator('.site-header').bounding_box()
                     check(f'{lang} {route}: case link lands below header',page.url.endswith(f'/{route}/#case-{kind}') and heading['y']>=header['y']+header['height'] and heading['y']<844,{'heading':heading,'header':header})
                     page.screenshot(path=str(OUT/f'{lang}-{route}-anchor-390.png'))
-        pdf=ctx.request.get(base.rstrip('/')+'/media/product-20261020/synthetic-work-standard.pdf')
+        pdf=ctx.request.get(base.rstrip('/')+PDF)
         check('public PDF served as PDF',pdf.ok and 'application/pdf' in pdf.headers.get('content-type','') and pdf.body().startswith(b'%PDF-'))
+        for folder in ['product-20261020','product-20261102']:
+            provenance=json.loads((ROOT/'media'/folder/'provenance.json').read_text())
+            for asset in provenance['assets']:
+                url='/media/'+folder+'/'+asset['file']
+                response=ctx.request.get(base.rstrip('/')+url,headers={'Cache-Control':'no-cache'})
+                check('served evidence matches reviewed bytes: '+url,response.ok and hashlib.sha256(response.body()).hexdigest()==asset['sha256'],{'status':response.status})
         nojs=browser.new_context(java_script_enabled=False,viewport={'width':390,'height':844})
         fallback=nojs.new_page()
         for lang in COPY:

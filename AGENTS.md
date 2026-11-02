@@ -33,7 +33,7 @@ The public homepage authority is **Owner-approved Investor Product Scroll R7** (
 - Canonical QA: `python tools/stc_r5_qa.py --browser`
 - Canonical release metadata: `release.json`
 - Canonical home surfaces: `index.html`, `ko/index.html`, `en/index.html`, `ar/index.html`
-- Homepage stylesheet: `stc-lite-home-v1.css`
+- Homepage stylesheet: `flowmatic-home.css`
 
 Do **not** use `python build_site.py` as the public website release command. That file remains the legacy/detail-page generator and still contains the superseded R4 homepage narrative. The canonical wrapper rebuilds detail pages, then generates current home surfaces from `content/investor_home.py` through `tools/build_investor_home.py`. The approved hero uses an actual product capture; the four product stages follow native scrolling.
 
@@ -49,4 +49,5 @@ Any homepage change must preserve these product concepts unless explicitly instr
 - One-product / one-line 4–8 week pilot with baseline, KPI comparison, ROI decision, and expansion path.
 - Primary users and budget owners must be visible in the public narrative.
 - Existing NC/CT proof routes and locked corporate identity.
-- Public copy must not expose internal labels such as STC-lite, Blueprint R2, L3–L6 CORE, CORE/OPTIONAL, INFERRED, manifest, hash, or Safety Contract outside an explicitly technical-detail context.
+- The owner's 2026-11-02 instruction prohibits STC and STC-lite on every public surface, including technical details, images, PDFs, metadata and linked asset names. Use Flowmatic Factory OS for the public product name.
+- Public copy must not expose other internal labels such as Blueprint R2, L3–L6 CORE, CORE/OPTIONAL, INFERRED, manifest, hash, or Safety Contract outside an explicitly technical-detail context.

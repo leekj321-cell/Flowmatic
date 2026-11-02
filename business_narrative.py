@@ -3,7 +3,7 @@ from html import escape as e
 from bs4 import BeautifulSoup
 # Detail pages retain their last approved release marker until their content changes.
 # The product-first homepage has an independent brand-copy release.
-RELEASE = '2026.10.29-r9-detail-scope'
+RELEASE = '2026.11.02-r11-public-terminology'
 from content.product_cases import render_cases, COPY as CASE_COPY
 from content.review_scope import render_review_scope
 from pathlib import Path

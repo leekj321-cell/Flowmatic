@@ -1,7 +1,7 @@
 {
   "policy": "WEB-019 / RT-022",
   "status": "LEGACY_GENERATOR_COMPATIBILITY",
-  "authority": "Historical R4 declaration retained only because the legacy detail-page generator and rollback tools still reference it. It is not the public homepage authority after STC-lite R5.",
+  "authority": "Historical declaration retained only because the legacy detail-page generator and rollback tools still reference it. The approved investor product-scroll homepage is the public authority.",
   "approved_reference_commit": "34faae11f9c63ecb031f0a727473c738b939d8fc",
   "lines": [
     "Elegant Engineering.",
