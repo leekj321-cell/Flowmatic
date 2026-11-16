@@ -8,7 +8,7 @@ function message(text,error=false){$("status").textContent=text;$("status").clas
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x]));}
 async function authFetch(path,opts={}){return fetch(SUPA+path,{...opts,headers:{apikey:KEY,"Content-Type":"application/json",...(opts.headers||{})}});}
 function getToken(){return sessionStorage.getItem("fm-demo-token");}
-function setAuth(a){auth=a;$("authState").textContent=a?.user?.email?"Signed in: "+a.user.email:"Public evaluation";$("loginBtn").textContent=a?"Sign out":"Sign in with Google";}
+function setAuth(a){auth=a;$("authState").textContent=a?.user?.email?"Signed in: "+a.user.email:"Public evaluation";$("signOut").disabled=!a;$("sendOtp").disabled=!!a;}
 async function restoreAuth(){
  const hash=new URLSearchParams(location.hash.slice(1)),at=hash.get("access_token"),rt=hash.get("refresh_token");
  if(at&&rt){sessionStorage.setItem("fm-demo-token",at);sessionStorage.setItem("fm-demo-refresh",rt);history.replaceState({},document.title,location.pathname);}
@@ -16,14 +16,26 @@ async function restoreAuth(){
  try{const r=await authFetch("/auth/v1/user",{headers:{Authorization:"Bearer "+token}});if(!r.ok)throw Error();const user=await r.json();setAuth({user});}
  catch{sessionStorage.removeItem("fm-demo-token");sessionStorage.removeItem("fm-demo-refresh");setAuth(null);}
 }
-$("loginBtn").onclick=async()=>{
- if(auth){sessionStorage.removeItem("fm-demo-token");sessionStorage.removeItem("fm-demo-refresh");setAuth(null);return;}
- try{
-  const redirect=encodeURIComponent(location.origin+"/demo/");
-  const url=SUPA+"/auth/v1/authorize?provider=google&redirect_to="+redirect;
-  location.href=url;
- }catch(e){message("Google sign-in is not configured: "+e.message,true);}
+$("sendOtp").onclick=async()=>{
+ const email=$("emailInput").value.trim();
+ if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){message("Enter a valid email address.",true);return;}
+ $("sendOtp").disabled=true;message("Requesting a one-time sign-in code…");
+ try{const r=await authFetch("/auth/v1/otp",{method:"POST",body:JSON.stringify({email,create_user:true})});
+  const data=await r.json().catch(()=>({}));if(!r.ok)throw Error(data.msg||data.error_description||"Email login unavailable");
+  $("otpRow").style.display="block";$("verifyOtp").style.display="inline-block";message("Check your email for the sign-in code. No password is required.");
+ }catch(e){message(e.message,true);}finally{if(!auth)$("sendOtp").disabled=false;}
 };
+$("verifyOtp").onclick=async()=>{
+ const email=$("emailInput").value.trim(),token=$("otpInput").value.trim();
+ if(!email||!token){message("Enter email and verification code.",true);return;}
+ $("verifyOtp").disabled=true;
+ try{const r=await authFetch("/auth/v1/verify",{method:"POST",body:JSON.stringify({email,token,type:"email"})});
+  const data=await r.json();if(!r.ok||!data.access_token)throw Error(data.msg||data.error_description||"Invalid or expired code");
+  sessionStorage.setItem("fm-demo-token",data.access_token);if(data.refresh_token)sessionStorage.setItem("fm-demo-refresh",data.refresh_token);
+  setAuth({user:data.user});message("Signed in. You may now analyze your own STEP files.");
+ }catch(e){message(e.message,true);}finally{$("verifyOtp").disabled=false;}
+};
+$("signOut").onclick=()=>{sessionStorage.removeItem("fm-demo-token");sessionStorage.removeItem("fm-demo-refresh");setAuth(null);message("Signed out. Public sample remains available.");};
 async function request(action,extra={}){
  const headers={"Content-Type":"application/json","apikey":KEY};
  if(action==="plan"&&getToken())headers.Authorization="Bearer "+getToken();
