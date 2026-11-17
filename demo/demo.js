@@ -70,53 +70,8 @@ function drawPath(p){
  $("toolSvg").innerHTML=svg;
  $("pathNote").textContent="Baseline XY travel "+p.toolpath.baselineDistanceMm+" mm → nearest-neighbor candidate "+p.toolpath.candidateDistanceMm+" mm. Cylindrical candidates: "+p.geometry.cylindricalCandidates+". This is NOT validated drilling or production NC.";
 }
-
-// Five independently modeled evaluation workplaces. Each robot's carried part
-// shares the gripper transform, never an independently interpolated marker.
-const WORKPLACE_PRESETS=[
- {id:"WP-01",name:"Machining",machines:["CNC-01","CNC-02","CNC-03"],color:"#eaf3ff"},
- {id:"WP-02",name:"Drilling",machines:["DRILL-01","CNC-04"],color:"#e9f7f1"},
- {id:"WP-03",name:"Inspection",machines:["CMM-01","VISION-01"],color:"#fff5e6"},
- {id:"WP-04",name:"Assembly",machines:["ASSEMBLY-01","PRESS-01","ASSEMBLY-02"],color:"#f3edff"},
- {id:"WP-05",name:"Packing",machines:["PACK-01","LABEL-01"],color:"#fff0f1"}
-];
-let workplaceFocus="ALL";
-function fiveWorkplaceCanvas(){
- const svg=$("factorySvg");
- const W=1050,H=450,layout=WORKPLACE_PRESETS.map((w,i)=>({...w,x:18+(i%3)*344,y:26+Math.floor(i/3)*204,width:322,height:183}));
- const active=workplaceFocus==="ALL"?layout:layout.filter(w=>w.id===workplaceFocus);
- let s='<rect width="1050" height="450" fill="#f7f9fc"/>';
- for(const w of active){
-  const x=workplaceFocus==="ALL"?w.x:100,y=workplaceFocus==="ALL"?w.y:52,width=workplaceFocus==="ALL"?w.width:850,height=workplaceFocus==="ALL"?w.height:350;
-  const cy=y+height*.53,from=x+40,to=x+width-40;
-  s+='<g><rect x="'+x+'" y="'+y+'" width="'+width+'" height="'+height+'" rx="12" fill="'+w.color+'" stroke="#93a8bd" stroke-width="2"/>';
-  s+='<text x="'+(x+12)+'" y="'+(y+25)+'" font-size="15" fill="#172331" font-weight="800">'+w.id+' · '+w.name+'</text>';
-  const mx=w.machines.map((m,i)=>x+width*(i+1)/(w.machines.length+1));
-  for(let i=0;i<w.machines.length;i++){
-   const cx=mx[i],my=y+height*.25;
-   s+='<rect x="'+(cx-23)+'" y="'+my+'" width="46" height="27" rx="4" fill="#d2dfed" stroke="#7087a1"/>';
-   s+='<text x="'+cx+'" y="'+(my+16)+'" text-anchor="middle" font-size="8">'+w.machines[i]+'</text>';
-  }
-  s+='<path d="M '+from+' '+cy+' L '+to+' '+cy+'" stroke="#91a8bf" stroke-width="3" stroke-dasharray="6 5"/>';
-  const t=sim?((sim.time/Math.max(6,14+w.machines.length*2)+(Number(w.id.slice(-1))-1)*.14)%1):0;
-  const pick=.12,drop=.76,carrying=t>=pick&&t<drop;
-  const move=carrying?(t-pick)/(drop-pick):t<pick?0:1;
-  const px=from+(to-from)*move;
-  const armX=px,armY=cy-31;
-  const partX=carrying?armX: t<pick?from:to;
-  const partY=carrying?armY+21:cy;
-  s+='<path d="M '+armX+' '+(armY-18)+' L '+armX+' '+(armY+15)+'" stroke="#1565d8" stroke-width="8" stroke-linecap="round"/>';
-  s+='<path d="M '+(armX-12)+' '+(armY+10)+' L '+(armX-12)+' '+(armY+23)+' M '+(armX+12)+' '+(armY+10)+' L '+(armX+12)+' '+(armY+23)+'" stroke="#1565d8" stroke-width="4"/>';
-  s+='<rect x="'+(armX-14)+'" y="'+(armY-27)+'" width="28" height="18" rx="6" fill="#1565d8"/>';
-  s+='<circle cx="'+partX+'" cy="'+partY+'" r="7" fill="#e53935" stroke="#fff" stroke-width="2"/>';
-  s+='<text x="'+(x+12)+'" y="'+(y+height-13)+'" font-size="11" fill="#536477">'+(carrying?"Gripper holding workpiece":t<pick?"Approach / pickup":"Delivered / return")+'</text>';
-  s+='</g>';
- }
- svg.innerHTML=s;
-}
 function drawLayout(){
- if(!sim)return;
- if(workplaceFocus==="ALL"||WORKPLACE_PRESETS.some(w=>w.id===workplaceFocus)){fiveWorkplaceCanvas();return;}const nodes=plan.layout.nodes,byId=Object.fromEntries(nodes.map(n=>[n.id,n]));
+ if(!sim)return;const nodes=plan.layout.nodes,byId=Object.fromEntries(nodes.map(n=>[n.id,n]));
  let s='<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#a4b4c7"/></marker></defs><rect width="1050" height="450" fill="#f7f9fc"/>';
  for(const link of plan.layout.links){const a=byId[link.from],b=byId[link.to];s+='<path d="M '+a.x+' '+a.y+' L '+b.x+' '+b.y+'" fill="none" stroke="#a4b4c7" stroke-width="4" stroke-dasharray="8 6" marker-end="url(#arr)"/>';}
  for(const n of nodes){
