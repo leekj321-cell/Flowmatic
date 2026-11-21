@@ -11,7 +11,6 @@
   const galleryOpen = document.getElementById('gallery-open');
   const dialog = document.getElementById('image-dialog');
   const header = document.querySelector('.site-header');
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let activeId = '', frame = 0, lastOpener = null;
 
   function select(id) {
@@ -28,6 +27,8 @@
     document.getElementById('shot-caption').textContent = shot.caption;
     shotImage.src = shot.src;
     shotImage.alt = shot.alt;
+    shotImage.width = shot.width || 2304;
+    shotImage.height = shot.height || 1294;
     galleryOpen.dataset.openShot = id;
   }
 
@@ -59,7 +60,7 @@
     if (!step) return;
     // Align the selected text with the reading area, then let native scroll own state.
     const top = Math.max(0, scrollY + step.getBoundingClientRect().top - activationLine() + 24);
-    scrollTo({top, behavior: behavior || (reducedMotion.matches ? 'instant' : 'smooth')});
+    scrollTo({top, behavior: behavior || 'instant'});
   }
 
   tabs.forEach((tab, index) => {
@@ -90,6 +91,8 @@
     document.getElementById('dialog-title').textContent = shot.label + ' · ' + shot.status;
     document.getElementById('dialog-image').src = shot.src;
     document.getElementById('dialog-image').alt = shot.alt;
+    document.getElementById('dialog-image').width = shot.width || 2304;
+    document.getElementById('dialog-image').height = shot.height || 1294;
     document.getElementById('dialog-note').textContent = shot.caption + '. ' + shot.boundary;
     dialog.showModal();
     document.body.classList.add('modal-open');
@@ -147,7 +150,13 @@
 
   document.documentElement.classList.add('js');
   // Cache all four real captures, so a later scroll transition has no network delay.
-  shots.slice(1).forEach(shot => { const preload = new Image(); preload.src = shot.src; });
+  const loadEvidence = () => shots.slice(1).forEach(shot => { const preload = new Image(); preload.src = shot.src; });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { loadEvidence(); observer.disconnect(); }
+    }, {rootMargin: '200px'});
+    observer.observe(story);
+  } else addEventListener('load',loadEvidence,{once:true});
   addEventListener('scroll', schedule, {passive:true});
   addEventListener('resize', schedule);
   addEventListener('pageshow', schedule);

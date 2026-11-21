@@ -1,6 +1,6 @@
 {
-  "release": "2026.11.16-r13-en-process-context",
-  "scope": "product-scroll-with-step-work-standard-excerpt",
+  "release": "2026.11.21-r14-product-tour",
+  "scope": "product-scroll-with-product-tour-reserved",
   "base_release": "2026.10.18-r7-product-scroll",
   "locales": [
     "ko",

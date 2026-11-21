@@ -10,9 +10,12 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
+from content.product_tour import FILM_ENABLED, MEDIA, MOVIE
 from content.investor_home import RELEASE, COPY, IDS, FILES
 from content.product_cases import PDF
 from business_narrative import RELEASE as DETAIL_RELEASE
+TOUR_FILES = ['flowmatic-v15-toolpath.jpg','flowmatic-v15-logistics.jpg','flowmatic-v15-handover-hold.jpg','flowmatic-v15-quality.jpg']
+VISIBLE_FILES = TOUR_FILES if FILM_ENABLED else FILES
 OUT = ROOT/'qa-artifacts'
 OUT.mkdir(exist_ok=True)
 REPORT = {'release':RELEASE,'checks':[],'limits':['Chromium viewport regression, not physical-device or Safari certification.','Arabic is checked for equivalent meaning and layout; native-speaker proofreading is not claimed.','No real contact request is submitted.']}
@@ -47,12 +50,12 @@ def static_checks():
         ids=['hero','problem','product','value','readiness','stack','adoption','contact']
         pos=[raw.find('id="'+x+'"') for x in ids]
         check(f'{lang}: approved narrative order',min(pos)>=0 and pos==sorted(pos))
-        check(f'{lang}: real product hero before architecture',bool(doc.select_one('#hero [data-open-shot="machining"] img')))
+        check(f'{lang}: real product hero before architecture',bool(doc.select_one('#hero video[controls][playsinline][poster]:not([autoplay])' if FILM_ENABLED else '#hero [data-open-shot="machining"] img')))
         check(f'{lang}: two explicit product cases',len(doc.select('.product-case'))==2 and bool(doc.select_one('[data-case-pdf]')))
         check(f'{lang}: four scroll steps',[x.get('data-step') for x in doc.select('[data-step]')]==IDS)
         check(f'{lang}: optional manual jump links',[x.get('href') for x in doc.select('[data-shot]')]==['#step-'+i for i in IDS])
         shots=json.loads(doc.select_one('#product-evidence').text)
-        check(f'{lang}: equivalent evidence identities',[s['id'] for s in shots]==IDS and [s['src'] for s in shots]==['/media/product-20261018/'+x for x in FILES])
+        check(f'{lang}: equivalent evidence identities',[s['id'] for s in shots]==IDS and [s['src'] for s in shots]==([MEDIA+name for name in TOUR_FILES] if FILM_ENABLED else ['/media/product-20261018/'+x for x in FILES]))
         check(f'{lang}: no-JS product images',len(doc.select('.step-image img'))==4)
         check(f'{lang}: public NC and CT links',all(doc.select_one(f'a[href="/{lang}/{route}/"]') for route in ['nc','ct']))
         check(f'{lang}: existing CT video',bool(doc.select_one('video source[src="/flowmatic_ct_demo.mp4"]')))
@@ -147,7 +150,7 @@ def browser_checks(base):
                     page.evaluate(SCROLL_TO_STEP,id)
                     page.wait_for_timeout(180)
                     check(f'{lang} {w}x{h}: forward {id}',page.locator('#product-panel').get_attribute('data-active-shot')==id)
-                    check(f'{lang} {w}x{h}: image follows {id}',page.locator('.shot-image').get_attribute('src').endswith(FILES[IDS.index(id)]))
+                    check(f'{lang} {w}x{h}: image follows {id}',page.locator('.shot-image').get_attribute('src').endswith(VISIBLE_FILES[IDS.index(id)]))
                     if h>610:
                         box=page.locator('#product-panel').bounding_box()
                         check(f'{lang} {w}x{h}: product panel readable {id}',box['y']>=-1 and box['y']+box['height']<=h-45,box)
@@ -159,7 +162,7 @@ def browser_checks(base):
                 if h<=610:
                     check(f'{lang}: landscape inline evidence fallback',page.locator('.step-image').first.is_visible())
                     page.locator('#step-logistics [data-open-shot]').click()
-                    check(f'{lang}: landscape inline image zoom',page.locator('#image-dialog').is_visible() and page.locator('#dialog-image').get_attribute('src').endswith(FILES[1]))
+                    check(f'{lang}: landscape inline image zoom',page.locator('#image-dialog').is_visible() and page.locator('#dialog-image').get_attribute('src').endswith(VISIBLE_FILES[1]))
                     page.keyboard.press('Escape')
                 if w in [390,1440]:
                     capture_cases(page,lang,'home',w)
@@ -178,7 +181,7 @@ def browser_checks(base):
             check(f'{lang}: keyboard first step',page.locator('#product-panel').get_attribute('data-active-shot')=='machining')
             check(f'{lang}: reduced motion',page.evaluate("getComputedStyle(document.documentElement).scrollBehavior")=='auto')
             page.locator('#gallery-open').click()
-            check(f'{lang}: real image dialog',page.locator('#image-dialog').is_visible() and page.locator('#dialog-image').get_attribute('src').endswith(FILES[0]))
+            check(f'{lang}: real image dialog',page.locator('#image-dialog').is_visible() and page.locator('#dialog-image').get_attribute('src').endswith(VISIBLE_FILES[0]))
             page.keyboard.press('Escape');page.wait_for_timeout(100)
             check(f'{lang}: dialog closes and focus returns',not page.locator('#image-dialog').is_visible() and page.locator('#gallery-open').evaluate('(el)=>el===document.activeElement'))
             page.emulate_media(reduced_motion='no-preference')

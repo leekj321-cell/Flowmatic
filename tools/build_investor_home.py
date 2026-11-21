@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from content.investor_home import COPY, FILES, IDS, RELEASE
 from content.product_cases import render_cases
+from content.product_tour import render_product_tour, resolve_demo_shots, FILM_ENABLED, COPY as TOUR_COPY
 
 def e(value):
     return escape(str(value), quote=True)
@@ -24,8 +25,9 @@ def build_home(lang):
     logo = 'flowmatic-ci-ko-horizontal.png' if lang == 'ko' else 'flowmatic-ci-global-horizontal.svg'
     keys = ['label','title','description','input','output','next','status','caption','boundary','alt']
     shots = [dict(zip(keys, row), id=IDS[i], number=f'{i+1:02}', src='/media/product-20261018/'+FILES[i]) for i,row in enumerate(c['shots'])]
+    shots = resolve_demo_shots(lang, shots)
     first = shots[0]
-    image = lambda s, cls='', lazy=True: f'<img class="{cls}" src="{e(s["src"])}" alt="{e(s["alt"])}" width="2304" height="1294" {"loading=lazy" if lazy else "fetchpriority=high"} decoding="async">'
+    image = lambda s, cls='', lazy=True: f'<img class="{cls}" src="{e(s["src"])}" alt="{e(s["alt"])}" width="{s.get("width",2304)}" height="{s.get("height",1294)}" {"loading=lazy" if lazy else "fetchpriority=high"} decoding="async">'
     links = ''.join(f'<a href="#{target}">{e(label)}</a>' for target,label in zip(['problem','product','readiness','adoption'],c['nav']))
     locales = ''.join(f'<a href="/{code}/" lang="{code}" hreflang="{code}" data-lang-link="{code}" {"aria-current=page" if code==lang else ""}>{label}</a>' for code,label in [('ko','한국어'),('en','EN'),('ar','العربية')])
     steps = []
@@ -69,9 +71,7 @@ def build_home(lang):
 <div class="hero-top">{eyebrow(c['kind'])}<span class="tag">{e(c['stage'])}</span></div>
 <div class="hero-grid"><div class="hero-copy"><h1 id="hero-title">{''.join(f'<span>{e(t)}</span>' for t in c['headline'])}</h1>
 <p class="lead">{e(c['lead'])}</p><p class="sub">{e(c['sub'])}</p><div class="actions"><a class="btn btn-primary" href="#product">{e(c['view'])} <span aria-hidden="true">↓</span></a><a class="btn" href="#adoption">{e(c['adopt'])}</a></div></div>
-<figure class="hero-visual"><div class="visual-head"><strong>{e(first['label'])}</strong><span><bdi>CURRENT</bdi></span></div>
-<button type="button" class="image-open" data-open-shot="machining" aria-label="{e(c['zoom'])}">{image(first,lazy=False)}</button>
-<figcaption class="visual-foot"><span>{e(c['actual'])}</span><span class="zoom-hint">{e(c['zoom'])} ↗</span></figcaption></figure></div>
+{render_product_tour(lang, first['src'], first['alt'], c['zoom'])}</div>
 <div class="hero-summary">{''.join(f'<div><small>{e(a)}</small><strong>{e(b)}</strong></div>' for a,b in c['summary'])}</div></section>
 <section class="problem" id="problem" aria-labelledby="problem-title"><div class="wrap problem-grid"><div>{eyebrow(c['nav'][0])}<h2 id="problem-title">{e(c['problemTitle'])}</h2></div><div class="problem-copy">{paragraphs(c['problem'])}<div class="problem-bottom">{''.join(f'<div><strong>{e(a)}</strong><span>{e(b)}</span></div>' for a,b in c['problemBottom'])}</div></div></div></section>
 <section class="product wrap" id="product" aria-labelledby="product-title"><span id="proof" class="anchor-alias"></span><span id="products" class="anchor-alias"></span><span id="demos" class="anchor-alias"></span><span id="journey" class="anchor-alias"></span>
@@ -82,8 +82,8 @@ def build_home(lang):
 <nav class="step-nav" aria-label="{e(c['nav'][1])}">{tabs}</nav>
 <figure class="scroll-figure"><div class="evidence-label"><span class="status" id="shot-status">{e(first['status'])}</span><span class="zoom-hint">{e(c['zoom'])} ↗</span></div>
 <button type="button" class="image-open" id="gallery-open" data-open-shot="machining" aria-label="{e(c['zoom'])}">{image(first,cls='shot-image')}</button>
-<figcaption class="caption"><strong id="shot-caption">{e(first['caption'])}</strong><p class="interface-note">{e(c['interface'])}</p></figcaption></figure></div>
-<div class="story-steps">{''.join(steps)}</div></div><p class="sequence-note">{e(c['sequence'])}</p>
+<figcaption class="caption"><strong id="shot-caption">{e(first['caption'])}</strong><p class="interface-note">{e(TOUR_COPY[lang]['reading'] if FILM_ENABLED else c['interface'])}</p></figcaption></figure></div>
+<div class="story-steps">{''.join(steps)}</div></div><p class="sequence-note">{e(TOUR_COPY[lang]['sequence'] if FILM_ENABLED else c['sequence'])}</p>
 <div class="additional-proof"><div><h3>{e(c['proofTitle'])}</h3><article><p class="proof-tag"><bdi>CURRENT · NC</bdi></p><h4>{e(c['ncTitle'])}</h4><p>{e(c['ncText'])}</p><a class="text-link" href="/{lang}/nc/">{e(c['ncLink'])} ↗</a></article><article><p class="proof-tag"><bdi>CURRENT · CT</bdi></p><h4>{e(c['ctTitle'])}</h4><p>{e(c['ctText'])}</p><a class="text-link" href="/{lang}/ct/">{e(c['ctLink'])} ↗</a></article></div><video controls playsinline preload="none" aria-label="{e(c['ctTitle'])}"><source src="/flowmatic_ct_demo.mp4" type="video/mp4"></video></div>
 </section>
 {render_cases(lang)}
@@ -108,7 +108,7 @@ def main():
     for lang in COPY:
         build_home(lang)
     (ROOT/'index.html').write_text(f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="flowmatic-release" content="{RELEASE}"><meta http-equiv="refresh" content="0;url=/ko/"><link rel="canonical" href="https://flowmatic-os.com/ko/"><title>Flowmatic Factory OS</title></head><body><a href="/ko/">Flowmatic Factory OS · 한국어</a> · <a href="/en/">English</a> · <a href="/ar/">العربية</a></body></html>\n''',encoding='utf-8')
-    (ROOT/'release.json').write_text(json.dumps({'release':RELEASE,'scope':'product-scroll-with-step-work-standard-excerpt','base_release':'2026.10.18-r7-product-scroll','locales':list(COPY)},ensure_ascii=False,indent=2)+'\n')
+    (ROOT/'release.json').write_text(json.dumps({'release':RELEASE,'scope':'product-scroll-with-verified-product-tour' if FILM_ENABLED else 'product-scroll-with-product-tour-reserved','base_release':'2026.10.18-r7-product-scroll','locales':list(COPY)},ensure_ascii=False,indent=2)+'\n')
     print('PASS: product-first homepages generated for KO / EN / AR.')
 
 if __name__ == '__main__':
