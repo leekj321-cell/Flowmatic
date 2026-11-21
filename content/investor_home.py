@@ -2,7 +2,8 @@
 
 Product screenshots are unmodified internal product captures, not customer results.
 """
-RELEASE = '2026.11.21-r14-product-tour'
+from content.product_tour import FILM_ENABLED
+RELEASE = '2026.11.21-r15-verified-film' if FILM_ENABLED else '2026.11.21-r14-product-tour'
 FILES = ['ui-source-index-mid-rotation.png', 'ui-optimized-gantry.png',
          'ui-source-factory-approval.png', 'ui-source-final-factory-monitor.png']
 IDS = ['machining', 'logistics', 'handover', 'operations']

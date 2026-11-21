@@ -1,6 +1,6 @@
 {
-  "release": "2026.11.21-r14-product-tour",
-  "scope": "product-scroll-with-product-tour-reserved",
+  "release": "2026.11.21-r15-verified-film",
+  "scope": "product-scroll-with-verified-product-tour",
   "base_release": "2026.10.18-r7-product-scroll",
   "locales": [
     "ko",
