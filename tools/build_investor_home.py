@@ -102,13 +102,13 @@ def build_home(lang):
 <dialog id="image-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title">{e(c['nav'][1])}</h2><button type="button" id="dialog-close">{e(c['close'])} ×</button></div><div class="dialog-image" dir="ltr"><img id="dialog-image" alt="" width="2304" height="1294"></div><p class="dialog-note" id="dialog-note"></p></dialog>
 <script id="product-evidence" type="application/json">{json.dumps(shots,ensure_ascii=False).replace('</','<\\/')}</script></body></html>
 '''
-    (ROOT/lang/'index.html').write_text(html,encoding='utf-8')
+    (ROOT/lang/'index.html').write_text(html,encoding='utf-8',newline='\n')
 
 def main():
     for lang in COPY:
         build_home(lang)
-    (ROOT/'index.html').write_text(f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="flowmatic-release" content="{RELEASE}"><meta http-equiv="refresh" content="0;url=/ko/"><link rel="canonical" href="https://flowmatic-os.com/ko/"><title>Flowmatic Factory OS</title></head><body><a href="/ko/">Flowmatic Factory OS · 한국어</a> · <a href="/en/">English</a> · <a href="/ar/">العربية</a></body></html>\n''',encoding='utf-8')
-    (ROOT/'release.json').write_text(json.dumps({'release':RELEASE,'scope':'product-scroll-with-verified-product-tour' if FILM_ENABLED else 'product-scroll-with-product-tour-reserved','base_release':'2026.10.18-r7-product-scroll','locales':list(COPY)},ensure_ascii=False,indent=2)+'\n')
+    (ROOT/'index.html').write_text(f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="flowmatic-release" content="{RELEASE}"><meta http-equiv="refresh" content="0;url=/ko/"><link rel="canonical" href="https://flowmatic-os.com/ko/"><title>Flowmatic Factory OS</title></head><body><a href="/ko/">Flowmatic Factory OS · 한국어</a> · <a href="/en/">English</a> · <a href="/ar/">العربية</a></body></html>\n''',encoding='utf-8',newline='\n')
+    (ROOT/'release.json').write_text(json.dumps({'release':RELEASE,'scope':'product-scroll-with-verified-product-tour' if FILM_ENABLED else 'product-scroll-with-product-tour-reserved','base_release':'2026.10.18-r7-product-scroll','locales':list(COPY)},ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
     print('PASS: product-first homepages generated for KO / EN / AR.')
 
 if __name__ == '__main__':
