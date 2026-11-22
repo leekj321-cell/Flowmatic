@@ -9,13 +9,14 @@ COPY = {
         "machining": {
             "title": "설계 조건과 가공계획 검토",
             "body": (
-                "표준 부품·공통 치구 몸체와 설계 BOM을 검토합니다. "
-                "치구 제약에 따른 NC 후보·전체 공정시간을 비교하고, "
-                "채택한 설계 기준으로 정적 생산능력을 추정합니다."
+                "지원 형상의 공정·NC·공구 정보와 3D 치구·설계 BOM을 "
+                "데스크톱 제품 시연의 연결된 작업 흐름에서 검토합니다. "
+                "공정시간 비교를 생산능력 계획에 사용합니다."
             ),
             "scope": (
-                "각 기능은 별도의 내부 설계·계획 시험 범위이며, "
-                "치구·공구의 최종 선정·제작도면, 통합 실행과 현장 절삭·충돌 검증은 완료 범위에 포함하지 않습니다."
+                "제품 시연에서 확인한 지원 형상의 소프트웨어 검토 범위입니다. "
+                "실제 제작에 사용할 치구·공구의 최종 선정과 제작도면 검토, "
+                "현장 절삭시험·충돌 검증은 별도로 필요합니다."
             ),
         },
         "quality": {
@@ -47,15 +48,16 @@ COPY = {
         "machining": {
             "title": "Design and machining plan review",
             "body": (
-                "Standard components, shared fixture bodies and design bills of "
-                "materials are reviewed. Candidate NC programs and total process "
-                "times are compared under fixture constraints, while adopted "
-                "design criteria support static production capacity estimates."
+                "For supported geometry, the desktop product demonstration links "
+                "process and NC review with tool information, 3D fixtures and "
+                "design bills of materials. Process-time comparisons support "
+                "production-capacity planning."
             ),
             "scope": (
-                "These are separate internal design and planning tests. Final fixture "
-                "and tool selection, fabrication drawings, integrated desktop "
-                "operation, cutting and collision clearance remain unverified."
+                "This covers software review of the supported geometry shown in "
+                "the product demonstration. Final fixture and tool selection and "
+                "fabrication drawings for physical use require separate engineering "
+                "review, cutting trials and collision validation."
             ),
         },
         "quality": {
@@ -87,13 +89,14 @@ COPY = {
         "machining": {
             "title": "مراجعة التصميم وخطة التشغيل",
             "body": (
-                "تُراجع المكونات القياسية وأجسام التثبيت المشتركة وقوائم مواد التصميم. "
-                "تُقارن برامج NC المرشحة وأزمنة العملية الكلية وفق قيود التثبيت، "
-                "وتُستخدم معايير التصميم المعتمد لتقدير حسابي غير ديناميكي للطاقة الإنتاجية."
+                "يعرض المنتج المكتبي، للأشكال المدعومة، مراجعة مترابطة للعمليات "
+                "وبرامج NC ومعلومات الأدوات ونماذج المثبتات ثلاثية الأبعاد "
+                "وقوائم مواد التصميم. تدعم مقارنة أزمنة العمليات تخطيط الطاقة الإنتاجية."
             ),
             "scope": (
-                "تستند هذه الوظائف إلى اختبارات داخلية منفصلة للتصميم والتخطيط، "
-                "ولا تشمل إنجاز الاختيار النهائي للتثبيت والأدوات أو رسومات التصنيع أو التشغيل المكتبي المتكامل أو التحقق من أداء القطع وخلو المسارات من التصادم."
+                "يشمل ذلك مراجعة برمجية للأشكال المدعومة المعروضة في العرض التوضيحي. "
+                "يتطلب الاختيار النهائي للمثبتات والأدوات ورسومات التصنيع للاستخدام الفعلي "
+                "مراجعة هندسية منفصلة، كما يلزم التحقق الميداني من أداء القطع وخلو المسارات من التصادم."
             ),
         },
         "quality": {

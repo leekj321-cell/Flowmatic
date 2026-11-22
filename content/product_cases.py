@@ -15,6 +15,7 @@ COPY = {
   'label':'CURRENT · 내부 검증', 'open':'원본 이미지 보기', 'open_excerpt':'제품 화면 발췌 보기',
   'detail':'사례와 적용 범위', 'pdf':'작업표준서 PDF 보기',
   'language':'화면은 한국어 제품의 실제 캡처이며, PDF는 STEP 형상과 계획 NC로 출력한 자료의 9쪽 발췌본입니다.',
+  'change_language':'화면은 한국어 제품의 실제 캡처로, 계획 비교·승인 적용·LOT 및 품질 기록을 보여줍니다.',
   'change': {
    'title':'생산량 변경에 따른 계획 승인과 실행 기준',
    'body':'변경된 생산량과 납기 조건으로 대안을 비교하고, 담당자가 승인한 계획을 작업지시와 자원 예약에 반영합니다. 이후 LOT·품질 기록에서 적용 계획과 근거를 확인합니다.',
@@ -38,6 +39,7 @@ COPY = {
   'label':'CURRENT · Internal validation', 'open':'Open original image', 'open_excerpt':'Open product screen excerpt',
   'detail':'Case and scope', 'pdf':'View work-instruction PDF',
   'language':'Screens are actual captures of the Korean-language product. The PDF is a nine-page excerpt exported from STEP geometry and planned NC.',
+  'change_language':'Actual captures of the Korean-language product show plan comparison, approval and application, and linked LOT and quality records.',
   'change': {
    'title':'Plan approval and execution criteria after a volume change',
    'body':'Compare alternatives against revised volumes and due dates. A responsible reviewer approves the selected plan before it is applied to work orders and resource reservations. LOT and quality records retain the applied plan and its evidence.',
@@ -61,6 +63,7 @@ COPY = {
   'label':'CURRENT · تحقق داخلي', 'open':'فتح الصورة الأصلية', 'open_excerpt':'فتح الجزء المقتطع من شاشة المنتج',
   'detail':'الحالة ونطاق التطبيق', 'pdf':'عرض ملف تعليمات العمل PDF',
   'language':'الشاشات لقطات فعلية من المنتج باللغة الكورية. ملف PDF مقتطف من تسع صفحات صُدّر من هندسة STEP وبرامج NC مخططة.',
+  'change_language':'تعرض اللقطات الفعلية للمنتج باللغة الكورية مقارنة الخطط واعتمادها وتطبيقها وسجلات الدُفعات والجودة المرتبطة بها.',
   'change': {
    'title':'اعتماد الخطة ومعايير التنفيذ بعد تغيير حجم الإنتاج',
    'body':'مقارنة البدائل وفق الكميات ومواعيد التسليم المعدلة. يعتمد المسؤول الخطة المختارة قبل تطبيقها على أوامر العمل وحجوزات الموارد. تحتفظ سجلات الدُفعات والجودة بالخطة المطبقة وأدلتها.',
@@ -97,4 +100,5 @@ def render_cases(lang, kinds=('change','standard'), detailed=False):
         if kind=='standard': links+=f'<a class="case-link" href="{PDF}" target="_blank" rel="noopener" data-case-pdf>{e(c["pdf"])} ↗</a>'
         articles.append(f'<article class="product-case" id="case-{kind}"><p class="case-state">{e(c["label"])}</p><h3>{e(t["title"])}</h3><p class="case-body">{e(t["body"])}</p>{steps}<div class="case-gallery">{pics}</div><p class="case-boundary">{e(t["boundary"])}</p><div class="case-links">{links}</div></article>')
     intro=f'<div class="cases-intro"><h2>{e(c["title"])}</h2><p>{e(c["intro"])}</p></div>' if len(kinds)>1 else ''
-    return f'<section class="product-cases {"cases-detailed" if detailed else ""}" id="product-cases">{intro}<div class="cases-grid">{"".join(articles)}</div><p class="case-language">{e(c["language"])}</p></section>'
+    language_note = c['language'] if 'standard' in kinds else c['change_language']
+    return f'<section class="product-cases {"cases-detailed" if detailed else ""}" id="product-cases">{intro}<div class="cases-grid">{"".join(articles)}</div><p class="case-language">{e(language_note)}</p></section>'

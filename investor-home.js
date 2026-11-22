@@ -1,6 +1,31 @@
 /* Product evidence follows native document scrolling. No wheel/touch interception. */
 (() => {
   'use strict';
+  // Chapter navigation follows an explicit visitor click; the film never autoplays.
+  const film = document.getElementById('product-film');
+  const chapterButtons = [...document.querySelectorAll('[data-video-time]')];
+  if (film) {
+    chapterButtons.forEach(button => button.addEventListener('click', () => {
+      const start = Number(button.dataset.videoTime);
+      if (!Number.isFinite(start)) return;
+      const playSection = () => {
+        film.currentTime = Math.max(0, Math.min(start, film.duration || start));
+        const request = film.play();
+        if (request && typeof request.catch === 'function') request.catch(() => {});
+        film.focus({preventScroll:true});
+        film.scrollIntoView({block:'center', behavior:'instant'});
+      };
+      if (film.readyState >= 1) playSection();
+      else { film.addEventListener('loadedmetadata', playSection, {once:true}); film.load(); }
+    }));
+    film.addEventListener('timeupdate', () => {
+      const active = [...chapterButtons].reverse().find(button => Number(button.dataset.videoTime) <= film.currentTime + 0.1);
+      chapterButtons.forEach(button => {
+        if (button === active) button.setAttribute('aria-current','true');
+        else button.removeAttribute('aria-current');
+      });
+    });
+  }
   const shots = JSON.parse(document.getElementById('product-evidence').textContent);
   const byId = new Map(shots.map(shot => [shot.id, shot]));
   const tabs = [...document.querySelectorAll('[data-shot]')];

@@ -70,7 +70,7 @@ def build_home(lang):
 <main id="main"><section class="hero wrap" id="hero" aria-labelledby="hero-title">
 <div class="hero-top">{eyebrow(c['kind'])}<span class="tag">{e(c['stage'])}</span></div>
 <div class="hero-grid"><div class="hero-copy"><h1 id="hero-title">{''.join(f'<span>{e(t)}</span>' for t in c['headline'])}</h1>
-<p class="lead">{e(c['lead'])}</p><p class="sub">{e(c['sub'])}</p><div class="actions"><a class="btn btn-primary" href="#product">{e(c['view'])} <span aria-hidden="true">↓</span></a><a class="btn" href="#adoption">{e(c['adopt'])}</a></div></div>
+<p class="lead">{e(c['lead'])}</p><p class="sub">{e(c['sub'])}</p><div class="actions"><a class="btn btn-primary" href="#product-demo">{e(c['view'])}</a><a class="btn" href="#contact">{e(c['adopt'])}</a></div></div>
 {render_product_tour(lang, first['src'], first['alt'], c['zoom'])}</div>
 <div class="hero-summary">{''.join(f'<div><small>{e(a)}</small><strong>{e(b)}</strong></div>' for a,b in c['summary'])}</div></section>
 <section class="problem" id="problem" aria-labelledby="problem-title"><div class="wrap problem-grid"><div>{eyebrow(c['nav'][0])}<h2 id="problem-title">{e(c['problemTitle'])}</h2></div><div class="problem-copy">{paragraphs(c['problem'])}<div class="problem-bottom">{''.join(f'<div><strong>{e(a)}</strong><span>{e(b)}</span></div>' for a,b in c['problemBottom'])}</div></div></div></section>

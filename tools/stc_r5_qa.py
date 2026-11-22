@@ -10,11 +10,10 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from content.product_tour import FILM_ENABLED, MEDIA, MOVIE
+from content.product_tour import FILM_ENABLED, MEDIA, MOVIE, TOUR_FILES
 from content.investor_home import RELEASE, COPY, IDS, FILES
 from content.product_cases import PDF
 from business_narrative import RELEASE as DETAIL_RELEASE
-TOUR_FILES = ['flowmatic-v15-toolpath.jpg','flowmatic-v15-logistics.jpg','flowmatic-v15-handover-hold.jpg','flowmatic-v15-quality.jpg']
 VISIBLE_FILES = TOUR_FILES if FILM_ENABLED else FILES
 OUT = ROOT/'qa-artifacts'
 OUT.mkdir(exist_ok=True)

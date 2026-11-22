@@ -51,3 +51,19 @@ html:not(.js) .menu-toggle{display:none}
 .story-step{min-height:min(78svh,700px);padding-bottom:58px}
 @media(max-width:820px){.story-step{min-height:70svh;padding-bottom:54px}.product-tour .tour-stills{min-height:40px;align-content:center}}
 @media(prefers-reduced-motion:reduce){.story-step,.hero-visual,.shot-image,.step-tab{animation:none!important;transition:none!important}.product-visual{scroll-behavior:auto}}
+
+/* Current film: readable metadata, accessible chapter seeking and a nearby contact path. */
+.product-tour .visual-head{flex-wrap:wrap;align-items:baseline;font-size:13px;line-height:1.6}
+.product-tour .visual-head strong{font-size:15px}
+.product-tour video{height:auto;aspect-ratio:16/10}
+.tour-links{display:flex;flex-wrap:wrap;gap:4px 20px;padding:4px 16px 12px}
+.product-tour .tour-links .tour-stills{margin:0;font-size:14px;min-height:40px;align-content:center}
+.tour-transcript li{display:block;margin:0;padding:10px 0;border-top:1px solid var(--line)}
+.tour-chapter{display:grid;grid-template-columns:4.2em minmax(0,1fr);gap:10px;width:100%;min-height:44px;padding:8px;border:0;background:transparent;text-align:start;font-size:14px;font-weight:700;line-height:1.6}
+.tour-chapter:hover,.tour-chapter[aria-current=true]{background:var(--blue-soft);color:var(--blue)}
+.tour-chapter:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.tour-transcript li p,.tour-chapter-hint{font-size:14px;line-height:1.75;color:var(--muted);padding:4px 8px 8px}
+.product-tour .tour-evidence-note{font-size:13px}
+@media(max-width:560px){.product-tour .visual-head{padding:12px;font-size:12px}.product-tour .visual-head strong{font-size:14px}.tour-chapter{grid-template-columns:3.8em minmax(0,1fr)}}
+
+.hero-grid:has(.tour-transcript[open]){align-items:start}

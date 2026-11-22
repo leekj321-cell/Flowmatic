@@ -1,0 +1,93 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:06.000
+What if your factory needs 20% more output?
+Do you need more equipment?
+
+2
+00:00:06.000 --> 00:00:12.500
+Rebalance machining operations across the same four cells and 48 CNCs.
+
+3
+00:00:12.500 --> 00:00:22.000
+Modeled annual capacity rises from 115,200 to 132,822 units — up 15.3%.
+
+4
+00:00:22.000 --> 00:00:28.000
+Automated process planning
+
+5
+00:00:28.000 --> 00:00:39.000
+Inspect the part, cutter, original NC and toolpath in detail.
+
+6
+00:00:39.000 --> 00:00:47.000
+Verify the completed geometry before production handover.
+
+7
+00:00:47.000 --> 00:00:53.000
+Automated fixture design and BOM generation
+
+8
+00:00:53.000 --> 00:01:00.000
+Inspect bore clamps on both faces and the work supports.
+
+9
+00:01:00.000 --> 00:01:06.000
+Rotate the completed fixture to review every side.
+
+10
+00:01:06.000 --> 00:01:14.000
+Tool quantities and tooling costs update with the production plan.
+
+11
+00:01:14.000 --> 00:01:22.000
+Track each pallet’s LOT, completed quantity and transport plan.
+
+12
+00:01:22.000 --> 00:01:30.000
+A new workplace joins production and logistics.
+
+13
+00:01:30.000 --> 00:01:38.967
+Zoom into Workplace 4 and continue on the same simulation clock.
+
+14
+00:01:38.967 --> 00:01:41.967
+SCADA + cell simulation · 2× playback
+
+15
+00:01:41.967 --> 00:01:49.467
+Unload P01 and transfer the part to P02.
+
+16
+00:01:49.467 --> 00:01:57.217
+Collect new stock and return along the LM axis.
+
+17
+00:01:57.217 --> 00:02:05.467
+Load P01, secure the fixture, then retract the gripper.
+
+18
+00:02:05.467 --> 00:02:07.967
+Close the door and resume machining.
+
+19
+00:02:07.967 --> 00:02:15.967
+Review and approve a bore-position change.
+Verify the revised geometry and NC together.
+
+20
+00:02:15.967 --> 00:02:21.467
+Compare a sample measurement with the design.
+Review the proposed NC correction.
+
+21
+00:02:21.467 --> 00:02:30.467
+Optimize factory routes, dispatch and cell handling.
+Modeled annual capacity reaches 138,596 units — up 20.3%.
+
+22
+00:02:30.467 --> 00:02:35.467
+Making every factory flow like water. This is Flowmatic.
