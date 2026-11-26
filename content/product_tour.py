@@ -4,10 +4,10 @@ from html import escape
 from pathlib import Path
 
 MEDIA = "/media/product-tour/"
-MOVIE = "Flowmatic_V28_Transitions_Complete_EN_20261125.mp4"
+MOVIE = "Flowmatic_V28_Quality_Restored_EN_20261126.mp4"
 POSTER = "poster-v28.jpg"
 TOUR_FILES = ["flowmatic-v28-process.jpg", "flowmatic-v28-fixture.jpg", "flowmatic-v28-scada.jpg", "flowmatic-v28-logistics.jpg"]
-REQUIRED = (MOVIE, POSTER, "captions-en-v28.vtt", "captions-ko-v28.vtt", *TOUR_FILES)
+REQUIRED = (MOVIE, POSTER, "captions-en-v28-quality-20261126.vtt", "captions-ko-v28-quality-20261126.vtt", *TOUR_FILES)
 DIRECTORY = Path(__file__).resolve().parents[1] / "media" / "product-tour"
 FILM_ENABLED = DIRECTORY.joinpath("publish-approved").is_file()
 if FILM_ENABLED and not all(DIRECTORY.joinpath(name).is_file() for name in REQUIRED):
@@ -55,7 +55,7 @@ COPY = json.loads(r'''{
         "01:14",
         74,
         "생산·물류·양산이관",
-        "LOT·팔레트·반송 계획을 확인하고 새 작업장을 공장 배치와 연결합니다."
+        "완성된 P06 지그에서 신규 작업장으로 이어진 뒤 공장 전체로 시야를 넓히며, 계속되는 생산·물류와 팔레트 반송 흐름을 확인합니다."
       ],
       [
         "01:39",
@@ -119,7 +119,7 @@ COPY = json.loads(r'''{
         "01:14",
         74,
         "Production, logistics & handover",
-        "Follow lot, pallet and transport plans as a new workplace joins the factory layout."
+        "Follow the completed P06 fixture into the new workplace, then zoom out to the whole factory as production, logistics and pallet transport continue."
       ],
       [
         "01:39",
@@ -183,7 +183,7 @@ COPY = json.loads(r'''{
         "01:14",
         74,
         "الإنتاج واللوجستيات والتسليم",
-        "متابعة خطط الدُفعات والمنصات والنقل عند إضافة منطقة عمل جديدة إلى تخطيط المصنع."
+        "متابعة تجهيز تثبيت P06 المكتمل وصولًا إلى منطقة العمل الجديدة، ثم توسيع الرؤية إلى المصنع بالكامل مع استمرار الإنتاج واللوجستيات ونقل المنصات."
       ],
       [
         "01:39",
@@ -364,7 +364,7 @@ def render_product_tour(lang, old_image, old_image_alt, zoom):
     e = lambda value: escape(str(value), quote=True)
     intro = f'<div class="visual-head"><strong id="product-demo-title">{e(c["title"])}</strong><bdi>{e(c["time"] if FILM_ENABLED else c["hold"])}</bdi></div>'
     if FILM_ENABLED:
-        tracks = "".join(f'<track kind="subtitles" src="{MEDIA}captions-{code}-v28.vtt" srclang="{code}" label="{label}"{(" default" if code == ("ko" if lang == "ko" else "en") else "")}>' for code, label in [("en","English"),("ko","한국어")])
+        tracks = "".join(f'<track kind="subtitles" src="{MEDIA}captions-{code}-v28-quality-20261126.vtt" srclang="{code}" label="{label}"{(" default" if code == ("ko" if lang == "ko" else "en") else "")}>' for code, label in [("en","English"),("ko","한국어")])
         body = f'<video id="product-film" controls playsinline preload="metadata" width="1920" height="1200" poster="{MEDIA}{POSTER}" aria-label="{e(c["play"])}"><source src="{MEDIA}{MOVIE}" type="video/mp4">{tracks}<p>{e(c["fallback"])}</p></video>'
         chapters = "".join(f'<li><button type="button" class="tour-chapter" data-video-time="{seconds}" aria-controls="product-film"><bdi>{e(stamp)}</bdi><span>{e(label)}</span></button><p>{e(line)}</p></li>' for stamp, seconds, label, line in c["chapters"])
         transcript = f'<details class="tour-transcript"><summary>{e(c["transcript"])}</summary><p class="tour-chapter-hint">{e(c["hint"])}</p><ol>{chapters}</ol></details>'
