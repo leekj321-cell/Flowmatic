@@ -9,7 +9,9 @@
       const start = Number(button.dataset.videoTime);
       if (!Number.isFinite(start)) return;
       const playSection = () => {
-        film.currentTime = Math.max(0, Math.min(start, film.duration || start));
+        // Seek one frame past a native subtitle boundary so the previous cue clears.
+        const seekStart = start > 0 ? start + 1 / 60 : start;
+        film.currentTime = Math.max(0, Math.min(seekStart, film.duration || seekStart));
         const request = film.play();
         if (request && typeof request.catch === 'function') request.catch(() => {});
         film.focus({preventScroll:true});
