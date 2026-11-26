@@ -1,5 +1,5 @@
 {
-  "release": "2026.11.23-v28-product-film",
+  "release": "2026.11.26-v28-product-film-transitions",
   "scope": "product-scroll-with-verified-product-tour",
   "base_release": "2026.10.18-r7-product-scroll",
   "locales": [

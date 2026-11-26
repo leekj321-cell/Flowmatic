@@ -4,7 +4,7 @@ from html import escape
 from pathlib import Path
 
 MEDIA = "/media/product-tour/"
-MOVIE = "Flowmatic_Factory_OS_EN_V28.mp4"
+MOVIE = "Flowmatic_V28_Transitions_Complete_EN_20261125.mp4"
 POSTER = "poster-v28.jpg"
 TOUR_FILES = ["flowmatic-v28-process.jpg", "flowmatic-v28-fixture.jpg", "flowmatic-v28-scada.jpg", "flowmatic-v28-logistics.jpg"]
 REQUIRED = (MOVIE, POSTER, "captions-en-v28.vtt", "captions-ko-v28.vtt", *TOUR_FILES)
